@@ -1,0 +1,91 @@
+@font-face {
+  font-family: 'AdjusterRegular';
+  src: url("adjuster-webfont.eot");
+  src: url("adjuster-webfont.eot?#iefix") format("embedded-opentype"), url("adjuster-webfont.woff") format("woff"), url("adjuster-webfont.ttf") format("truetype"), url("adjuster-webfont.otf") format("opentype"), url("adjuster-webfont.svg#AdjusterRegular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+#main {
+  margin: 0 auto;
+  position: relative; }
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 5px solid #ccc; }
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #ccc; }
+
+.vertical-line {
+  width: 1px;
+  background: #ccc; }
+
+#live-panel {
+  font-family: AdjusterRegular;
+  font-size: 170px;
+  line-height: 170px;
+  height: 170px;
+  width: 1000px;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  text-align: center; }
+  #live-panel .topline,
+  #live-panel .bottomline {
+    height: 1px;
+    margin: auto;
+    width: 100%;
+    background-color: #000;
+    position: absolute;
+    left: 0; }
+  #live-panel .topline {
+    top: 17px; }
+  #live-panel .bottomline {
+    bottom: 44px; }
+  #live-panel .adjuster {
+    height: 170px;
+    position: absolute;
+    top: 0;
+    left: 0; }
+    #live-panel .adjuster label {
+      font-family: Helvetica, sans-serif;
+      font-size: 10px;
+      line-height: 1em;
+      text-align: left;
+      position: absolute;
+      background-color: #fff;
+      z-index: 1;
+      padding: 3px 0; }
+      #live-panel .adjuster label input {
+        width: 35px;
+        border: 1px solid #ccc;
+        display: block;
+        font-family: Helvetica, sans-serif;
+        font-size: 12px; }
+    #live-panel .adjuster .arrow-up,
+    #live-panel .adjuster .arrow-down,
+    #live-panel .adjuster .vertical-line {
+      position: absolute; }
+    #live-panel .adjuster.body-height label {
+      top: 55px;
+      left: 0; }
+    #live-panel .adjuster.body-height .arrow-up {
+      top: 0; }
+    #live-panel .adjuster.body-height .arrow-down {
+      bottom: 0; }
+    #live-panel .adjuster.body-height .vertical-line {
+      top: 0;
+      left: 3px;
+      height: 170px; }

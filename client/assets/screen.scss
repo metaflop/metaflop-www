@@ -1,4 +1,6 @@
 $live_panel_height: 170px;
+$input_height: 20px;
+$input_color: #ccc;
 
 @font-face {
     font-family: 'AdjusterRegular';
@@ -15,6 +17,38 @@ $live_panel_height: 170px;
 body {
     margin: 0;
     padding: 0;
+    font-family: Helvetica, sans-serif;
+}
+
+input {
+    border: 1px solid $input_color;
+    font-family: Helvetica, sans-serif;
+    height: $input_height;
+    padding: 0;
+}
+
+h1 {
+    font-family: AdjusterRegular;
+    font-size: $live_panel_height;
+    line-height: $live_panel_height;
+    height: $live_panel_height;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix {
+    overflow: hidden;
+    
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+        position: absolute;
+        left: -9999px;
+    }
 }
 
 #main {
@@ -27,7 +61,7 @@ body {
     height: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-bottom: 5px solid #ccc;
+    border-bottom: 5px solid $input_color;
 }
 
 .arrow-down {
@@ -35,24 +69,29 @@ body {
     height: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 5px solid #ccc;
+    border-top: 5px solid $input_color;
 }
 
 .vertical-line {
     width: 1px;
-    background: #ccc;
+    background: $input_color;
+}
+
+#live-panel,
+#parameter-panel {
+    margin: 20px auto 0 auto;
+    width: 1000px;
+    
+    input {
+        width: 37px;
+        font-size: 12px;
+    }
 }
 
 #live-panel {
-    font-family: AdjusterRegular;
-    font-size: $live_panel_height;
-    line-height: $live_panel_height;
-    height: $live_panel_height;
-    width: 1000px;
     overflow: hidden;
     position: relative;
     display: block;
-    margin: 0 auto;
     text-align: center;
     
     .topline,
@@ -78,7 +117,6 @@ body {
         left: 0;
 
         label {
-            font-family: Helvetica, sans-serif;
             font-size: 10px;
             line-height: 1em;
             text-align: left;
@@ -88,11 +126,7 @@ body {
             padding: 3px 0;
             
             input {
-                width: 35px;
-                border: 1px solid #ccc;
                 display: block;
-                font-family: Helvetica, sans-serif;
-                font-size: 12px;
             }
         }
         
@@ -122,6 +156,36 @@ body {
                 height: $live_panel_height;
             }
         }
+    }
+}
+
+#parameter-panel {
+    label {
+        float: left;
+        width: 170px;
+    }
+
+    input,
+    a {
+        float: left;
+    }
+        
+    a {
+        text-decoration: none;
+        border: 1px solid $input_color;
+        color: #000;
+        text-align: center;
+        width: $input_height;
+        height: $input_height;
+        line-height: $input_height;
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .static-value {
+        font-size: 12px;
+        line-height: 21px;
     }
 }
 

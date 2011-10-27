@@ -7,7 +7,34 @@
 
 body {
   margin: 0;
+  padding: 0;
+  font-family: Helvetica, sans-serif; }
+
+input {
+  border: 1px solid #cccccc;
+  font-family: Helvetica, sans-serif;
+  height: 20px;
   padding: 0; }
+
+h1 {
+  font-family: AdjusterRegular;
+  font-size: 170px;
+  line-height: 170px;
+  height: 170px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0; }
+
+.clearfix {
+  overflow: hidden; }
+  .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    position: absolute;
+    left: -9999px; }
 
 #main {
   margin: 0 auto;
@@ -18,29 +45,32 @@ body {
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-bottom: 5px solid #ccc; }
+  border-bottom: 5px solid #cccccc; }
 
 .arrow-down {
   width: 0;
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 5px solid #ccc; }
+  border-top: 5px solid #cccccc; }
 
 .vertical-line {
   width: 1px;
-  background: #ccc; }
+  background: #cccccc; }
+
+#live-panel,
+#parameter-panel {
+  margin: 20px auto 0 auto;
+  width: 1000px; }
+  #live-panel input,
+  #parameter-panel input {
+    width: 37px;
+    font-size: 12px; }
 
 #live-panel {
-  font-family: AdjusterRegular;
-  font-size: 170px;
-  line-height: 170px;
-  height: 170px;
-  width: 1000px;
   overflow: hidden;
   position: relative;
   display: block;
-  margin: 0 auto;
   text-align: center; }
   #live-panel .topline,
   #live-panel .bottomline {
@@ -60,7 +90,6 @@ body {
     top: 0;
     left: 0; }
     #live-panel .adjuster label {
-      font-family: Helvetica, sans-serif;
       font-size: 10px;
       line-height: 1em;
       text-align: left;
@@ -69,11 +98,7 @@ body {
       z-index: 1;
       padding: 3px 0; }
       #live-panel .adjuster label input {
-        width: 35px;
-        border: 1px solid #ccc;
-        display: block;
-        font-family: Helvetica, sans-serif;
-        font-size: 12px; }
+        display: block; }
     #live-panel .adjuster .arrow-up,
     #live-panel .adjuster .arrow-down,
     #live-panel .adjuster .vertical-line {
@@ -89,3 +114,24 @@ body {
       top: 0;
       left: 3px;
       height: 170px; }
+
+#parameter-panel label {
+  float: left;
+  width: 170px; }
+#parameter-panel input,
+#parameter-panel a {
+  float: left; }
+#parameter-panel a {
+  text-decoration: none;
+  border: 1px solid #cccccc;
+  color: #000;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  display: block;
+  font-size: 12px;
+  font-weight: bold; }
+#parameter-panel .static-value {
+  font-size: 12px;
+  line-height: 21px; }

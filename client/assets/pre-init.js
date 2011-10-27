@@ -1,0 +1,5 @@
+$(function () {
+
+    $("#loading").spin("large");
+    
+});

@@ -115,23 +115,32 @@ h1 {
       left: 3px;
       height: 170px; }
 
-#parameter-panel label {
-  float: left;
-  width: 170px; }
-#parameter-panel input,
-#parameter-panel a {
-  float: left; }
-#parameter-panel a {
-  text-decoration: none;
-  border: 1px solid #cccccc;
-  color: #000;
-  text-align: center;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  display: block;
-  font-size: 12px;
-  font-weight: bold; }
-#parameter-panel .static-value {
-  font-size: 12px;
-  line-height: 21px; }
+#parameter-panel {
+  display: none;
+  /* initial preloading */ }
+  #parameter-panel label {
+    float: left;
+    width: 170px; }
+  #parameter-panel input,
+  #parameter-panel a {
+    float: left; }
+  #parameter-panel a {
+    text-decoration: none;
+    border: 1px solid #cccccc;
+    color: #000;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: block;
+    font-size: 12px;
+    font-weight: bold; }
+  #parameter-panel .static-value {
+    font-size: 12px;
+    line-height: 21px; }
+
+#loading {
+  margin-top: 130px; }
+
+#templates {
+  display: none; }

@@ -160,6 +160,8 @@ h1 {
 }
 
 #parameter-panel {
+    display: none; /* initial preloading */
+
     label {
         float: left;
         width: 170px;
@@ -187,5 +189,13 @@ h1 {
         font-size: 12px;
         line-height: 21px;
     }
+}
+
+#loading {
+    margin-top: 130px;
+}
+
+#templates {
+    display: none;
 }
 

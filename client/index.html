@@ -35,26 +35,6 @@
             <label>body height</label>
             <div class="static-value">100%</div>
         </div>
-
-        <div class="clearfix">
-            <label for="param-body-height">capital height</label>
-            <div class="adjuster param-body-height">
-                <a href="#" class="sub2">--</a>
-                <a href="#" class="sub1">-</a>
-                <input type="text" name="param-body-height" id="param-body-height" />
-                <a href="#" class="add1">+</a>
-                <a href="#" class="add2">++</a>
-            </div>
-        </div>
-
-        <div class="clearfix">        
-            <label for="param-pen-type">pen</label>
-            <select id="param-pen-type" name="param-pen-type">
-                <option>square</option>
-                <option>razor</option>
-                <option>circle</option>
-            </select>
-        </div>
     </div>
 
     <div id="loading"></div>
@@ -64,14 +44,42 @@
 
     <div id="livePanelAdjuster">
         {{#items}}
-        <div class="adjuster {{class}}">
-            <label for="body-height">
-                <input type="text" name="body-height" id="body-height" />
+        <div class="adjuster {{name}}">
+            <label for="live-{{name}}">
+                <input type="text" name="live-{{name}}" id="body-height" />
                 {{title}}
             </label>
         <div class="arrow-up"></div>
         <div class="arrow-down"></div>
         <div class="vertical-line"></div>
+        </div>
+        {{/items}}
+    </div>
+    
+    <div id="parameterPanelAdjusterStandard">
+        {{#items}}
+        <div class="clearfix">
+            <label for="param-{{name}}">{{title}}</label>
+            <div class="adjuster param-{{name}}">
+                <a href="#" class="sub2">--</a>
+                <a href="#" class="sub1">-</a>
+                <input type="text" name="param-{{name}}" id="param-{{name}}" />
+                <a href="#" class="add1">+</a>
+                <a href="#" class="add2">++</a>
+            </div>
+        </div>
+        {{/items}}
+    </div>
+    
+    <div id="parameterPanelAdjusterPen">
+        {{#items}}
+        <div class="clearfix">        
+            <label for="param-{{name}}">{{title}}</label>
+            <select id="param-{{name}}" name="param-{{name}}">
+                <option>square</option>
+                <option>razor</option>
+                <option>circle</option>
+            </select>
         </div>
         {{/items}}
     </div>

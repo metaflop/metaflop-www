@@ -111,6 +111,7 @@ h1 {
     }
     
     .adjuster {
+        display: none; /* initial preloading */
         height: $live_panel_height;
         position: absolute;
         top: 0;

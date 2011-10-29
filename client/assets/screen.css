@@ -85,6 +85,8 @@ h1 {
   #live-panel .bottomline {
     bottom: 44px; }
   #live-panel .adjuster {
+    display: none;
+    /* initial preloading */
     height: 170px;
     position: absolute;
     top: 0;

@@ -13,7 +13,7 @@ body {
 input {
   border: 1px solid #cccccc;
   font-family: Helvetica, sans-serif;
-  height: 20px;
+  height: 19px;
   padding: 0; }
 
 h1 {
@@ -136,15 +136,28 @@ h1 {
     float: left; }
   #parameter-panel a {
     text-decoration: none;
-    border: 1px solid #cccccc;
-    color: #000;
-    text-align: center;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
+    color: transparent;
+    width: 19px;
+    height: 19px;
     display: block;
-    font-size: 12px;
-    font-weight: bold; }
+    background-image: url(plusminus.png);
+    background-repeat: no-repeat; }
+    #parameter-panel a.add1 {
+      background-position: -19px 0; }
+      #parameter-panel a.add1:hover {
+        background-position: -19px -19px; }
+    #parameter-panel a.add10 {
+      background-position: 0 0; }
+      #parameter-panel a.add10:hover {
+        background-position: 0 -19px; }
+    #parameter-panel a.sub1 {
+      background-position: -38px 0; }
+      #parameter-panel a.sub1:hover {
+        background-position: -38px -19px; }
+    #parameter-panel a.sub10 {
+      background-position: -57px 0; }
+      #parameter-panel a.sub10:hover {
+        background-position: -57px -19px; }
   #parameter-panel .static-value {
     font-size: 12px;
     line-height: 21px; }

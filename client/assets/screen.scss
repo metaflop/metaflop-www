@@ -1,5 +1,5 @@
 $live_panel_height: 170px;
-$input_height: 20px;
+$input_height: 19px;
 $input_color: #ccc;
 
 @font-face {
@@ -183,15 +183,40 @@ h1 {
         
     a {
         text-decoration: none;
-        border: 1px solid $input_color;
-        color: #000;
-        text-align: center;
+        color: transparent;
         width: $input_height;
         height: $input_height;
-        line-height: $input_height;
         display: block;
-        font-size: 12px;
-        font-weight: bold;
+        background-image: url(plusminus.png);
+        background-repeat: no-repeat;
+        
+        &.add1 {
+            background-position: -19px 0;
+            &:hover {
+                background-position: -19px -19px;
+            }
+        }
+        
+        &.add10 {
+            background-position: 0 0;
+            &:hover {
+                background-position: 0 -19px;
+            }
+        }
+        
+        &.sub1 {
+            background-position: -38px 0;
+            &:hover {
+                background-position: -38px -19px;
+            }
+        }
+        
+        &.sub10 {
+            background-position: -57px 0;
+            &:hover {
+                background-position: -57px -19px;
+            }
+        }
     }
     
     .static-value {

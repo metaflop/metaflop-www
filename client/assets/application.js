@@ -52,7 +52,7 @@ $(function () {
         })
         .keydown(function(event) {
             // allow backspace, delete, tab, cursors
-            if ([46, 9, 37, 39].some(event.keyCode)) {
+            if ([46, 9, 35, 36, 37, 39].some(event.keyCode)) {
             }
             // allow delete
             else if (event.keyCode == 8){

@@ -53,9 +53,9 @@
 
     <div id="livePanelAdjuster">
         {{#items}}
-        <div class="adjuster {{name}}" style="left: {{css.left}}; top: {{css.top}}; height: {{css.height}};">
+        <div class="adjuster live-{{name}}" style="left: {{css.left}}; top: {{css.top}}; height: {{css.height}};">
             <label for="live-{{name}}">
-                <input type="text" name="live-{{name}}" id="body-height" />
+                <input type="text" name="live-{{name}}" id="live-{{name}}" />
                 {{title}}
             </label>
             <div class="arrow-up"></div>
@@ -69,7 +69,7 @@
         {{#items}}
         <div class="clearfix">
             <label for="param-{{name}}">{{title}}</label>
-            <div class="param-{{name}}">
+            <div class="adjuster param-{{name}}">
                 <a href="#" class="sub2">--</a>
                 <a href="#" class="sub1">-</a>
                 <input type="text" name="param-{{name}}" id="param-{{name}}" />
@@ -84,11 +84,13 @@
         {{#items}}
         <div class="clearfix">        
             <label for="param-{{name}}">{{title}}</label>
-            <select id="param-{{name}}" name="param-{{name}}">
-                <option>square</option>
-                <option>razor</option>
-                <option>circle</option>
-            </select>
+            <div class="adjuster param-{{name}}">
+                <select id="param-{{name}}" name="param-{{name}}">
+                    <option>square</option>
+                    <option>razor</option>
+                    <option>circle</option>
+                </select>
+            </div>
         </div>
         {{/items}}
     </div>

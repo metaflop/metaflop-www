@@ -81,21 +81,24 @@ h1 {
     position: absolute;
     left: 0; }
   #live-panel .topline {
-    top: 17px; }
+    top: 5px; }
   #live-panel .bottomline {
-    bottom: 44px; }
+    bottom: 35px; }
   #live-panel .adjuster {
     display: none;
     /* initial preloading */
     height: 170px;
     position: absolute;
     top: 0;
-    left: 0; }
+    left: 0;
+    /* child elements relative, allow grow / move position */ }
     #live-panel .adjuster label {
       font-size: 10px;
       line-height: 1em;
       text-align: left;
       position: absolute;
+      top: 27%;
+      left: 0;
       background-color: #fff;
       z-index: 1;
       padding: 3px 0; }
@@ -105,17 +108,22 @@ h1 {
     #live-panel .adjuster .arrow-down,
     #live-panel .adjuster .vertical-line {
       position: absolute; }
-    #live-panel .adjuster.body-height label {
-      top: 55px;
+    #live-panel .adjuster .arrow-up {
+      top: 0;
       left: 0; }
-    #live-panel .adjuster.body-height .arrow-up {
-      top: 0; }
-    #live-panel .adjuster.body-height .arrow-down {
-      bottom: 0; }
-    #live-panel .adjuster.body-height .vertical-line {
+    #live-panel .adjuster .arrow-down {
+      bottom: 0;
+      left: 0; }
+    #live-panel .adjuster .vertical-line {
       top: 0;
       left: 3px;
-      height: 170px; }
+      height: 100%; }
+    #live-panel .adjuster.body-height {
+      top: 6px;
+      left: 20px;
+      height: 128px; }
+      #live-panel .adjuster.body-height label {
+        top: 37%; }
 
 #parameter-panel {
   display: none;

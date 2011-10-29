@@ -1,12 +1,12 @@
 $(function () {
 
     var params = {
-        capitalHeight:  { name: 'capital-height', title: 'capital height' },
-        xHeight:  { name: 'x-height', title: 'x height' },
-        barHeight:  { name: 'bar-height', title: 'bar height' },
-        ascHeight:  { name: 'asc-height', title: 'ascender height' },
-        descHeight:  { name: 'desc-height', title: 'descender height' },
-        penType:  { name: 'pen-type', title: 'pen type' }
+        capitalHeight:  { name: 'capital-height', title: 'capital height', css: { height: '128px', top: '6px', left: '212px' } },
+        xHeight:        { name: 'x-height', title: 'x height', css: { height: '67px', top: '67px', left: '534px' } },
+        barHeight:      { name: 'bar-height', title: 'bar height', css: { height: '67px', top: '67px', left: '415px' } },
+        ascHeight:      { name: 'asc-height', title: 'ascender height', css: { height: '134px', top: '0', left: '616px' } },
+        descHeight:     { name: 'desc-height', title: 'descender height', css: { height: '35px', top: '135px', left: '855px' } },
+        penType:        { name: 'pen-type', title: 'pen type' }
     };
 
     var templates = [

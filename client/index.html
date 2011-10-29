@@ -26,6 +26,15 @@
         <div class="topline">&nbsp;</div>
         <h1>M e t a f l o p</h1>
         <div class="bottomline"></div>
+        
+        <div class="adjuster body-height">
+            <label>
+                body height
+            </label>
+            <div class="arrow-up"></div>
+            <div class="arrow-down"></div>
+            <div class="vertical-line"></div>
+        </div>
     </div>
     
     <div id="parameter-panel">
@@ -44,14 +53,14 @@
 
     <div id="livePanelAdjuster">
         {{#items}}
-        <div class="adjuster {{name}}">
+        <div class="adjuster {{name}}" style="left: {{css.left}}; top: {{css.top}}; height: {{css.height}};">
             <label for="live-{{name}}">
                 <input type="text" name="live-{{name}}" id="body-height" />
                 {{title}}
             </label>
-        <div class="arrow-up"></div>
-        <div class="arrow-down"></div>
-        <div class="vertical-line"></div>
+            <div class="arrow-up"></div>
+            <div class="arrow-down"></div>
+            <div class="vertical-line"></div>
         </div>
         {{/items}}
     </div>
@@ -60,7 +69,7 @@
         {{#items}}
         <div class="clearfix">
             <label for="param-{{name}}">{{title}}</label>
-            <div class="adjuster param-{{name}}">
+            <div class="param-{{name}}">
                 <a href="#" class="sub2">--</a>
                 <a href="#" class="sub1">-</a>
                 <input type="text" name="param-{{name}}" id="param-{{name}}" />

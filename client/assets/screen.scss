@@ -104,10 +104,10 @@ h1 {
         left: 0;
     }
     .topline {
-        top: 17px;
+        top: 5px;
     }
     .bottomline {
-        bottom: 44px;
+        bottom: 35px;
     }
     
     .adjuster {
@@ -117,11 +117,14 @@ h1 {
         top: 0;
         left: 0;
 
+        /* child elements relative, allow grow / move position */
         label {
             font-size: 10px;
             line-height: 1em;
             text-align: left;
             position: absolute;
+            top: 27%;
+            left: 0;
             background-color: #fff;
             z-index: 1;
             padding: 3px 0;
@@ -136,25 +139,30 @@ h1 {
         .vertical-line {
             position: absolute;
         }
+                
+        .arrow-up {
+            top: 0;
+            left: 0;
+        }
+                    
+        .arrow-down {
+            bottom: 0;
+            left: 0;
+        }
+        
+        .vertical-line {
+            top: 0;
+            left: 3px;
+            height: 100%;
+        }
         
         &.body-height {
-            label {
-                top: $live_panel_height / 2 - 30px;
-                left: 0;
-            }
-
-            .arrow-up {
-                top: 0;
-            }
-                        
-            .arrow-down {
-                bottom: 0;
-            }
+            top: 6px;
+            left: 20px;
+            height: 128px;
             
-            .vertical-line {
-                top: 0;
-                left: 3px;
-                height: $live_panel_height;
+            label {
+                top: 37%;
             }
         }
     }

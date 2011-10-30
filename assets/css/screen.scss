@@ -2,6 +2,11 @@ $live_panel_height: 170px;
 $input_height: 19px;
 $input_color: #ccc;
 
+@mixin box-shadow {
+    box-shadow: 2px 3px 3px #ccc;
+}
+
+
 @font-face {
     font-family: 'AdjusterRegular';
     src: url('../fonts/adjuster-webfont.eot');
@@ -25,6 +30,7 @@ input {
     font-family: Helvetica, sans-serif;
     height: $input_height;
     padding: 0;
+    @include box-shadow;
 }
 
 h1 {
@@ -35,6 +41,11 @@ h1 {
     font-weight: normal;
     margin: 0;
     padding: 0;
+    text-shadow: 2px 3px 3px #ccc;
+}
+
+h2 {
+    text-shadow: 1px 2px 2px #ccc;
 }
 
 .clearfix {
@@ -103,9 +114,10 @@ h1 {
         background-color: #000;
         position: absolute;
         left: 0;
+        @include box-shadow;
     }
     .topline {
-        top: 5px;
+        top: 5px
     }
     .bottomline {
         bottom: 35px;

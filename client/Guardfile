@@ -3,7 +3,8 @@
 
 guard 'mozrepl' do
   watch(/.+\.html/)
-  watch(/assets\/(.+\.(css|js|html))/) { |m| m[1] }
+  watch(/assets\/css\/(.+\.css)/)
+  watch(/assets\/js\/(.+\.js)/)
 end
 
 ### or with options...

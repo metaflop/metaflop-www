@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'AdjusterRegular';
-  src: url("adjuster-webfont.eot");
-  src: url("adjuster-webfont.eot?#iefix") format("embedded-opentype"), url("adjuster-webfont.woff") format("woff"), url("adjuster-webfont.ttf") format("truetype"), url("adjuster-webfont.otf") format("opentype"), url("adjuster-webfont.svg#AdjusterRegular") format("svg");
+  src: url("../fonts/adjuster-webfont.eot");
+  src: url("../fonts/adjuster-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/adjuster-webfont.woff") format("woff"), url("../fonts/adjuster-webfont.ttf") format("truetype"), url("../fonts/adjuster-webfont.otf") format("opentype"), url("../fonts/adjuster-webfont.svg#AdjusterRegular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -59,11 +59,13 @@ h1 {
   background: #cccccc; }
 
 #live-panel,
-#parameter-panel {
+#parameter-panel,
+#preview-panel {
   margin: 20px auto 0 auto;
   width: 1000px; }
   #live-panel input,
-  #parameter-panel input {
+  #parameter-panel input,
+  #preview-panel input {
     width: 37px;
     font-size: 12px; }
 
@@ -140,7 +142,7 @@ h1 {
     width: 19px;
     height: 19px;
     display: block;
-    background-image: url(plusminus.png);
+    background-image: url(../img/plusminus.png);
     background-repeat: no-repeat; }
     #parameter-panel a.add1 {
       background-position: -19px 0; }

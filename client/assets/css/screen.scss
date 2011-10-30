@@ -4,12 +4,12 @@ $input_color: #ccc;
 
 @font-face {
     font-family: 'AdjusterRegular';
-    src: url('adjuster-webfont.eot');
-    src: url('adjuster-webfont.eot?#iefix') format('embedded-opentype'),
-         url('adjuster-webfont.woff') format('woff'),
-         url('adjuster-webfont.ttf') format('truetype'),
-         url('adjuster-webfont.otf') format('opentype'),
-         url('adjuster-webfont.svg#AdjusterRegular') format('svg');
+    src: url('../fonts/adjuster-webfont.eot');
+    src: url('../fonts/adjuster-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/adjuster-webfont.woff') format('woff'),
+         url('../fonts/adjuster-webfont.ttf') format('truetype'),
+         url('../fonts/adjuster-webfont.otf') format('opentype'),
+         url('../fonts/adjuster-webfont.svg#AdjusterRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -39,7 +39,7 @@ h1 {
 
 .clearfix {
     overflow: hidden;
-    
+
     &:after {
         content: ".";
         display: block;
@@ -78,10 +78,11 @@ h1 {
 }
 
 #live-panel,
-#parameter-panel {
+#parameter-panel,
+#preview-panel {
     margin: 20px auto 0 auto;
     width: 1000px;
-    
+
     input {
         width: 37px;
         font-size: 12px;
@@ -93,7 +94,7 @@ h1 {
     position: relative;
     display: block;
     text-align: center;
-    
+
     .topline,
     .bottomline {
         height: 1px;
@@ -109,7 +110,7 @@ h1 {
     .bottomline {
         bottom: 35px;
     }
-    
+
     .adjuster {
         display: none; /* initial preloading */
         height: $live_panel_height;
@@ -128,39 +129,39 @@ h1 {
             background-color: #fff;
             z-index: 1;
             padding: 3px 0;
-            
+
             input {
                 display: block;
             }
         }
-        
+
         .arrow-up,
         .arrow-down,
         .vertical-line {
             position: absolute;
         }
-                
+
         .arrow-up {
             top: 0;
             left: 0;
         }
-                    
+
         .arrow-down {
             bottom: 0;
             left: 0;
         }
-        
+
         .vertical-line {
             top: 0;
             left: 3px;
             height: 100%;
         }
-        
+
         &.body-height {
             top: 6px;
             left: 20px;
             height: 128px;
-            
+
             label {
                 top: 37%;
             }
@@ -180,37 +181,37 @@ h1 {
     a {
         float: left;
     }
-        
+
     a {
         text-decoration: none;
         color: transparent;
         width: $input_height;
         height: $input_height;
         display: block;
-        background-image: url(plusminus.png);
+        background-image: url(../img/plusminus.png);
         background-repeat: no-repeat;
-        
+
         &.add1 {
             background-position: -19px 0;
             &:hover {
                 background-position: -19px -19px;
             }
         }
-        
+
         &.add10 {
             background-position: 0 0;
             &:hover {
                 background-position: 0 -19px;
             }
         }
-        
+
         &.sub1 {
             background-position: -38px 0;
             &:hover {
                 background-position: -38px -19px;
             }
         }
-        
+
         &.sub10 {
             background-position: -57px 0;
             &:hover {
@@ -218,7 +219,7 @@ h1 {
             }
         }
     }
-    
+
     .static-value {
         font-size: 12px;
         line-height: 21px;

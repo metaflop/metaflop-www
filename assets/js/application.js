@@ -102,13 +102,15 @@ $(function () {
             setValue($(this), null, true);
         });
 
-    $('.add1, .add10, .sub1, .sub10').click(function() {
+    $('.add1, .add10, .sub1, .sub10').click(function(e) {
+        e.preventDefault();
         $this = $(this);
         var input = $this.parent().find('input');
 
         setActiveInputs(input);
 
         changeValue(input, $this.attr('class'));
+        return false;
     });
 
 });

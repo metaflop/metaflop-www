@@ -67,7 +67,8 @@ h2 {
 #parameter-panel,
 #preview-panel {
   margin: 20px auto 0 auto;
-  width: 1000px; }
+  width: 1000px;
+  overflow: hidden; }
   #live-panel input,
   #parameter-panel input,
   #preview-panel input {
@@ -174,10 +175,9 @@ h2 {
   background-color: #94CBEE; }
 
 #preview-loading {
-  margin-top: 200px; }
-
-#preview-loading {
-  display: none; }
+  display: none;
+  margin-top: 100px;
+  height: 50px; }
 
 .inputblock {
   margin-bottom: 10px; }

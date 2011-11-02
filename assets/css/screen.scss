@@ -1,6 +1,7 @@
 $live_panel_height: 170px;
 $input_height: 19px;
 $input_color: #ccc;
+$content_width: 1000px;
 
 @mixin box-shadow {
     box-shadow: 2px 3px 3px #ccc;
@@ -92,7 +93,8 @@ h2 {
 #parameter-panel,
 #preview-panel {
     margin: 20px auto 0 auto;
-    width: 1000px;
+    width: $content_width;
+    overflow: hidden;
 
     input {
         width: 37px;
@@ -243,11 +245,9 @@ h2 {
 }
 
 #preview-loading {
-    margin-top: 200px;
-}
-
-#preview-loading {
     display: none;
+    margin-top: 100px;
+    height: 50px;
 }
 
 .inputblock {

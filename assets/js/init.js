@@ -13,7 +13,7 @@ $(function () {
         // live panel
         {
             name: 'livePanelAdjuster',
-            items: [ 
+            items: [
                 params.capitalHeight,
                 params.xHeight,
                 params.barHeight,
@@ -25,7 +25,7 @@ $(function () {
         // parameter panel, standard
         {
             name: 'parameterPanelAdjusterStandard',
-            items: [ 
+            items: [
                 params.capitalHeight,
                 params.xHeight,
                 params.barHeight,
@@ -42,14 +42,19 @@ $(function () {
         }
     ]
 
-    $.each(templates, function(i, template) {
+    templates.each(function(template, i) {
+        // sequence numbering for tab navigation
+        template.items.each(function(item, j) {
+            item["tabindex"] = (i + 1) + "" + (j + 1);
+        });
         var html = $.mustache($('#' + template.name).html(), template);
         template.action(html);
     });
-    
-    
+
+
     // stop the spinner
     $('#loading').spin(false);
     $('.adjuster').show();
     $('#parameter-panel').show();
 });
+

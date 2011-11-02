@@ -8,7 +8,11 @@ $(function () {
     }
 
     // increase/decrease the inputField's value
-    var changeValue = function(inputField, cssClass){
+    var changeValue = function(inputField, cssClass, addPercentSign){
+        if (addPercentSign === undefined){
+            addPercentSign = true;
+        }
+
         var number = cssClass.remove(/\D/g).toNumber();
         var method = cssClass.remove(/\d+$/);
 
@@ -17,7 +21,7 @@ $(function () {
         if (method == 'add') value = value + number;
         else if (method == 'sub') value = value - number;
 
-        setValue(inputField, value, true);
+        setValue(inputField, value, addPercentSign);
     }
 
     var setValue = function(inputField, value, addPercentSign) {
@@ -74,6 +78,14 @@ $(function () {
             // allow delete
             else if (event.keyCode == 8){
                 stripPercentSign($(this));
+            }
+            // up increase value
+            else if (event.keyCode == 38) {
+                changeValue($(this), 'add1', false);
+            }
+            // down decrease value
+            else if (event.keyCode == 40) {
+                changeValue($(this), 'sub1', false);
             }
             else {
                 // stop keypress if NaN

@@ -1,12 +1,20 @@
-$live_panel_height: 170px;
-$input_height: 19px;
+$live_panel_height: 6em;
+$input_height: 1.2em;
 $input_color: #ccc;
+$active_color: #94CBEE;
 $content_width: 1000px;
+$preview-box-width: 350px;
+$preview-box-spacing: 5px;
 
 @mixin box-shadow {
     box-shadow: 2px 3px 3px #ccc;
 }
 
+@mixin left-column {
+    width: 29%;
+    margin-right: 1%;
+    float: left;
+}
 
 @font-face {
     font-family: 'AdjusterRegular';
@@ -23,22 +31,40 @@ $content_width: 1000px;
 body {
     margin: 0;
     padding: 0;
-    font-family: Helvetica, sans-serif;
+    font-family: Georgia, serif;
+    font-size: 0.8em;
 }
 
 input {
     border: 1px solid $input_color;
-    font-family: Helvetica, sans-serif;
+    font-family: Georgia, serif;
+    font-size: 12px;
+    height: $input_height;
+    width: 37px;
+    padding: 0;
+    margin: 0.2em 0 0 0;
+}
+
+select {
     height: $input_height;
     padding: 0;
-    @include box-shadow;
+    margin: 0.2em 0 0 0;
+    border: none;
+    background: #fff;
+}
+
+option {
+    height: $input_height;
+    line-height: $input_height;
+    padding: 0;
+    margin: 0;
 }
 
 h1 {
     font-family: AdjusterRegular;
     font-size: $live_panel_height;
-    line-height: $live_panel_height;
-    height: $live_panel_height;
+    line-height: 1em;
+    height: 1em;
     font-weight: normal;
     margin: 0;
     padding: 0;
@@ -46,7 +72,39 @@ h1 {
 }
 
 h2 {
-    text-shadow: 1px 2px 2px #ccc;
+    font-size: 1em;
+    font-weight: normal;
+    background-color: $active_color;
+    padding: 0.2em 2em 0.2em 0.5em;
+    margin: 0;
+    display: inline-block;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    width: 100%;
+    line-height: 1.6em;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+label {
+    float: left;
+    width: 170px;
+    line-height: 1.6em;
 }
 
 .clearfix {
@@ -89,17 +147,15 @@ h2 {
     background: $input_color;
 }
 
-#live-panel,
-#parameter-panel,
-#preview-panel {
+#header,
+#content {
     margin: 20px auto 0 auto;
     width: $content_width;
     overflow: hidden;
+}
 
-    input {
-        width: 37px;
-        font-size: 12px;
-    }
+#menu {
+    @include left-column;
 }
 
 #live-panel {
@@ -185,11 +241,8 @@ h2 {
 
 #parameter-panel {
     display: none; /* initial preloading */
-
-    label {
-        float: left;
-        width: 170px;
-    }
+    
+    @include left-column;
 
     input,
     a {
@@ -240,18 +293,53 @@ h2 {
     }
 }
 
+.preview-box,
+.preview-box-fullwidth {
+    float: left;
+    width: $preview-box-width;
+    height: $preview-box-width;
+    margin: 0 0 0.5em 0;
+    overflow: hidden;
+    
+    h2 {
+        background: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .preview-box-content {
+        margin: 0 $preview-box-spacing $preview-box-spacing 0;
+        background: $active_color;
+        width: $preview-box-width - $preview-box-spacing;
+        height: $preview-box-width - $preview-box-spacing;
+        overflow: hidden;
+    }
+}
+
+.preview-box-fullwidth {
+    width: $preview-box-width * 2 - $preview-box-spacing;
+    
+    .preview-box-content {
+        width: $preview-box-width * 2 - $preview-box-spacing;
+    }
+}
+
 .adjuster input.active {
-    background-color: #94CBEE;
+    background-color: $active_color;
+}
+
+#preview-panel {
+    margin-left: 10px;
 }
 
 #preview-loading {
     display: none;
-    margin-top: 100px;
+    margin-top: 140px;
     height: 50px;
 }
 
 .inputblock {
-    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
 }
 
 #loading {

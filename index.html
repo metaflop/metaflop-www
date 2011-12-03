@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="assets/css/screen.css" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <script src="assets/js/spin.min.js" type="text/javascript"></script>
     <script src="assets/js/jquery.spin.js" type="text/javascript"></script>
     <script src="assets/js/pre-init.js" type="text/javascript"></script>
@@ -16,12 +16,11 @@
     <script src="assets/js/init.js" type="text/javascript"></script>
 
     <script src="assets/js/application.js" type="text/javascript"></script>
-    
+
     <script id="livePanelAdjuster" type="text/x-html-template">
         {{#items}}
         <div class="adjuster live-{{name}}" style="left: {{css.left}}; top: {{css.top}}; height: {{css.height}};">
             <label for="live-{{name}}">
-                <input type="text" name="live-{{name}}" id="live-{{name}}" tabindex="{{tabindex}}" />
                 {{title}}
             </label>
             <div class="arrow-up"></div>
@@ -30,20 +29,29 @@
         </div>
         {{/items}}
     </script>
-    
+
     <script id="parameterPanelAdjusterStandard" type="text/x-html-template">
-        {{#items}}
-        <div class="clearfix inputblock">
-            <label for="param-{{name}}">{{title}}</label>
-            <div class="adjuster param-{{name}}">
-                <a href="#" class="sub10" title="decrease by 10%">--</a>
-                <a href="#" class="sub1" title="decrease by 1%">-</a>
-                <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" />
-                <a href="#" class="add1" title="increase by 1%">+</a>
-                <a href="#" class="add10" title="increase by 10%">++</a>
+        {{#groups}}
+            <fieldset>
+            <legend>{{title}}</legend>
+            {{#items}}
+            <div class="clearfix inputblock">
+                <label for="param-{{name}}">{{title}}</label>
+                {{{html}}}
+                {{^html}}
+                <div class="adjuster param-{{name}}">
+                    <a href="#" class="sub10" title="decrease by 10%">--</a>
+                    <a href="#" class="sub1" title="decrease by 1%">-</a>
+                    <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" />
+                    <a href="#" class="add1" title="increase by 1%">+</a>
+                    <a href="#" class="add10" title="increase by 10%">++</a>
+                </div>
+                {{/html}}
             </div>
-        </div>
-        {{/items}}
+            {{/items}}
+            
+            </fieldset>
+        {{/groups}}
     </script>
 
     <script id="parameterPanelAdjusterPen" type="text/x-html-template">
@@ -66,37 +74,69 @@
 
 <div id="main">
 
-    <div id="live-panel">
-        <div class="topline">&nbsp;</div>
-        <h1>M e t a f l o p</h1>
-        <div class="bottomline"></div>
+    <div id="header">
 
-        <div class="adjuster body-height">
-            <label>
-                body height
-            </label>
-            <div class="arrow-up"></div>
-            <div class="arrow-down"></div>
-            <div class="vertical-line"></div>
+        <div id="menu">
+            <h2>Metaflop</h2>
+            
+            <fieldset>
+                <legend><label>typeface</label>font1</legend>
+                
+                <ul>
+                    <li>Information</li>
+                    <li>Clear settings</li>
+                </ul>
+            </fieldset>
+        </div>
+    
+        <div id="live-panel">
+            <div class="topline">&nbsp;</div>
+            <h1>M e t a f l o p</h1>
+            <div class="bottomline"></div>
+
+            <div class="adjuster body-height">
+                <label>
+                    body height
+                </label>
+                <div class="arrow-up"></div>
+                <div class="arrow-down"></div>
+                <div class="vertical-line"></div>
+            </div>
         </div>
     </div>
 
-    <div id="parameter-panel">
-        <h2>parameters</h2>
+    <div id="content">
 
-        <div class="clearfix inputblock">
-            <label>body height</label>
-            <div class="static-value">100%</div>
+        <div id="parameter-panel">
+            <h2>Parameters</h2>
         </div>
-    </div>
 
-    <div id="preview-panel">
-        <h2>preview</h2>
-        <div id="preview-loading"></div>
-        <img src="" id="preview-image" />
-    </div>
+        <div id="preview-panel">
+            <div id="preview-single" class="preview-box">
+                <h2>Glyph</h2>
+           
+                <div class="preview-box-content">
+                    <div id="preview-loading"></div>
+                    <img src="" id="preview-image" />
+                </div>
+            </div>
+            <div id="preview-table" class="preview-box">
+                <h2>Chart</h2>
+                <div class="preview-box-content">
+                </div>
+            </div>
+            <div id="preview-freetext" class="preview-box-fullwidth">
+                <h2>Typewriter</h2>
+                <div class="preview-box-content">
+                </div>
+            </div>
+            
+        </div>
 
-    <div id="loading"></div>
+        <div id="loading"></div>
+    
+    </div>
+    
 </div>
 
 </body>

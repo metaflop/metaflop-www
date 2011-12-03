@@ -8,27 +8,71 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Helvetica, sans-serif; }
+  font-family: Georgia, serif;
+  font-size: 0.8em; }
 
 input {
   border: 1px solid #cccccc;
-  font-family: Helvetica, sans-serif;
-  height: 19px;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  height: 1.2em;
+  width: 37px;
   padding: 0;
-  box-shadow: 2px 3px 3px #ccc; }
+  margin: 0.2em 0 0 0; }
+
+select {
+  height: 1.2em;
+  padding: 0;
+  margin: 0.2em 0 0 0;
+  border: none;
+  background: #fff; }
+
+option {
+  height: 1.2em;
+  line-height: 1.2em;
+  padding: 0;
+  margin: 0; }
 
 h1 {
   font-family: AdjusterRegular;
-  font-size: 170px;
-  line-height: 170px;
-  height: 170px;
+  font-size: 6em;
+  line-height: 1em;
+  height: 1em;
   font-weight: normal;
   margin: 0;
   padding: 0;
   text-shadow: 2px 3px 3px #ccc; }
 
 h2 {
-  text-shadow: 1px 2px 2px #ccc; }
+  font-size: 1em;
+  font-weight: normal;
+  background-color: #94cbee;
+  padding: 0.2em 2em 0.2em 0.5em;
+  margin: 0;
+  display: inline-block; }
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0; }
+
+legend {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  width: 100%;
+  line-height: 1.6em; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+label {
+  float: left;
+  width: 170px;
+  line-height: 1.6em; }
 
 .clearfix {
   overflow: hidden; }
@@ -63,17 +107,16 @@ h2 {
   width: 1px;
   background: #cccccc; }
 
-#live-panel,
-#parameter-panel,
-#preview-panel {
+#header,
+#content {
   margin: 20px auto 0 auto;
   width: 1000px;
   overflow: hidden; }
-  #live-panel input,
-  #parameter-panel input,
-  #preview-panel input {
-    width: 37px;
-    font-size: 12px; }
+
+#menu {
+  width: 29%;
+  margin-right: 1%;
+  float: left; }
 
 #live-panel {
   overflow: hidden;
@@ -96,7 +139,7 @@ h2 {
   #live-panel .adjuster {
     display: none;
     /* initial preloading */
-    height: 170px;
+    height: 6em;
     position: absolute;
     top: 0;
     left: 0;
@@ -136,18 +179,18 @@ h2 {
 
 #parameter-panel {
   display: none;
-  /* initial preloading */ }
-  #parameter-panel label {
-    float: left;
-    width: 170px; }
+  /* initial preloading */
+  width: 29%;
+  margin-right: 1%;
+  float: left; }
   #parameter-panel input,
   #parameter-panel a {
     float: left; }
   #parameter-panel a {
     text-decoration: none;
     color: transparent;
-    width: 19px;
-    height: 19px;
+    width: 1.2em;
+    height: 1.2em;
     display: block;
     background-image: url(../img/plusminus.png);
     background-repeat: no-repeat; }
@@ -171,16 +214,44 @@ h2 {
     font-size: 12px;
     line-height: 21px; }
 
+.preview-box,
+.preview-box-fullwidth {
+  float: left;
+  width: 350px;
+  height: 350px;
+  margin: 0 0 0.5em 0;
+  overflow: hidden; }
+  .preview-box h2,
+  .preview-box-fullwidth h2 {
+    background: none;
+    padding: 0;
+    margin: 0; }
+  .preview-box .preview-box-content,
+  .preview-box-fullwidth .preview-box-content {
+    margin: 0 5px 5px 0;
+    background: #94cbee;
+    width: 345px;
+    height: 345px;
+    overflow: hidden; }
+
+.preview-box-fullwidth {
+  width: 695px; }
+  .preview-box-fullwidth .preview-box-content {
+    width: 695px; }
+
 .adjuster input.active {
-  background-color: #94CBEE; }
+  background-color: #94cbee; }
+
+#preview-panel {
+  margin-left: 10px; }
 
 #preview-loading {
   display: none;
-  margin-top: 100px;
+  margin-top: 140px;
   height: 50px; }
 
 .inputblock {
-  margin-bottom: 10px; }
+  border-bottom: 1px solid #ccc; }
 
 #loading {
   margin-top: 130px; }

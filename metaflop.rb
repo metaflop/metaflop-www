@@ -1,4 +1,9 @@
 require 'sinatra'
+require 'sinatra/reloader' if development?
+
+get '/' do
+    File.read('index.html')
+end
 
 get '/preview/:type' do |type|
     mf = Metafont.new 

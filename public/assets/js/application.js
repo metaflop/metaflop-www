@@ -59,7 +59,9 @@ $(function () {
         loading.show();
         loading.spin("large");
         // http://stackoverflow.com/questions/4285042/can-jquery-ajax-load-image
-        image.attr('src', '/preview/' + previewType).load(function(responseText, textStatus, XMLHttpRequest) {
+        var url = '/preview/' + previewType + '?' + 
+            $.makeArray($('input:text')).map(function(value){ return value.id.remove('param-') + '=' + value.value.remove(/\D+$/) }).join("&");
+        image.attr('src', url).load(function(responseText, textStatus, XMLHttpRequest) {
             console.debug(responseText, textStatus, XMLHttpRequest);
             loading.spin(false);
             image.show();

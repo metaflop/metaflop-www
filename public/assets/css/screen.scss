@@ -297,9 +297,7 @@ label {
 .preview-box-fullwidth {
     float: left;
     width: $preview-box-width;
-    height: $preview-box-width;
-    margin: 0 0 0.5em 0;
-    overflow: hidden;
+    margin: 0 0 0.1em 0;
     
     h2 {
         background: none;
@@ -310,9 +308,15 @@ label {
     .preview-box-content {
         margin: 0 $preview-box-spacing $preview-box-spacing 0;
         background: $active_color;
-        width: $preview-box-width - $preview-box-spacing;
-        height: $preview-box-width - $preview-box-spacing;
+        border: 3px solid $active_color;
+        width: $preview-box-width - $preview-box-spacing - 2 * 3px;
+        height: $preview-box-width - $preview-box-spacing - 2 * 3px;
         overflow: hidden;
+        text-align: center;
+    }
+    
+    &.active .preview-box-content {
+        background: none;        
     }
 }
 
@@ -332,10 +336,14 @@ label {
     margin-left: 10px;
 }
 
-#preview-loading {
+.preview-loading {
     display: none;
     margin-top: 140px;
     height: 50px;
+}
+
+.preview-image {
+    height: 100%;
 }
 
 .inputblock {

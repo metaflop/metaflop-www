@@ -22,6 +22,6 @@ class Metafont
 
     def preview_single
         # hide all output but the last one, which returns the image
-        `cd mf > /dev/null && mf adj.mf > /dev/null && gftodvi adj.2602gf > /dev/null && dvisvgm -TS0.75 -M16 --bbox=min -n adj.dvi > /dev/null && convert -trim adj.svg gif:-`
+        `cd mf > /dev/null && mf adj.mf > /dev/null && gftodvi adj.2602gf > /dev/null && dvisvgm -TS0.75 -M16 --bbox=min -n adj.dvi > /dev/null && convert -trim +repage adj.svg gif:-`
     end
 end

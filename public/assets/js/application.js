@@ -51,13 +51,15 @@ $(function () {
     }
 
     var previewImage = function(){
-        var loading = $('#preview-loading');
-        var image = $('#preview-image');
+        var previewBox = $('.preview-box.active');
+        var loading = previewBox.find('.preview-loading');
+        var image = previewBox.find('.preview-image');
+        var previewType = previewBox.attr('id').remove('preview-');
         image.hide();
         loading.show();
         loading.spin("large");
         // http://stackoverflow.com/questions/4285042/can-jquery-ajax-load-image
-        image.attr('src', '/bin/preview.pl').load(function(responseText, textStatus, XMLHttpRequest) {
+        image.attr('src', '/preview/' + previewType).load(function(responseText, textStatus, XMLHttpRequest) {
             console.debug(responseText, textStatus, XMLHttpRequest);
             loading.spin(false);
             image.show();

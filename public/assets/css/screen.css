@@ -218,9 +218,7 @@ label {
 .preview-box-fullwidth {
   float: left;
   width: 350px;
-  height: 350px;
-  margin: 0 0 0.5em 0;
-  overflow: hidden; }
+  margin: 0 0 0.1em 0; }
   .preview-box h2,
   .preview-box-fullwidth h2 {
     background: none;
@@ -230,9 +228,14 @@ label {
   .preview-box-fullwidth .preview-box-content {
     margin: 0 5px 5px 0;
     background: #94cbee;
-    width: 345px;
-    height: 345px;
-    overflow: hidden; }
+    border: 3px solid #94cbee;
+    width: 339px;
+    height: 339px;
+    overflow: hidden;
+    text-align: center; }
+  .preview-box.active .preview-box-content,
+  .preview-box-fullwidth.active .preview-box-content {
+    background: none; }
 
 .preview-box-fullwidth {
   width: 695px; }
@@ -245,10 +248,13 @@ label {
 #preview-panel {
   margin-left: 10px; }
 
-#preview-loading {
+.preview-loading {
   display: none;
   margin-top: 140px;
   height: 50px; }
+
+.preview-image {
+  height: 100%; }
 
 .inputblock {
   border-bottom: 1px solid #ccc; }

@@ -97,7 +97,7 @@ class Metafont
             
         # hide all output but the last one, which returns the image
         `cd mf > /dev/null && 
-         mf -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
+         mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
          gftodvi #{@out_dir}/adj.2602gf > /dev/null && 
          dvisvgm -TS0.75 -M16 --bbox=min -n -p 28 #{@out_dir}/adj.dvi > /dev/null && 
          convert -trim +repage #{@out_dir}/adj-28.svg gif:-`

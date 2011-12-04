@@ -2,21 +2,21 @@ $(function () {
 
     var params = {
         boxHeight:      { title: 'box height', html: '<div class="static-value">100%</div>', css: { height: 'inherit', top: 'inherit', left: 'inherit' } },
-        unitWidth:      { title: 'unit width', html:'', css: { height: '128px', top: '6px', left: '212px' } },
-        capHeight:      { title: 'cap height', html:'', css: { height: '128px', top: '6px', left: '212px' } },
-        meanHeight:     { title: 'mean height', css: { height: '67px', top: '67px', left: '534px' } },
-        barHeight:      { title: 'bar height', css: { height: '67px', top: '67px', left: '415px' } },
-        ascHeight:      { title: 'ascender height', css: { height: '134px', top: '0', left: '616px' } },
-        descHeight:     { title: 'descender height', css: { height: '35px', top: '135px', left: '855px' } },
-        horizontalInc:  { title: 'horizontal increase' },
-        verticalInc:    { title: 'vertical increase' },
-        superness:      { title: 'superness' },
-        penType:        { title: 'pen type' },
-        drawingMode:    { title: 'mode' },
-        penX:           { title: 'pen x' },
-        penY:           { title: 'pen y' },
-        penAngle:       { title: 'pen angle' },
-        contrast:       { title: 'contrast' }
+        unitWidth:      { title: 'unit width', default: '1.7', css: { height: '128px', top: '6px', left: '212px' } },
+        capHeight:      { title: 'cap height', default: '1', css: { height: '128px', top: '6px', left: '212px' } },
+        meanHeight:     { title: 'mean height', default: '0.7', css: { height: '67px', top: '67px', left: '534px' } },
+        barHeight:      { title: 'bar height', default: '0.5', css: { height: '67px', top: '67px', left: '415px' } },
+        ascHeight:      { title: 'ascender height', default: '0.97', css: { height: '134px', top: '0', left: '616px' } },
+        descHeight:     { title: 'descender height', default: '0.35', css: { height: '35px', top: '135px', left: '855px' } },
+        horizontalInc:  { title: 'horizontal increase', default: '0.8' },
+        verticalInc:    { title: 'vertical increase', default: '0.5' },
+        superness:      { title: 'superness', default: '0.73' },
+        penType:        { title: 'pen type', default: '' },
+        drawingMode:    { title: 'mode', default: '' },
+        penX:           { title: 'pen x', default: '0.3' },
+        penY:           { title: 'pen y', default: '0.3' },
+        penAngle:       { title: 'pen angle', default: '' },
+        contrast:       { title: 'contrast', default: '' }
     };
     
     // enhance each object with a name (used as html/css id)

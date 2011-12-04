@@ -11,7 +11,7 @@ get '/preview/:type' do |type|
     Metafont::VALID_OPTIONS_KEYS.each do |key|
         # query params come in with dashes -> replace by underscores to match properties
         param = params[key.to_s.gsub("_", "-")]
-        args[key] = param if param
+        args[key] = param if param && !param.empty?
     end
     
     mf = Metafont.new(args)
@@ -27,7 +27,6 @@ class Metafont
     
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
-        :box_height,
         :unit_width,
         :cap_height,
         :mean_height,
@@ -44,6 +43,21 @@ class Metafont
         :pen_angle,
         :contrast
     ]
+    
+    # the mapping between the defined params in the mf file and this class' properties
+    MF_MAPPINGS = {
+        'u#' => :unit_width,
+        'cap#' => :cap_height,
+        'mean#' => :mean_height,
+        'bar' => :bar_height,
+        'asc#' => :ascender_height,
+        'desc#' => :descender_height,
+        'incx' => :horizontal_increase,
+        'incy' => :vertical_increase,
+        'superness' => :superness,
+        'px#' => :pen_x,
+        'py#' => :pen_y
+    }
     
     attr_accessor *VALID_OPTIONS_KEYS
 
@@ -65,9 +79,21 @@ class Metafont
                 stripped == '' || stripped[0] == '%'
             end
             .map do |x|                  # remove comments at the end of the line
-                x[/([^%]+)/, 0]
+                pair = x[/([^%]+)/, 0].strip
+                splits = pair.split(':=')
+                if (splits.length == 2)
+                    # replace the default value from the file if we have a value set for the parameter
+                    mapping = MF_MAPPINGS[splits[0]]
+                    value = mapping ? send(mapping) : nil
+                    if (value && !value.empty?)
+                        pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
+                    end
+                end
+                pair
             end
             .join
+            
+            
             
         # hide all output but the last one, which returns the image
         `cd mf > /dev/null && 

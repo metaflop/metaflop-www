@@ -29,12 +29,6 @@ $(function () {
         {
             name: 'livePanelAdjuster',
             items: [
-                params.boxHeight,
-                params.capHeight,
-                params.meanHeight,
-                params.barHeight,
-                params.ascHeight,
-                params.descHeight
             ],
             action : function(html) { $('#live-panel').append(html) }
         },

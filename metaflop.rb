@@ -5,6 +5,10 @@ get '/' do
     File.read('index.html')
 end
 
+get '/assets/css/screen.scss' do
+    scss :screen
+end
+
 get '/preview/:type' do |type|
     # map all query params
     args = {}

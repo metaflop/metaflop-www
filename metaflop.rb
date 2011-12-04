@@ -1,7 +1,11 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
+enable :sessions
+
 get '/' do
+    session[:id] ||= SecureRandom.urlsafe_base64
+
     File.read('index.html')
 end
 
@@ -11,7 +15,7 @@ end
 
 get '/preview/:type' do |type|
     # map all query params
-    args = {}
+    args = { :out_dir => "/tmp/metaflop/#{session[:id]}" }
     Metafont::VALID_OPTIONS_KEYS.each do |key|
         # query params come in with dashes -> replace by underscores to match properties
         param = params[key.to_s.gsub("_", "-")]
@@ -31,6 +35,8 @@ class Metafont
     
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
+        :out_dir,
+
         :unit_width,
         :cap_height,
         :mean_height,
@@ -64,7 +70,7 @@ class Metafont
     }
     
     attr_accessor *VALID_OPTIONS_KEYS
-
+    
     # initialize with optional options defined in VALID_OPTIONS_KEYS
     def initialize(args)
         args = options.merge(args)
@@ -73,6 +79,7 @@ class Metafont
         end
         
         @out_dir ||= '.'
+        Dir.mkdir(@out_dir) unless File.directory?(@out_dir)
     end
 
     # returns an gif image for a single character preview
@@ -102,9 +109,10 @@ class Metafont
         # hide all output but the last one, which returns the image
         `cd mf > /dev/null && 
          mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
-         gftodvi #{@out_dir}/adj.2602gf > /dev/null && 
-         dvisvgm -TS0.75 -M16 --bbox=min -n -p 28 #{@out_dir}/adj.dvi > /dev/null && 
-         convert -trim +repage #{@out_dir}/adj-28.svg gif:-`
+         cd #{@out_dir} && 
+         gftodvi adj.2602gf > /dev/null && 
+         dvisvgm -TS0.75 -M16 --bbox=min -n -p 28 adj.dvi > /dev/null && 
+         convert -trim +repage adj-28.svg gif:-`
     end
         
     def options

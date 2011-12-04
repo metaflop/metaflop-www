@@ -9,7 +9,7 @@ $(function () {
 
     // increase/decrease the inputField's value
     var changeValue = function(inputField, cssClass){
-        var number = cssClass.remove(/\D/g).toNumber();
+        var number = cssClass.remove(/\D/g).toNumber() / 10.0;
         var method = cssClass.remove(/\d+$/);
 
         var value = inputField.val().toNumber() || 0;

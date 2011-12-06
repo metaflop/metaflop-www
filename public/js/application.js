@@ -28,6 +28,12 @@ $(function () {
         value = String(value).replace(',', '.');
 
         inputField.val(value);
+        // update the associated slider too
+        if (value >= 0.1 && value <=1) {
+        var sliderId = inputField.attr('id').replace('param-', 'slider-');
+            $('#' + sliderId).val(value);
+            fdSlider.updateSlider(sliderId);
+        }
 
         previewImage();
     }
@@ -137,6 +143,27 @@ $(function () {
 
         changeValue(input, $this.attr('class'));
         return false;
+    });
+    
+    // sliders
+    function updateValue(cbObj) {
+        console.debug(cbObj);
+        // update the associated input field
+        $('#' + cbObj.elem.id.replace('slider-', 'param-')).val(cbObj.value);
+    }
+    parameterPanel.find('.slider input').each(function() {
+        fdSlider.createSlider({
+            inp: this,
+            step: "0.01",
+            maxStep: 1, // (for keyboard users)
+            min: 0.1,
+            max: 1,
+            animation:"timed",
+            hideInput: true,
+            callbacks:{
+                "change":[updateValue]
+            }
+        });
     });
 
 });

@@ -10,6 +10,7 @@
     <script src="/js/jquery.min.js" type="text/javascript"></script>
     <script src="/js/spin.min.js" type="text/javascript"></script>
     <script src="/js/jquery.spin.js" type="text/javascript"></script>
+    <script src="/js/fd-slider.js"></script>
     <script src="/js/pre-init.js" type="text/javascript"></script>
     <script src="/js/jquery.mustache.js" type="text/javascript"></script>
     <script src="/js/sugar-1.0.min.js" type="text/javascript"></script>
@@ -46,7 +47,9 @@
                     <a href="#" class="add1" title="increase by 1%">+</a>
                     <a href="#" class="add10" title="increase by 10%">++</a>
                 </div>
-                <div class="slider">&nbsp;</div>
+                <div class="slider">
+                    <input id="slider-{{name}}" type="text" maxlength="6" name="inputTest" value="{{default}}" />
+                </div>
                 {{/html}}
             </div>
             {{/items}}

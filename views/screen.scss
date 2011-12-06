@@ -270,6 +270,7 @@ label {
             background-repeat: no-repeat;
             background-color: #eee;
             top: 3px;
+            z-index: 3;
 
             &.add1 {
                 right: -16px;
@@ -298,7 +299,7 @@ label {
             &.sub10 {
                 left: -30px;
                 background-position: -56px -1px;
-                z-index: 2;
+                z-index: 4;
                 &:hover {
                     background-position: -56px -19px;
                 }
@@ -378,3 +379,48 @@ label {
     display: none;
 }
 
+
+/* slider */
+.fd-form-element-hidden {
+    display: none;
+}
+
+.fd-slider {
+    width: 100%;
+    height: 1.6em;
+    display: block;
+    position: relative;
+    
+    &.fd-slider-hover {
+        .fd-slider-handle {
+            background: $active-color;
+        }
+    }
+    
+    span {
+        position: absolute;
+    }
+    
+    .fd-slider-handle {
+        width: 7px;
+        height: 1em;
+        background: #eee;
+        border: 1px solid #ccc;
+        top: 0.3em;
+        z-index: 2;
+    }
+
+    .fd-slider-bar {
+        height: 1px;
+        width: 100%;
+        background: #aaa;
+        top: 50%;
+    }
+    
+    .fd-slider-range {
+        height: 1px;
+        top: 50%;
+        background: #333;
+        z-index: 1;
+    }
+}

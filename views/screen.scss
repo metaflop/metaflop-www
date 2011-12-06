@@ -93,6 +93,7 @@ legend {
     border-bottom: 1px solid #000;
     width: 100%;
     line-height: 1.6em;
+    font-weight: bold;
 }
 
 ul {
@@ -105,6 +106,15 @@ label {
     float: left;
     width: 50%;
     line-height: 1.6em;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+    
+    &:hover {
+        color: $active-color;
+    }
 }
 
 .clearfix {
@@ -269,39 +279,49 @@ label {
             background-image: url(/img/plusminus.png);
             background-repeat: no-repeat;
             background-color: #eee;
-            top: 3px;
+            top: 2px;
             z-index: 3;
 
             &.add1 {
                 right: -16px;
-                background-position: -25px -1px;
+                background-position: -25px -2px;
+                border-top: 1px solid $input-color;
+                border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -25px -19px;
+                    background-position: -25px -20px;
                 }
             }
 
             &.add10 {
                 right: -30px;
-                background-position: 0 -1px;
+                background-position: 0 -2px;
+                border-top: 1px solid $input-color;
+                border-bottom: 1px solid $input-color;
+                border-right: 1px solid $input-color;
                 &:hover {
-                    background-position: 0 -19px;
+                    background-position: 0 -20px;
                 }
             }
 
             &.sub1 {
                 left: -16px;
-                background-position: -35px -1px;
+                background-position: -35px -2px;
+                border-top: 1px solid $input-color;
+                border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -35px -19px;
+                    background-position: -35px -20px;
                 }
             }
 
             &.sub10 {
                 left: -30px;
-                background-position: -56px -1px;
+                background-position: -56px -2px;
+                border-top: 1px solid $input-color;
+                border-bottom: 1px solid $input-color;
+                border-left: 1px solid $input-color;
                 z-index: 4;
                 &:hover {
-                    background-position: -56px -19px;
+                    background-position: -56px -20px;
                 }
             }
         }
@@ -369,6 +389,10 @@ label {
 .inputblock {
     border-bottom: 1px solid #ccc;
     position: relative;
+    
+    &:hover {
+        background: #eee;
+    }
 }
 
 #loading {

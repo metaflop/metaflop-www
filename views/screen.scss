@@ -103,7 +103,7 @@ ul {
 
 label {
     float: left;
-    width: 170px;
+    width: 50%;
     line-height: 1.6em;
 }
 
@@ -244,45 +244,64 @@ label {
     
     @include left-column;
 
-    input,
-    a {
-        float: left;
+    .slider {
+        float: right;
+        width: 30%;
+        height: 1.6em;
     }
 
-    a {
-        text-decoration: none;
-        color: transparent;
-        width: $input_height;
-        height: $input_height;
-        display: block;
-        background-image: url(/img/plusminus.png);
-        background-repeat: no-repeat;
+    .adjuster {
+        float: left;
+        position: absolute;
+        left: 50%;
+        width: 45px;
+        height: 1.6em;
+        text-align: center;
+        
 
-        &.add1 {
-            background-position: -19px 0;
-            &:hover {
-                background-position: -19px -19px;
+        a {
+            display: none;
+            text-decoration: none;
+            color: transparent;
+            width: 19px;
+            height: $input_height;
+            position: absolute;
+            background-image: url(/img/plusminus.png);
+            background-repeat: no-repeat;
+            background-color: #eee;
+            top: 3px;
+
+            &.add1 {
+                right: -16px;
+                background-position: -25px -1px;
+                &:hover {
+                    background-position: -25px -19px;
+                }
             }
-        }
 
-        &.add10 {
-            background-position: 0 0;
-            &:hover {
-                background-position: 0 -19px;
+            &.add10 {
+                right: -30px;
+                background-position: 0 -1px;
+                &:hover {
+                    background-position: 0 -19px;
+                }
             }
-        }
 
-        &.sub1 {
-            background-position: -38px 0;
-            &:hover {
-                background-position: -38px -19px;
+            &.sub1 {
+                left: -16px;
+                background-position: -35px -1px;
+                &:hover {
+                    background-position: -35px -19px;
+                }
             }
-        }
 
-        &.sub10 {
-            background-position: -57px 0;
-            &:hover {
-                background-position: -57px -19px;
+            &.sub10 {
+                left: -30px;
+                background-position: -56px -1px;
+                z-index: 2;
+                &:hover {
+                    background-position: -56px -19px;
+                }
             }
         }
     }
@@ -348,6 +367,7 @@ label {
 
 .inputblock {
     border-bottom: 1px solid #ccc;
+    position: relative;
 }
 
 #loading {

@@ -112,6 +112,22 @@ $(function () {
             setValue($(this), null);
         });
 
+    // toggle the +/- buttons for the inputs
+    var parameterPanel = $('#parameter-panel');
+    var parameterPanelInputs = parameterPanel.find('input');
+    parameterPanelInputs.mouseover(function() {
+        parameterPanel.find('a').hide();
+        parameterPanelInputs.not(":focus").removeClass('active');
+        
+        $(this).addClass('active').siblings('a').show();
+    });
+    parameterPanel.find('.inputblock').mouseleave(function() {
+        $(this).find('a').hide();
+    });
+    parameterPanel.find('.slider').mouseenter(function() {
+        $(this).parent().find('a').hide();
+    });
+    
     $('.add1, .add10, .sub1, .sub10').click(function(e) {
         e.preventDefault();
         $this = $(this);

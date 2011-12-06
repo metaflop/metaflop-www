@@ -16,7 +16,7 @@ $(function () {
         penX:           { title: 'pen x', default: '0.3' },
         penY:           { title: 'pen y', default: '0.3' },
         penAngle:       { title: 'pen angle', default: '' },
-        contrast:       { title: 'contrast', default: '' }
+        contrast:       { title: 'contrast', default: '1' }
     };
     
     // enhance each object with a name (used as html/css id)

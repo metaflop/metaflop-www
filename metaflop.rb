@@ -66,7 +66,8 @@ class Metafont
         'incy' => :vertical_increase,
         'superness' => :superness,
         'px#' => :pen_x,
-        'py#' => :pen_y
+        'py#' => :pen_y,
+        'cont' => :contrast
     }
     
     attr_accessor *VALID_OPTIONS_KEYS

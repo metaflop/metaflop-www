@@ -149,7 +149,7 @@ $(function () {
     function updateValue(cbObj) {
         console.debug(cbObj);
         // update the associated input field
-        $('#' + cbObj.elem.id.replace('slider-', 'param-')).val(cbObj.value);
+        $('#' + cbObj.elem.id.replace('slider-', 'param-')).val(cbObj.value).blur();
     }
     parameterPanel.find('.slider input').each(function() {
         fdSlider.createSlider({

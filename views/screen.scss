@@ -378,8 +378,11 @@ a {
 
 .preview-loading {
     display: none;
-    margin-top: 140px;
-    height: 50px;
+    float: right;
+    padding-right: 1em;
+    margin-right: 0.4em;
+    color: $active_color / 1.5;
+    background: url(/img/loading.gif) no-repeat scroll right 0.8em #fff;
 }
 
 .preview-image {

@@ -147,7 +147,6 @@ $(function () {
     
     // sliders
     function updateValue(cbObj) {
-        console.debug(cbObj);
         // update the associated input field
         $('#' + cbObj.elem.id.replace('slider-', 'param-')).val(cbObj.value).blur();
     }
@@ -164,6 +163,26 @@ $(function () {
                 "change":[updateValue]
             }
         });
+    });
+    
+    
+    // character chooser for single preview
+    $('a.char-chooser').click(function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var div = $('div.char-chooser');
+        var activeItem = div.find('li.active');
+        var items = div.find('li');
+        
+        var nextItem = $($this.hasClass('right') 
+            ? activeItem.next()[0] || items.first()
+            : activeItem.prev()[0] || items.last());
+        
+        items.removeClass('active');
+        nextItem.addClass('active');
+        div.scrollTo(nextItem, 400, { easing: 'easeInOutExpo', axis: "x" });
+        
+        return false;
     });
 
 });

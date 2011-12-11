@@ -6,6 +6,8 @@ $content_width: 1000px;
 $preview-box-width: 350px;
 $preview-box-spacing: 5px;
 
+$preview-box-content-width: $preview-box-width - $preview-box-spacing - 2 * 3px;
+
 @mixin box-shadow {
     box-shadow: 2px 3px 3px #ccc;
 }
@@ -349,10 +351,11 @@ a {
         margin: 0 $preview-box-spacing $preview-box-spacing 0;
         background: $active_color;
         border: 3px solid $active_color;
-        width: $preview-box-width - $preview-box-spacing - 2 * 3px;
-        height: $preview-box-width - $preview-box-spacing - 2 * 3px;
+        width: $preview-box-content-width;
+        height: $preview-box-content-width;
         overflow: hidden;
         text-align: center;
+        position: relative;
     }
     
     &.active .preview-box-content {
@@ -385,16 +388,54 @@ a {
     background: url(/img/loading.gif) no-repeat scroll right 0.8em #fff;
 }
 
-.preview-image {
-    height: 100%;
-}
-
 .inputblock {
     border-bottom: 1px solid #ccc;
     position: relative;
     
     &:hover {
         background: #eee;
+    }
+}
+
+div.char-chooser {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: $preview-box-content-width;
+    height: 1.3em;
+    overflow: hidden;
+    font-size: 0.8em;
+    
+    ul {
+        position: absolute;
+        width: 2000px;
+        height: 1.6em;
+    }
+    
+    li {
+        float: left;
+        width: $preview-box-content-width;
+        
+        a {
+            padding: 0 0.2em;
+        }
+    }
+}
+
+a.char-chooser {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    color: transparent;
+    
+    &.left {
+        left: 0;
+        background: url(/img/icons.png) no-repeat scroll -99px -16px #fff;
+    }
+    
+    &.right {
+        right: 0;
+        background: url(/img/icons.png) no-repeat scroll -36px -17px #fff;
     }
 }
 

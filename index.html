@@ -76,11 +76,10 @@
     </script>
     
     <script id="charChooser" type="text/x-html-template">
-        {{%IMPLICIT-ITERATOR iterator=item}}
         <ul>
             {{#sets}}
             <li class="active">
-                {{#items}}<a href="#">{{item}}</a>{{/items}}
+                {{#items}}<a href="#{{number}}">{{title}}</a>{{/items}}
             </li>
             {{/sets}}
         </ul>

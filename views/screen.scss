@@ -408,6 +408,7 @@ div.char-chooser {
     
     ul {
         position: absolute;
+        top: 0.2em;
         width: 2000px;
         height: 1.6em;
     }
@@ -418,6 +419,11 @@ div.char-chooser {
         
         a {
             padding: 0 0.2em;
+            
+            &.active {
+                font-weight: bold;
+                border: 1px solid $active-color;
+            }
         }
     }
 }
@@ -430,12 +436,12 @@ a.char-chooser {
     
     &.left {
         left: 0;
-        background: url(/img/icons.png) no-repeat scroll -99px -16px #fff;
+        background: url(/img/icons.png) no-repeat scroll -99px -14px #fff;
     }
     
     &.right {
         right: 0;
-        background: url(/img/icons.png) no-repeat scroll -36px -17px #fff;
+        background: url(/img/icons.png) no-repeat scroll -36px -15px #fff;
     }
 }
 

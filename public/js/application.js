@@ -56,7 +56,12 @@ $(function () {
         loading.show();
         // http://stackoverflow.com/questions/4285042/can-jquery-ajax-load-image
         var url = '/preview/' + previewType + '?' + 
-            $.makeArray($('input:text')).map(function(value){ return value.id.remove('param-') + '=' + value.value.remove(/\D+$/) }).join("&");
+            $.makeArray($('input:text')).map(function(value){ 
+                return value.id.remove('param-') + '=' + value.value.remove(/\D+$/)
+            })
+            // add the selected character param
+            .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
+            .join("&");
         image.attr('src', url).load(function(responseText, textStatus, XMLHttpRequest) {
             content.fadeTo(50, 1);
             loading.hide();
@@ -167,6 +172,18 @@ $(function () {
     
     
     // character chooser for single preview
+    var charLinks = $('div.char-chooser a');
+    charLinks.click(function(e) {
+        e.preventDefault();
+        
+        charLinks.removeClass('active');
+        $(this).addClass('active').blur();
+        previewImage();
+        
+        return false;
+    });
+    charLinks.first().addClass('active');
+    
     $('a.char-chooser').click(function(e) {
         e.preventDefault();
         var $this = $(this);

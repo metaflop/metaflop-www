@@ -36,6 +36,7 @@ class Metafont
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
         :out_dir,
+        :char_number,
 
         :unit_width,
         :cap_height,
@@ -79,8 +80,11 @@ class Metafont
             instance_variable_set("@#{key}".to_sym, args[key])
         end
         
+        # defaults
         @out_dir ||= '.'
         Dir.mkdir(@out_dir) unless File.directory?(@out_dir)
+        
+        @char_number ||= 1
     end
 
     # returns an gif image for a single character preview
@@ -106,14 +110,15 @@ class Metafont
             .join
             
             
-            
+        char_number = @char_number.to_s.rjust(2, '0')
+        
         # hide all output but the last one, which returns the image
         `cd mf > /dev/null && 
          mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
          cd #{@out_dir} && 
          gftodvi adj.2602gf > /dev/null && 
-         dvisvgm -TS0.75 -M16 --bbox=min -n -p 28 adj.dvi > /dev/null && 
-         convert -trim +repage adj-28.svg gif:-`
+         dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
+         convert -trim +repage -resize 'x315' adj-#{char_number}.svg gif:-`
     end
         
     def options

@@ -52,19 +52,20 @@ $(function () {
         var content = previewBox.find('.preview-box-content');
         var previewType = previewBox.attr('id').remove('preview-');
 
-        content.fadeTo(50, 0.5);
+        content.fadeTo(0, 0.5);
         loading.show();
         // http://stackoverflow.com/questions/4285042/can-jquery-ajax-load-image
         var url = '/preview/' + previewType + '?' + 
-            $.makeArray($('input:text')).map(function(value){ 
-                return value.id.remove('param-') + '=' + value.value.remove(/\D+$/)
+            $.makeArray($('input:text,textarea')).map(function(element){ 
+                return element.id.remove('param-') + '=' + element.value
             })
             // add the selected character param
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
         image.attr('src', url).load(function(responseText, textStatus, XMLHttpRequest) {
-            content.fadeTo(50, 1);
+            content.fadeTo(0, 1);
             loading.hide();
+            content.find('textarea').hide();
         });
     }
 
@@ -198,6 +199,46 @@ $(function () {
         items.removeClass('active');
         nextItem.addClass('active');
         div.scrollTo(nextItem, 400, { easing: 'easeInOutExpo', axis: "x" });
+        
+        return false;
+    });
+    
+    // activate preview box
+    $('.preview-box').click(function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+        if ($this.not('.active').length > 0) {
+            $('.preview-box.active').removeClass('active').find('textarea').hide();
+            $this.addClass('active');
+                        
+            previewImage();
+        }
+        // show textarea
+        else if ($this[0].id == 'preview-typewriter') {
+            $this.find('textarea').show().focus();
+        }
+        
+        return false;
+    });
+    
+    $('.toggle-mode').click(function(e) {
+        e.preventDefault();
+        
+        var $this = $(this);
+        var textarea = $this.siblings('textarea');
+        
+        if ($this.hasClass('edit-mode')) {
+            textarea.hide();
+            previewImage();
+            $this.attr('title', 'enter edit mode');
+        }
+        else {
+            textarea.show();
+            $this.attr('title', 'exit edit mode');
+        }
+        
+        $this.toggleClass('edit-mode');
         
         return false;
     });

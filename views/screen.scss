@@ -62,6 +62,15 @@ option {
     margin: 0;
 }
 
+textarea {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
 h1 {
     font-family: AdjusterRegular;
     font-size: $live_panel_height;
@@ -356,6 +365,23 @@ a {
         overflow: hidden;
         text-align: center;
         position: relative;
+        
+        .toggle-mode {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            width: 15px;
+            height: 15px;
+            border: 1px solid $active_color;
+            background-image: url(/img/icons.png);
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: -64px -113px;
+            
+            &.edit-mode {
+                background-position: -64px -145px;
+            }
+        }
     }
     
     &.active .preview-box-content {

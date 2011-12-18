@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 
 enable :sessions
+set :logging, :true if development?
 
 get '/' do
     session[:id] ||= SecureRandom.urlsafe_base64
@@ -37,6 +38,7 @@ class Metafont
     VALID_OPTIONS_KEYS = [
         :out_dir,
         :char_number,
+        :text,
 
         :unit_width,
         :cap_height,
@@ -88,8 +90,17 @@ class Metafont
     end
 
     # returns an gif image for a single character preview
-    def preview_single
-        mf_args = File.readlines("mf/adj.mf")
+    def preview_single    
+        char_number = @char_number.to_s.rjust(2, '0')
+        generate(nil, 'gftodvi adj.2602gf', char_number)
+    end
+    
+    def preview_typewriter
+        generate("cp adj.mf #{@out_dir}", %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"})
+    end
+    
+    def mf_args
+        File.readlines("mf/adj.mf")
             .delete_if do |x|            # remove comment and empty lines
                 stripped = x.strip
                 stripped == '' || stripped[0] == '%'
@@ -108,19 +119,24 @@ class Metafont
                 pair
             end
             .join
-            
-            
-        char_number = @char_number.to_s.rjust(2, '0')
+    end
+    
+    def generate(pre, post, char_number = "0")
+        pre = "#{pre} > /dev/null &&" if pre
+        svg_name = char_number != "0" ? "adj-#{char_number}.svg" : "adj.svg"
+    
+        command = %Q{cd mf > /dev/null && 
+                     mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
+                     #{pre}
+                     cd #{@out_dir} && 
+                     #{post} > /dev/null && 
+                     dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
+                     convert -trim +repage -resize 'x315' #{svg_name} gif:-}
         
         # hide all output but the last one, which returns the image
-        `cd mf > /dev/null && 
-         mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
-         cd #{@out_dir} && 
-         gftodvi adj.2602gf > /dev/null && 
-         dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
-         convert -trim +repage -resize 'x315' adj-#{char_number}.svg gif:-`
+        `#{command}`
     end
-        
+    
     def options
         options = {}
         VALID_OPTIONS_KEYS.each{ |k| options[k] = send(k) }

@@ -27,7 +27,13 @@ get '/preview/:type' do |type|
     mf = Metafont.new(args)
     method = "preview_#{type}"
     if mf.respond_to? method
-        [200, { 'Content-Type' => 'image/gif' }, mf.method("preview_#{type}").call]
+        image = mf.method("preview_#{type}").call
+        if image
+            [200, { 'Content-Type' => 'image/gif' }, image]
+        else
+            image = File.read('public/img/error.png')
+            [404, { 'Content-Type' => 'image/gif' }, image]
+        end
     else
         [404, { 'Content-Type' => 'text/html' }, "The preview type could not be found"]
     end
@@ -135,19 +141,25 @@ class Metafont
             svg_name = "adj.svg"
             char_number = "01"
         end
-    
-        command = %Q{cd mf > /dev/null && 
-                     mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
-                     #{pre}
-                     cd #{@out_dir} && 
-                     #{post} > /dev/null && 
-                     dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
-                     convert -trim +repage -resize 'x315' #{svg_name} gif:-}
-                     
-        puts command
         
-        # hide all output but the last one, which returns the image
-        `#{command}`
+        success = system(
+                    %Q{cd mf > /dev/null && 
+                    mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null}
+                  )
+        
+        # don't bother if metafont failed            
+        if success    
+            command = %Q{#{pre}
+                         cd #{@out_dir} && 
+                         #{post} > /dev/null && 
+                         dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
+                         convert -trim +repage -resize 'x315' #{svg_name} gif:-}
+                         
+            # hide all output but the last one, which returns the image
+            `#{command}`
+        else
+            nil
+        end
     end
     
     def options

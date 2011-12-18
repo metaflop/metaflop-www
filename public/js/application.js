@@ -51,7 +51,8 @@ $(function () {
         var image = previewBox.find('.preview-image');
         var content = previewBox.find('.preview-box-content');
         var previewType = previewBox.attr('id').remove('preview-');
-
+        
+        content.tipsy('hide');
         content.fadeTo(0, 0.5);
         loading.show();
         // http://stackoverflow.com/questions/4285042/can-jquery-ajax-load-image
@@ -62,10 +63,15 @@ $(function () {
             // add the selected character param
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
-        image.attr('src', url).load(function(responseText, textStatus, XMLHttpRequest) {
+            
+        image.attr('src', url).load(url, function(responseText, textStatus, XMLHttpRequest) {            
             content.fadeTo(0, 1);
             loading.hide();
             content.find('textarea').hide();
+            
+            if (textStatus == 'error') {
+                content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
+            }
         });
     }
 
@@ -242,6 +248,5 @@ $(function () {
         
         return false;
     });
-
 });
 

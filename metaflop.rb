@@ -106,6 +106,7 @@ class Metafont
         generate(%Q{cp *.mf #{@out_dir}}, %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"})
     end
     
+    # returns the metafont parameter instructions (aka adj.mf)
     def mf_args
         if !@mf_args
             @mf_args = File.readlines("mf/adj.mf")
@@ -132,6 +133,9 @@ class Metafont
         @mf_args
     end
     
+    # generates the image for the specified tool chain
+    # @pre: tool chain that gets executed in the mf dir
+    # @post: tool chain that gets executed in the tmp output dir
     def generate(pre, post, char_number = nil)
         pre = "#{pre} &&" if pre
         
@@ -149,12 +153,14 @@ class Metafont
         
         # don't bother if metafont failed            
         if success    
-            command = %Q{#{pre}
+            command = %Q{cd mf &&
+                         #{pre}
                          cd #{@out_dir} && 
                          #{post} > /dev/null && 
                          dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
                          convert -trim +repage -resize 'x315' #{svg_name} gif:-}
-                         
+                        
+                        puts command 
             # hide all output but the last one, which returns the image
             `#{command}`
         else

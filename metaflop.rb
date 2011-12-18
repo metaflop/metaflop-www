@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
+require 'sass'
 
 enable :sessions
 set :logging, :true if development?
@@ -96,34 +97,44 @@ class Metafont
     end
     
     def preview_typewriter
-        generate("cp adj.mf #{@out_dir}", %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"})
+        generate(%Q{cp *.mf #{@out_dir}}, %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"})
     end
     
     def mf_args
-        File.readlines("mf/adj.mf")
-            .delete_if do |x|            # remove comment and empty lines
-                stripped = x.strip
-                stripped == '' || stripped[0] == '%'
-            end
-            .map do |x|                  # remove comments at the end of the line
-                pair = x[/([^%]+)/, 0].strip
-                splits = pair.split(':=')
-                if (splits.length == 2)
-                    # replace the default value from the file if we have a value set for the parameter
-                    mapping = MF_MAPPINGS[splits[0]]
-                    value = mapping ? send(mapping) : nil
-                    if (value && !value.empty?)
-                        pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
-                    end
+        if !@mf_args
+            @mf_args = File.readlines("mf/adj.mf")
+                .delete_if do |x|            # remove comment and empty lines
+                    stripped = x.strip
+                    stripped == '' || stripped[0] == '%'
                 end
-                pair
-            end
-            .join
+                .map do |x|                  # remove comments at the end of the line
+                    pair = x[/([^%]+)/, 0].strip
+                    splits = pair.split(':=')
+                    if (splits.length == 2)
+                        # replace the default value from the file if we have a value set for the parameter
+                        mapping = MF_MAPPINGS[splits[0]]
+                        value = mapping ? send(mapping) : nil
+                        if (value && !value.empty?)
+                            pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
+                        end
+                    end
+                    pair
+                end
+                .join
+        end
+        
+        @mf_args
     end
     
-    def generate(pre, post, char_number = "0")
-        pre = "#{pre} > /dev/null &&" if pre
-        svg_name = char_number != "0" ? "adj-#{char_number}.svg" : "adj.svg"
+    def generate(pre, post, char_number = nil)
+        pre = "#{pre} &&" if pre
+        
+        if char_number
+            svg_name = "adj-#{char_number}.svg"
+        else
+            svg_name = "adj.svg"
+            char_number = "01"
+        end
     
         command = %Q{cd mf > /dev/null && 
                      mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null && 
@@ -132,6 +143,8 @@ class Metafont
                      #{post} > /dev/null && 
                      dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null && 
                      convert -trim +repage -resize 'x315' #{svg_name} gif:-}
+                     
+        puts command
         
         # hide all output but the last one, which returns the image
         `#{command}`

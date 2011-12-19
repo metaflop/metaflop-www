@@ -416,12 +416,16 @@ a {
 }
 
 .preview-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.preview-loading-text {
     display: none;
     float: right;
-    padding-right: 1em;
     margin-right: 0.4em;
     color: $active_color / 1.5;
-    background: url(/img/loading.gif) no-repeat scroll right 0.8em #fff;
 }
 
 .inputblock {

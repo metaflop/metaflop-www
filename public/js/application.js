@@ -62,13 +62,14 @@ $(function () {
             .join("&");
             
         var done = function() {
-            image.attr('src', url);
-            content.fadeTo(0, 1);
-            loadingText.hide();
-            loading.spin(false);
-            content.find('textarea').hide();
-            
-            $.fn.metaflop.lastXhr = null;
+            image.attr('src', url).load(function(){
+                content.fadeTo(0, 1);
+                loadingText.hide();
+                loading.spin(false);
+                content.find('textarea').hide();
+                
+                $.fn.metaflop.lastXhr = null;
+            });
         };
             
         $.ajax({

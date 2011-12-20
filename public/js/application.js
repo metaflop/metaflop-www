@@ -45,7 +45,7 @@ $(function () {
         }
     }
 
-    var previewImage = function(){
+    var previewImageCall = function(){
         var previewBox = $('.preview-box.active');
         var loading = previewBox.find('.preview-loading');
         var loadingText = previewBox.find('.preview-loading-text');
@@ -97,6 +97,12 @@ $(function () {
                 }
             }
         });
+    }
+    
+    var timeout;
+    var previewImage = function(){
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(previewImageCall, 300);
     }
 
     var isAllowedTrailingCharacter = function(keyCode) {

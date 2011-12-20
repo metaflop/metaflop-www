@@ -121,8 +121,6 @@ $(function () {
 
         })
         .keyup(function(event) {
-            console.debug(event.keyCode, isAllowedTrailingCharacter(event.keyCode), [16, 17, 18].none(event.keyCode));
-            
             // defer evaluation when allowed trailing characters (e.g. ".", wait for the next number)
             // ignore meta keys
             if (!(isAllowedTrailingCharacter(event.keyCode) || isAllowedMetaKey(event.keyCode))) {
@@ -164,7 +162,15 @@ $(function () {
     // sliders
     function updateValue(cbObj) {
         // update the associated input field
-        $('#' + cbObj.elem.id.replace('slider-', 'param-')).val(cbObj.value).blur();
+        var input = $('#' + cbObj.elem.id.replace('slider-', 'param-'));
+        input.val(cbObj.value)
+        
+        if (input.hasClass('init')) {
+            input.removeClass('init');
+        }
+        else {
+            input.blur();
+        }
     }
     parameterPanel.find('.slider input').each(function() {
         fdSlider.createSlider({
@@ -274,5 +280,8 @@ $(function () {
             sliders.hide();
         }
     });
+    
+    // load the first image
+    previewImage();
 });
 

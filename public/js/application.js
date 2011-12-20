@@ -61,41 +61,26 @@ $(function () {
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
             
-        var done = function() {
+        
+        if (!$.fn.metaflop.preloadImage) {
+            content.tipsy('hide');
+            content.fadeTo(0, 0.5);
+            loadingText.show();
+            loading.spin('large');
+        }
+                        
+        $.fn.metaflop.preloadImage = new Image();
+        $.fn.metaflop.preloadImage.src = url;
+        
+        $.fn.metaflop.preloadImage.onload = function() {
             image.attr('src', url);
             content.fadeTo(0, 1);
             loadingText.hide();
             loading.spin(false);
             content.find('textarea').hide();
             
-            $.fn.metaflop.lastXhr = null;
+            $.fn.metaflop.preloadImage = null;
         };
-            
-        $.ajax({
-            url: url,
-            beforeSend: function(xhr) {
-                if ($.fn.metaflop.lastXhr) {
-                    $.fn.metaflop.lastXhr.abort();
-                }
-                else {
-                    content.tipsy('hide');
-                    content.fadeTo(0, 0.5);
-                    loadingText.show();
-                    loading.spin('large');
-                }
-                
-                $.fn.metaflop.lastXhr =  xhr;
-            },
-            statusCode: {
-                200: function() {
-                    done();
-                },
-                404: function() {
-                    done();
-                    content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
-                }
-            }
-        });
     }
 
     var isAllowedTrailingCharacter = function(keyCode) {

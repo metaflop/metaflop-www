@@ -113,13 +113,7 @@ $(function () {
     var charChooser = $.mustache($('#charChooser').html(), {
         sets : sets
     });
-    
-    
+        
     $('div.char-chooser').html(charChooser);
-
-
-    // stop the spinner
-    $('#loading').spin(false);
-    $('#parameter-panel').show();
 });
 

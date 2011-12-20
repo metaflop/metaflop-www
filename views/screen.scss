@@ -119,9 +119,10 @@ label {
     line-height: 1.6em;
 }
 
-a {
+a, span.action {
     color: #000;
     text-decoration: none;
+    cursor: pointer;
     
     &:hover {
         color: $active-color;
@@ -264,7 +265,9 @@ a {
     display: none; /* initial preloading */
     
     @include left-column;
-
+    
+    position: relative;
+    
     .slider {
         float: right;
         width: 30%;
@@ -272,13 +275,14 @@ a {
     }
 
     .adjuster {
-        float: left;
-        position: absolute;
-        left: 50%;
-        width: 45px;
+        float: right;
+        width: 30%;
         height: 1.6em;
+        margin-right: 1.7em;
         text-align: center;
+        position: relative;
         
+        display: none;
 
         a {
             display: none;
@@ -294,38 +298,38 @@ a {
             z-index: 3;
 
             &.add1 {
-                right: -16px;
-                background-position: -25px -2px;
+                right: 5px;
+                background-position: -21px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -25px -20px;
+                    background-position: -21px -20px;
                 }
             }
 
             &.add10 {
-                right: -30px;
-                background-position: 0 -2px;
+                right: -15px;
+                background-position: -1px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 border-right: 1px solid $input-color;
                 &:hover {
-                    background-position: 0 -20px;
+                    background-position: -1px -20px;
                 }
             }
 
             &.sub1 {
-                left: -16px;
-                background-position: -35px -2px;
+                left: 5px;
+                background-position: -38px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -35px -20px;
+                    background-position: -38px -20px;
                 }
             }
 
             &.sub10 {
-                left: -30px;
+                left: -15px;
                 background-position: -56px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
@@ -341,6 +345,18 @@ a {
     .static-value {
         font-size: 12px;
         line-height: 21px;
+        float: right;
+        width: 30%;
+    }
+        
+    .parameter-panel-mode-toggle {
+        position: absolute;
+        right: 0;
+        top: 0.4em;
+        
+        .action.active {
+            font-weight: bold;
+        }
     }
 }
 

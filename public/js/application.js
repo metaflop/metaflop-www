@@ -135,19 +135,20 @@ $(function () {
 
     // toggle the +/- buttons for the inputs
     var parameterPanel = $('#parameter-panel');
-    var parameterPanelInputs = parameterPanel.find('input');
-    parameterPanelInputs.mouseover(function() {
-        parameterPanel.find('a').hide();
-        parameterPanelInputs.not(":focus").removeClass('active');
+    var parameterPanelBlocks = parameterPanel.find('.adjuster');
+
+    parameterPanelBlocks.mouseover(function() {
+        var $this = $(this);
+        parameterPanel.find('.adjuster a').hide();
+        $this.find('a').show();
         
-        $(this).addClass('active').siblings('a').show();
+        parameterPanel.find('input').removeClass('active');
+        $this.find('input').addClass('active');
     });
     parameterPanel.find('.inputblock').mouseleave(function() {
         $(this).find('a').hide();
     });
-    parameterPanel.find('.slider').mouseenter(function() {
-        $(this).parent().find('a').hide();
-    });
+
     
     $('.add1, .add10, .sub1, .sub10').click(function(e) {
         e.preventDefault();
@@ -231,7 +232,8 @@ $(function () {
         return false;
     });
     
-    $('.toggle-mode').click(function(e) {
+    // edit/view mode for typewriter preview (textarea on/off)
+    $('#preview-typewriter').find('.toggle-mode').click(function(e) {
         e.preventDefault();
         
         var $this = $(this);
@@ -250,6 +252,27 @@ $(function () {
         $this.toggleClass('edit-mode');
         
         return false;
+    });
+    
+    // switch basic/pro mode for parameter panel
+    var parameterPanelToggleMode = $('.parameter-panel-mode-toggle span');
+    parameterPanelToggleMode.click(function() {
+        var $this = $(this);
+        var parameterPanel = $('#parameter-panel');
+        var adjusters = parameterPanel.find('.adjuster');
+        var sliders = parameterPanel.find('.slider');
+        
+        parameterPanelToggleMode.removeClass('active');
+        $this.addClass('active');
+        
+        if ($this.hasClass('sliders')) {
+            sliders.show();
+            adjusters.hide();
+        }
+        else {
+            adjusters.show();
+            sliders.hide();
+        }
     });
 });
 

@@ -120,7 +120,6 @@ $(function () {
 
     // stop the spinner
     $('#loading').spin(false);
-    $('.adjuster').show();
     $('#parameter-panel').show();
 });
 

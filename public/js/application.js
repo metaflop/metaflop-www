@@ -45,6 +45,7 @@ $(function () {
         }
     }
 
+
     var stopRequest = function() {
         if (window.stop !== undefined) {
             window.stop();
@@ -54,8 +55,7 @@ $(function () {
         }   
     }
 
-
-    var previewImage = function(){
+    var previewImageCall = function(){        
         var previewBox = $('.preview-box.active');
         var loading = previewBox.find('.preview-loading');
         var loadingText = previewBox.find('.preview-loading-text');
@@ -71,7 +71,7 @@ $(function () {
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
             
-        
+            
         if ($.fn.metaflop.preloadImage) {
             stopRequest();
         }
@@ -94,6 +94,12 @@ $(function () {
             
             $.fn.metaflop.preloadImage = null;
         };
+    }
+    
+    var timeout;
+    var previewImage = function(){
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(previewImageCall, 300);
     }
 
     var isAllowedTrailingCharacter = function(keyCode) {

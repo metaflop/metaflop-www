@@ -52,12 +52,7 @@ $(function () {
         var image = previewBox.find('.preview-image');
         var content = previewBox.find('.preview-box-content');
         var previewType = previewBox.attr('id').remove('preview-');
-        
-        content.tipsy('hide');
-        content.fadeTo(0, 0.5);
-        loadingText.show();
-        loading.spin('large');
-        // http://stackoverflow.com/questions/4285042/can-jquery-ajax-load-image
+                
         var url = '/preview/' + previewType + '?' + 
             $.makeArray($('input:text,textarea')).map(function(element){ 
                 return element.id.remove('param-') + '=' + element.value
@@ -66,14 +61,39 @@ $(function () {
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
             
-        image.attr('src', url).load(url, function(responseText, textStatus, XMLHttpRequest) {            
+        var done = function() {
+            image.attr('src', url);
             content.fadeTo(0, 1);
             loadingText.hide();
             loading.spin(false);
             content.find('textarea').hide();
             
-            if (textStatus == 'error') {
-                content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
+            $.fn.metaflop.lastXhr = null;
+        };
+            
+        $.ajax({
+            url: url,
+            beforeSend: function(xhr) {
+                if ($.fn.metaflop.lastXhr) {
+                    $.fn.metaflop.lastXhr.abort();
+                }
+                else {
+                    content.tipsy('hide');
+                    content.fadeTo(0, 0.5);
+                    loadingText.show();
+                    loading.spin('large');
+                }
+                
+                $.fn.metaflop.lastXhr =  xhr;
+            },
+            statusCode: {
+                200: function() {
+                    done();
+                },
+                404: function() {
+                    done();
+                    content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
+                }
             }
         });
     }

@@ -115,5 +115,10 @@ $(function () {
     });
         
     $('div.char-chooser').html(charChooser);
+
+    // create a namespace for later use
+    $.fn.metaflop = {
+    
+    };
 });
 

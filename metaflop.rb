@@ -28,12 +28,7 @@ get '/preview/:type' do |type|
     method = "preview_#{type}"
     if mf.respond_to? method
         image = mf.method("preview_#{type}").call
-        if image
-            [200, { 'Content-Type' => 'image/gif' }, image]
-        else
-            image = File.read('public/img/error.png')
-            [404, { 'Content-Type' => 'image/gif' }, image]
-        end
+        [image ? 200 : 404, { 'Content-Type' => 'image/gif' }, image]
     else
         [404, { 'Content-Type' => 'text/html' }, "The preview type could not be found"]
     end

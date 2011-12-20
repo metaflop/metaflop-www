@@ -53,7 +53,7 @@ $(function () {
         else if (document.execCommand !== undefined) {
             document.execCommand("Stop", false);
         }   
-    }
+    }   
 
     var previewImageCall = function(){        
         var previewBox = $('.preview-box.active');
@@ -70,7 +70,18 @@ $(function () {
             // add the selected character param
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
+     
+        var done = function(imageUrl) {
+            content.fadeTo(0, 1);
+            loadingText.hide();
+            loading.spin(false);
+            content.find('textarea').hide();
+            image.attr('src', imageUrl);
             
+            $.fn.metaflop.preloadImage.onload = null;
+            $.fn.metaflop.preloadImage.onerror = null;
+            $.fn.metaflop.preloadImage = null;
+        };
             
         if ($.fn.metaflop.preloadImage) {
             stopRequest();
@@ -81,18 +92,17 @@ $(function () {
             loadingText.show();
             loading.spin('large');
         }
-                        
+                       
         $.fn.metaflop.preloadImage = new Image();
         $.fn.metaflop.preloadImage.src = url;
         
         $.fn.metaflop.preloadImage.onload = function() {
-            image.attr('src', url);
-            content.fadeTo(0, 1);
-            loadingText.hide();
-            loading.spin(false);
-            content.find('textarea').hide();
-            
-            $.fn.metaflop.preloadImage = null;
+            done(this.src);
+        };
+        
+        $.fn.metaflop.preloadImage.onerror = function() {
+            done('/img/error.png');
+            content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
         };
     }
     

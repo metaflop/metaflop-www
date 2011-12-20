@@ -34,7 +34,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Georgia, serif;
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 
 input {
@@ -115,7 +115,7 @@ ul {
 
 label {
     float: left;
-    width: 50%;
+    width: 60%;
     line-height: 1.6em;
 }
 
@@ -379,6 +379,7 @@ a, span.action {
         text-align: center;
         position: relative;
         line-height: $preview-box-content-width;
+        font-size: 0.67em;
         
         * {
             line-height: 1.25em;
@@ -457,7 +458,6 @@ div.char-chooser {
     width: $preview-box-content-width;
     height: 1.3em;
     overflow: hidden;
-    font-size: 0.8em;
     
     ul {
         position: absolute;
@@ -489,12 +489,12 @@ a.char-chooser {
     
     &.left {
         left: 0;
-        background: url(/img/icons.png) no-repeat scroll -99px -14px #fff;
+        background: url(/img/icons.png) no-repeat scroll -99px -17px #fff;
     }
     
     &.right {
         right: 0;
-        background: url(/img/icons.png) no-repeat scroll -36px -15px #fff;
+        background: url(/img/icons.png) no-repeat scroll -36px -18px #fff;
     }
 }
 

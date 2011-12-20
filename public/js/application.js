@@ -45,6 +45,16 @@ $(function () {
         }
     }
 
+    var stopRequest = function() {
+        if (window.stop !== undefined) {
+            window.stop();
+        }
+        else if (document.execCommand !== undefined) {
+            document.execCommand("Stop", false);
+        }   
+    }
+
+
     var previewImage = function(){
         var previewBox = $('.preview-box.active');
         var loading = previewBox.find('.preview-loading');
@@ -62,7 +72,10 @@ $(function () {
             .join("&");
             
         
-        if (!$.fn.metaflop.preloadImage) {
+        if ($.fn.metaflop.preloadImage) {
+            stopRequest();
+        }
+        else {
             content.tipsy('hide');
             content.fadeTo(0, 0.5);
             loadingText.show();

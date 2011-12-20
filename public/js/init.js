@@ -25,13 +25,6 @@ $(function () {
     });
 
     var templates = [
-        // live panel
-        {
-            name: 'livePanelAdjuster',
-            items: [
-            ],
-            action : function(html) { $('#live-panel').append(html) }
-        },
         // parameter panel, standard
         {
             name: 'parameterPanelAdjusterStandard',

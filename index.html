@@ -20,19 +20,6 @@
 
     <script src="/js/application.js" type="text/javascript"></script>
 
-    <script id="livePanelAdjuster" type="text/x-html-template">
-        {{#items}}
-        <div class="adjuster live-{{name}}" style="left: {{css.left}}; top: {{css.top}}; height: {{css.height}};">
-            <label for="live-{{name}}">
-                {{title}}
-            </label>
-            <div class="arrow-up"></div>
-            <div class="arrow-down"></div>
-            <div class="vertical-line"></div>
-        </div>
-        {{/items}}
-    </script>
-
     <script id="parameterPanelAdjusterStandard" type="text/x-html-template">
         {{#groups}}
             <fieldset>
@@ -109,9 +96,7 @@
         </div>
     
         <div id="live-panel">
-            <div class="topline">&nbsp;</div>
-            <h1>M e t a f l o p</h1>
-            <div class="bottomline"></div>
+            <img src="/img/typoglossary.png" />
         </div>
     </div>
 

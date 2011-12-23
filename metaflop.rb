@@ -55,6 +55,7 @@ class Metafont
         :apperture,
         :superness,
         :pen_size,
+        :corner,
         :contrast
     ]
 
@@ -74,6 +75,7 @@ class Metafont
         'superness' => :superness,
         'px#' => :pen_size,
         'py#' => :pen_size,
+        'corner#' => :corner,
         'cont' => :contrast
     }
 

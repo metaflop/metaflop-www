@@ -18,6 +18,7 @@ $(function () {
         superness:      { title: 'superness', default: '0.73' },
 
         penSize:        { title: 'pen size', default: '0.3' },
+        corner:         { title: 'corner', default: '0.2' },
         contrast:       { title: 'contrast', default: '1' }
     };
 
@@ -63,6 +64,7 @@ $(function () {
                     title: "Drawing mode",
                     items: [
                         params.penSize,
+                        params.corner,
                         params.contrast,
                     ]
                 }

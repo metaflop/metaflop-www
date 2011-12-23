@@ -1,24 +1,26 @@
 $(function () {
 
     var params = {
-        boxHeight:      { title: 'box height', html: '<div class="static-value">100%</div>', css: { height: 'inherit', top: 'inherit', left: 'inherit' } },
-        unitWidth:      { title: 'unit width', default: '1.7', css: { height: '128px', top: '6px', left: '212px' } },
-        capHeight:      { title: 'cap height', default: '1', css: { height: '128px', top: '6px', left: '212px' } },
-        meanHeight:     { title: 'mean height', default: '0.7', css: { height: '67px', top: '67px', left: '534px' } },
-        barHeight:      { title: 'bar height', default: '0.5', css: { height: '67px', top: '67px', left: '415px' } },
-        ascHeight:      { title: 'ascender height', default: '0.97', css: { height: '134px', top: '0', left: '616px' } },
-        descHeight:     { title: 'descender height', default: '0.35', css: { height: '35px', top: '135px', left: '855px' } },
+        boxHeight:      { title: 'box height', html: '<div class="static-value">100%</div>' },
+        unitWidth:      { title: 'unit width', default: '1.7' },
+        spacing:        { title: 'spacing', default: '0.1' },
+
+        capHeight:      { title: 'cap height', default: '1' },
+        meanHeight:     { title: 'mean height', default: '0.7' },
+        barHeight:      { title: 'bar height', default: '0.5' },
+        ascHeight:      { title: 'ascender height', default: '0.97' },
+        descHeight:     { title: 'descender height', default: '0.35' },
+
+        overshoot:      { title: 'overshoot', default: '0.0' },
         horizontalInc:  { title: 'horizontal increase', default: '0.8' },
         verticalInc:    { title: 'vertical increase', default: '0.5' },
+        apperture:      { title: 'apperture', default: '0.35' },
         superness:      { title: 'superness', default: '0.73' },
-        penType:        { title: 'pen type', default: '' },
-        drawingMode:    { title: 'mode', default: '' },
-        penX:           { title: 'pen x', default: '0.3' },
-        penY:           { title: 'pen y', default: '0.3' },
-        penAngle:       { title: 'pen angle', default: '' },
+
+        penSize:        { title: 'pen size', default: '0.3' },
         contrast:       { title: 'contrast', default: '1' }
     };
-    
+
     // enhance each object with a name (used as html/css id)
     Object.extended(params).each(function(item, i){
         params[item].name = function(){ return params[item].title.dasherize(); }
@@ -33,7 +35,8 @@ $(function () {
                     title: "Dimension",
                     items: [
                         params.boxHeight,
-                        params.unitWidth
+                        params.unitWidth,
+                        params.spacing
                     ]
                 },
                 {
@@ -43,7 +46,8 @@ $(function () {
                         params.meanHeight,
                         params.barHeight,
                         params.ascHeight,
-                        params.descHeight
+                        params.descHeight,
+                        params.overshoot
                     ]
                 },
                 {
@@ -51,26 +55,18 @@ $(function () {
                     items: [
                         params.horizontalInc,
                         params.verticalInc,
+                        params.apperture,
                         params.superness
                     ]
                 },
                 {
                     title: "Drawing mode",
                     items: [
-                        params.drawingMode,
-                        params.penX,
-                        params.penY,
-                        params.penAngle,
+                        params.penSize,
                         params.contrast,
                     ]
                 }
             ],
-            action: function(html) { $('#parameter-panel').append(html) }
-        },
-        // parameter panel, pen
-        {
-            name: 'parameterPanelAdjusterPen',
-            items: [ params.penType ],
             action: function(html) { $('#parameter-panel').append(html) }
         }
     ]
@@ -84,7 +80,7 @@ $(function () {
         var html = $.mustache($('#' + template.name).html(), template);
         template.action(html);
     });
-    
+
     // single preview char chooser
     var sets = [];
     var number = 0;
@@ -102,16 +98,15 @@ $(function () {
             };
         });
     });
-    
+
     var charChooser = $.mustache($('#charChooser').html(), {
         sets : sets
     });
-        
+
     $('div.char-chooser').html(charChooser);
 
     // create a namespace for later use
     $.fn.metaflop = {
-    
+
     };
 });
-

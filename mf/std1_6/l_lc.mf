@@ -1,0 +1,21 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjichar("l",.2, asc#, 0);
+
+x1=x2=leftstemloc;
+
+y1=0;
+y2=h;
+
+
+penpos1(cont*px,0);
+penpos2(cont*px,0);
+
+
+penstroke z1e..z2e;
+
+
+penlabels(range 1 thru 30);
+
+endchar;

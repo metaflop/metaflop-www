@@ -1,0 +1,33 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("V",5, cap#, 0);
+
+
+x3l=leftstemloc-cont*px/2;
+x2r=w-x3l;
+
+(x4l+x1r)/2=.5w;
+
+x1r-x4l=corner;
+
+y1=y4=0;
+y2=y3=h;
+
+
+
+alphav=diag_ratio(1,cont*px,h,x2r-x1r);
+
+penpos1(alphav*px,0);
+penpos2(alphav*px,0);
+penpos3(alphav*cont*px,0);
+penpos4(alphav*cont*px,0);
+
+z0=whatever[z3r,z4r]=whatever[z1l,z2l];
+
+
+fill z3l--z4l--z1r--z2r--z2l--z0--z3r--cycle;
+
+penlabels(range 0 thru 30);
+
+endchar;

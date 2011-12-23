@@ -1,0 +1,54 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("Q",6, cap#, 0);
+
+x8r=if (incx>.5): .5w else: x1r+incx*(x6r-x1r) fi;
+x7r=if (incx>.5): .5w else: x6r-incx*(x6r-x1r) fi;
+y1r=if (incy>.5): .5h else: y8r-incy*(y8r-y3r) fi;
+y2r=if (incy>.5): .5h else: y3r+incy*(y8r-y3r) fi;
+
+x8r=x3r; x7r=x4r;
+y4r=y3r=h-px;
+y8r=y7r=px;
+top y3=h;
+top y4=h;
+bot y8=0;
+bot y7=0;
+
+
+
+x1=leftstemloc;
+x6=w-x1;
+x6=x5;
+y2r=y5r;
+y6r=y1r;
+x2=x1;
+x1r=x2r=x1+(cont*px/2);
+x6r=x5r=x6-(cont*px/2);
+
+
+ang:=angle(z6r-z7r);
+
+
+penpos1(whatever,if (superness=.5): -(ang-90)/2 else: 0 fi);
+penpos2(whatever,if (superness=.5): ((ang-90)/2) else: 0 fi);
+penpos3(whatever,if (superness=.5): -(180-ang)/2 else: -90 fi);
+penpos4(whatever,if (superness=.5): (180-ang)/2 else: -90 fi);
+penpos5(whatever,if (superness=.5): -(ang-90)/2 else: 180 fi);
+penpos6(whatever,if (superness=.5): (ang-90)/2 else: 180 fi);
+penpos7(whatever,if (superness=.5): -(180-ang)/2 else: 90 fi);
+penpos8(whatever,if (superness=.5): (180-ang)/2 else: 90 fi);
+
+z10-z9=z1-z8;
+(z9+z10)/2=(z7+z6)/2;
+
+penpos9(px,angle(z9-z10)+90);
+penpos10(px,angle(z9-z10)+90);
+
+penstroke z9e--z10e;
+penstroke super_qr(4e,5e)---super_ql(6e,7e)---super_qr(8e,1e)---super_ql(2e,3e)---cycle;
+
+penlabels(1,2,3,4,5,6,7,8);
+
+endchar;

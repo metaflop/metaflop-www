@@ -1,0 +1,57 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("P",corr*4.5, cap#, 0);
+x11=x22=leftstemloc;
+x11r=x22r=x11+(cont*px/2);
+y11=0;
+y22=h;
+
+penpos11(whatever,0);
+penpos22(whatever,0);
+
+
+
+
+penstroke z11e---z22e;
+x14r=x13r-incx*(x13r-x11r);
+y12r=y10r+incy*(px-(h-px));
+y13r=y14r-incy*(px-(h-px));
+y10r=h-px=y9r;
+y14r=y8r=y14+.5px;
+y14=bar*h;
+if (y12r<y10r+.5(y14r-y10r)): y12r:=y10r+.5(y14r-y10r); fi
+if (y13r>y10r+.5(y14r-y10r)): y13r:=y14r-.5(y14r-y10r); fi
+
+x14r=x10r;
+top y10=h;
+y14=y8;
+y9=y10;
+
+
+x8=x11;
+x13=w-x11;%- if (bar>.5): (1/10)*(bar*h) else: 0 fi;
+x13=x12;
+
+x9=x8;
+x13r=x12r=x13-(cont*px/2);
+
+
+ang:=angle(z13r-z14r);
+
+
+penpos8(whatever,-90);
+penpos9(whatever,90);
+
+penpos10(whatever,if (superness=.5): (180-ang)/2 else: -90 fi);
+penpos12(whatever,if (superness=.5): -(ang-90)/2 else: 180 fi);
+penpos13(whatever,if (superness=.5): (ang-90)/2 else: 180 fi);
+penpos14(whatever,if (superness=.5): -(180-ang)/2 else: 90 fi);
+
+
+penstroke z9e---super_qr(10e,12e)---super_ql(13e,14e)--z8e;
+
+
+penlabels(range 1 thru 30);
+
+endchar;

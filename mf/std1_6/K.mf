@@ -1,0 +1,47 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("K",corr*5, cap#, 0);
+
+
+
+x5l=x6l=leftstemloc-cont*px/2;
+x2r=w-x6l;
+x1l=0;
+x4r=x2r;
+if (incx>.5): y1=h-incx*(h-.52*h); x3l=x5r;else: y1=h; x3l=0;fi;
+y5=y4r=h;
+y2=y6=0;
+y3=.52*h;
+
+
+penpos5(cont*px,0);
+penpos6(cont*px,0);
+alphak1=diag_ratio(1,cont*px,if (incx>.5):h-incx*(h-.52*h) else: h fi,x2r-x1l);
+alphak2=diag_ratio(1,px,y4r-y3,x4r-x3l);
+penpos3(alphak2*px,0);
+penpos4(alphak2*px,0);
+
+penpos1(alphak1*cont*px,0);
+penpos2(alphak1*cont*px,0);
+
+
+z34l=z4l+whatever*dir angle(z4r-z3r)=whatever[z5l,z6l];
+z34r=z4r+whatever*dir angle(z4r-z3r)=whatever[z5l,z6l];
+path ss; ss=z4l---z34l---z6l;
+path l; l=z2l---z1l;
+path r; r=z2r---z1r;
+
+z12l=l intersectionpoint ss;
+z12r=r intersectionpoint ss;
+%z12l=whatever[z3,z4]=whatever[z1l,z2l];
+%z12r=whatever[z3,z4]=whatever[z1r,z2r];
+
+fill z4l---z4r---z34r---z34l---cycle;
+penstroke z5e..z6e;
+fill z2l---z2r---z12r---z12l---cycle;
+
+
+penlabels(range 1 thru 30);
+
+endchar;

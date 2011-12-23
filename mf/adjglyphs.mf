@@ -1,0 +1,196 @@
+% MetaFlop
+% STANDARD 1.3
+% Routines for the font Adjuster from Simon Egli © 2011
+
+% Aditional parameters / hidden parameter list
+barheight#:=bar*cap#;	% Cross Bar (Upper)
+leftstemloc#:=0.2u#+s#+((cont*px#)/2);	% position of left stem
+letter_fit#:=0.2u#; % amount of letter fit
+shrink_fit:=.2u#;  % amount of shrink fit
+
+mode_setup;
+
+
+% definition of left and right-side bearings. To use in glyph after beginchar: normal_adjust_fit(-1.5u#,-1.5u#);
+
+ def normal_adjust_fit(expr left_adjustment,right_adjustment) = m := -hround(left_adjustment*hppp)-letter_fit; 
+ interim xoffset := -m; charwd := charwd+2letter_fit#+left_adjustment+right_adjustment; 
+ n := m+hround(charwd*hppp)-shrink_fit;
+ w := n-hround(right_adjustment*hppp)-letter_fit; enddef;
+
+
+%pixel conversions
+% metafont needs these pixel definitions to calculate the final dimensions of the parameter values
+define_pixels(s,u,letter_fit);
+define_blacker_pixels(px,py);
+define_good_x_pixels(leftstemloc);
+define_good_y_pixels(asc);
+define_good_y_pixels(des);
+define_good_y_pixels(cap);
+define_good_y_pixels(mean);
+define_good_y_pixels(corner);
+define_corrected_pixels(o);
+
+
+% Begin Charater macro
+def beginadjchar(expr code, unit_width, h, d) =
+ beginchar(code,unit_width*u#+s#,h,d);
+pickup adj_pen;
+enddef;
+
+def beginadjichar(expr code, unit_width, h, d) =
+ beginchar(code,2(unit_width*u#+s#+(cont*px#)/2),h,d);
+pickup adj_pen;
+enddef;
+
+
+% Box correction above incx .5
+
+if (incx > .5):
+corr:=(1-incx)+.5;
+else: corr:=1;
+fi
+
+
+
+
+%Fixed pen settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+pickup pencircle xscaled px yscaled py rotated 15;
+adj_pen:=savepen;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Pen angle macros
+def angledpen(expr a,b)=
+-(90-((180-(angle(a-b)))/2))   enddef; 
+
+streightpensize:=contrst*px;
+serif:=serifsize*u;
+
+def verticalpensize(expr a,b)=
+contrst*px/sind (90-(-(90-((180-angle(a-b))/2)) ))*sind 90 enddef;
+
+def incxb=
+incx/sind 90*sind 56 enddef;
+
+def incxs=
+incx/sind 90*sind 34 enddef;
+
+def angb =
+arcsin ((1/(sind 90)*sind 56)/(incx/((incx/sind 90)*sind 56))) enddef;
+
+vardef diag_ratio(expr a,b,y,c) =
+numeric aa_, bb_, cc_; bb_=b/y; cc_=c/y; aa_=a*a-bb_*bb_;
+(a*(cc_++sqrt aa_)-bb_*cc_)/aa_ enddef;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Superness macros
+%%Left curves (superness)
+def super_quarterl(suffix i,j,k) =
+ z.i{0,y.j-y.i}
+...(superness[x.j,x.i],superness[y.i,y.j]){z.j-z.i}
+...z.j{x.k-x.i,0} enddef;
+
+%%Right curves (superness)
+def super_quarterr(suffix i,j,k) =
+z.j{x.k-x.i,0}
+...(superness[x.j,x.k],superness[y.k,y.j]){z.k-z.j}
+...z.k{0,y.k-y.j} enddef;
+
+
+def super_ql(suffix i,j) =
+ z.i{0,y.j-y.i}
+...(superness[x.j,x.i],superness[y.i,y.j]){z.j-z.i}...z.j{x.j-x.i,0} enddef;
+
+%%Right curves (superness)
+def super_qr(suffix j,k) =
+z.j{x.k-x.j,0}
+...(superness[x.j,x.k],superness[y.k,y.j]){z.k-z.j}
+...z.k{0,y.k-y.j} enddef;
+
+%%Right interior curves (superness)
+def super_quarterri(suffix i,j,k) =
+z.j{x.k-x.i,0}
+...(supernessi[x.j,x.k],supernessi[y.k,y.j]){z.k-z.j}
+...z.k{0,y.k-y.j} enddef;
+
+%%Left interior curves (superness)
+def super_quarterli(suffix i,j,k) =
+ z.i{0,y.j-y.i}
+...(supernessi[x.j,x.i],supernessi[y.i,y.j]){z.j-z.i}
+...z.j{x.k-x.i,0} enddef;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Glyph inputs:
+
+
+input std1_6/A
+input std1_6/B
+input std1_6/C
+input std1_6/D
+input std1_6/E
+input std1_6/F
+input std1_6/G
+input std1_6/H
+input std1_6/I 
+input std1_6/J
+input std1_6/K
+input std1_6/L
+input std1_6/M
+input std1_6/N
+input std1_6/O
+input std1_6/P
+input std1_6/Q
+input std1_6/R
+input std1_6/S
+input std1_6/T
+input std1_6/U
+input std1_6/V
+input std1_6/W
+input std1_6/X
+input std1_6/Y
+input std1_6/Z
+input std1_6/a_lc
+input std1_6/b_lc
+input std1_6/c_lc
+input std1_6/d_lc
+input std1_6/e_lc
+input std1_6/f_lc
+input std1_6/g_lc
+input std1_6/h_lc
+input std1_6/i_lc
+input std1_6/j_lc
+input std1_6/k_lc
+input std1_6/l_lc
+input std1_6/m_lc
+input std1_6/n_lc
+input std1_6/o_lc
+input std1_6/p_lc
+input std1_6/q_lc
+input std1_6/r_lc
+input std1_6/s_lc
+input std1_6/t_lc
+input std1_6/u_lc
+input std1_6/v_lc
+input std1_6/w_lc
+input std1_6/x_lc
+input std1_6/y_lc
+input std1_6/z_lc
+input std1_6/cifrao
+input std1_6/comma
+input std1_6/dot
+input std1_6/excl
+
+font_quad:=10u#+0s#;
+font_normal_space:=4u#+.2s#;
+font_normal_stretch:=0u#;
+font_normal_shrink:=0u#;
+
+
+
+%ligtable "L": "O" =: oct"014";   % USE THIS FOR LIGATURES OR SPECIAL CHARACTERS
+%font_identifier:="FRAN" if slant<>0: & "SL" fi;
+%font_coding_scheme:="ABCDEFGHIJKLMNOPQRSTUVWXYZ only";
+

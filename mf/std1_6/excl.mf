@@ -1,0 +1,28 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjichar("!",0.2, cap#, 0);
+
+x4=x3=leftstemloc;
+y4-y3=1.2*cont*px;
+y3=0;
+y5=y6=.5(y4+y3);
+x5-x6=1.2*cont*px;
+.5[x5,x6]=leftstemloc;
+
+x1=x2=leftstemloc;
+
+y1=y4+1/7h;
+y2=h;
+
+
+penpos1(cont*px,0);
+penpos2(cont*px,0);
+
+
+penstroke z1e..z2e;
+fill super_qr(4,5)---super_ql(5,3)---super_qr(3,6)---super_ql(6,4)---cycle;
+
+penlabels(range 1 thru 30);
+
+endchar;

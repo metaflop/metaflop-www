@@ -1,0 +1,33 @@
+% MetaFlop
+% 10-point STANDARD 1.6
+
+%%%%% DIMENSION %%%%%%
+
+font_size:=10pt#;  % font size  / nicht verstellbar  		
+ht#:=10pt#;      % box height / nicht verstellbar		
+u#:=1.5pt#;      % unit widht 					$ 0pt / 5pt
+s#:=0.15u#;             % unsichtbar machen / nicht verstellbar
+o#:=0pt#;	        % ist noch nicht funktional	
+px#:=0.2pt#;     % pen width 					$ 0pt / 5pt 
+py#:=px#;		% unsichtbar machen / nicht verstellbar
+
+%%%%% PROPORTION %%%%%%
+
+cap#:=0.9ht#;   % cap heigt					$ 0ht / 1ht	
+mean#:=0.7ht#;   % mean height					$ 0ht / 1ht	
+bar:=0.53;       % bar height					$ 0ht / 1ht
+asc#:=0.97ht#;    % ascender height				$ 0ht / 1ht	
+des#:=0.35ht#;    % descender heigt				$ 0ht / 1ht	
+
+%%%%% SHAPE %%%%%
+
+incx:=0.5;       % horizontal increase				$ 0 / 1	
+incy:=0.5;       % vertical increase				$ 0 / 1
+appert:=0.7;     % apperture 					$ 0 / 1
+cont:=1.0;       % contrast					$ 1 / 20
+superness:=0.74; % superness					$ 0 / 2	
+corner#:=0.2pt#; % corner   standartwert = px			$ 0pt / 10pt
+
+
+input adjglyphs;
+bye;

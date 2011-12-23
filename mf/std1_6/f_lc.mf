@@ -1,0 +1,108 @@
+% MetaFlop
+% Standard 1.3
+
+ beginadjchar("f",3.25, asc#, 0);
+
+ normal_adjust_fit(-0.25u#,-0.25u#);
+
+if (incx<=.5): incf:=.51; else: incf:=incx; fi 
+
+
+x9r= if (incf>.5): x12r+((w-(leftstemloc-.5(px*cont)+.5px))-x12r) else: w-(leftstemloc-.5(cont*px)+px) fi;
+
+
+
+
+x12r=if (incf>.5):x14r+incf*(w-(leftstemloc-.5(cont*px)+px)-x14r)else: x14r+.5*(x9r-x14r) fi ;
+
+y12r=h-px;
+if (h>w):y10r=y12r-(incy*((w-leftstemloc+.5(cont*px)-px)-(.5w))) else: 
+y10r=y12r+incy*(px-y12r) fi;
+
+
+
+
+
+y12l=h;
+
+
+x14=(.5w);
+x14=x13;
+
+
+
+
+
+y10r=y13r;
+
+x10=x9;
+x9r=x10r=x9-(px/2);
+
+y14r=y9r=0;
+x14r=x13r=x14+(cont*px/2);
+
+x11r=x12r;
+y11l=h;
+y12r=y11r;
+
+x15=1.5*leftstemloc-.5(cont*px); % width of bar (affecting sidebearings)
+x16=w-x15;
+y15r=y16r=mean;
+
+
+
+
+
+
+ang:=(angle(z12r-z13r));
+penpos9(whatever,0);
+penpos10(whatever,if (superness=.5): -((ang-90)/2) else: 0 fi);
+penpos11(whatever,if (superness=.5): (180-ang)/2 else: -90 fi);
+penpos12(whatever,if (superness=.5): -(180-ang)/2 else: -90 fi);
+penpos13(whatever,if (superness=.5): -(angle(z13r-z12r)-180)/2 else: 180 fi);
+penpos14(whatever,180);
+penpos15(px,90);
+penpos16(px,90);
+penstroke z15e---z16e;
+
+if (superness=.5): penstroke z11e---super_qr(12e,13e)---z14e; else: penstroke super_qr(12e,13e)---z14e; fi
+
+
+
+if (incf>.5):
+path tl; tl = z9l---super_ql(10l,11l);
+path ap; ap = (w-(leftstemloc-.5(cont*px)),infinity)---(w-(leftstemloc-.5(cont*px)),-infinity);
+path v; v = z9r---super_ql(10r,11r);
+
+z100=ap intersectionpoint tl;
+
+numeric t,u; (t,u)=ap intersectiontimes tl;
+
+z101=z100+whatever*(dir(angle(direction u of tl)+90));
+y101=0;
+path m; numeric t,u; (t,u)=((z100--z101) intersectiontimes (v));
+m = subpath (u,infinity) of (v);
+
+path ss; numeric t,u; (t,u)=(ap intersectiontimes tl);
+ss = subpath (infinity,u) of tl;
+
+fill ss---m---cycle;
+
+else:
+path tl; tl = z9l---super_ql(10l,11l);
+path ap; ap = (0,y15r-appert*(y15r-y12r))---(w,y15r-appert*(y15r-y12r));
+path v; v = z9r---super_ql(10r,11r);
+z100=ap intersectionpoint tl;
+path x; numeric t,u; (t,u)=ap intersectiontimes tl;
+z101=z100+whatever*(dir(angle(direction u of tl)+90));
+x101=0;
+path m; numeric t,u; (t,u)=((z100--z101) intersectiontimes v);
+m = subpath (u,infinity) of v;
+path ss; numeric t,u; (t,u)=(ap intersectiontimes tl);
+ss = subpath (infinity,u) of tl;
+fill ss---m---cycle;
+fi
+
+penlabels(range 1 thru 80);
+
+endchar;

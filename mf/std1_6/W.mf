@@ -1,0 +1,58 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("W",7, cap#, 0);
+
+
+x3l=leftstemloc-cont*px/2;
+x2r=.65w;
+
+(x4l+x1r)/2=x3l+.5(x2r-x3l);
+
+x1r-x4l=corner;
+
+y1=y4=0;
+y2=y3=h;
+
+
+
+alphaw:=diag_ratio(1,cont*px,h,x2r-x1r);
+
+penpos1(alphaw*px,0);
+penpos2(alphaw*px,0);
+penpos3(alphaw*cont*px,0);
+penpos4(alphaw*cont*px,0);
+
+z0=whatever[z3r,z4r]=whatever[z1l,z2l];
+
+
+fill z3l--z4l--z1r--z2r--z2l--z0--z3r--cycle;
+
+x13l=.35w;
+x12r=w-x3l;
+
+(x14l+x11r)/2=x13l+.5(x12r-x13l);
+
+x11r-x14l=corner;
+
+y11=y14=0;
+y12=y13=h;
+
+
+
+alphav1:=diag_ratio(1,cont*px,h,x12r-x11r);
+
+penpos11(alphav1*px,0);
+penpos12(alphav1*px,0);
+penpos13(alphav1*cont*px,0);
+penpos14(alphav1*cont*px,0);
+
+z10=whatever[z13r,z14r]=whatever[z11l,z12l];
+
+
+fill z13l--z14l--z11r--z12r--z12l--z10--z13r--cycle;
+
+
+penlabels(range 0 thru 30);
+
+endchar;

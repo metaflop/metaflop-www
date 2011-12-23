@@ -1,0 +1,36 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("F",4.5, cap#, 0);
+
+
+x1=x2=leftstemloc;
+x1r=x2r=x1+(cont*px/2);
+x1=x3=x7;
+x4=w-x1l;
+x8=w-x3;
+y1=0;
+top y3=h;
+top y4=h;
+y2=h;
+
+y3l=y4l=y3-px/2;
+
+
+y7=y8=bar*h;
+y7l=y8l=y7-px/2;
+
+penpos1(whatever,0);
+penpos2(whatever,0);
+penpos3(whatever,90);
+penpos4(whatever,90);
+penpos7(whatever,90);
+penpos8(whatever,90);
+
+penstroke z1e..z2e;
+penstroke z3e..z4e;
+penstroke z7e..z8e;
+
+penlabels(range 1 thru 30);
+
+endchar;

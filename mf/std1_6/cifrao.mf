@@ -1,0 +1,199 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("?",corr*4.8, cap#, 0);
+
+
+x8r=if (incx>.5): x7r else: (leftstemloc+(cont*px/2))+incx*(x6r-(leftstemloc+(cont*px/2))) fi;
+x7r=x6r-incx*(x6r-(leftstemloc+(cont*px/2)));
+y1r=if (incy>.5): y8r-.5*(y8r-y3r) else: y8r-incy*(y8r-y3r) fi;
+y5r=if (incy>.5): y3r+.5*(y8r-y3r) else: y3r+incy*(y8r-y3r) fi;
+
+x8r=x3r; x7r=x4r;
+y4r=y3r=(.52h)-.5px;
+y8r=y7r=px;
+y3=(.52h);
+y4=(.52h);
+bot y8=0;
+bot y7=0;
+
+if (incx>.5):
+x1=x7r-((w-(leftstemloc-(cont*px/2)+.5px))-x7r);
+else:
+x1=leftstemloc-(cont*px/2)+.5px;
+fi
+
+x6=w-leftstemloc;
+x6=x5;
+y2r=h;
+y6r=y1r;
+x2=x1;
+x1r=x2r=x1+.5px;
+x6r=x5r=x6-(cont*px/2);
+x55=x56=.5w;
+y55=h+px;
+y56=-px;
+
+ang:=angle(z6r-z7r);
+ 
+
+penpos1(whatever,if (superness=.5): -(ang-90)/2 else: 0 fi);
+penpos2(whatever,if (superness=.5): ((ang-90)/2) else: 0 fi);
+penpos3(whatever,if (superness=.5): -(180-ang)/2 else: -90 fi);
+penpos4(whatever,if (superness=.5): (180-ang)/2 else: -90 fi);
+penpos5(whatever,if (superness=.5): -(ang-90)/2 else: 180 fi);
+penpos6(whatever,if (superness=.5): (ang-90)/2 else: 180 fi);
+penpos7(whatever,if (superness=.5): -(180-ang)/2 else: 90 fi);
+penpos8(whatever,if (superness=.5): (180-ang)/2 else: 90 fi);
+penpos55(px,0);
+penpos56(px,0);
+
+penstroke z56e---z55e;
+%draw super_qr(4r,5r);
+%draw super_qr(4l,5l);
+penstroke super_ql(6e,7e);%---super_ql(2e,3e)---cycle;
+
+
+
+x18r= x10r+incx*(x6r-x10r);
+x17r=if (incx>.5): x18r else: x6r-incx*(x6r-x10r) fi;
+y10r=if (incy>.5): y18r-.5*(y18r-y13r) else: y18r-incy*(y18r-y13r) fi;
+y12r=if (incy>.5): y13r+.5*(y18r-y13r) else: y13r+incy*(y18r-y13r) fi;
+
+x18r=x13r; x17r=x14r;
+y14r=y13r=h-px;
+y18r=y17r=(.52h)+.5px;
+top y13=h;
+top y14=h;
+y18=(.52h);
+y17=(.52h);
+
+
+
+x10=leftstemloc+s;
+x16=(w-x1)-s;
+x16=x15;
+y12r=y15r;
+y16r=0;
+x12=x10;
+x10r=x12r=x10+(cont*px/2);
+x16r=x15r=x16-.5px;
+
+
+ang:=angle(z13r-z10r);
+
+
+penpos10(whatever,if (superness=.5): -(ang-90)/2 else: 0 fi);
+penpos12(whatever,if (superness=.5): ((ang-90)/2) else: 0 fi);
+penpos13(whatever,if (superness=.5): -(180-ang)/2 else: -90 fi);
+penpos14(whatever,if (superness=.5): (180-ang)/2 else: -90 fi);
+penpos15(whatever,if (superness=.5): -(ang-90)/2 else: 180 fi);
+penpos16(whatever,if (superness=.5): (ang-90)/2 else: 180 fi);
+penpos17(whatever,if (superness=.5): -(180-ang)/2 else: 90 fi);
+penpos18(whatever,if (superness=.5): (180-ang)/2 else: 90 fi);
+
+
+%draw super_qr(14r,15r);
+%draw super_qr(14l,15l);
+penstroke super_ql(12e,13e);%---cycle;
+%fill z17r---z3l---z4r---z17l---cycle;
+
+if (incx>.5):
+
+path tl; tl = super_qr(14l,15l);
+path ap; ap = ((w-(leftstemloc-(cont*px/2)+.5px))-s,infinity)---((w-(leftstemloc-(cont*px/2)+.5px))-s,-infinity);
+path v; v = super_qr(14r,15r);
+
+z100=ap intersectionpoint tl;
+
+numeric t,u; (t,u)=ap intersectiontimes tl;
+
+z101=z100+whatever*(dir(angle(direction u of tl)+90));
+y101=0;
+path r; numeric t,u; (t,u)=((z100--z101) intersectiontimes v);
+r = subpath (u,0) of v;
+
+path ss; numeric t,u; (t,u)=(ap intersectiontimes tl);
+ss = subpath (0,u) of tl;
+
+fill ss---r---cycle;
+
+path dtl; dtl = super_qr(8l,1l);
+path dap; dap = (x12l,infinity)---(x12l,-infinity);
+path dv; dv = super_qr(8r,1r);
+
+z98=dap intersectionpoint dtl;
+
+numeric t,u; (t,u)=dap intersectiontimes dtl;
+
+z99=z98+whatever*(dir(angle(direction u of dtl)+90));
+y99=h;
+path dr; numeric t,u; (t,u)=((z98--z99) intersectiontimes dv);
+dr = subpath (u,0) of dv;
+
+path ds; numeric t,u; (t,u)=(dap intersectiontimes dtl);
+ds = subpath (0,u) of dtl;
+
+fill ds---dr---cycle;
+
+
+
+path ctl; ctl = super_qr(18l,10l);
+path ctr; ctr = super_qr(18r,10r);
+path cbl; cbl = super_qr(4l,5l);
+path cbr; cbr = super_qr(4r,5r);
+path c; c = (.5w,infinity)---(.5w,-infinity);
+path tl; numeric t,u; (t,u)=ctl intersectiontimes c;
+tl = subpath (t,infinity) of ctl;
+path tr; numeric t,u; (t,u)=ctr intersectiontimes c;
+tr = subpath (infinity,t) of ctr;
+fill tl---tr---cycle;
+
+
+path bl; numeric t,u; (t,u)=cbl intersectiontimes c;
+bl = subpath (t,infinity) of cbl;
+path br; numeric t,u; (t,u)=cbr intersectiontimes c;
+br = subpath (infinity,t) of cbr;
+fill bl---br---cycle;
+penstroke z5e---super_ql(6e,7e)---z8e;
+penstroke z10e---super_ql(12e,13e)---z14e;
+else:
+
+penstroke z3e---super_qr(4e,5e)---super_ql(6e,7e)---z8e;
+penstroke z17e---super_qr(18e,10e)---super_ql(12e,13e)---z14e;
+path tl; tl = super_qr(14l,15l)---z16l;
+path ap; ap = (0,y3l+appert*(y13l-y18r))---(w,y3l+appert*(y13l-y18r));
+path v; v = super_qr(14r,15r)---z16r;
+z100=ap intersectionpoint tl;
+path x; numeric t,u; (t,u)=ap intersectiontimes tl;
+z101=z100+whatever*(dir(angle(direction u of tl)+90));
+x101=0;
+path r; numeric t,u; (t,u)=((z100--z101) intersectiontimes v);
+r = subpath (u,0) of v;
+path ss; numeric t,u; (t,u)=(ap intersectiontimes tl);
+ss = subpath (0,u) of tl;
+fill ss---r---cycle;
+
+path bl; bl = super_qr(8l,1l)---z2l;
+path bap; bap = (0,y3r-appert*(y13l-y18r))---(w,y3r-appert*(y13l-y18r));
+path bv; bv = super_qr(8r,1r)---z2r;
+z98=bap intersectionpoint bl;
+path x; numeric t,u; (t,u)=bap intersectiontimes bl;
+z99=z98+whatever*(dir(angle(direction u of bl)+90));
+x99=w;
+path br; numeric t,u; (t,u)=((z98--z99) intersectiontimes bv);
+br = subpath (u,0) of bv;
+path bs; numeric t,u; (t,u)=(bap intersectiontimes bl);
+bs = subpath (0,u) of bl;
+fill bs---br---cycle;
+
+fi
+
+
+
+
+
+
+penlabels(range 1 thru 20);
+
+endchar;

@@ -1,0 +1,60 @@
+% MetaFlop
+% Standard 1.3
+
+beginadjchar("M",6, cap#, 0);
+
+
+x15l=x16l=leftstemloc-cont*px/2;
+x13r=x14r=w-x15l;
+x15r=x16r=x15+(px/2);
+x13l=x14l=x14r-cont*px;
+
+y15=y13=0;
+y16=y14=h;
+
+
+
+
+penpos15(whatever,0);
+penpos16(whatever,0);
+penpos13(whatever,0);
+penpos14(whatever,0);
+
+
+penstroke z15e..z16e;
+penstroke z13e..z14e;
+
+
+
+x3l=x16r-px;
+
+
+(x4l+x1r)/2=(x16r+x13l)/2;
+x2r=x14l+px;
+x1r-x4l=corner;
+
+y1=y4=0;
+y2=y3=h;
+
+
+
+alpham=diag_ratio(1,cont*px,h,x3l-x4l);
+
+
+
+penpos1(alpham*px,0);
+penpos2(alpham*px,0);
+penpos3(alpham*cont*px,0);
+penpos4(alpham*cont*px,0);
+
+z0=whatever[z3r,z4r]=whatever[z1l,z2l];
+
+
+fill z3l--z4l--z1r--z2r--z2l--z0--z3r--cycle;
+
+
+
+
+penlabels(range 0 thru 30);
+
+endchar;

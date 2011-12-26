@@ -119,6 +119,6 @@ w:=x100+(leftstemloc-.5(cont*px));
 fi
 
 
-penlabels(range 1 thru 8);
+% penlabels(range 1 thru 8);
 
 endchar;

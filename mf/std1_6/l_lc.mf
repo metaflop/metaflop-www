@@ -16,6 +16,6 @@ penpos2(cont*px,0);
 penstroke z1e..z2e;
 
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

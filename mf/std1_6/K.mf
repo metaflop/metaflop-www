@@ -42,6 +42,6 @@ penstroke z5e..z6e;
 fill z2l---z2r---z12r---z12l---cycle;
 
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

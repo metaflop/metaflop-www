@@ -23,6 +23,6 @@ penpos2(cont*px,0);
 penstroke z1e..z2e;
 fill super_qr(4,5)---super_ql(5,3)---super_qr(3,6)---super_ql(6,4)---cycle;
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

@@ -5,6 +5,10 @@ require 'sass'
 enable :sessions
 set :logging, :true if development?
 
+configure do
+  mime_type :otf, 'font/opentype'
+end
+
 get '/' do
     session[:id] ||= SecureRandom.urlsafe_base64
 
@@ -27,10 +31,21 @@ get '/preview/:type' do |type|
     mf = Metafont.new(args)
     method = "preview_#{type}"
     if mf.respond_to? method
-        image = mf.method("preview_#{type}").call
+        image = mf.method(method).call
         [image ? 200 : 404, { 'Content-Type' => 'image/gif' }, image]
     else
         [404, { 'Content-Type' => 'text/html' }, "The preview type could not be found"]
+    end
+end
+
+get '/font/:type' do |type|
+    mf = Metafont.new
+    method = "font_#{type}"
+    if mf.respond_to? method
+        attachment 'metaflop.otf'
+        file = mf.method(method).call
+    else
+        [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]
     end
 end
 
@@ -43,7 +58,6 @@ class Metafont
         :text,
 
         :unit_width,
-        :spacing,
         :cap_height,
         :mean_height,
         :bar_height,
@@ -62,7 +76,6 @@ class Metafont
     # the mapping between the defined params in the mf file and this class' properties
     MF_MAPPINGS = {
         'u#' => :unit_width,
-        's#' => :spacing,
         'cap#' => :cap_height,
         'mean#' => :mean_height,
         'bar' => :bar_height,
@@ -82,7 +95,7 @@ class Metafont
     attr_accessor *VALID_OPTIONS_KEYS
 
     # initialize with optional options defined in VALID_OPTIONS_KEYS
-    def initialize(args)
+    def initialize(args = {})
         args = options.merge(args)
         VALID_OPTIONS_KEYS.each do |key|
             instance_variable_set("@#{key}".to_sym, args[key])
@@ -97,12 +110,33 @@ class Metafont
 
     # returns an gif image for a single character preview
     def preview_single
-        char_number = @char_number.to_s.rjust(2, '0')
-        generate(nil, 'gftodvi adj.2602gf', char_number)
+        generate(
+            post: 'gftodvi adj.2602gf',
+            convert_svg: "-density 60",
+            convert_gif: "-chop 0x15 -extent 'x315'",
+            char_number: char_number
+        )
+    end
+
+    def preview_chart
+        generate(
+            pre: %Q{rm -rf #{@out_dir}/* && cp -r *.mf std1_6 #{@out_dir}},
+            post: %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
+            convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize 'x315'"
+        )
     end
 
     def preview_typewriter
-        generate(%Q{cp *.mf #{@out_dir}}, %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"})
+        generate(
+            pre: %Q{rm -rf #{@out_dir}/* && cp -r *.mf std1_6 #{@out_dir}},
+            post: %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
+            convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize '695'"
+        )
+    end
+
+    def font_otf
+        `cd mf && perl mf2pt1.pl adj.mf`
+        File.read('mf/adj.otf')
     end
 
     # returns the metafont parameter instructions (aka adj.mf)
@@ -133,17 +167,27 @@ class Metafont
     end
 
     # generates the image for the specified tool chain
-    # @pre: tool chain that gets executed in the mf dir
-    # @post: tool chain that gets executed in the tmp output dir
-    def generate(pre, post, char_number = nil)
+    #
+    # @param options [Hash] optional parameters
+    # @option options [String] :pre tool chain that gets executed in the mf dir
+    # @option options [String] :post tool chain that gets executed in the tmp output dir
+    # @option options [String] :convert_svg parameters for the 'convert' task for the svg image
+    # @option options [String] :convert_gif parameters for the 'convert' task for the gif image
+    # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
+    # @option options [String] :char_number the nth character
+    def generate(options)
         pre = "#{pre} &&" if pre
+        char_number = options[:char_number]
 
         if char_number
+            char_number = char_number.to_s.rjust(2, '0')
             svg_name = "adj-#{char_number}.svg"
         else
-            svg_name = "adj.svg"
             char_number = "01"
+            svg_name = "adj.svg"
         end
+
+        convert = options[:convert_custom] || "convert #{options[:convert_svg]} #{svg_name} #{options[:convert_gif]}"
 
         success = system(
                     %Q{cd mf > /dev/null &&
@@ -153,13 +197,13 @@ class Metafont
         # don't bother if metafont failed
         if success
             command = %Q{cd mf &&
-                         #{pre}
+                         #{options[:pre]}
                          cd #{@out_dir} &&
-                         #{post} > /dev/null &&
-                         dvisvgm -TS0.75 -M16 --bbox=min -n -p #{char_number} adj.dvi > /dev/null &&
-                         convert -trim +repage -resize 'x315' #{svg_name} gif:-}
+                         #{options[:post]} > /dev/null &&
+                         dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
+                         #{convert} gif:-}
 
-                        puts command
+            puts command
             # hide all output but the last one, which returns the image
             `#{command}`
         else

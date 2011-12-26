@@ -32,6 +32,6 @@ fill z3l--z4l--z1r--z2r--z2l--z0--z3r--cycle;
 penstroke z6e---z5e;
 
 
-penlabels(range 0 thru 30);
+% penlabels(range 0 thru 30);
 
 endchar;

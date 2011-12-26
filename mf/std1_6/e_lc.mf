@@ -115,7 +115,7 @@ fill z8r---z8l---ss---r---cycle;
 fi
 
 
-penlabels(range 1 thru 100);
+% penlabels(range 1 thru 100);
 
 endchar;
 

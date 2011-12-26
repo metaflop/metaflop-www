@@ -10,6 +10,12 @@ shrink_fit:=.2u#;  % amount of shrink fit
 
 mode_setup;
 
+def makebox(text r) = 
+for y=0,h.o_,-d.o_: r((0,0),(0,0)); endfor % horizontals 
+for x=0,w:	r((0,0),(0,0)); endfor % verticals 
+if charic<>0: r((w+charic*hppp,h.o_),(w+charic*hppp,.5h.o_)); fi 
+enddef;
+
 
 % definition of left and right-side bearings. To use in glyph after beginchar: normal_adjust_fit(-1.5u#,-1.5u#);
 

@@ -19,6 +19,6 @@ y9=y8-epsilon;
 fill z7---super_ql(5,9)---z8---super_qr(8,7)---cycle;
 fill super_qr(4,5)---super_ql(5,3)---super_qr(3,6)---super_ql(6,4)---cycle;
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

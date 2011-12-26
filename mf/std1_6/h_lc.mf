@@ -49,7 +49,8 @@ if (cont>1.5): x1l:=x1r-px; fi
 
 penstroke z3e---super_ql(6e,7e)---super_qr(8e,1e);
 penstroke z2e---z4e;
-penlabels(1,2,3,4,5,6,7,8);
+
+% penlabels(1,2,3,4,5,6,7,8);
 
 endchar;
 

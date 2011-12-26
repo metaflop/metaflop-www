@@ -24,7 +24,7 @@ des#:=0.35ht#;    % descender heigt				$ 0ht / 1ht
 incx:=0.5;       % horizontal increase				$ 0 / 1	
 incy:=0.5;       % vertical increase				$ 0 / 1
 appert:=0.7;     % apperture 					$ 0 / 1
-cont:=1.0;       % contrast					$ 1 / 20
+cont:=1.0;       % contrast					$ 1 / 10
 superness:=0.74; % superness					$ 0 / 2	
 corner#:=0.2pt#; % corner   standartwert = px			$ 0pt / 10pt
 

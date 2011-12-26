@@ -209,6 +209,6 @@ fi
 
 
 
-penlabels(range 1 thru 20);
+% penlabels(range 1 thru 20);
 
 endchar;

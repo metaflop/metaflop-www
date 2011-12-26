@@ -3,7 +3,6 @@ $(function () {
     var params = {
         boxHeight:      { title: 'box height', html: '<div class="static-value">100%</div>' },
         unitWidth:      { title: 'unit width', default: '1.7' },
-        spacing:        { title: 'spacing', default: '0.1' },
 
         capHeight:      { title: 'cap height', default: '1' },
         meanHeight:     { title: 'mean height', default: '0.7' },
@@ -36,8 +35,7 @@ $(function () {
                     title: "Dimension",
                     items: [
                         params.boxHeight,
-                        params.unitWidth,
-                        params.spacing
+                        params.unitWidth
                     ]
                 },
                 {

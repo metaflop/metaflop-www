@@ -37,7 +37,7 @@ penpos6(px,90);				% CORRECT TO THE PROPER ANGLE
 fill z3l--z4l--z1r--z2r--z2l--z0--z3r--cycle;	% Here we use fill instead of penstroke
 penstroke z5e..z6e;				% here we were lazy so we used penstroke
 
-penlabels(range 0 thru 30);			% labeling of pen positions including l and r, on greyfont outputs
+% penlabels(range 0 thru 30);			% labeling of pen positions including l and r, on greyfont outputs
 
 % normal_adjust_fit(-0.5u#,-0.5u#); % sidebearings
 

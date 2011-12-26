@@ -53,6 +53,6 @@ z10=whatever[z13r,z14r]=whatever[z11l,z12l];
 fill z13l--z14l--z11r--z12r--z12l--z10--z13r--cycle;
 
 
-penlabels(range 0 thru 30);
+% penlabels(range 0 thru 30);
 
 endchar;

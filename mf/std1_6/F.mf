@@ -31,6 +31,6 @@ penstroke z1e..z2e;
 penstroke z3e..z4e;
 penstroke z7e..z8e;
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

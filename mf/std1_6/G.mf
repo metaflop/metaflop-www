@@ -161,7 +161,7 @@ fill a---z3l---z3r---b---cycle;
 fi
 
 
-penlabels(range 1 thru 80);
-%labels(range 1 thru 200);
+% penlabels(range 1 thru 80);
+% labels(range 1 thru 200);
 endchar;
 

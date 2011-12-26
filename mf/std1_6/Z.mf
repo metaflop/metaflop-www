@@ -43,6 +43,6 @@ fill z1l---z1r---z2r---z36---z6r---z6l---z5l---z14---cycle;
 else:
 fill z1l---z1r---z2r---z4r---z36---z6r---z6l---z5l---z3l---z14---cycle;
 fi
-penlabels(range 1 thru 64);
+% penlabels(range 1 thru 64);
 
 endchar;

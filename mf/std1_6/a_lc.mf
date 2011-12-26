@@ -140,6 +140,6 @@ fill ss---r---cycle;
 fi
 
 
-penlabels(range 1 thru 80);
+% penlabels(range 1 thru 80);
 
 endchar;

@@ -103,6 +103,6 @@ ss = subpath (infinity,u) of tl;
 fill ss---m---cycle;
 fi
 
-penlabels(range 1 thru 80);
+% penlabels(range 1 thru 80);
 
 endchar;

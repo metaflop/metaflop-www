@@ -52,6 +52,6 @@ penpos14(whatever,if (superness=.5): -(180-ang)/2 else: 90 fi);
 penstroke z9e---super_qr(10e,12e)---super_ql(13e,14e)--z8e;
 
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

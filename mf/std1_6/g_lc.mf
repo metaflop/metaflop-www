@@ -127,6 +127,6 @@ fill ss---r---z7r---z7l---cycle;
 fi
 
 
-penlabels(1,2,3,4,5,6,7,8);
-labels (range 50 thru 200);
+% penlabels(1,2,3,4,5,6,7,8);
+% labels (range 50 thru 200);
 endchar;

@@ -42,6 +42,6 @@ z0=whatever[z3r,z4r]=whatever[z1r,z2r];
 
 fill z1l--z1r--z0--z4r--z4l--z3l--z2l--cycle;
 
-penlabels(range 0 thru 30);
+% penlabels(range 0 thru 30);
 
 endchar;

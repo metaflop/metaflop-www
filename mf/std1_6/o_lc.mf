@@ -46,7 +46,7 @@ penpos8(whatever,if (superness=.5): (180-ang)/2 else: 90 fi);
 %draw super_qr(4l,5l);
 penstroke super_qr(4e,5e)---super_ql(6e,7e)---super_qr(8e,1e)---super_ql(2e,3e)---cycle;
 
-penlabels(1,2,3,4,5,6,7,8);
+% penlabels(1,2,3,4,5,6,7,8);
 
 endchar;
 

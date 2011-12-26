@@ -48,6 +48,6 @@ penstroke z11e---z22e;
 
 
 
-penlabels(range 1 thru 30);
+% penlabels(range 1 thru 30);
 
 endchar;

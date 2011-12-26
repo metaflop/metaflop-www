@@ -31,6 +31,6 @@ z7=z2l+whatever*dir(angle(z2l-z1l));
 fill z3l--z4l--z1l--z7--z6--z2r--z2l--z0--z3r--cycle;
 
 
-penlabels(range 0 thru 30);
+% penlabels(range 0 thru 30);
 
 endchar;

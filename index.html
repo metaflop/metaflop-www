@@ -42,7 +42,7 @@
                 {{/html}}
             </div>
             {{/items}}
-            
+
             </fieldset>
         {{/groups}}
     </script>
@@ -61,7 +61,7 @@
         </div>
         {{/items}}
     </script>
-    
+
     <script id="charChooser" type="text/x-html-template">
         <ul>
             {{#sets}}
@@ -81,20 +81,20 @@
 
         <div id="menu">
             <h2>Metaflop</h2>
-            
+
             <fieldset>
                 <legend>
                     <label>Typeface</label>font1</legend>
-                
+
                 <ul>
                     <li><a href="#">Information</a></li>
-                    <li><a href="#">Clear settings</a></li>
                     <li><a href="#">Reset</a></li>
                     <li><a href="#">Flop it!</a></li>
+                    <li><a href="/font/otf">Export font (.otf)</a></li>
                 </ul>
             </fieldset>
         </div>
-    
+
         <div id="live-panel">
             <img src="/img/typoglossary.png" />
         </div>
@@ -113,13 +113,13 @@
             <div id="preview-single" class="preview-box active">
                 <h2>Glyph</h2>
                 <div class="preview-loading-text">server action! updating glyph</div>
-           
+
                 <div class="preview-box-content">
                     <div class="preview-loading"></div>
                     <img src="/img/blank.png" class="preview-image" />
                     <a href="#" class="char-chooser left">&lt;</a>
                     <div class="char-chooser">
-                        
+
                     </div>
                     <a href="#" class="char-chooser right">&gt;</a>
                 </div>
@@ -127,7 +127,7 @@
             <div id="preview-chart" class="preview-box">
                 <h2>Chart</h2>
                 <div class="preview-loading-text">server action! updating chart</div>
-                
+
                 <div class="preview-box-content">
                     <div class="preview-loading"></div>
                     <img src="/img/blank.png" class="preview-image" />
@@ -136,7 +136,7 @@
             <div id="preview-typewriter" class="preview-box preview-box-fullwidth">
                 <h2>Typewriter</h2>
                 <div class="preview-loading-text">server action! updating text</div>
-                
+
                 <div class="preview-box-content">
                     <div class="preview-loading"></div>
                     <textarea id="param-text">Font design is in fact lots of fun, especially when you make mistakes.</textarea>
@@ -144,15 +144,14 @@
                     <img src="/img/blank.png" class="preview-image" />
                 </div>
             </div>
-            
+
         </div>
 
         <div id="loading"></div>
-    
+
     </div>
-    
+
 </div>
 
 </body>
 </html>
-

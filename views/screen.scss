@@ -291,8 +291,7 @@ a, span.action {
     
     .preview-box-content {
         margin: 0 $preview-box-spacing $preview-box-spacing 0;
-        background: $active_color;
-        border: 3px solid $active_color;
+        border: 3px solid lighten($active_color, 20%);
         width: $preview-box-content-width;
         height: $preview-box-content-width;
         overflow: hidden;
@@ -329,7 +328,7 @@ a, span.action {
     }
     
     &.active .preview-box-content {
-        background: none;        
+        border: 3px solid $active_color;
     }
 }
 

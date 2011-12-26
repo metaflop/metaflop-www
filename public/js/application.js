@@ -227,9 +227,11 @@ $(function () {
     charLinks.click(function(e) {
         e.preventDefault();
         
-        charLinks.removeClass('active');
-        $(this).addClass('active').blur();
-        previewImage();
+        if ($(this).parents('.preview-box.active').length > 0) {
+            charLinks.removeClass('active');
+            $(this).addClass('active').blur();
+            previewImage();
+        }
         
         return false;
     });

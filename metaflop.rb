@@ -114,7 +114,7 @@ class Metafont
     # returns an gif image for a single character preview
     def preview_single
         generate(
-            post: 'gftodvi adj.2602gf',
+            generate: 'gftodvi adj.2602gf',
             convert_svg: "-density 60",
             convert_gif: "-chop 0x15 -extent 'x315'",
             char_number: char_number
@@ -124,7 +124,7 @@ class Metafont
     def preview_chart
         cleanup_tmp_dir
         generate(
-            post: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
+            generate: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
             convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize 'x315'"
         )
     end
@@ -132,7 +132,7 @@ class Metafont
     def preview_typewriter
         cleanup_tmp_dir
         generate(
-            post: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
+            generate: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
             convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize '695'"
         )
     end
@@ -173,14 +173,12 @@ class Metafont
     # generates the image for the specified tool chain
     #
     # @param options [Hash] optional parameters
-    # @option options [String] :pre tool chain that gets executed in the mf dir
-    # @option options [String] :post tool chain that gets executed in the tmp output dir
+    # @option options [String] :generate tool chain that gets executed in the tmp output dir
     # @option options [String] :convert_svg parameters for the 'convert' task for the svg image
     # @option options [String] :convert_gif parameters for the 'convert' task for the gif image
     # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
     # @option options [String] :char_number the nth character
     def generate(options)
-        options[:pre] = "#{options[:pre]} &&" if options[:pre]
         char_number = options[:char_number]
 
         if char_number
@@ -200,11 +198,9 @@ class Metafont
 
         # don't bother if metafont failed
         if success
-            command = %Q{cd mf &&
-                         #{options[:pre]}
-                         cd #{@out_dir} &&
+            command = %Q{cd #{@out_dir} &&
                          echo "#{mf_args}" > adj.mf &&
-                         #{options[:post]} > /dev/null &&
+                         #{options[:generate]} > /dev/null &&
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
                          #{convert} gif:-}
 

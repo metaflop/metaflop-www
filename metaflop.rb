@@ -1,53 +1,80 @@
 require 'sinatra'
-require 'sinatra/reloader' if development?
+require 'sinatra/reloader'
 require 'sass'
+require 'mustache/sinatra'
 require 'fileutils'
 
-enable :sessions
-set :logging, :true if development?
+class App < Sinatra::Base
 
-configure do
-  mime_type :otf, 'font/opentype'
-end
+    configure do
+        require './views/layout'
+        register Mustache::Sinatra
 
-get '/' do
-    session[:id] ||= SecureRandom.urlsafe_base64
+        set :mustache, {
+            :views => './views',
+            :templates => './views'
+        }
 
-    File.read('index.html')
-end
+        mime_type :otf, 'font/opentype'
 
-get '/assets/css/screen.scss' do
-    scss :screen
-end
-
-get '/preview/:type' do |type|
-    # map all query params
-    args = { :out_dir => "/tmp/metaflop/#{session[:id]}" }
-    Metafont::VALID_OPTIONS_KEYS.each do |key|
-        # query params come in with dashes -> replace by underscores to match properties
-        param = params[key.to_s.gsub("_", "-")]
-        args[key] = param if param && !param.empty?
+        enable :sessions
     end
 
-    mf = Metafont.new(args)
-    method = "preview_#{type}"
-    if mf.respond_to? method
-        image = mf.method(method).call
-        [image ? 200 : 404, { 'Content-Type' => 'image/gif' }, image]
-    else
-        [404, { 'Content-Type' => 'text/html' }, "The preview type could not be found"]
+    configure :development do
+        register Sinatra::Reloader
+        set :logging, :true
     end
-end
 
-get '/font/:type' do |type|
-    mf = Metafont.new(:out_dir => "/tmp/metaflop/#{session[:id]}")
-    method = "font_#{type}"
-    if mf.respond_to? method
-        attachment 'metaflop.otf'
-        file = mf.method(method).call
-    else
-        [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]
+
+    get '/' do
+        session[:id] ||= SecureRandom.urlsafe_base64
+
+        File.read('index.html')
     end
+
+    get '/assets/css/:name.scss' do |name|
+        content_type :css
+        scss name.to_sym, :layout => false
+    end
+
+    get '/assets/js/:name' do |name|
+        content_type :js
+
+        @defaults = Metafont.new.mf_args_values
+
+        mustache name.to_sym, :layout => false
+    end
+
+    get '/preview/:type' do |type|
+        # map all query params
+        args = { :out_dir => "/tmp/metaflop/#{session[:id]}" }
+        Metafont::VALID_OPTIONS_KEYS.each do |key|
+            # query params come in with dashes -> replace by underscores to match properties
+            param = params[key.to_s.gsub("_", "-")]
+            args[key] = param if param && !param.empty?
+        end
+
+        mf = Metafont.new(args)
+        method = "preview_#{type}"
+        if mf.respond_to? method
+            image = mf.method(method).call
+            [image ? 200 : 404, { 'Content-Type' => 'image/gif' }, image]
+        else
+            [404, { 'Content-Type' => 'text/html' }, "The preview type could not be found"]
+        end
+    end
+
+    get '/font/:type' do |type|
+        mf = Metafont.new(:out_dir => "/tmp/metaflop/#{session[:id]}")
+        method = "font_#{type}"
+        if mf.respond_to? method
+            attachment 'metaflop.otf'
+            file = mf.method(method).call
+        else
+            [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]
+        end
+    end
+
 end
 
 class Metafont
@@ -103,7 +130,7 @@ class Metafont
         end
 
         # defaults
-        unless File.directory?(@out_dir)
+        if @out_dir && !File.directory?(@out_dir)
             Dir.mkdir(@out_dir)
             FileUtils.cp_r(Dir['mf/*'], "#{@out_dir}")
         end
@@ -143,9 +170,9 @@ class Metafont
         File.read("#{@out_dir}/adj.otf")
     end
 
-    # returns the metafont parameter instructions (aka adj.mf)
+    # returns the metafont parameter instructions (aka adj.mf) as an array (each param)
     def mf_args
-        if !@mf_args
+        unless @mf_args
             @mf_args = File.readlines("mf/adj.mf")
                 .delete_if do |x|            # remove comment and empty lines
                     stripped = x.strip
@@ -164,10 +191,18 @@ class Metafont
                     end
                     pair
                 end
-                .join
         end
 
         @mf_args
+    end
+
+    def mf_args_values
+        values = {}
+        mf_args.each do |x|
+            splits = x.delete('#').split(':=')
+            values[splits[0]] = splits[1].to_f
+        end
+        values
     end
 
     # generates the image for the specified tool chain
@@ -193,13 +228,13 @@ class Metafont
 
         success = system(
                     %Q{cd mf > /dev/null &&
-                    mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args}" > /dev/null}
+                    mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args.join}" > /dev/null}
                   )
 
         # don't bother if metafont failed
         if success
             command = %Q{cd #{@out_dir} &&
-                         echo "#{mf_args}" > adj.mf &&
+                         echo "#{mf_args.join}" > adj.mf &&
                          #{options[:generate]} > /dev/null &&
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
                          #{convert} gif:-}

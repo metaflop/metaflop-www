@@ -5,4 +5,6 @@ tmp_dir = "/tmp/metaflop"
 FileUtils.rm_rf(tmp_dir)
 Dir.mkdir(tmp_dir)
 
-run Sinatra::Application
+use Rack::ShowExceptions
+
+run App

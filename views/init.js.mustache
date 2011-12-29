@@ -2,23 +2,23 @@ $(function () {
 
     var params = {
         boxHeight:      { title: 'box height', html: '<div class="static-value">100%</div>' },
-        unitWidth:      { title: 'unit width', default: '1.7' },
+        unitWidth:      { title: 'unit width', default: '{{defaults.u}}' },
 
-        capHeight:      { title: 'cap height', default: '1' },
-        meanHeight:     { title: 'mean height', default: '0.7' },
-        barHeight:      { title: 'bar height', default: '0.5' },
-        ascHeight:      { title: 'ascender height', default: '0.97' },
-        descHeight:     { title: 'descender height', default: '0.35' },
+        capHeight:      { title: 'cap height', default: '{{defaults.cap}}' },
+        meanHeight:     { title: 'mean height', default: '{{defaults.mean}}' },
+        barHeight:      { title: 'bar height', default: '{{defaults.bar}}' },
+        ascHeight:      { title: 'ascender height', default: '{{defaults.asc}}' },
+        descHeight:     { title: 'descender height', default: '{{defaults.desc}}' },
 
-        overshoot:      { title: 'overshoot', default: '0.0' },
-        horizontalInc:  { title: 'horizontal increase', default: '0.8' },
-        verticalInc:    { title: 'vertical increase', default: '0.5' },
-        apperture:      { title: 'apperture', default: '0.35' },
-        superness:      { title: 'superness', default: '0.73' },
+        overshoot:      { title: 'overshoot', default: '{{defaults.o}}' },
+        horizontalInc:  { title: 'horizontal increase', default: '{{defaults.incx}}' },
+        verticalInc:    { title: 'vertical increase', default: '{{defaults.incy}}' },
+        apperture:      { title: 'apperture', default: '{{defaults.appert}}' },
+        superness:      { title: 'superness', default: '{{defaults.superness}}' },
 
-        penSize:        { title: 'pen size', default: '0.3' },
-        corner:         { title: 'corner', default: '0.2' },
-        contrast:       { title: 'contrast', default: '1' }
+        penSize:        { title: 'pen size', default: '{{defaults.px}}' },
+        corner:         { title: 'corner', default: '{{defaults.corner}}' },
+        contrast:       { title: 'contrast', default: '{{defaults.cont}}' }
     };
 
     // enhance each object with a name (used as html/css id)

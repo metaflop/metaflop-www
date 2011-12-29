@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sass'
+require 'fileutils'
 
 enable :sessions
 set :logging, :true if development?
@@ -39,7 +40,7 @@ get '/preview/:type' do |type|
 end
 
 get '/font/:type' do |type|
-    mf = Metafont.new
+    mf = Metafont.new(:out_dir => "/tmp/metaflop/#{session[:id]}")
     method = "font_#{type}"
     if mf.respond_to? method
         attachment 'metaflop.otf'
@@ -102,8 +103,10 @@ class Metafont
         end
 
         # defaults
-        @out_dir ||= '.'
-        Dir.mkdir(@out_dir) unless File.directory?(@out_dir)
+        unless File.directory?(@out_dir)
+            Dir.mkdir(@out_dir)
+            FileUtils.cp_r(Dir['mf/*'], "#{@out_dir}")
+        end
 
         @char_number ||= 1
     end
@@ -119,24 +122,25 @@ class Metafont
     end
 
     def preview_chart
+        cleanup_tmp_dir
         generate(
-            pre: %Q{rm -rf #{@out_dir}/* && cp -r *.mf std1_6 #{@out_dir}},
-            post: %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
+            post: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
             convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize 'x315'"
         )
     end
 
     def preview_typewriter
+        cleanup_tmp_dir
         generate(
-            pre: %Q{rm -rf #{@out_dir}/* && cp -r *.mf std1_6 #{@out_dir}},
-            post: %Q{echo "#{mf_args}" > adj.mf && latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
+            post: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
             convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize '695'"
         )
     end
 
     def font_otf
-        `cd mf && perl mf2pt1.pl adj.mf`
-        File.read('mf/adj.otf')
+        cleanup_tmp_dir
+        `cd #{@out_dir} && perl mf2pt1.pl adj.mf`
+        File.read("#{@out_dir}/adj.otf")
     end
 
     # returns the metafont parameter instructions (aka adj.mf)
@@ -176,7 +180,7 @@ class Metafont
     # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
     # @option options [String] :char_number the nth character
     def generate(options)
-        pre = "#{pre} &&" if pre
+        options[:pre] = "#{options[:pre]} &&" if options[:pre]
         char_number = options[:char_number]
 
         if char_number
@@ -199,6 +203,7 @@ class Metafont
             command = %Q{cd mf &&
                          #{options[:pre]}
                          cd #{@out_dir} &&
+                         echo "#{mf_args}" > adj.mf &&
                          #{options[:post]} > /dev/null &&
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
                          #{convert} gif:-}
@@ -209,6 +214,11 @@ class Metafont
         else
             nil
         end
+    end
+
+    def cleanup_tmp_dir
+        raise '@out_dir is empty!' unless @out_dir
+        FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
     end
 
     def options

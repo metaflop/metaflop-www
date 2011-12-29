@@ -1,4 +1,4 @@
-require './metaflop'
+require './app'
 
 # setup the tmp dir where the generated fonts go
 tmp_dir = "/tmp/metaflop"

@@ -133,7 +133,7 @@ class Metafont
         cleanup_tmp_dir
         generate(
             generate: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
-            convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize '695'"
+            convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize '675'"
         )
     end
 

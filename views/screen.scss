@@ -123,7 +123,7 @@ a, span.action {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-    
+
     &:hover {
         color: $active-color;
     }
@@ -182,9 +182,9 @@ a, span.action {
 
 #parameter-panel {
     @include left-column;
-    
+
     position: relative;
-    
+
     .slider {
         float: right;
         width: 30%;
@@ -198,7 +198,7 @@ a, span.action {
         margin-right: 1.7em;
         text-align: center;
         position: relative;
-        
+
         display: none;
 
         a {
@@ -265,12 +265,12 @@ a, span.action {
         float: right;
         width: 30%;
     }
-        
+
     .parameter-panel-mode-toggle {
         position: absolute;
         right: 0;
         top: 0.4em;
-        
+
         .action.active {
             font-weight: bold;
         }
@@ -282,13 +282,13 @@ a, span.action {
     float: left;
     width: $preview-box-width;
     margin: 0 0 0.1em 0;
-    
+
     h2 {
         background: none;
         padding: 0;
         margin: 0;
     }
-    
+
     .preview-box-content {
         margin: 0 $preview-box-spacing $preview-box-spacing 0;
         border: 3px solid lighten($active_color, 20%);
@@ -299,11 +299,11 @@ a, span.action {
         position: relative;
         line-height: $preview-box-content-width;
         font-size: 0.67em;
-        
+
         * {
             line-height: 1.25em;
         }
-        
+
         .toggle-mode {
             position: absolute;
             top: -1px;
@@ -315,18 +315,18 @@ a, span.action {
             background-color: #fff;
             background-repeat: no-repeat;
             background-position: -64px -113px;
-            
+
             &.edit-mode {
                 background-position: -64px -145px;
             }
         }
-        
+
         .preview-image {
             vertical-align: middle;
             display: inline;
         }
     }
-    
+
     &.active .preview-box-content {
         border: 3px solid $active_color;
     }
@@ -334,9 +334,14 @@ a, span.action {
 
 .preview-box-fullwidth {
     width: $preview-box-width * 2 - $preview-box-spacing;
-    
+
     .preview-box-content {
         width: $preview-box-width * 2 - $preview-box-spacing;
+
+        .preview-image {
+            vertical-align: top;
+            margin: 1em 0;
+        }
     }
 }
 
@@ -364,7 +369,7 @@ a, span.action {
 .inputblock {
     border-bottom: 1px solid #ccc;
     position: relative;
-    
+
     &:hover {
         background: #eee;
     }
@@ -377,21 +382,21 @@ div.char-chooser {
     width: $preview-box-content-width;
     height: 1.3em;
     overflow: hidden;
-    
+
     ul {
         position: absolute;
         top: 0.2em;
         width: 2000px;
         height: 1.6em;
     }
-    
+
     li {
         float: left;
         width: $preview-box-content-width;
-        
+
         a {
             padding: 0 0.2em;
-            
+
             &.active {
                 font-weight: bold;
                 border: 1px solid $active-color;
@@ -405,12 +410,12 @@ a.char-chooser {
     bottom: 0;
     z-index: 1;
     color: transparent;
-    
+
     &.left {
         left: 0;
         background: url(/img/icons.png) no-repeat scroll -99px -17px #fff;
     }
-    
+
     &.right {
         right: 0;
         background: url(/img/icons.png) no-repeat scroll -36px -18px #fff;
@@ -436,17 +441,17 @@ a.char-chooser {
     height: 1.6em;
     display: block;
     position: relative;
-    
+
     &.fd-slider-hover {
         .fd-slider-handle {
             background: $active-color;
         }
     }
-    
+
     span {
         position: absolute;
     }
-    
+
     .fd-slider-handle {
         width: 7px;
         height: 1em;
@@ -462,7 +467,7 @@ a.char-chooser {
         background: #aaa;
         top: 50%;
     }
-    
+
     .fd-slider-range {
         height: 1px;
         top: 50%;
@@ -477,18 +482,18 @@ a.char-chooser {
 
   /* Rounded corners */
   .tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-  
+
   /* Uncomment for shadow */
   /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
-  
+
   .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
-  
+
   /* Rules to colour arrows */
   .tipsy-arrow-n { border-bottom-color: #000; }
   .tipsy-arrow-s { border-top-color: #000; }
   .tipsy-arrow-e { border-left-color: #000; }
   .tipsy-arrow-w { border-right-color: #000; }
-  
+
 	.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
     .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
     .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
@@ -497,4 +502,3 @@ a.char-chooser {
     .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
   .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
   .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
-

@@ -3,11 +3,24 @@ require 'sinatra/reloader'
 require 'sass'
 require 'mustache/sinatra'
 require 'fileutils'
+require 'time'
 require './metaflop'
 
-class App < Sinatra::Base
+class App < Sinatra::Application
 
     configure do
+        # setup the tmp dir where the generated fonts go
+        tmp_dir = "/tmp/metaflop"
+        FileUtils.rm_rf(tmp_dir)
+        Dir.mkdir(tmp_dir)
+
+        # logging
+        log_dir = "#{File.dirname(__FILE__)}/log/"
+        Dir.mkdir(log_dir) unless Dir.exist? log_dir
+        logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')
+        $stderr.reopen(logger)
+        $stdout.reopen(logger)
+
         require './views/layout'
         register Mustache::Sinatra
 
@@ -23,13 +36,15 @@ class App < Sinatra::Base
 
     configure :development do
         register Sinatra::Reloader
-        set :logging, :true
+    end
+
+    configure :production do
+
     end
 
 
     get '/' do
         session[:id] ||= SecureRandom.urlsafe_base64
-
         File.read('index.html')
     end
 
@@ -56,6 +71,7 @@ class App < Sinatra::Base
         end
 
         mf = Metaflop.new(args)
+        mf.logger = logger
         method = "preview_#{type}"
         if mf.respond_to? method
             image = mf.method(method).call
@@ -67,6 +83,7 @@ class App < Sinatra::Base
 
     get '/font/:type' do |type|
         mf = Metaflop.new(:out_dir => "/tmp/metaflop/#{session[:id]}")
+        mf.logger = logger
         method = "font_#{type}"
         if mf.respond_to? method
             attachment 'metaflop.otf'

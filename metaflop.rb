@@ -1,4 +1,8 @@
+require './racklogger'
+
 class Metaflop
+
+    include RackLogger
 
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
@@ -160,10 +164,11 @@ class Metaflop
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
                          #{convert} gif:-}
 
-            puts command
+            logger.info command
             # hide all output but the last one, which returns the image
             `#{command}`
         else
+            logger.error "mf generation failed for '#{mf_args.join}'"
             nil
         end
     end

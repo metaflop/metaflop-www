@@ -94,15 +94,20 @@ class Metaflop
     # returns the metafont parameter instructions (aka adj.mf) as an array (each param)
     def mf_args
         unless @mf_args
-            @mf_args = File.readlines("mf/adj.mf")
+            @mf_args = { :values => {}, :instruction => '' }
+            File.readlines("mf/adj.mf")
                 .delete_if do |x|            # remove comment and empty lines
                     stripped = x.strip
                     stripped == '' || stripped[0] == '%'
                 end
-                .map do |x|                  # remove comments at the end of the line
+                .each do |x|                  # remove comments at the end of the line
                     pair = x[/([^%]+)/, 0].strip
                     splits = pair.split(':=')
+
                     if (splits.length == 2)
+                        # store as key/value pairs
+                        @mf_args[:values][splits[0].to_sym] = { :raw => splits[1], :clean => splits[1].to_f }
+
                         # replace the default value from the file if we have a value set for the parameter
                         mapping = MF_MAPPINGS[splits[0]]
                         value = mapping ? send(mapping) : nil
@@ -110,20 +115,12 @@ class Metaflop
                             pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
                         end
                     end
-                    pair
+                    # the instruction oneliner for the mf command
+                    @mf_args[:instruction] = @mf_args[:instruction] + pair
                 end
         end
 
         @mf_args
-    end
-
-    def mf_args_values
-        values = {}
-        mf_args.each do |x|
-            splits = x.delete('#').split(':=')
-            values[splits[0].to_sym] = splits[1].to_f
-        end
-        values
     end
 
     # generates the image for the specified tool chain
@@ -149,13 +146,13 @@ class Metaflop
 
         success = system(
                     %Q{cd mf > /dev/null &&
-                    mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args.join}" > /dev/null}
+                    mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args[:instruction]}" > /dev/null}
                   )
 
         # don't bother if metafont failed
         if success
             command = %Q{cd #{@out_dir} &&
-                         echo "#{mf_args.join}" > adj.mf &&
+                         echo "#{mf_args[:instruction]}" > adj.mf &&
                          #{options[:generate]} > /dev/null &&
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
                          #{convert} gif:-}

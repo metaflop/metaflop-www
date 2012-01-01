@@ -30,7 +30,7 @@ class App < Sinatra::Base
     get '/' do
         session[:id] ||= SecureRandom.urlsafe_base64
 
-        @defaults = Metaflop.new.mf_args_values
+        @defaults = Metaflop.new.mf_args[:values]
         mustache :index
     end
 

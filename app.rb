@@ -30,20 +30,13 @@ class App < Sinatra::Base
     get '/' do
         session[:id] ||= SecureRandom.urlsafe_base64
 
-        File.read('index.html')
+        @defaults = Metaflop.new.mf_args_values
+        mustache :index
     end
 
     get '/assets/css/:name.scss' do |name|
         content_type :css
         scss name.to_sym, :layout => false
-    end
-
-    get '/assets/js/:name' do |name|
-        content_type :js
-
-        @defaults = Metaflop.new.mf_args_values
-
-        mustache name.to_sym, :layout => false
     end
 
     get '/preview/:type' do |type|

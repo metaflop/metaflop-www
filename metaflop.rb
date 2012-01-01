@@ -121,7 +121,7 @@ class Metaflop
         values = {}
         mf_args.each do |x|
             splits = x.delete('#').split(':=')
-            values[splits[0]] = splits[1].to_f
+            values[splits[0].to_sym] = splits[1].to_f
         end
         values
     end

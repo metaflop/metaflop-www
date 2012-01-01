@@ -1,5 +1,10 @@
 $(function () {
 
+    // create a namespace for later use
+    $.fn.metaflop = {
+
+    };
+
     // set background to corresponding inputs
     var setActiveInputs = function(inputField) {
         var suffix = (inputField.id || inputField[0].id).remove(/^\w+-/);
@@ -52,37 +57,37 @@ $(function () {
         }
         else if (document.execCommand !== undefined) {
             document.execCommand("Stop", false);
-        }   
-    }   
+        }
+    }
 
-    var previewImageCall = function(){        
+    var previewImageCall = function(){
         var previewBox = $('.preview-box.active');
         var loading = previewBox.find('.preview-loading');
         var loadingText = previewBox.find('.preview-loading-text');
         var image = previewBox.find('.preview-image');
         var content = previewBox.find('.preview-box-content');
         var previewType = previewBox.attr('id').remove('preview-');
-                
-        var url = '/preview/' + previewType + '?' + 
-            $.makeArray($('input:text,textarea')).map(function(element){ 
+
+        var url = '/preview/' + previewType + '?' +
+            $.makeArray($('input:text,textarea')).map(function(element){
                 return element.id.remove('param-') + '=' + element.value
             })
             // add the selected character param
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
-     
+
         var done = function(imageUrl) {
             content.fadeTo(0, 1);
             loadingText.hide();
             loading.spin(false);
             content.find('textarea').hide();
             image.attr('src', imageUrl);
-            
+
             $.fn.metaflop.preloadImage.onload = null;
             $.fn.metaflop.preloadImage.onerror = null;
             $.fn.metaflop.preloadImage = null;
         };
-            
+
         if ($.fn.metaflop.preloadImage) {
             stopRequest();
         }
@@ -92,20 +97,20 @@ $(function () {
             loadingText.show();
             loading.spin('large');
         }
-                       
+
         $.fn.metaflop.preloadImage = new Image();
         $.fn.metaflop.preloadImage.src = url;
-        
+
         $.fn.metaflop.preloadImage.onload = function() {
             done(this.src);
         };
-        
+
         $.fn.metaflop.preloadImage.onerror = function() {
             done('/img/error.png');
             content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
         };
     }
-    
+
     var timeout;
     var previewImage = function(){
         if (timeout) clearTimeout(timeout);
@@ -115,7 +120,7 @@ $(function () {
     var isAllowedTrailingCharacter = function(keyCode) {
         return [190, 188].some(keyCode);
     }
-    
+
     var isAllowedMetaKey = function(keyCode) {
         return [16, 17, 18].some(keyCode) || // meta
                [46, 9, 35, 36, 37, 39].some(keyCode); // backspace, delete, tab, cursors
@@ -173,7 +178,7 @@ $(function () {
         var $this = $(this);
         parameterPanel.find('.adjuster a').hide();
         $this.find('a').show();
-        
+
         parameterPanel.find('input').removeClass('active');
         $this.find('input').addClass('active');
     });
@@ -181,7 +186,7 @@ $(function () {
         $(this).find('a').hide();
     });
 
-    
+
     $('.add1, .add10, .sub1, .sub10').click(function(e) {
         e.preventDefault();
         $this = $(this);
@@ -192,13 +197,13 @@ $(function () {
         changeValue(input, $this.attr('class'));
         return false;
     });
-    
+
     // sliders
     function updateValue(cbObj) {
         // update the associated input field
         var input = $('#' + cbObj.elem.id.replace('slider-', 'param-'));
         input.val(cbObj.value)
-        
+
         if (input.hasClass('init')) {
             input.removeClass('init');
         }
@@ -220,41 +225,41 @@ $(function () {
             }
         });
     });
-    
-    
+
+
     // character chooser for single preview
     var charLinks = $('div.char-chooser a');
     charLinks.click(function(e) {
         e.preventDefault();
-        
+
         if ($(this).parents('.preview-box.active').length > 0) {
             charLinks.removeClass('active');
             $(this).addClass('active').blur();
             previewImage();
         }
-        
+
         return false;
     });
     charLinks.first().addClass('active');
-    
+
     $('a.char-chooser').click(function(e) {
         e.preventDefault();
         var $this = $(this);
         var div = $('div.char-chooser');
         var activeItem = div.find('li.active');
         var items = div.find('li');
-        
-        var nextItem = $($this.hasClass('right') 
+
+        var nextItem = $($this.hasClass('right')
             ? activeItem.next()[0] || items.first()
             : activeItem.prev()[0] || items.last());
-        
+
         items.removeClass('active');
         nextItem.addClass('active');
         div.scrollTo(nextItem, 400, { easing: 'easeInOutExpo', axis: "x" });
-        
+
         return false;
     });
-    
+
     // activate preview box
     $('.preview-box').click(function(e) {
         e.preventDefault();
@@ -263,24 +268,24 @@ $(function () {
         if ($this.not('.active').length > 0) {
             $('.preview-box.active').removeClass('active').find('textarea').hide();
             $this.addClass('active');
-                        
+
             previewImage();
         }
         // show textarea
         else if ($this[0].id == 'preview-typewriter') {
             $this.find('textarea').show().focus();
         }
-        
+
         return false;
     });
-    
+
     // edit/view mode for typewriter preview (textarea on/off)
     $('#preview-typewriter').find('.toggle-mode').click(function(e) {
         e.preventDefault();
-        
+
         var $this = $(this);
         var textarea = $this.siblings('textarea');
-        
+
         if ($this.hasClass('edit-mode')) {
             textarea.hide();
             previewImage();
@@ -290,12 +295,12 @@ $(function () {
             textarea.show();
             $this.attr('title', 'exit edit mode');
         }
-        
+
         $this.toggleClass('edit-mode');
-        
+
         return false;
     });
-    
+
     // switch basic/pro mode for parameter panel
     var parameterPanelToggleMode = $('.parameter-panel-mode-toggle span');
     parameterPanelToggleMode.click(function() {
@@ -303,10 +308,10 @@ $(function () {
         var parameterPanel = $('#parameter-panel');
         var adjusters = parameterPanel.find('.adjuster');
         var sliders = parameterPanel.find('.slider');
-        
+
         parameterPanelToggleMode.removeClass('active');
         $this.addClass('active');
-        
+
         if ($this.hasClass('sliders')) {
             sliders.show();
             adjusters.hide();
@@ -316,8 +321,7 @@ $(function () {
             sliders.hide();
         }
     });
-    
+
     // load the first image
     previewImage();
 });
-

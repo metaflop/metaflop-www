@@ -41,10 +41,13 @@ class App
                     }
                 ]
 
-                # add a name (css class compliant)
+                # add a name (css class compliant) and tab index
+                i = 1
                 groups.each do |group|
                     group[:items].each do |x|
                         x[:name] = x[:title].gsub(' ', '-')
+                        x[:tabindex] = i
+                        i = i + 1
                     end
                 end
             end

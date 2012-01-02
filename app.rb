@@ -48,8 +48,10 @@ class App < Sinatra::Base
         args = { :out_dir => "/tmp/metaflop/#{session[:id]}" }
         Metaflop::VALID_OPTIONS_KEYS.each do |key|
             # query params come in with dashes -> replace by underscores to match properties
-            param = params[key.to_s.gsub("_", "-")]
-            args[key] = param if param && !param.empty?
+            value = params[key.to_s.gsub("_", "-")]
+
+            # whitelist allowed characters
+            args[key] = value.delete "^a-zA-Z0-9., " if value && !value.empty?
         end
 
         mf = Metaflop.new(args)

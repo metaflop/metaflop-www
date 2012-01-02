@@ -8,35 +8,35 @@ class App
                         :title => "Dimension",
                         :items => [
                             { :title => 'box height', :html => '<div class="static-value">100%</div>' },
-                            { :title => 'unit width', :default => defaults[:u] }
+                            { :title => 'unit width', :default => defaults[:u], :range => ranges[:u] }
                         ]
                     },
                     {
                         :title => "Proportion",
                         :items => [
-                            { :title => 'cap height', :default => defaults[:cap] },
-                            { :title => 'mean height', :default => defaults[:mean] },
-                            { :title => 'bar height', :default => defaults[:bar] },
-                            { :title => 'ascender height', :default => defaults[:asc] },
-                            { :title => 'descender height', :default => defaults[:desc] },
-                            { :title => 'overshoot', :default => defaults[:o] }
+                            { :title => 'cap height', :default => defaults[:cap], :range => ranges[:cap] },
+                            { :title => 'mean height', :default => defaults[:mean], :range => ranges[:mean] },
+                            { :title => 'bar height', :default => defaults[:bar], :range => ranges[:bar] },
+                            { :title => 'ascender height', :default => defaults[:asc], :range => ranges[:asc] },
+                            { :title => 'descender height', :default => defaults[:desc], :range => ranges[:desc] },
+                            { :title => 'overshoot', :default => defaults[:o], :range => ranges[:o] }
                         ]
                     },
                     {
                         :title => "Shape",
                         :items => [
-                            { :title => 'horizontal increase', :default => defaults[:incx] },
-                            { :title => 'vertical increase', :default => defaults[:incy] },
-                            { :title => 'apperture', :default => defaults[:appert] },
-                            { :title => 'superness', :default => defaults[:superness] }
+                            { :title => 'horizontal increase', :default => defaults[:incx], :range => ranges[:incx] },
+                            { :title => 'vertical increase', :default => defaults[:incy], :range => ranges[:incy] },
+                            { :title => 'apperture', :default => defaults[:appert], :range => ranges[:appert] },
+                            { :title => 'superness', :default => defaults[:superness], :range => ranges[:superness] }
                         ]
                     },
                     {
                         :title => "Drawing mode",
                         :items => [
-                            { :title => 'pen size', :default => defaults[:px] },
-                            { :title => 'corner', :default => defaults[:corner] },
-                            { :title => 'contrast', :default => defaults[:cont] }
+                            { :title => 'pen size', :default => defaults[:px], :range => ranges[:px] },
+                            { :title => 'corner', :default => defaults[:corner], :range => ranges[:corner] },
+                            { :title => 'contrast', :default => defaults[:cont], :range => ranges[:cont] }
                         ]
                     }
                 ]
@@ -71,6 +71,10 @@ class App
 
             def defaults
                 @defaults
+            end
+
+            def ranges
+                @ranges
             end
         end
 

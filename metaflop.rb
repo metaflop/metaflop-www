@@ -94,7 +94,7 @@ class Metaflop
     # returns the metafont parameter instructions (aka adj.mf) as an array (each param)
     def mf_args
         unless @mf_args
-            @mf_args = { :values => {}, :instruction => '' }
+            @mf_args = { :values => {}, :instruction => '', :ranges => {} }
             File.readlines("mf/adj.mf")
                 .delete_if do |x|            # remove comment and empty lines
                     stripped = x.strip
@@ -105,8 +105,9 @@ class Metaflop
                     splits = pair.split(':=')
 
                     if (splits.length == 2)
+                        key = splits[0].delete('#').to_sym
                         # store as key/value pairs
-                        @mf_args[:values][splits[0].to_sym] = { :raw => splits[1], :clean => splits[1].to_f }
+                        @mf_args[:values][key] = { :raw => splits[1], :clean => splits[1].to_f }
 
                         # replace the default value from the file if we have a value set for the parameter
                         mapping = MF_MAPPINGS[splits[0]]
@@ -114,6 +115,11 @@ class Metaflop
                         if (value && !value.empty?)
                             pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
                         end
+
+                        # get the ranges
+                        range = x.delete(' ').scan(/\$(\d+)\w*\/(\d+)\w*$/).flatten!
+                        range = [0, 1] if range.nil?
+                        @mf_args[:ranges][key] = { :from => range[0], :to => range[1] }
                     end
                     # the instruction oneliner for the mf command
                     @mf_args[:instruction] = @mf_args[:instruction] + pair

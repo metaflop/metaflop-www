@@ -216,8 +216,8 @@ $(function () {
             inp: this,
             step: "0.01",
             maxStep: 1, // (for keyboard users)
-            min: 0.1,
-            max: 1,
+            min: $(this).attr('data-range-from'),
+            max: $(this).attr('data-range-to'),
             animation:"timed",
             hideInput: true,
             callbacks:{

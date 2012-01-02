@@ -2,7 +2,7 @@ $(function () {
 
     // create a namespace for later use
     $.fn.metaflop = {
-
+        ready: false // is set to true when the initial preview has been generated (i.e. the UI is ready)
     };
 
     // set background to corresponding inputs
@@ -86,6 +86,13 @@ $(function () {
             $.fn.metaflop.preloadImage.onload = null;
             $.fn.metaflop.preloadImage.onerror = null;
             $.fn.metaflop.preloadImage = null;
+
+            if (!$.fn.metaflop.ready) {
+                // add tooltips to the sliders (only after the initial preview has been loaded,
+                // we don't want to show them prematurely)
+                $('.fd-slider-handle').tipsy({ title: 'aria-valuetext', gravity: 's' });
+                $.fn.metaflop.ready = true;
+            }
         };
 
         if ($.fn.metaflop.preloadImage) {
@@ -209,6 +216,9 @@ $(function () {
         }
         else {
             input.blur();
+
+            // update the tooltip
+            $(cbObj.elem).siblings().find('.fd-slider-handle').tipsy('show');
         }
     }
     parameterPanel.find('.slider input').each(function() {
@@ -225,7 +235,6 @@ $(function () {
             }
         });
     });
-
 
     // character chooser for single preview
     var charLinks = $('div.char-chooser a');

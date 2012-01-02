@@ -331,6 +331,13 @@ $(function () {
         }
     });
 
+    // toggle the information header
+    var informationToggle = $('#menu').find('.action');
+    informationToggle.click(function() {
+        informationToggle.toggleClass('active');
+        $('#info-panel').toggle(500, 'easeInOutExpo');
+    });
+
     // load the first image
     previewImage();
 });

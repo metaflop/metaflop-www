@@ -1,6 +1,6 @@
 <div id="main">
 
-    <div id="header">
+    <div id="col1">
 
         <div id="menu">
             <h2>Metaflop</h2>
@@ -10,20 +10,13 @@
                     <label>Typeface</label>font1</legend>
 
                 <ul>
-                    <li><a href="#">Information</a></li>
+                    <li><a href="#">Information</a> <span class="action active">on</span> / <span class="action">off</span></li>
                     <li><a href="#">Reset</a></li>
                     <li><a href="#">Flop it!</a></li>
                     <li><a href="/font/otf">Export font (.otf)</a></li>
                 </ul>
             </fieldset>
         </div>
-
-        <div id="live-panel">
-            <img src="/img/typoglossary.png" />
-        </div>
-    </div>
-
-    <div id="content">
 
         <div id="parameter-panel">
             <h2>Parameters</h2>
@@ -55,6 +48,14 @@
 
                 </fieldset>
             {{/parameters}}
+        </div>
+
+    </div>
+
+    <div id="col2">
+
+        <div id="info-panel">
+            <img src="/img/typoglossary.png" />
         </div>
 
         <div id="preview-panel">
@@ -98,11 +99,7 @@
                     <img src="/img/blank.png" class="preview-image" />
                 </div>
             </div>
-
         </div>
 
-        <div id="loading"></div>
-
     </div>
-
 </div>

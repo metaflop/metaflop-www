@@ -8,14 +8,18 @@ $preview-box-spacing: 5px;
 
 $preview-box-content-width: $preview-box-width - $preview-box-spacing - 2 * 3px;
 
-@mixin box-shadow {
-    box-shadow: 2px 3px 3px #ccc;
+@mixin col {
+    margin: 20px auto 0;
+    float: left;
+    overflow: hidden;
 }
 
-@mixin left-column {
-    width: 29%;
-    margin-right: 1%;
-    float: left;
+@mixin header-row {
+    height: 185px;
+}
+
+@mixin box-shadow {
+    box-shadow: 2px 3px 3px #ccc;
 }
 
 @font-face {
@@ -146,6 +150,7 @@ a, span.action {
 #main {
     margin: 0 auto;
     position: relative;
+    width: $content_width;
 }
 
 .arrow-up {
@@ -169,20 +174,36 @@ a, span.action {
     background: $input_color;
 }
 
-#header,
-#content {
-    margin: 20px auto 0 auto;
-    width: $content_width;
-    overflow: hidden;
+#col1 {
+    @include col;
+
+    width: 28%;
+    margin-right: 1%;
+}
+
+#col2 {
+    @include col;
+
+    width: 71%;
 }
 
 #menu {
-    @include left-column;
+    @include header-row;
+
+    .action {
+        color: lighten(#000, 80%);
+
+        &.active {
+            color: #000;
+        }
+    }
+}
+
+#info-panel {
+    @include header-row;
 }
 
 #parameter-panel {
-    @include left-column;
-
     position: relative;
 
     .slider {

@@ -3,6 +3,10 @@
 
 beginadjichar("I",0.2, cap#, 0);
 
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space+0.2u#,space+0.2u#);
+%
 
 x1=x2=leftstemloc;
 

@@ -1,7 +1,12 @@
 % MetaFlop
-% Standard 1.3
+% Standard 1.6
 
 beginadjchar("c",corr*4.4, mean#, 0);
+
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.2u#,space-0.4u#);
+%
 
 %(leftstemloc+.5(px*cont))+incx*((w-(leftstemloc+.5(px*cont)))-(leftstemloc+.5(px*cont)))
 x8r=if (incx>.5): (leftstemloc-.5(cont*px))+incx*((w-(leftstemloc-.5(cont*px)))-(leftstemloc-.5(cont*px))) else: x1r+incx*((w-x1r)-x1r) fi;
@@ -10,13 +15,12 @@ y1r=if (incy>.5): .5h else: y8r-incy*(y8r-y3r) fi;
 y2r=if (incy>.5): .5h else: y3r+incy*(y8r-y3r) fi;
 
 x8r=x3r; x7r=x4r;
-y4r=y3r=h-px;
-y8r=y7r=px;
-top y3=h;
-top y4=h;
-bot y8=0;
-bot y7=0;
-
+y4r=y3r=h-px +o;  % overshoot up
+y8r=y7r=px -o; % overshoot down
+top y3=h +o; % overshoot up
+top y4=h +o; % overshoot up
+bot y8=0 -o; % overshoot down
+bot y7=0 -o; % overshoot down
 
 
 x1=leftstemloc;

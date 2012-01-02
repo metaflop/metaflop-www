@@ -3,7 +3,11 @@
 
 beginadjchar("t",3.25, asc#, 0);
 
-% normal_adjust_fit(-0.5u#,-0.5u#);
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.2u#,space-0.2u#);
+%
+
 
 % if (incx<=.5): inct:=.51; else: inct:=incx; fi 
 
@@ -84,6 +88,6 @@ penstroke z14e---z13e;
 %  fill ss---r---cycle;
 
 
-% penlabels(range 1 thru 80);
+penlabels(range 1 thru 80);
 
 endchar;

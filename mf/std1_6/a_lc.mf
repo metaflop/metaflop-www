@@ -1,87 +1,83 @@
 % MetaFlop
-% Standard 1.3
+% Standard 1.6
 
 beginadjchar("a",3.75, mean#, 0);
 
-%%%%%%LOWER OCTOCON
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.0u#,space-0.0u#);
+%
 
+
+%%%%%% LOWER OCTAGON %%%%%%
 
 x8r=if (incx>.5): .5w else: x1r+incx*(x6r-x1r) fi;
 x7r=if (incx>.5): .5w else: x6r-incx*(x6r-x1r) fi;
 x8r=x3r; x7r=x4r;
-y4r=y3r=bar*h-px;
-y8r=y7r=px;
-top y3=bar*h;
-top y4=bar*h;
-bot y8=0;
-bot y7=0;
-
-
+y4r=y3r=1.1bar*h-px;  % extra 1.1 for bar
+y8r=y7r=px -o;  % overhoot down
+top y3=1.1bar*h;   % extra 1.1 for bar
+top y4=1.1bar*h;   % extra 1.1 for bar
+bot y8=0 -o; % overshoot down
+bot y7=0 -o; % overshoot down
 
 x1=leftstemloc;
 x6=w-(leftstemloc+.5(cont*px)-.5px);
-x6=x5;
+x6=x5=x25;  % x25 added
 y5r=(y3r+px)-incy*(y8r-y3r);
 x5r=x5+(px/2-2*epsilon);
-%y2=y5;
 y6r=y1r;
+
+y25r=y2r;  % new
+
 x2=x1;
 x1r=x2r=x1+(cont*px/2);
-x6r=x6-(px/2);
-y1r=if (incy>.5): .5bar*h else: y8r-incy*(y8r-y3r) fi;
+
+x6r=x25r=x6-(px/2);  % y15 added
+
+y1r=if (incy>.5): .5bar*h else: y8r-incy*(y8r-y3r) fi; %left pair
 y2r=if (incy>.5): .5bar*h else: y3r+incy*(y8r-y3r) fi;
 
-%ang:=180+angle(direction 1 of (super_ql(6r,7r)));
+%y15r=if (incy>.5): .5bar*h else: y8r-incy*(y8r-y3r) fi; % right pair
+%y6r=if (incy>.5): .5bar*h else: y3r+incy*(y8r-y3r) fi;
+
+
 ang:=angle(z6r-z7r);
-
-
 penpos1(whatever,if (superness=.5): -(ang-90)/2 else: 0 fi);
 penpos2(whatever,if (superness=.5): ((ang-90)/2) else: 0 fi);
 penpos3(whatever,if (superness=.5): -(180-ang)/2 else: -90 fi);
 penpos4(whatever,if (superness=.5): -(180-ang)/2 else: -90 fi);
 penpos5(whatever,if (superness=.5): (ang-90)/2 else: 0 fi);
 penpos6(whatever,if (superness=.5): (ang-90)/2 else: 180 fi);
+
+penpos25(whatever,if (superness=.5): (ang-90)/2 else: 180 fi);
+
 penpos7(whatever,if (superness=.5): -(180-ang)/2 else: 90 fi);
 penpos8(whatever,if (superness=.5): (180-ang)/2 else: 90 fi);
+penstroke super_ql(6e,7e)---super_qr(8e,1e)---super_ql(2e,3e)---super_qr(4e,25e)---z6e;  % new bowl
 
-penstroke super_ql(6e,7e)---super_qr(8e,1e)---super_ql(2e,3e)---z4e;
 
-
-%%%%STEM AND UPPERCURVE
+%%%%%% STEM AND UPPERCURVE %%%%%%
 
 x9r= if (incx>.5): x12r-((w-(leftstemloc-.5(px*cont)+.5px))-x12r) else: leftstemloc-.5(cont*px)+px fi;
-
 x11r=if (incx>.5): x12r else: (leftstemloc+.5(cont*px))+incx*(x14r-(leftstemloc+.5(cont*px))) fi;
 
-y12r=y11r=h-px;
+y12r=y11r=h-px +o; % overshoot up 
+
 if (h>w):y10r=y11r-(incy*(w-(2*leftstemloc-(cont*px)))) else: y10r=y11r+incy*(px-y11r) fi;
-
 if (y10r<h-(.5w-(leftstemloc-.5(cont*px)))): y10r:=2/3h; fi;
-
 x12r=x14r-incx*(x14r-(leftstemloc+.5(cont*px)));
 
-
-top y11=h;
-top y12=h;
-
+top y11=h +o; % overshoot up
+top y12=h +o; % overshoot up
 
 x14=w-leftstemloc;
 x14=x13;
-
-
-
-
-
 y10r=y13r;
-
 x10=x9;
 x9r=x10r=x9+(px/2);
-
 y14r=y9r=0;
 x14r=x13r=x14-(cont*px/2);
-
-
-
 
 ang:=angle(z11r-z10r);
 penpos9(whatever,0);
@@ -91,34 +87,24 @@ penpos12(whatever,if (superness=.5): (180-ang)/2 else: -90 fi);
 penpos13(whatever,if (superness=.5): (angle(z13r-z12r)+90)/2 else: 180 fi);
 penpos14(whatever,180);
 penstroke z11e---super_qr(12e,13e)---z14e;
-%penstroke super_qr(4e,5e);
 
-path al; al = super_qr(12r,13r)---z14r;
-path dl; dl = super_qr(4l,5l);
-path dr; dr = super_qr(4r,5r);
-path fodase; path aal; numeric r,u; (r,u)=(al intersectiontimes dl);
-aal = subpath (0,u) of dl;
-path aar; numeric t,u; (t,u)=(al intersectiontimes dr);
-aar = subpath (u,0) of dr;
-fodase=subpath (r,t) of al;
-fill aal---aar---cycle;
-fill fodase---cycle;
+y4r=y15r;
+y4l=y15l;
+x15l=x15r=x14l;
 
-
+% penstroke z4e---z15e;  % old straight bowl top
+ 
 if (incx>.5):
 path tl; tl = z9l---super_ql(10l,11l);
 path ap; ap = (leftstemloc-.5(cont*px)+.5px,infinity)---(leftstemloc-.5(cont*px)+.5px,-infinity);
 path v; v = z9r---super_ql(10r,11r);
-
 z100=ap intersectionpoint tl;
-
 numeric t,u; (t,u)=ap intersectiontimes tl;
 
 if (x4l>(w-x2l)): x101=x100; else: z101=z100+whatever*(dir(angle(direction u of tl)+90));fi
 y101=0;
 path r; numeric t,u; (t,u)=((z100--z101) intersectiontimes (v));
 r = subpath (u,infinity) of (v);
-
 path ss; numeric t,u; (t,u)=(ap intersectiontimes tl);
 ss = subpath (infinity,u) of tl;
 
@@ -136,9 +122,9 @@ path r; numeric t,u; (t,u)=((z100--z101) intersectiontimes v);
 r = subpath (u,infinity) of v;
 path ss; numeric t,u; (t,u)=(ap intersectiontimes tl);
 ss = subpath (infinity,u) of tl;
+
 fill ss---r---cycle;
 fi
-
 
 % penlabels(range 1 thru 80);
 

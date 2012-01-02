@@ -3,6 +3,12 @@
 
 beginadjchar("U",5, cap#, 0);
 
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.0u#,space-0.0u#);
+%
+
+
 x8r=if (incx>.5): .5w else: x1r+incx*(x6r-x1r) fi;
 x7r=if (incx>.5): .5w else: x6r-incx*(x6r-x1r) fi;
 y1r=px+incy*((h-px)-px);
@@ -14,10 +20,10 @@ x2=x1=x2l+.5(cont*px);
 x3=x6=x3l-.5(cont*px);
 
 
-y8r=y7r=px;
+y8r=y7r=px -o; % overshoot down
 
-bot y8=0;
-bot y7=0;
+bot y8=0 -o; % overshoot down
+bot y7=0 -o; % overshoot down
 
 
 

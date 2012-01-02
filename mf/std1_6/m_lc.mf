@@ -1,7 +1,14 @@
 % MetaFlop
-% Standard 1.3
+% Standard 1.6
 
 beginadjchar("m",6.75, mean#, 0);
+
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.0u#,space-0.0u#);
+%
+
+
 
 x3=x6=.5w;
 x6r=x6-(cont*px/2);
@@ -20,10 +27,12 @@ y2=y3=0;
 x2=x4=x1=x2l+.5(cont*px);
 x3=x3l-.5(cont*px);
 y4=h;
-y8r=y7r=h-px;
 
-top y8=h;
-top y7=h;
+y8r=y7r=h-px +o; % overshoot up
+
+
+top y8=h +o; % overshoot up
+top y7=h +o; % overshoot up
 
 y6r=y1r;
 

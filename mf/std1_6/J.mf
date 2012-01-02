@@ -1,7 +1,12 @@
 % MetaFlop
-% Standard 1.3
+% Standard 1.6
 
 beginadjchar("J",corr*4.5, cap#, 0);
+
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.3u#,space-0.0u#);
+%
 
 
 
@@ -18,10 +23,11 @@ x2=x1=x2l+.5px;
 x3=x6=x3l-.5(cont*px);
 
 
-y8r=y7r=px;
+y8r=y7r=px -o; % overshoot down
 
-bot y8=0;
-bot y7=0;
+bot y8=0 -o; % overshoot down
+bot y7=0 -o; % overshoot down
+
 
 
 
@@ -95,6 +101,6 @@ fill ss---r---z7r---z7l---cycle;
 fi
 
 
-% penlabels(1,2,3,4,5,6,7,8);
-% labels (range 50 thru 200);
+%penlabels(1,2,3,4,5,6,7,8);
+%labels (range 50 thru 200);
 endchar;

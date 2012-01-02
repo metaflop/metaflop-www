@@ -2,6 +2,15 @@
 % Standard 1.3
 
 beginadjchar("R",corr*4.5, cap#, 0);
+
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.0u#,space-0.3u#);
+%
+
+
+
+
 x11=x22=leftstemloc;
 x11r=x22r=x11+(cont*px/2);
 y11=0;

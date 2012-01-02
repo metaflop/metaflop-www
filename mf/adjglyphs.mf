@@ -1,28 +1,33 @@
 % MetaFlop
-% STANDARD 1.3
-% Routines for the font Adjuster from Simon Egli © 2011
+% STANDARD 1.6
 
 % Aditional parameters / hidden parameter list
 barheight#:=bar*cap#;	% Cross Bar (Upper)
 leftstemloc#:=0.2u#+s#+((cont*px#)/2);	% position of left stem
-letter_fit#:=0.2u#; % amount of letter fit
-shrink_fit:=.2u#;  % amount of shrink fit
+letter_fit#:=0.0u#; % amount of letter fit
+shrink_fit:=.0u#;  % amount of shrink fit
+space:=0.2u#;
 
-mode_setup;
+% definition of left and right-side bearings. To use in glyph after beginchar: normal_adjust_fit(-1.5u#,-1.5u#);
+ def normal_adjust_fit(expr left_adjustment,right_adjustment) = l := -hround(left_adjustment*hppp)-letter_fit; 
+ interim xoffset := -l; charwd := charwd+2letter_fit#+left_adjustment+right_adjustment; 
+ r := l+hround(charwd*hppp)-shrink_fit;
+ w := r-hround(right_adjustment*hppp)-letter_fit; enddef;
+%
 
-def makebox(text r) = 
-for y=0,h.o_,-d.o_: r((0,0),(0,0)); endfor % horizontals 
-for x=0,w:	r((0,0),(0,0)); endfor % verticals 
+
+ def makebox(text r) = 
+for y=0,h.o_,-d.o_: r((-(.5*539-.5w),y),(w+(.5*539-.5w),y)); endfor % horizontals 
+for x=0,w:	r((x,-d.o_),(x,h.o_)); endfor % verticals 
 if charic<>0: r((w+charic*hppp,h.o_),(w+charic*hppp,.5h.o_)); fi 
 enddef;
 
 
-% definition of left and right-side bearings. To use in glyph after beginchar: normal_adjust_fit(-1.5u#,-1.5u#);
+mode_setup;
 
- def normal_adjust_fit(expr left_adjustment,right_adjustment) = m := -hround(left_adjustment*hppp)-letter_fit; 
- interim xoffset := -m; charwd := charwd+2letter_fit#+left_adjustment+right_adjustment; 
- n := m+hround(charwd*hppp)-shrink_fit;
- w := n-hround(right_adjustment*hppp)-letter_fit; enddef;
+
+
+
 
 
 %pixel conversions
@@ -184,7 +189,7 @@ input std1_6/w_lc
 input std1_6/x_lc
 input std1_6/y_lc
 input std1_6/z_lc
-input std1_6/cifrao
+% input std1_6/cifrao
 input std1_6/comma
 input std1_6/dot
 input std1_6/excl

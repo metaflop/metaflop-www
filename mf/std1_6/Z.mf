@@ -3,6 +3,12 @@
 
 beginadjchar("Z",5, cap#, 0);
 
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.0u#,space-0.0u#);
+%
+
+
 if (corner < 0):
 corner:=(px-epsilon);
 fi
@@ -43,6 +49,7 @@ fill z1l---z1r---z2r---z36---z6r---z6l---z5l---z14---cycle;
 else:
 fill z1l---z1r---z2r---z4r---z36---z6r---z6l---z5l---z3l---z14---cycle;
 fi
+
 % penlabels(range 1 thru 64);
 
 endchar;

@@ -3,6 +3,12 @@
 
 beginadjchar("w",5.83, mean#, 0);
 
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.3u#,space-0.3u#);
+%
+
+
 
 x3l=leftstemloc-cont*px/2;
 x2r=.65w;

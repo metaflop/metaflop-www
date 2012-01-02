@@ -3,7 +3,14 @@
 
 beginadjchar("T",5, cap#, 0);
 
-% normal_adjust_fit(-0.25u#,-0.25u#);
+
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.3u#,space-0.3u#);
+%
+
+
+
 
 
 

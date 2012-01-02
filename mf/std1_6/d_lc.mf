@@ -1,7 +1,15 @@
 % MetaFlop
-% Standard 1.3
+% Standard 1.6
 
 beginadjchar("d",4.4, asc#, 0);
+
+% sidebearings
+numeric r,l;
+normal_adjust_fit(space-0.3u#,space-0.0u#);
+%
+
+
+
 x11=x22=w-leftstemloc;
 x11r=x22r=x11+(cont*px/2);
 y11=0;
@@ -11,12 +19,13 @@ penpos22(whatever,0);
 x8r=if (incx>.5): .5w else: x1r+incx*(x6r-x1r) fi;
 x7r=if (incx>.5): .5w else: x6r-incx*(x6r-x1r) fi;
 x8r=x3r; x7r=x4r;
-y4r=y3r=mean-px;
-y8r=y7r=px;
-top y3=mean;
-top y4=mean;
-bot y8=0;
-bot y7=0;
+y4r=y3r=mean-px +o;    % +o overshoot
+y8r=y7r=px -o;       % -o overshoot
+top y3=mean +o;    % +o overshoot
+top y4=mean +o;    % +o overshoot
+bot y8=0-o;     % -o overshoot
+bot y7=0-o;     % -o overshoot
+
 
 
 

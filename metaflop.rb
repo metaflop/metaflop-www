@@ -29,7 +29,7 @@ class Metaflop
         'mean#' => :mean_height,
         'bar' => :bar_height,
         'asc#' => :ascender_height,
-        'desc#' => :descender_height,
+        'des#' => :descender_height,
         'o#' => :overshoot,
         'incx' => :horizontal_increase,
         'incy' => :vertical_increase,

@@ -18,7 +18,7 @@ class App
                             { :title => 'mean height', :default => defaults[:mean], :range => ranges[:mean] },
                             { :title => 'bar height', :default => defaults[:bar], :range => ranges[:bar] },
                             { :title => 'ascender height', :default => defaults[:asc], :range => ranges[:asc] },
-                            { :title => 'descender height', :default => defaults[:desc], :range => ranges[:desc] },
+                            { :title => 'descender height', :default => defaults[:des], :range => ranges[:des] },
                             { :title => 'overshoot', :default => defaults[:o], :range => ranges[:o] }
                         ]
                     },

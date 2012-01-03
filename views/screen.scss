@@ -1,7 +1,8 @@
 $live_panel_height: 6em;
 $input_height: 1.2em;
 $input_color: #ccc;
-$active_color: #cccc99;
+$active_color: #ffff66;
+$active-link-color: darken($active_color, 30%);
 $content_width: 1000px;
 $preview-box-width: 350px;
 $preview-box-spacing: 5px;
@@ -9,7 +10,6 @@ $preview-box-spacing: 5px;
 $preview-box-content-width: $preview-box-width - $preview-box-spacing - 2 * 3px;
 
 @mixin col {
-    margin: 20px auto 0;
     float: left;
     overflow: hidden;
 }
@@ -37,13 +37,14 @@ $preview-box-content-width: $preview-box-width - $preview-box-spacing - 2 * 3px;
 body {
     margin: 0;
     padding: 0;
-    font-family: Georgia, serif;
+    font-family: helvetica, sans-serif;
     font-size: 0.9em;
+    background: url(/img/bg-gradient.png) repeat-x $active-color 0 0;
 }
 
 input {
     border: 1px solid $input_color;
-    font-family: Georgia, serif;
+    font-family: helvetica, sans-serif;
     font-size: 12px;
     height: $input_height;
     width: 37px;
@@ -88,7 +89,7 @@ h1 {
 
 h2 {
     font-size: 1em;
-    font-weight: normal;
+    font-weight: bold;
     background-color: $active_color;
     padding: 0.2em 2em 0.2em 0.5em;
     margin: 0;
@@ -129,7 +130,7 @@ a, span.action {
     cursor: pointer;
 
     &:hover {
-        color: $active-color;
+        color: $active-link-color;
     }
 }
 
@@ -148,9 +149,12 @@ a, span.action {
 }
 
 #main {
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     position: relative;
     width: $content_width;
+    overflow: hidden;
+    background: #fff;
+    padding: 10px 10px 0 10px;
 }
 
 .arrow-up {
@@ -192,6 +196,10 @@ a, span.action {
 
     .action {
         color: lighten(#000, 80%);
+
+        &:hover {
+            color: $active-link-color;
+        }
 
         &.active {
             color: #000;

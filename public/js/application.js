@@ -77,6 +77,7 @@ $(function () {
             .join("&");
 
         var done = function(imageUrl) {
+            image.removeClass('error');
             content.fadeTo(0, 1);
             loadingText.hide();
             loading.spin(false);
@@ -114,6 +115,7 @@ $(function () {
 
         $.fn.metaflop.preloadImage.onerror = function() {
             done('/img/error.png');
+            image.addClass('error');
             content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
         };
     }

@@ -370,6 +370,10 @@ a, span.action {
         .preview-image {
             vertical-align: top;
             margin: 1em 0;
+
+            &.error {
+                vertical-align: middle;
+            }
         }
     }
 }

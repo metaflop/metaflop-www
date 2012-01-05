@@ -62,7 +62,7 @@ class Metaflop
     # returns an gif image for a single character preview
     def preview_single
         generate(
-            generate: 'gftodvi adj.2602gf',
+            generate: 'gftodvi font.2602gf',
             convert_svg: "-density 60",
             convert_gif: "-chop 0x15 -extent 'x315'",
             char_number: char_number
@@ -72,30 +72,30 @@ class Metaflop
     def preview_chart
         cleanup_tmp_dir
         generate(
-            generate: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
-            convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize 'x315'"
+            generate: %Q{latex -output-format=dvi -jobname=font "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=font at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
+            convert_custom: "dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize 'x315'"
         )
     end
 
     def preview_typewriter
         cleanup_tmp_dir
         generate(
-            generate: %Q{latex -output-format=dvi -jobname=adj "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=adj at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
-            convert_custom: "dvigif -D 200 adj.dvi -o adj.gif >> /dev/null && convert adj.gif -trim +repage -resize '675'"
+            generate: %Q{latex -output-format=dvi -jobname=font "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=font at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
+            convert_custom: "dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'"
         )
     end
 
     def font_otf
         cleanup_tmp_dir
-        `cd #{@out_dir} && perl mf2pt1.pl adj.mf`
-        File.read("#{@out_dir}/adj.otf")
+        `cd #{@out_dir} && perl mf2pt1.pl font.mf`
+        File.read("#{@out_dir}/font.otf")
     end
 
-    # returns the metafont parameter instructions (aka adj.mf) as an array (each param)
+    # returns the metafont parameter instructions (aka font.mf) as an array (each param)
     def mf_args
         unless @mf_args
             @mf_args = { :values => {}, :instruction => '', :ranges => {} }
-            File.readlines("mf/adj.mf")
+            File.readlines("mf/font.mf")
                 .delete_if do |x|            # remove comment and empty lines
                     stripped = x.strip
                     stripped == '' || stripped[0] == '%'
@@ -142,25 +142,25 @@ class Metaflop
 
         if char_number
             char_number = char_number.to_s.rjust(2, '0')
-            svg_name = "adj-#{char_number}.svg"
+            svg_name = "font-#{char_number}.svg"
         else
             char_number = "01"
-            svg_name = "adj.svg"
+            svg_name = "font.svg"
         end
 
         convert = options[:convert_custom] || "convert #{options[:convert_svg]} #{svg_name} #{options[:convert_gif]}"
 
         success = system(
-                    %Q{cd mf > /dev/null &&
-                    mf -halt-on-error -jobname=adj -output-directory=#{@out_dir} \\\\"#{mf_args[:instruction]}" > /dev/null}
+                    %Q{cd #{@out_dir} &&
+                    mf -halt-on-error -jobname=font \\\\"#{mf_args[:instruction]}" > /dev/null}
                   )
 
         # don't bother if metafont failed
         if success
             command = %Q{cd #{@out_dir} &&
-                         echo "#{mf_args[:instruction]}" > adj.mf &&
+                         echo "#{mf_args[:instruction]}" > font.mf &&
                          #{options[:generate]} > /dev/null &&
-                         dvisvgm -TS0.75 -M16 -n -p #{char_number} adj.dvi > /dev/null &&
+                         dvisvgm -TS0.75 -M16 -n -p #{char_number} font.dvi > /dev/null &&
                          #{convert} gif:-}
 
             puts command

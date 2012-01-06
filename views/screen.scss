@@ -232,6 +232,7 @@ a, span.action {
     @include header-row;
     margin-top: 1.45em;
     height: 182px;
+    display: none;
 }
 
 #parameter-panel {

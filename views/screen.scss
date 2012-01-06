@@ -1,13 +1,22 @@
-$live_panel_height: 6em;
+$live_panel_height: 6em; // TODO: remove, h1 is not preview anymore (insert h1 hidden somewhere)
 $input_height: 1.2em;
 $input_color: #ccc;
-$active_color: #ffff66;
-$active-link-color: darken($active_color, 30%);
-$content_width: 1000px;
-$preview-box-width: 350px;
-$preview-box-spacing: 5px;
+$active_color: #60eb00;
+$active_link_color: darken($active_color, 30%);
 
-$preview-box-content-width: $preview-box-width - $preview-box-spacing - 2 * 3px;
+$content_width: 1000px;
+$right_column_width: 710px;
+$border_width: 3px;
+$box_spacing_y: 7px;
+
+$box_spacing_x: 30px;
+$preview_box_width: ($right_column_width - $box_spacing_x) / 2;
+$preview_box_width_full: $right_column_width;
+$preview_box_height: 340px;
+$preview_box_content_width: $preview_box_width - 2 * $border_width;
+$preview_box_content_width_full: $preview_box_width_full - 2 * $border_width;
+
+$left_column_width: $content_width - $right_column_width - $box_spacing_x;
 
 @mixin col {
     float: left;
@@ -15,7 +24,7 @@ $preview-box-content-width: $preview-box-width - $preview-box-spacing - 2 * 3px;
 }
 
 @mixin header-row {
-    height: 185px;
+    margin-bottom: $box_spacing_y;
 }
 
 @mixin box-shadow {
@@ -39,7 +48,7 @@ body {
     padding: 0;
     font-family: helvetica, sans-serif;
     font-size: 0.9em;
-    background: url(/img/bg-gradient.png) repeat-x $active-color 0 0;
+    background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
 }
 
 input {
@@ -49,7 +58,7 @@ input {
     height: $input_height;
     width: 37px;
     padding: 0;
-    margin: 0.2em 0 0 0;
+    margin: 0.3em 0 0 0;
 }
 
 select {
@@ -90,10 +99,10 @@ h1 {
 h2 {
     font-size: 1em;
     font-weight: bold;
-    background-color: $active_color;
-    padding: 0.2em 2em 0.2em 0.5em;
     margin: 0;
+    padding: 0.1em 2em 0 0.5em;
     display: inline-block;
+    background: $active_color;
 }
 
 fieldset {
@@ -110,6 +119,10 @@ legend {
     width: 100%;
     line-height: 1.6em;
     font-weight: bold;
+
+    &.first {
+        border-top: none;
+    }
 }
 
 ul {
@@ -130,7 +143,7 @@ a, span.action {
     cursor: pointer;
 
     &:hover {
-        color: $active-link-color;
+        color: $active_link_color;
     }
 }
 
@@ -148,12 +161,16 @@ a, span.action {
     }
 }
 
+.box-content {
+    padding: 0 0.5em;
+    background: #fff;
+}
+
 #main {
     margin: 20px auto 0 auto;
     position: relative;
     width: $content_width;
     overflow: hidden;
-    background: #fff;
     padding: 10px 10px 0 10px;
 }
 
@@ -181,24 +198,28 @@ a, span.action {
 #col1 {
     @include col;
 
-    width: 28%;
-    margin-right: 1%;
+    width: $left_column_width;
+    margin-right: $box_spacing_x;
 }
 
 #col2 {
     @include col;
 
-    width: 71%;
+    width: 710px;
 }
 
 #menu {
     @include header-row;
 
+    .box-content {
+        height: inherit;
+    }
+
     .action {
         color: lighten(#000, 80%);
 
         &:hover {
-            color: $active-link-color;
+            color: $active_link_color;
         }
 
         &.active {
@@ -209,6 +230,8 @@ a, span.action {
 
 #info-panel {
     @include header-row;
+    margin-top: 1.45em;
+    height: 182px;
 }
 
 #parameter-panel {
@@ -224,7 +247,7 @@ a, span.action {
         float: right;
         width: 30%;
         height: 1.6em;
-        margin-right: 1.7em;
+        margin-right: 1.2em;
         text-align: center;
         position: relative;
 
@@ -244,45 +267,45 @@ a, span.action {
             z-index: 3;
 
             &.add1 {
-                right: 5px;
-                background-position: -21px -2px;
+                right: 0;
+                background-position: -21px -1px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -21px -20px;
+                    background-position: -21px -19px;
                 }
             }
 
             &.add10 {
-                right: -15px;
-                background-position: -1px -2px;
+                right: -20px;
+                background-position: -1px -1px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 border-right: 1px solid $input-color;
                 &:hover {
-                    background-position: -1px -20px;
+                    background-position: -1px -19px;
                 }
             }
 
             &.sub1 {
-                left: 5px;
-                background-position: -38px -2px;
+                left: -1px;
+                background-position: -38px -1px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -38px -20px;
+                    background-position: -38px -19px;
                 }
             }
 
             &.sub10 {
-                left: -15px;
-                background-position: -56px -2px;
+                left: -21px;
+                background-position: -56px -1px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 border-left: 1px solid $input-color;
                 z-index: 4;
                 &:hover {
-                    background-position: -56px -20px;
+                    background-position: -56px -19px;
                 }
             }
         }
@@ -298,7 +321,7 @@ a, span.action {
     .parameter-panel-mode-toggle {
         position: absolute;
         right: 0;
-        top: 0.4em;
+        top: 0.2em;
 
         .action.active {
             font-weight: bold;
@@ -309,25 +332,24 @@ a, span.action {
 .preview-box,
 .preview-box-fullwidth {
     float: left;
-    width: $preview-box-width;
-    margin: 0 0 0.1em 0;
+    width: $preview_box_width;
+    margin: 0 0 $box_spacing_y 0;
 
     h2 {
-        background: none;
-        padding: 0;
+        background: #fff;
         margin: 0;
     }
 
     .preview-box-content {
-        margin: 0 $preview-box-spacing $preview-box-spacing 0;
-        border: 3px solid lighten($active_color, 20%);
-        width: $preview-box-content-width;
-        height: $preview-box-content-width;
+        border: 3px solid #fff;
+        width: $preview_box_content_width;
+        height: $preview_box_height;
         overflow: hidden;
         text-align: center;
         position: relative;
-        line-height: $preview-box-content-width;
+        line-height: $preview_box_height;
         font-size: 0.67em;
+        background: #fff;
 
         * {
             line-height: 1.25em;
@@ -356,16 +378,26 @@ a, span.action {
         }
     }
 
-    &.active .preview-box-content {
-        border: 3px solid $active_color;
+    &.active {
+        h2 {
+            background: $active_color;
+        }
+
+        .preview-box-content {
+            border: 3px solid $active_color;
+        }
     }
 }
 
+#preview-chart {
+    margin-left: $box_spacing_x;
+}
+
 .preview-box-fullwidth {
-    width: $preview-box-width * 2 - $preview-box-spacing;
+    width: $preview_box_width_full;
 
     .preview-box-content {
-        width: $preview-box-width * 2 - $preview-box-spacing;
+        width: $preview_box_content_width_full;
 
         .preview-image {
             vertical-align: top;
@@ -380,10 +412,6 @@ a, span.action {
 
 .adjuster input.active {
     background-color: $active_color;
-}
-
-#preview-panel {
-    margin-left: 10px;
 }
 
 .preview-loading {
@@ -403,6 +431,10 @@ a, span.action {
     border-bottom: 1px solid #ccc;
     position: relative;
 
+    &.last {
+        border-bottom: none;
+    }
+
     &:hover {
         background: #eee;
     }
@@ -412,7 +444,7 @@ div.char-chooser {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: $preview-box-content-width;
+    width: $preview_box_content_width;
     height: 1.3em;
     overflow: hidden;
 
@@ -425,7 +457,7 @@ div.char-chooser {
 
     li {
         float: left;
-        width: $preview-box-content-width;
+        width: $preview_box_content_width;
 
         a {
             font-size: 1.15em;

@@ -9,7 +9,8 @@ class App
                         :items => [
                             { :title => 'box height', :html => '<div class="static-value">100%</div>' },
                             { :title => 'unit width', :default => defaults[:u], :range => ranges[:u] }
-                        ]
+                        ],
+                        :css_class => "first"
                     },
                     {
                         :title => "Proportion",
@@ -49,7 +50,11 @@ class App
                         x[:tabindex] = i
                         i = i + 1
                     end
+
+                    # add css class to last item
+                    group[:items][-1][:css_class] = "last"
                 end
+
             end
 
             # single preview char chooser

@@ -4,18 +4,19 @@
 
         <div id="menu">
             <h2>Metaflop</h2>
+            <div class="box-content">
+                <fieldset>
+                    <legend class="first">
+                        <label>Typeface</label>font1</legend>
 
-            <fieldset>
-                <legend>
-                    <label>Typeface</label>font1</legend>
-
-                <ul>
-                    <li>Information <span class="action active">on</span> / <span class="action">off</span></li>
-                    <li><a href="#">Reset</a></li>
-                    <li><a href="#">Flop it!</a></li>
-                    <li><a href="/font/otf">Export font (.otf)</a></li>
-                </ul>
-            </fieldset>
+                    <ul>
+                        <li>Information <span class="action active">on</span> / <span class="action">off</span></li>
+                        <li><a href="#">Reset</a></li>
+                        <li><a href="#">Flop it!</a></li>
+                        <li><a href="/font/otf">Export font (.otf)</a></li>
+                    </ul>
+                </fieldset>
+            </div>
         </div>
 
         <div id="parameter-panel">
@@ -23,31 +24,32 @@
             <div class="parameter-panel-mode-toggle">
                 <span class="action sliders active">dummy</span> / <span class="action adjusters">nerd</span>
             </div>
-
-            {{#parameters}}
-                <fieldset>
-                <legend>{{title}}</legend>
-                {{#items}}
-                <div class="clearfix inputblock">
-                    <label for="param-{{name}}">{{title}}</label>
-                    {{{html}}}
-                    {{^html}}
-                    <div class="adjuster param-{{name}}">
-                        <a href="#" class="sub10" title="decrease by 0.1">--</a>
-                        <a href="#" class="sub1" title="decrease by 0.01">-</a>
-                        <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" value="{{default}}" class="init" />
-                        <a href="#" class="add1" title="increase by 0.01">+</a>
-                        <a href="#" class="add10" title="increase by 0.1">++</a>
+            <div class="box-content">
+                {{#parameters}}
+                    <fieldset>
+                    <legend{{#css_class}} class="{{css_class}}"{{/css_class}}>{{title}}</legend>
+                    {{#items}}
+                    <div class="clearfix inputblock{{#css_class}} {{css_class}}{{/css_class}}">
+                        <label for="param-{{name}}">{{title}}</label>
+                        {{{html}}}
+                        {{^html}}
+                        <div class="adjuster param-{{name}}">
+                            <a href="#" class="sub10" title="decrease by 0.1">--</a>
+                            <a href="#" class="sub1" title="decrease by 0.01">-</a>
+                            <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" value="{{default}}" class="init" />
+                            <a href="#" class="add1" title="increase by 0.01">+</a>
+                            <a href="#" class="add10" title="increase by 0.1">++</a>
+                        </div>
+                        <div class="slider">
+                            <input id="slider-{{name}}" type="text" maxlength="6" name="inputTest" value="{{default}}" data-range-from="{{range.from}}" data-range-to="{{range.to}}" />
+                        </div>
+                        {{/html}}
                     </div>
-                    <div class="slider">
-                        <input id="slider-{{name}}" type="text" maxlength="6" name="inputTest" value="{{default}}" data-range-from="{{range.from}}" data-range-to="{{range.to}}" />
-                    </div>
-                    {{/html}}
-                </div>
-                {{/items}}
+                    {{/items}}
 
-                </fieldset>
-            {{/parameters}}
+                    </fieldset>
+                {{/parameters}}
+            </div>
         </div>
 
     </div>

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require './racklogger'
 
 class Metaflop
@@ -91,7 +92,8 @@ class Metaflop
 
     def font_otf
         cleanup_tmp_dir
-        `cd #{@out_dir} && perl mf2pt1.pl font.mf`
+        `cd #{@out_dir} && perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Müller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com/support/eula.html.
+License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofixedpitch --fullname="Bespoke Regular" --name=Bespoke-Regular --weight=Regular font.mf`
         File.read("#{@out_dir}/font.otf")
     end
 

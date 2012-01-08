@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sass'
@@ -82,7 +83,7 @@ class App < Sinatra::Application
         mf.logger = logger
         method = "font_#{type}"
         if mf.respond_to? method
-            attachment 'metaflop.otf'
+            attachment 'Bespoke-Regular.otf'
             file = mf.method(method).call
         else
             [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]

@@ -42,8 +42,6 @@ class App < Sinatra::Application
 
 
     get '/' do
-        session[:id] ||= SecureRandom.urlsafe_base64
-
         mf_args = Metaflop.new.mf_args
         @ranges = mf_args[:ranges]
         @defaults = mf_args[:values]
@@ -59,7 +57,7 @@ class App < Sinatra::Application
 
     get '/preview/:type' do |type|
         # map all query params
-        args = { :out_dir => "/tmp/metaflop/#{session[:id]}" }
+        args = { :out_dir => out_dir }
         Metaflop::VALID_OPTIONS_KEYS.each do |key|
             # query params come in with dashes -> replace by underscores to match properties
             value = params[key.to_s.gsub("_", "-")]
@@ -80,7 +78,7 @@ class App < Sinatra::Application
     end
 
     get '/font/:type' do |type|
-        mf = Metaflop.new(:out_dir => "/tmp/metaflop/#{session[:id]}")
+        mf = Metaflop.new(:out_dir => out_dir)
         mf.logger = logger
         method = "font_#{type}"
         if mf.respond_to? method
@@ -89,6 +87,11 @@ class App < Sinatra::Application
         else
             [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]
         end
+    end
+
+    def out_dir
+        session[:id] ||= SecureRandom.urlsafe_base64
+        "/tmp/metaflop/#{session[:id]}"
     end
 
 end

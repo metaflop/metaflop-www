@@ -171,7 +171,7 @@ class Metaflop
             # hide all output but the last one, which returns the image
             `#{command}`
         else
-            logger.error "mf generation failed for '#{mf_args.join}'"
+            logger.error "mf generation failed for '#{mf_args}'"
             nil
         end
     end

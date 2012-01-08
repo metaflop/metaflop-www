@@ -57,7 +57,7 @@ class Metaflop
         # defaults
         if @out_dir && !File.directory?(@out_dir)
             Dir.mkdir(@out_dir)
-            FileUtils.cp_r(Dir['mf/*'], "#{@out_dir}")
+            FileUtils.cp_r(Dir["{mf/*,bin/*}"], "#{@out_dir}")
         end
 
         @char_number ||= 1

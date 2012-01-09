@@ -123,7 +123,7 @@ License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofix
                         end
 
                         # get the ranges
-                        range = x.delete(' ').scan(/\$(\d+)\w*\/(\d+)\w*$/).flatten!
+                        range = x.delete(' ').scan(/\$([\d\.]+)\w*\/([\d\.]+)\w*$/).flatten!
                         range = [0, 1] if range.nil?
                         @mf_args[:ranges][key] = { :from => range[0], :to => range[1] }
                     end

@@ -90,6 +90,10 @@ class App < Sinatra::Application
         end
     end
 
+    get '/:page' do |page|
+        mustache page.to_sym, :layout => false
+    end
+
     def out_dir
         session[:id] ||= SecureRandom.urlsafe_base64
         "/tmp/metaflop/#{session[:id]}"

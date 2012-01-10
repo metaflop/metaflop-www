@@ -1,8 +1,9 @@
 $live_panel_height: 6em; // TODO: remove, h1 is not preview anymore (insert h1 hidden somewhere)
 $input_height: 1.2em;
-$input_color: #ccc;
+$input_color: #ccc9bc;
 $active_color: #60eb00;
 $active_link_color: darken($active_color, 30%);
+$text_link_color: darken($input_color, 25%);
 
 $content_width: 1000px;
 $right_column_width: 710px;
@@ -18,9 +19,12 @@ $preview_box_content_width_full: $preview_box_width_full - 2 * $border_width;
 
 $left_column_width: $content_width - $right_column_width - $box_spacing_x;
 
+$footer_height: 25px;
+
 @mixin col {
     float: left;
     overflow: hidden;
+    padding-top: 30px;
 }
 
 @mixin header-row {
@@ -28,7 +32,7 @@ $left_column_width: $content_width - $right_column_width - $box_spacing_x;
 }
 
 @mixin box-shadow {
-    box-shadow: 2px 3px 3px #ccc;
+    box-shadow: 2px 3px 3px $input_color;
 }
 
 @font-face {
@@ -43,9 +47,13 @@ $left_column_width: $content_width - $right_column_width - $box_spacing_x;
     font-style: normal;
 }
 
-body {
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+}
+
+body {
     font-family: helvetica, sans-serif;
     font-size: 0.9em;
     background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
@@ -86,14 +94,8 @@ textarea {
 }
 
 h1 {
-    font-family: AdjusterRegular;
-    font-size: $live_panel_height;
-    line-height: 1em;
-    height: 1em;
-    font-weight: normal;
-    margin: 0;
-    padding: 0;
-    text-shadow: 2px 3px 3px #ccc;
+    position: absolute;
+    left: -9999px;
 }
 
 h2 {
@@ -167,11 +169,14 @@ a, span.action {
 }
 
 #main {
-    margin: 20px auto 0 auto;
+    min-height: 100%;
+	height: auto !important;
+	height: 100%;
+    margin: 0 auto ($footer_height * -1) auto;
     position: relative;
     width: $content_width;
     overflow: hidden;
-    padding: 10px 10px 0 10px;
+    padding: 0 10px 0 10px;
 }
 
 .arrow-up {
@@ -429,7 +434,7 @@ a, span.action {
 }
 
 .inputblock {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $input_color;
     position: relative;
 
     &.last {
@@ -497,6 +502,67 @@ a.char-chooser {
     display: none;
 }
 
+#footer-push {
+    height: 25px;
+    clear: both;
+}
+
+#footer {
+    overflow: hidden;
+    height: $footer_height;
+    clear: both;
+    text-align: right;
+    position: relative;
+    margin: 0 auto;
+    width: $content_width;
+
+    a {
+        text-decoration: underline;
+        color: $input_color;
+
+        &.link {
+            text-decoration: none;
+        }
+
+        &:hover {
+            color: $active_link_color;
+        }
+    }
+
+    ul {
+        float: right;
+        li {
+            display: inline;
+
+            a {
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+.link {
+    background: url(/img/links.png) no-repeat top left;
+    display: block;
+    width: 24px;
+    height: 22px;
+    float: left;
+
+    &.link-facebook {
+        background-position: 0 -1px;
+
+        &:hover {
+            background-position: 0 -72px;
+        }
+    }
+    &.link-twitter {
+        background-position: 0 -145px;
+
+        &:hover {
+            background-position: 0 -216px;
+        }
+    }
+}
 
 /* slider */
 .fd-form-element-hidden {
@@ -523,7 +589,7 @@ a.char-chooser {
         width: 7px;
         height: 1em;
         background: #eee;
-        border: 1px solid #ccc;
+        border: 1px solid $input_color;
         top: 0.3em;
         z-index: 2;
     }
@@ -569,3 +635,39 @@ a.char-chooser {
     .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
   .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
   .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+
+/* fancybox */
+.MyTagStyle
+{
+    max-height:600px;
+    max-width:940px;
+    overflow:auto;
+}
+
+#fancybox-content {
+    h2 {
+        background: none;
+        color: $input_color;
+        font-size: 1.5em;
+        padding-left: 0;
+        margin: 0 0 0.7em 0;
+    }
+
+    h3 {
+        font-size: 1.2em;
+        padding: 0;
+        margin: 0 0 0.3em 0;
+    }
+
+    p {
+        margin: 0 0 0.7em 0;
+    }
+
+    a {
+        color: $text_link_color;
+
+        &:hover {
+            color: $active_link_color;
+        }
+    }
+}

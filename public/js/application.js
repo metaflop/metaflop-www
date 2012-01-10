@@ -340,6 +340,26 @@ $(function () {
         $('#info-panel').toggle(500, 'easeInOutExpo');
     });
 
+    // fancybox links
+    $('.popup').fancybox({
+        'titleShow' : false,
+        'width' : 1000,
+        'height' : 650,
+        'autoDimensions' : false,
+        'showNavArrows' : false,
+        'transitionIn' : 'face',
+        'transitionOut' : 'fade',
+        'easingIn' : 'easeOutBack',
+        'easingOut' : 'easeInBack'
+    });
+    $('.popup-back').live('click', function(e) {
+        e.preventDefault();
+
+        $.fancybox.prev();
+
+        return false;
+    });
+
     // load the first image
     previewImage();
 });

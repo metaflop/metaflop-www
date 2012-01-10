@@ -1,5 +1,4 @@
-$live_panel_height: 6em; // TODO: remove, h1 is not preview anymore (insert h1 hidden somewhere)
-$input_height: 1.2em;
+$input_height: 14px;
 $input_color: #ccc9bc;
 $active_color: #60eb00;
 $active_link_color: darken($active_color, 30%);
@@ -55,7 +54,7 @@ html, body {
 
 body {
     font-family: helvetica, sans-serif;
-    font-size: 0.9em;
+    font-size: 15px;
     background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
 }
 
@@ -66,13 +65,13 @@ input {
     height: $input_height;
     width: 37px;
     padding: 0;
-    margin: 0.3em 0 0 0;
+    margin: 4px 0 0 0;
 }
 
 select {
     height: $input_height;
     padding: 0;
-    margin: 0.2em 0 0 0;
+    margin: 3px 0 0 0;
     border: none;
     background: #fff;
 }
@@ -99,10 +98,10 @@ h1 {
 }
 
 h2 {
-    font-size: 1em;
+    font-size: 15px;
     font-weight: bold;
     margin: 0;
-    padding: 0.1em 2em 0 0.5em;
+    padding: 2px 30px 0 7px;
     display: inline-block;
     background: $active_color;
 }
@@ -119,7 +118,7 @@ legend {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     width: 100%;
-    line-height: 1.6em;
+    line-height: 24px;
     font-weight: bold;
 
     &.first {
@@ -136,7 +135,7 @@ ul {
 label {
     float: left;
     width: 60%;
-    line-height: 1.6em;
+    line-height: 24px;
 }
 
 a, span.action {
@@ -164,7 +163,7 @@ a, span.action {
 }
 
 .box-content {
-    padding: 0 0.5em;
+    padding: 0 7px;
     background: #fff;
 }
 
@@ -235,7 +234,7 @@ a, span.action {
 
 #info-panel {
     @include header-row;
-    margin-top: 1.45em;
+    margin-top: 22px;
     height: 188px;
     display: none;
 }
@@ -245,15 +244,15 @@ a, span.action {
 
     .slider {
         float: right;
-        width: 30%;
-        height: 1.6em;
+        width: 74px;
+        height: 24px;
     }
 
     .adjuster {
         float: right;
-        width: 30%;
-        height: 1.6em;
-        margin-right: 1.2em;
+        width: 74px;
+        height: 24px;
+        margin-right: 18px;
         text-align: center;
         position: relative;
 
@@ -269,49 +268,49 @@ a, span.action {
             background-image: url(/img/plusminus.png);
             background-repeat: no-repeat;
             background-color: #eee;
-            top: 2px;
+            top: 4px;
             z-index: 3;
 
             &.add1 {
                 right: 0;
-                background-position: -21px -1px;
+                background-position: -21px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -21px -19px;
+                    background-position: -21px -20px;
                 }
             }
 
             &.add10 {
                 right: -20px;
-                background-position: -1px -1px;
+                background-position: -1px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 border-right: 1px solid $input-color;
                 &:hover {
-                    background-position: -1px -19px;
+                    background-position: -1px -20px;
                 }
             }
 
             &.sub1 {
                 left: -1px;
-                background-position: -38px -1px;
+                background-position: -38px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 &:hover {
-                    background-position: -38px -19px;
+                    background-position: -38px -20px;
                 }
             }
 
             &.sub10 {
                 left: -21px;
-                background-position: -56px -1px;
+                background-position: -56px -2px;
                 border-top: 1px solid $input-color;
                 border-bottom: 1px solid $input-color;
                 border-left: 1px solid $input-color;
                 z-index: 4;
                 &:hover {
-                    background-position: -56px -19px;
+                    background-position: -56px -20px;
                 }
             }
         }
@@ -327,7 +326,7 @@ a, span.action {
     .parameter-panel-mode-toggle {
         position: absolute;
         right: 0;
-        top: 0.2em;
+        top: 3px;
 
         .action.active {
             font-weight: bold;
@@ -354,11 +353,11 @@ a, span.action {
         text-align: center;
         position: relative;
         line-height: $preview_box_height;
-        font-size: 0.67em;
+        font-size: 9px;
         background: #fff;
 
         * {
-            line-height: 1.25em;
+            line-height: 11px;
         }
 
         .toggle-mode {
@@ -407,7 +406,7 @@ a, span.action {
 
         .preview-image {
             vertical-align: top;
-            margin: 1em 0;
+            margin: 9px 0;
 
             &.error {
                 vertical-align: middle;
@@ -429,8 +428,8 @@ a, span.action {
 .preview-loading-text {
     display: none;
     float: right;
-    margin-right: 0.4em;
-    color: $active_color / 1.5;
+    margin-right: 6px;
+    color: $input_color;
 }
 
 .inputblock {
@@ -451,14 +450,14 @@ div.char-chooser {
     bottom: 0;
     left: 0;
     width: $preview_box_content_width;
-    height: 1.3em;
+    height: 12px;
     overflow: hidden;
 
     ul {
         position: absolute;
-        top: 0.2em;
+        top: 2px;
         width: 2000px;
-        height: 1.6em;
+        height: 15px;
     }
 
     li {
@@ -466,8 +465,8 @@ div.char-chooser {
         width: $preview_box_content_width;
 
         a {
-            font-size: 1.15em;
-            padding: 0 0.2em;
+            font-size: 10px;
+            padding: 0 2px;
 
             &.active {
                 font-weight: bold;
@@ -548,7 +547,7 @@ a.char-chooser {
 
 .fd-slider {
     width: 100%;
-    height: 1.6em;
+    height: 24px;
     display: block;
     position: relative;
 
@@ -564,10 +563,10 @@ a.char-chooser {
 
     .fd-slider-handle {
         width: 7px;
-        height: 1em;
+        height: 15px;
         background: #eee;
         border: 1px solid $input_color;
-        top: 0.3em;
+        top: 4px;
         z-index: 2;
     }
 
@@ -587,7 +586,7 @@ a.char-chooser {
 }
 
 /* tipsy */
-.tipsy { font-size: 0.9em; position: absolute; padding: 5px; z-index: 100000; }
+.tipsy { font-size: 12px; position: absolute; padding: 5px; z-index: 100000; }
   .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
 
   /* Rounded corners */
@@ -625,19 +624,19 @@ a.char-chooser {
     h2 {
         background: none;
         color: $input_color;
-        font-size: 1.5em;
+        font-size: 22px;
         padding-left: 0;
-        margin: 0 0 0.7em 0;
+        margin: 0 0 16px 0;
     }
 
     h3 {
-        font-size: 1.2em;
+        font-size: 18px;
         padding: 0;
-        margin: 0 0 0.3em 0;
+        margin: 0 0 5px 0;
     }
 
     p {
-        margin: 0 0 0.7em 0;
+        margin: 0 0 10px 0;
     }
 
     a {

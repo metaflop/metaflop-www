@@ -541,29 +541,6 @@ a.char-chooser {
     }
 }
 
-.link {
-    background: url(/img/links.png) no-repeat top left;
-    display: block;
-    width: 24px;
-    height: 22px;
-    float: left;
-
-    &.link-facebook {
-        background-position: 0 -1px;
-
-        &:hover {
-            background-position: 0 -72px;
-        }
-    }
-    &.link-twitter {
-        background-position: 0 -145px;
-
-        &:hover {
-            background-position: 0 -216px;
-        }
-    }
-}
-
 /* slider */
 .fd-form-element-hidden {
     display: none;

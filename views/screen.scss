@@ -241,7 +241,7 @@ a, span.action {
 
 #info-panel {
     @include header-row;
-    margin-top: 22px;
+    margin-top: 23px;
     height: 188px;
     display: none;
 }
@@ -330,8 +330,9 @@ a, span.action {
 
     .parameter-panel-mode-toggle {
         position: absolute;
+        line-height: 15px;
         right: 0;
-        top: 2px;
+        top: 5px;
 
         .action.active {
             font-weight: bold;
@@ -434,8 +435,9 @@ a, span.action {
 .preview-loading-text {
     display: none;
     float: right;
-    margin-right: 6px;
-    color: $input_color;
+    font-size: 13px;
+    height: 13px;
+    line-height: 25px;
 }
 
 .inputblock {
@@ -631,14 +633,12 @@ a.char-chooser {
 #fancybox-content {
     h2 {
         background: none;
-        color: $input_color;
-        font-size: 22px;
         padding-left: 0;
         margin: 0 0 16px 0;
     }
 
     h3 {
-        font-size: 18px;
+        font-size: 15px;
         padding: 0;
         margin: 0 0 5px 0;
     }

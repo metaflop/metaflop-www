@@ -33,6 +33,9 @@ $(function () {
         value = String(value).replace(',', '.').toNumber();
 
         inputField.val(value);
+        // add init class to prevent tooltips and recursion
+        inputField.addClass('init');
+
         var sliderInput = getTwinInput(inputField);
         // update the associated slider too
         if (value >= sliderInput.attr('data-range-from') && value <= sliderInput.attr('data-range-to')) {

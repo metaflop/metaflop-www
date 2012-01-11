@@ -30,14 +30,14 @@ $(function () {
             value = inputField.val() || 0;
         }
 
-        value = String(value).replace(',', '.');
+        value = String(value).replace(',', '.').toNumber();
 
         inputField.val(value);
+        var sliderInput = getTwinInput(inputField);
         // update the associated slider too
-        if (value >= 0.1 && value <=1) {
-        var sliderId = inputField.attr('id').replace('param-', 'slider-');
-            $('#' + sliderId).val(value);
-            fdSlider.updateSlider(sliderId);
+        if (value >= sliderInput.attr('data-range-from') && value <= sliderInput.attr('data-range-to')) {
+            sliderInput.val(value);
+            fdSlider.updateSlider(sliderInput[0].id);
         }
 
         previewImage();
@@ -50,6 +50,16 @@ $(function () {
         }
     }
 
+    // finds the corresponding counterpart input field
+    // for a "param-" the corresponding "slider-" and vice versa
+    // input is a jquery object or a dom element
+    var getTwinInput = function(input) {
+        var element = input.length === undefined ? input : input[0];
+        var id = element.id.has('slider')
+                 ? element.id.replace('slider-', 'param-')
+                 : element.id.replace('param-', 'slider-');
+        return $('#' + id);
+    }
 
     var stopRequest = function() {
         if (window.stop !== undefined) {
@@ -135,7 +145,9 @@ $(function () {
                [46, 9, 35, 36, 37, 39].some(keyCode); // backspace, delete, tab, cursors
     }
 
-    $('.adjuster input')
+    var paramInputs = $('.adjuster input.param');
+
+    paramInputs
         .focus(function() {
             $this = $(this);
             setActiveInputs($this);
@@ -179,6 +191,44 @@ $(function () {
             setValue($(this), null);
         });
 
+    // reset
+    $('#action-reset-values').click(function(e) {
+        e.preventDefault();
+
+        paramInputs.each(function() {
+            var $this = $(this);
+
+            var sliderInput = getTwinInput($this);
+            // add init class to prevent tooltips
+            $this.addClass('init');
+
+            setValue($this, sliderInput.attr('data-default'));
+        });
+
+        return false;
+    });
+
+    // randomize
+    $('#action-randomize-values').click(function(e) {
+        e.preventDefault();
+
+        paramInputs.each(function() {
+            var $this = $(this);
+
+            var sliderInput = getTwinInput($this);
+            // add init class to prevent tooltips
+            $this.addClass('init');
+
+            var from = sliderInput.attr('data-range-from');
+            var to = sliderInput.attr('data-range-to');
+            var value = Number.random(from * 100, to * 100) / 100;
+
+            setValue($this, value);
+        });
+
+        return false;
+    });
+
     // toggle the +/- buttons for the inputs
     var parameterPanel = $('#parameter-panel');
     var parameterPanelBlocks = parameterPanel.find('.adjuster');
@@ -209,8 +259,9 @@ $(function () {
 
     // sliders
     function updateValue(cbObj) {
+
         // update the associated input field
-        var input = $('#' + cbObj.elem.id.replace('slider-', 'param-'));
+        var input = getTwinInput(cbObj.elem);
         input.val(cbObj.value)
 
         if (input.hasClass('init')) {

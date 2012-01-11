@@ -11,8 +11,8 @@
 
                     <ul>
                         <li>information <span class="action">on</span> / <span class="action active">off</span></li>
-                        <li><a href="#">reset</a></li>
-                        <li><a href="#">flop it!</a></li>
+                        <li><a href="#" id="action-reset-values">reset</a></li>
+                        <li><a href="#" id="action-randomize-values">flop it!</a></li>
                         <li><a href="/font/otf">export font (.otf)</a></li>
                     </ul>
                 </fieldset>
@@ -36,12 +36,13 @@
                         <div class="adjuster param-{{name}}">
                             <a href="#" class="sub10" title="decrease by 0.1">--</a>
                             <a href="#" class="sub1" title="decrease by 0.01">-</a>
-                            <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" value="{{default}}" class="init" />
+                            <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" value="{{default}}" class="param init" />
                             <a href="#" class="add1" title="increase by 0.01">+</a>
                             <a href="#" class="add10" title="increase by 0.1">++</a>
                         </div>
                         <div class="slider">
-                            <input id="slider-{{name}}" type="text" maxlength="6" name="inputTest" value="{{default}}" data-range-from="{{range.from}}" data-range-to="{{range.to}}" />
+                            <input id="slider-{{name}}" type="text" maxlength="6" name="inputTest" value="{{default}}"
+                                data-range-from="{{range.from}}" data-range-to="{{range.to}}" data-default="{{default}}" />
                         </div>
                         {{/html}}
                     </div>

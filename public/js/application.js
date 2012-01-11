@@ -46,13 +46,6 @@ $(function () {
         previewImage();
     }
 
-    var stripPercentSign = function(inputField) {
-        var value = inputField.val().toNumber();
-        if (value || value === 0) {
-            inputField.val(value);
-        }
-    }
-
     // finds the corresponding counterpart input field
     // for a "param-" the corresponding "slider-" and vice versa
     // input is a jquery object or a dom element
@@ -154,7 +147,6 @@ $(function () {
         .focus(function() {
             $this = $(this);
             setActiveInputs($this);
-            stripPercentSign($this);
         })
         .keydown(function(event) {
             // allow backspace, delete, tab, cursors and metakeys
@@ -162,11 +154,9 @@ $(function () {
             }
             // allow delete
             else if (event.keyCode == 8){
-                stripPercentSign($(this));
             }
             // up increase value
             else if (event.keyCode == 38) {
-                changeValue($(this), 'add1');
             }
             // down decrease value
             else if (event.keyCode == 40) {

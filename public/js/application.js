@@ -141,6 +141,11 @@ $(function () {
                [46, 9, 35, 36, 37, 39].some(keyCode); // backspace, delete, tab, cursors
     }
 
+    var showNotification = function(element, text) {
+        element.tipsy({trigger: 'manual', fallback: text, gravity: 's'}).tipsy('show');
+        setTimeout(function(){ element.tipsy('hide') }, 2000);
+    };
+
     var paramInputs = $('.adjuster input.param');
 
     paramInputs
@@ -198,6 +203,8 @@ $(function () {
             setValue($this, sliderInput.attr('data-default'));
         });
 
+        showNotification($(this), "The values were reset to their defaults.");
+
         return false;
     });
 
@@ -218,6 +225,8 @@ $(function () {
 
             setValue($this, value);
         });
+
+        showNotification($(this), "A random set of parameters was generated.");
 
         return false;
     });

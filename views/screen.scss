@@ -34,6 +34,14 @@ $footer_height: 25px;
     box-shadow: 2px 3px 3px $input_color;
 }
 
+@mixin box-heading {
+    font-size: 15px;
+    line-height: 15px;
+    margin: 0;
+    padding: 5px 8px 4px 7px;
+    display: inline-block;
+}
+
 @font-face {
     font-family: 'AdjusterRegular';
     src: url('/fonts/adjuster-webfont.eot');
@@ -98,13 +106,11 @@ h1 {
 }
 
 h2 {
-    font-size: 15px;
-    line-height: 15px;
+    @include box-heading;
+
     font-weight: bold;
-    margin: 0;
-    padding: 5px 8px 4px 7px;
-    display: inline-block;
     background: $active_color;
+    float: left;
 }
 
 fieldset {
@@ -165,6 +171,7 @@ a, span.action {
 }
 
 .box-content {
+    clear: both; // clear h2 float
     padding: 2px 7px;
     background: #fff;
 
@@ -237,6 +244,12 @@ a, span.action {
             color: #000;
         }
     }
+}
+
+.beta {
+    @include box-heading;
+
+    color: #fff;
 }
 
 #info-panel {
@@ -329,10 +342,9 @@ a, span.action {
     }
 
     .parameter-panel-mode-toggle {
-        position: absolute;
-        line-height: 15px;
-        right: 0;
-        top: 5px;
+        @include box-heading;
+
+        float: right;
 
         .action.active {
             font-weight: bold;
@@ -352,6 +364,7 @@ a, span.action {
     }
 
     .preview-box-content {
+        clear: both; // clear h2 float
         margin-top: $border_width * -1; // correct the border width, such that h2 corresponds to parameters h2
         border: $border_width solid #fff;
         width: $preview_box_content_width;

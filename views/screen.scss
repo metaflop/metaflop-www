@@ -42,18 +42,6 @@ $footer_height: 25px;
     display: inline-block;
 }
 
-@font-face {
-    font-family: 'AdjusterRegular';
-    src: url('/fonts/adjuster-webfont.eot');
-    src: url('/fonts/adjuster-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/adjuster-webfont.woff') format('woff'),
-         url('/fonts/adjuster-webfont.ttf') format('truetype'),
-         url('/fonts/adjuster-webfont.otf') format('opentype'),
-         url('/fonts/adjuster-webfont.svg#AdjusterRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
 html, body {
     height: 100%;
     margin: 0;

@@ -33,7 +33,8 @@ class Metaflop
         :superness,
         :pen_size,
         :corner,
-        :contrast
+        :contrast,
+        :sidebearing
     ]
 
     # the mapping between the defined params in the mf file and this class' properties
@@ -52,7 +53,8 @@ class Metaflop
         'px#' => :pen_size,
         'py#' => :pen_size,
         'corner#' => :corner,
-        'cont' => :contrast
+        'cont' => :contrast,
+        'sidebearing' => :sidebearing
     }
 
     attr_accessor *VALID_OPTIONS_KEYS
@@ -101,17 +103,35 @@ class Metaflop
 
     def font_otf
         cleanup_tmp_dir
+
+        # regenerate from the latest parameters with the sidebearings turned off
+        @sidebearing = '0'
+        mf_args(:force => true, :file => "#{@out_dir}/font.mf")
+        generate_mf
+
         `cd #{@out_dir} && perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Müller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com/support/eula.html.
 License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofixedpitch --fullname="Bespoke Regular" --name=Bespoke-Regular --weight=Regular font.mf`
+
+        @sidebearing = nil
+
         File.read("#{@out_dir}/font.otf")
     end
 
     # returns the metafont parameter instructions (aka font.mf) as an array (each param)
-    def mf_args
-        unless @mf_args
+    #
+    # @param options [Hash] optional parameters
+    # @option options [String] :force always regenerates the mf
+    # @option options [String] :file defaults to "mf/font.mf" (containing the default parameters)
+    def mf_args(options = {})
+        if !@mf_args || options[:force]
+            options[:file] ||= "mf/font.mf"
             @mf_args = { :values => {}, :instruction => '', :ranges => {} }
-            File.readlines("mf/font.mf")
-                .delete_if do |x|            # remove comment and empty lines
+
+            lines = File.readlines(options[:file])
+            # in case the file is a one-liner already, split each statement onto a line
+            lines = lines[0].split(';').map{ |x| "#{x};" } if lines.length == 1
+
+            lines.delete_if do |x|            # remove comment and empty lines
                     stripped = x.strip
                     stripped == '' || stripped[0] == '%'
                 end
@@ -152,7 +172,7 @@ License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofix
     # @option options [String] :convert_gif parameters for the 'convert' task for the gif image
     # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
     # @option options [String] :char_number the nth character
-    def generate(options)
+    def generate(options = {})
         char_number = options[:char_number]
 
         if char_number
@@ -165,15 +185,9 @@ License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofix
 
         convert = options[:convert_custom] || "convert #{options[:convert_svg]} #{svg_name} #{options[:convert_gif]}"
 
-        success = system(
-                    %Q{cd #{@out_dir} &&
-                    mf -halt-on-error -jobname=font \\\\"#{mf_args[:instruction]}" > /dev/null}
-                  )
-
         # don't bother if metafont failed
-        if success
+        if generate_mf
             command = %Q{cd #{@out_dir} &&
-                         echo "#{mf_args[:instruction]}" > font.mf &&
                          #{options[:generate]} > /dev/null &&
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} font.dvi > /dev/null &&
                          #{convert} gif:-}
@@ -185,6 +199,15 @@ License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofix
             logger.error "mf generation failed for '#{mf_args}'"
             nil
         end
+    end
+
+    # returns true if the mf was successfully generated
+    def generate_mf
+        system(
+            %Q{cd #{@out_dir} &&
+            echo "#{mf_args[:instruction]}" > font.mf &&
+            mf -halt-on-error -jobname=font \\\\"#{mf_args[:instruction]}" > /dev/null}
+        )
     end
 
     def cleanup_tmp_dir

@@ -74,11 +74,13 @@ $(function () {
         }
     }
 
+    // we habe 2 preview images, the next preview is loaded into the invisible one
     var previewImageCall = function(){
         var previewBox = $('.preview-box.active');
         var loading = previewBox.find('.preview-loading');
         var loadingText = previewBox.find('.preview-loading-text');
-        var image = previewBox.find('.preview-image');
+        var image = previewBox.find('.preview-image:visible');
+        var preloadImage = previewBox.find('.preview-image:hidden');
         var content = previewBox.find('.preview-box-content');
         var previewType = previewBox.attr('id').remove('preview-');
 
@@ -90,17 +92,33 @@ $(function () {
             .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
 
-        var done = function(imageUrl) {
-            image.removeClass('error');
+        var done = function(error) {
+            preloadImage.unbind('load');
+            preloadImage.unbind('error');
+
+            if (error) {
+                preloadImage.attr('src', '/img/error.png');
+                preloadImage.addClass('error');
+
+                content.tipsy({
+                    trigger: 'manual',
+                    fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.',
+                    gravity: 's'
+                }).tipsy('show');
+            }
+            else {
+                preloadImage.removeClass('error');
+                image.removeClass('error');
+            }
+
             content.fadeTo(0, 1);
             loadingText.hide();
             loading.spin(false);
             content.find('textarea').hide();
-            image.attr('src', imageUrl);
+            image.hide();
+            preloadImage.show();
 
-            $.fn.metaflop.preloadImage.onload = null;
-            $.fn.metaflop.preloadImage.onerror = null;
-            $.fn.metaflop.preloadImage = null;
+            $.fn.metaflop.preloadImageInProgress = false;
 
             if (!$.fn.metaflop.ready) {
                 // add tooltips to the sliders (only after the initial preview has been loaded,
@@ -110,7 +128,8 @@ $(function () {
             }
         };
 
-        if ($.fn.metaflop.preloadImage) {
+        // there is already a request on its way -> cancel it
+        if ($.fn.metaflop.preloadImageInProgress) {
             stopRequest();
         }
         else {
@@ -118,20 +137,24 @@ $(function () {
             content.fadeTo(0, 0.5);
             loadingText.show();
             loading.spin('large');
+
+            $.fn.metaflop.preloadImageInProgress = true;
         }
 
-        $.fn.metaflop.preloadImage = new Image();
-        $.fn.metaflop.preloadImage.src = url;
+        // events when image is loaded
+        preloadImage.unbind('load');
+        preloadImage.unbind('error');
 
-        $.fn.metaflop.preloadImage.onload = function() {
-            done(this.src);
-        };
+        preloadImage.bind('load', function() {
+            done();
+        });
 
-        $.fn.metaflop.preloadImage.onerror = function() {
-            done('/img/error.png');
-            image.addClass('error');
-            content.tipsy({trigger: 'manual', fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.', gravity: 's'}).tipsy('show');
-        };
+        preloadImage.bind('error', function() {
+            done(true);
+        });
+
+        // start preloading
+        preloadImage.attr('src', url);
     }
 
     var timeout;

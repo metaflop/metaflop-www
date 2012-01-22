@@ -9,6 +9,7 @@
 # encoding: UTF-8
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sinatra/config_file'
 require 'sass'
 require 'mustache/sinatra'
 require 'fileutils'
@@ -18,6 +19,9 @@ require './metaflop'
 class App < Sinatra::Application
 
     configure do
+        register Sinatra::ConfigFile
+        config_file './config.yml'
+
         # setup the tmp dir where the generated fonts go
         tmp_dir = "/tmp/metaflop"
         FileUtils.rm_rf(tmp_dir)
@@ -76,6 +80,7 @@ class App < Sinatra::Application
         end
 
         mf = Metaflop.new(args)
+        mf.settings = settings.metaflop
         mf.logger = logger
         method = "preview_#{type}"
         if mf.respond_to? method
@@ -88,6 +93,7 @@ class App < Sinatra::Application
 
     get '/font/:type' do |type|
         mf = Metaflop.new(:out_dir => out_dir)
+        mf.settings = settings.metaflop
         mf.logger = logger
         method = "font_#{type}"
         if mf.respond_to? method

@@ -9,10 +9,13 @@
 #
 
 require './racklogger'
+require './racksettings'
+require 'mustache'
 
 class Metaflop
 
     include RackLogger
+    include RackSettings
 
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
@@ -78,9 +81,9 @@ class Metaflop
     # returns an gif image for a single character preview
     def preview_single
         generate(
-            generate: 'gftodvi font.2602gf',
-            convert_svg: "-density 60",
-            convert_gif: "-chop 0x15 -extent 'x315'",
+            generate: "#{settings[:preview_single]['generate']}",
+            convert_svg: "#{settings[:preview_single]['convert_svg']}",
+            convert_gif: "#{settings[:preview_single]['convert_gif']}",
             char_number: char_number
         )
     end
@@ -88,16 +91,16 @@ class Metaflop
     def preview_chart
         cleanup_tmp_dir
         generate(
-            generate: %Q{latex -output-format=dvi -jobname=font "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=font at 22pt \\noindent \\big \\begin{center} \\setlength{\\tabcolsep}{18pt} \\begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr H & I & J & K & L & M & N \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr  O & P & Q & R & S & T & U  \\\\  \\cr  &   &   &   &   &   &   \\\\ \\cr  &   &   &   &   &   &   \\\\ \\cr  V & W & X & Y & Z   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr a & b & c & d & e & f & g \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr h & i & j & k & l & m & n \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr o & p & q & r & s & t & u \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr v & w & x & y & z & . & ! \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr   &   &   &   &   &   &   \\\\ \\cr \\end{tabular}  \\end{center} \\end{document}"},
-            convert_custom: "dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize 'x315'"
+            generate: "#{settings[:preview_chart]['generate']}",
+            convert_custom: "#{settings[:preview_chart]['convert_custom']}"
         )
     end
 
     def preview_typewriter
         cleanup_tmp_dir
         generate(
-            generate: %Q{latex -output-format=dvi -jobname=font "\\\\documentclass[a4paper]{report} \\begin{document} \\pagestyle{empty} \\font\\big=font at 20pt \\noindent \\big \\begin{flushleft}#{@text} \\end{flushleft} \\end{document}"},
-            convert_custom: "dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'"
+            generate: Mustache.render("#{settings[:preview_typewriter]['generate']}", :text => @text),
+            convert_custom: "#{settings[:preview_typewriter]['convert_custom']}"
         )
     end
 
@@ -109,8 +112,7 @@ class Metaflop
         mf_args(:force => true, :file => "#{@out_dir}/font.mf")
         generate_mf
 
-        `cd #{@out_dir} && perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Müller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com/support/eula.html.
-License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofixedpitch --fullname="Bespoke Regular" --name=Bespoke-Regular --weight=Regular font.mf`
+        `cd #{@out_dir} && #{settings[:font_otf]}`
 
         @sidebearing = nil
 

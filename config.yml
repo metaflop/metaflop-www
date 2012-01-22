@@ -1,0 +1,18 @@
+metaflop:
+
+    preview_single:
+        generate: gftodvi font.2602gf
+        convert_svg: -density 60
+        convert_gif: -chop 0x15 -extent 'x315'
+
+    preview_chart:
+        generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"
+
+        convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize 'x315'
+
+    preview_typewriter:
+        generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 20pt \noindent \big \begin{flushleft}{{text}} \end{flushleft} \end{document}"
+
+        convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'
+
+    font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Müller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com/support/eula.html.License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofixedpitch --fullname="Bespoke Regular" --name=Bespoke-Regular --weight=Regular font.mf'

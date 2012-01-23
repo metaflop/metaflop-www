@@ -143,15 +143,20 @@ class Metaflop
 
                     if (splits.length == 2)
                         key = splits[0].delete('#').to_sym
-                        # store as key/value pairs
-                        @mf_args[:values][key] = { :raw => splits[1], :clean => splits[1].to_f }
 
                         # replace the default value from the file if we have a value set for the parameter
                         mapping = MF_MAPPINGS[splits[0]]
+
                         value = mapping ? send(mapping) : nil
+
                         if (value && !value.empty?)
                             pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
+                        else
+                            value = splits[1].to_f
                         end
+
+                        # store as key/value pairs
+                        @mf_args[:values][key] = value
 
                         # get the ranges
                         range = x.gsub(/\s+/, '').scan(/\$([\d\.]+)\w*\/([\d\.]+)\w*$/).flatten!

@@ -55,10 +55,9 @@ class App < Sinatra::Application
 
 
     get '/' do
-        mf_args = Metaflop.new.mf_args
+        mf_args = mf_instance_from_request.mf_args
         @ranges = mf_args[:ranges]
         @defaults = mf_args[:values]
-        @defaults.each_key { |key| @defaults[key] = @defaults[key][:clean] }
 
         mustache :index
     end
@@ -69,19 +68,7 @@ class App < Sinatra::Application
     end
 
     get '/preview/:type' do |type|
-        # map all query params
-        args = { :out_dir => out_dir }
-        Metaflop::VALID_OPTIONS_KEYS.each do |key|
-            # query params come in with dashes -> replace by underscores to match properties
-            value = params[key.to_s.gsub("_", "-")]
-
-            # whitelist allowed characters
-            args[key] = value.delete "^a-zA-Z0-9., " if value && !value.empty?
-        end
-
-        mf = Metaflop.new(args)
-        mf.settings = settings.metaflop
-        mf.logger = logger
+        mf = mf_instance_from_request
         method = "preview_#{type}"
         if mf.respond_to? method
             image = mf.method(method).call
@@ -111,6 +98,24 @@ class App < Sinatra::Application
     def out_dir
         session[:id] ||= SecureRandom.urlsafe_base64
         "/tmp/metaflop/#{session[:id]}"
+    end
+
+    def mf_instance_from_request
+        # map all query params
+        args = { :out_dir => out_dir }
+        Metaflop::VALID_OPTIONS_KEYS.each do |key|
+            # query params come in with dashes -> replace by underscores to match properties
+            value = params[key.to_s.gsub("_", "-")]
+
+            # whitelist allowed characters
+            args[key] = value.delete "^a-zA-Z0-9., " if value && !value.empty?
+        end
+
+        mf = Metaflop.new(args)
+        mf.settings = settings.metaflop
+        mf.logger = logger
+
+        mf
     end
 
 end

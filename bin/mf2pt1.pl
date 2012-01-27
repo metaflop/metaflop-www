@@ -909,8 +909,8 @@ Open($1);
 SelectAll();
 # Simplify(0, 2);         # Switch these off to get pure font elements (S.Egli)
  RemoveOverlap();        
- AddExtrema();
- Simplify(0, 2);
+# AddExtrema();
+# Simplify(0, 2);
  CorrectDirection();
  Simplify(0, 2);
  RoundToInt();

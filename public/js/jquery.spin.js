@@ -13,15 +13,15 @@ $("#el").spin(false); // Kills the spinner.
 (function($) {
 	$.fn.spin = function(opts, color) {
 		var presets = {
-			"tiny": { lines: 8, length: 2, width: 2, radius: 3 },
-			"small": { lines: 8, length: 4, width: 3, radius: 5 },
+			"tiny": { lines: 12, length: 2, width: 2, radius: 3, color: '#000', speed: 1.4, trail: 74, shadow: false },
+			"small": { lines: 12, length: 4, width: 3, radius: 5, color: '#000', speed: 1.4, trail: 74, shadow: false },
 			"large": { lines: 12, length: 8, width: 5, radius: 11, color: '#000', speed: 1.4, trail: 74, shadow: false }
 		};
 		if (Spinner) {
 			return this.each(function() {
 				var $this = $(this),
 					data = $this.data();
-				
+
 				if (data.spinner) {
 					data.spinner.stop();
 					delete data.spinner;

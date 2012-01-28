@@ -126,6 +126,11 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
+
+    li {
+        clear: both;
+        overflow: hidden;
+    }
 }
 
 label {
@@ -141,6 +146,46 @@ a, span.action {
 
     &:hover {
         color: $active_link_color;
+    }
+}
+
+a.action-icon {
+    background: url(/img/share-icons.png) no-repeat top left;
+
+    &.share-clipboard {
+        background-position: 0 -66px;
+
+        &:hover {
+            background-position: 0 0;
+        }
+     }
+
+    &.share-facebook {
+        background-position: 0 -198px;
+
+        &:hover {
+            background-position: 0 -132px;
+        }
+     }
+    &.share-email {
+        background-position: 0 -330px;
+
+        &:hover {
+            background-position: 0 -264px;
+        }
+    }
+    &.share-twitter {
+        background-position: 0 -462px;
+
+        &:hover {
+            background-position: 0 -396px;
+        }
+    }
+
+
+    img {
+        width: 16px;
+        height: 16px;
     }
 }
 
@@ -230,6 +275,18 @@ a, span.action {
 
         &.active {
             color: #000;
+        }
+    }
+
+    ul li {
+        a {
+            float: left;
+        }
+        .spinner {
+            display: block;
+            float: left;
+            overflow: hidden;
+            width: 20px;
         }
     }
 }
@@ -596,7 +653,7 @@ a.char-chooser {
     }
 }
 
-/* tipsy */
+/* tipsy: standard */
 .tipsy { font-size: 12px; position: absolute; padding: 5px; z-index: 100000; }
   .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
 
@@ -622,6 +679,46 @@ a.char-chooser {
     .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
   .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
   .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+
+/* tipsy: custom */
+.tipsy-small {
+    opacity: 1;
+
+    .tipsy-inner {
+        background-color: #0f0f0f;
+        height: 22px;
+        margin-top: -2px;
+        padding-top: 3px;
+
+        a, span {
+            margin: 2px 5px;
+            position: relative;
+            height: 16px;
+            width: 16px;
+            cursor: default;
+        }
+
+        span {
+            position: relative;
+        }
+        object {
+            position: absolute;
+            top: 1px;
+            left: 0;
+            cursor: default;
+        }
+
+        img {
+            top: 2px;
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .tipsy-arrow-w {
+        border-right-color: #0f0f0f;
+    }
+}
 
 /* fancybox */
 .MyTagStyle

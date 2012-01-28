@@ -260,28 +260,44 @@ $(function () {
         e.preventDefault();
 
         var link = $(this);
-        var url = "http://www.metaflop.com/" + $.fn.metaflop.queryString.escapeURL();
-        var text = 'I created a nice metaflop font!';
-        var textAndUrl = text + ' ' + url;
 
-        var tipsyContent =
-            '<a href="http://twitter.com/home?status=' + textAndUrl + '" target="_blank" class="action-icon share-twitter" title="post a tweet"><img src="/img/blank.png" /></a>' +
-            '<a href="http://www.facebook.com/sharer.php?u=' + textAndUrl + '" target="_blank" class="action-icon share-facebook" title="post on facebook"><img src="/img/blank.png" /></a>' +
-            '<a href="mailto:?subject=metaflop font&body=' + text + '" target="_blank" class="action-icon share-email" title="send by email"><img src="/img/blank.png" /></a>' +
-            '<span><img src="/img/blank.png" /><object width="16" height="16" id="clippy" class="clippy" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" title="copy to clipboard"><param value="/flash/clippy.swf" name="movie"><param value="always" name="allowScriptAccess"><param value="high" name="quality"><param value="noscale" name="scale"><param value="text=' + url + '" name="FlashVars"><param value="#FFFFFF" name="bgcolor"><param value="opaque" name="wmode"><embed width="16" height="16" wmode="opaque" bgcolor="#FFFFFF" flashvars="text=' + url + '" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="/flash/clippy.swf"></object></span>';
+        // insert spinner (need new element to properly position)
+        var spinner = $('<span>&nbsp;</span>').addClass('spinner');
+        spinner.insertAfter(link);
+        link.blur();
+        spinner.spin('tiny');
 
-        link.tipsy({
-            trigger: 'manual',
-            fallback: tipsyContent,
-            gravity: 'w',
-            html: true,
-            className: 'tipsy-small'
-        }).tipsy('show');
+        $.ajax({
+            url: '/font/create' + $.fn.metaflop.queryString,
+            success: function(data) {
+                var url = "http://www.metaflop.com/font/" + data;
+                var text = 'I created a nice metaflop font!';
+                var textAndUrl = text + ' ' + url;
 
-        // hide tipsy when clicked anywhere outside of it
-        $('body').bind('click.metaflop', function() {
-            link.tipsy('hide');
-            $('body').unbind('click.metaflop');
+                var tipsyContent =
+                    '<a href="http://twitter.com/home?status=' + textAndUrl + '" target="_blank" class="action-icon share-twitter" title="post a tweet"><img src="/img/blank.png" /></a>' +
+                    '<a href="http://www.facebook.com/sharer.php?u=' + textAndUrl + '" target="_blank" class="action-icon share-facebook" title="post on facebook"><img src="/img/blank.png" /></a>' +
+                    '<a href="mailto:?subject=metaflop font&body=' + textAndUrl + '" target="_blank" class="action-icon share-email" title="send by email"><img src="/img/blank.png" /></a>' +
+                    '<span><img src="/img/blank.png" /><object width="16" height="16" id="clippy" class="clippy" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" title="copy to clipboard"><param value="/flash/clippy.swf" name="movie"><param value="always" name="allowScriptAccess"><param value="high" name="quality"><param value="noscale" name="scale"><param value="text=' + url + '" name="FlashVars"><param value="#FFFFFF" name="bgcolor"><param value="opaque" name="wmode"><embed width="16" height="16" wmode="opaque" bgcolor="#FFFFFF" flashvars="text=' + url + '" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="/flash/clippy.swf"></object></span>';
+
+                link.tipsy({
+                    trigger: 'manual',
+                    fallback: tipsyContent,
+                    gravity: 'w',
+                    html: true,
+                    className: 'tipsy-small'
+                }).tipsy('show');
+
+                // hide tipsy when clicked anywhere outside of it
+                $('body').bind('click.metaflop', function() {
+                    link.tipsy('hide');
+                    $('body').unbind('click.metaflop');
+                });
+            },
+            complete: function() {
+                spinner.spin(false);
+                spinner.remove();
+            }
         });
 
         return false;

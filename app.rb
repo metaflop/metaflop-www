@@ -14,13 +14,15 @@ require 'sass'
 require 'mustache/sinatra'
 require 'fileutils'
 require 'time'
+require 'data_mapper' # metagem, requires common plugins too.
 require './metaflop'
+require './url'
 
 class App < Sinatra::Application
 
     configure do
         register Sinatra::ConfigFile
-        config_file './config.yml'
+        config_file ['./config.yml', './db.yml']
 
         # setup the tmp dir where the generated fonts go
         tmp_dir = "/tmp/metaflop"
@@ -38,6 +40,18 @@ class App < Sinatra::Application
         mime_type :otf, 'font/opentype'
 
         enable :sessions
+
+        # db
+        DataMapper.setup(:default, {
+            :adapter  => settings.db[:adapter],
+            :host     => settings.db[:host],
+            :username => settings.db[:username],
+            :password => settings.db[:password],
+            :database => settings.db[:database]
+        })
+
+        DataMapper.finalize
+        Url.auto_upgrade!
     end
 
     configure :development do
@@ -62,6 +76,25 @@ class App < Sinatra::Application
         mustache :index
     end
 
+    # creates a shortened url for the current params (i.e. font setting)
+    get '/font/create' do
+        Url.create(:params => params)[:short]
+    end
+
+    get '/font/:url' do |url|
+        url = Url.first(:short => url)
+
+        if url.nil?
+            redirect '/'
+        end
+
+        mf_args = mf_instance_from_request(url[:params]).mf_args
+        @ranges = mf_args[:ranges]
+        @defaults = mf_args[:values]
+
+        mustache :index
+    end
+
     get '/assets/css/:name.scss' do |name|
         content_type :css
         scss name.to_sym, :layout => false
@@ -78,7 +111,7 @@ class App < Sinatra::Application
         end
     end
 
-    get '/font/:type' do |type|
+    get '/export/font/:type' do |type|
         mf = Metaflop.new(:out_dir => out_dir)
         mf.settings = settings.metaflop
         mf.logger = logger
@@ -100,7 +133,7 @@ class App < Sinatra::Application
         "/tmp/metaflop/#{session[:id]}"
     end
 
-    def mf_instance_from_request
+    def mf_instance_from_request(params = params)
         # map all query params
         args = { :out_dir => out_dir }
         Metaflop::VALID_OPTIONS_KEYS.each do |key|

@@ -1,0 +1,13 @@
+db:
+    development:
+        adapter: mysql
+        host: localhost
+        username: user
+        password: pw
+        database: metaflop
+    production:
+        adapter: mysql
+        host: localhost
+        username: user
+        password: pw
+        database: metaflop

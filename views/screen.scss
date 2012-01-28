@@ -126,6 +126,11 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
+
+    li {
+        clear: both;
+        overflow: hidden;
+    }
 }
 
 label {
@@ -270,6 +275,18 @@ a.action-icon {
 
         &.active {
             color: #000;
+        }
+    }
+
+    ul li {
+        a {
+            float: left;
+        }
+        .spinner {
+            display: block;
+            float: left;
+            overflow: hidden;
+            width: 20px;
         }
     }
 }

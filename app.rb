@@ -46,7 +46,7 @@ class App < Sinatra::Application
 
     configure :production do
         # logging
-        log_dir = "/local/metaflop/log/rack/"
+        log_dir = "log/rack/"
         Dir.mkdir(log_dir) unless Dir.exist? log_dir
         logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')
         $stderr.reopen(logger)

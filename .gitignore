@@ -3,3 +3,5 @@ screeen.css
 .bundle
 config/user.rb
 db.yml
+.DS_Store
+*.swp

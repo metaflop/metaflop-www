@@ -72,7 +72,7 @@ class Metaflop
         # defaults
         if @out_dir && !File.directory?(@out_dir)
             Dir.mkdir(@out_dir)
-            FileUtils.cp_r(Dir["{mf/*,bin/*}"], "#{@out_dir}")
+            FileUtils.cp_r(Dir["{mf/metaflop-font-bespoke/*,bin/*}"], "#{@out_dir}")
         end
 
         @char_number ||= 1
@@ -126,7 +126,7 @@ class Metaflop
     # @option options [String] :file defaults to "mf/font.mf" (containing the default parameters)
     def mf_args(options = {})
         if !@mf_args || options[:force]
-            options[:file] ||= "mf/font.mf"
+            options[:file] ||= "mf/metaflop-font-bespoke/font.mf"
             @mf_args = { :values => {}, :instruction => '', :ranges => {} }
 
             lines = File.readlines(options[:file])

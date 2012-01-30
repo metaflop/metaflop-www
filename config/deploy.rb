@@ -20,7 +20,7 @@ ssh_options[:forward_agent] = true # use local ssh key
 
 set :application, "metaflop"
 set :scm, :git
-set :repository,  "git@github.com:greyfont/metaflop.git"
+set :repository,  "git@github.com:greyfont/metaflop-www.git"
 set :branch, "master"
 set :deploy_via, :remote_cache # don't clone repo each time
 set :git_enable_submodules, 1

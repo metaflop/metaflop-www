@@ -35,3 +35,11 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
+
+namespace :config do
+  task :db do
+    upload('db.yml', "#{deploy_to}/current/db.yml")
+  end
+end
+
+before "deploy:restart", "config:db"

@@ -356,12 +356,12 @@ $(function () {
 
         // update the associated input field
         var input = getTwinInput(cbObj.elem);
-        input.val(cbObj.value)
 
         if (input.hasClass('init')) {
             input.removeClass('init');
         }
         else {
+            input.val(cbObj.value);
             input.blur();
 
             // update the tooltip

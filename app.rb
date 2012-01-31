@@ -15,8 +15,8 @@ require 'mustache/sinatra'
 require 'fileutils'
 require 'time'
 require 'data_mapper' # metagem, requires common plugins too.
-require './metaflop'
-require './url'
+require './lib/metaflop'
+require './lib/url'
 
 class App < Sinatra::Application
 

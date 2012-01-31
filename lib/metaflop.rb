@@ -8,8 +8,8 @@
 # licensed under gpl v3
 #
 
-require './racklogger'
-require './racksettings'
+require './lib/racklogger'
+require './lib/racksettings'
 require 'mustache'
 
 class Metaflop

@@ -15,4 +15,4 @@ metaflop:
 
         convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'
 
-    font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Müller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com/support/eula.html.License URL: http://www.metaflop.com/support/eula.html" --family=Bespoke --nofixedpitch --fullname="Bespoke Regular" --name=Bespoke-Regular --weight=Regular font.mf'
+    font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family=Bespoke --nofixedpitch --fullname="Bespoke {{font_hash}}" --name="Bespoke-{{font_hash}}" --weight={{font_hash}} font.mf'

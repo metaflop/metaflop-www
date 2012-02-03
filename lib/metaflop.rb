@@ -22,6 +22,7 @@ class Metaflop
         :out_dir,
         :char_number,
         :text,
+        :font_hash,
 
         :unit_width,
         :cap_height,
@@ -112,7 +113,9 @@ class Metaflop
         mf_args(:force => true, :file => "#{@out_dir}/font.mf")
         generate_mf
 
-        `cd #{@out_dir} && #{settings[:font_otf]}`
+        command = Mustache.render("#{settings[:font_otf]}", :font_hash => @font_hash)
+
+        `cd #{@out_dir} && #{command}`
 
         @sidebearing = nil
 

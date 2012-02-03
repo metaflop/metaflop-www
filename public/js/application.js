@@ -74,7 +74,40 @@ $(function () {
         }
     }
 
-    // we habe 2 preview images, the next preview is loaded into the invisible one
+    // don't create new url each time for unchanged setting
+    var callWithFontHash = function(complete, success) {
+        complete = complete || function(){};
+        success = success || function(){};
+
+        if ($.fn.metaflop.shortendedUrl) {
+            success($.fn.metaflop.shortendedUrl);
+            complete();
+        }
+        else {
+            $.ajax({
+                url: '/font/create' + $.fn.metaflop.queryString,
+                success: function(data) {
+                    $.fn.metaflop.shortendedUrl = data;
+                    success(data);
+                },
+                complete: function() {
+                    complete();
+                }
+            });
+        }
+    }
+
+    var getSpinnerForActionLink = function(link) {
+        // insert spinner (need new element to properly position)
+        var spinner = $('<span>&nbsp;</span>').addClass('spinner');
+        spinner.insertAfter(link);
+        link.blur();
+        spinner.spin('tiny');
+
+        return spinner;
+    }
+
+    // we have 2 preview images, the next preview is loaded into the invisible one
     var previewImageCall = function(){
         var previewBox = $('.preview-box.active');
         var loading = previewBox.find('.preview-loading');
@@ -264,11 +297,7 @@ $(function () {
 
         var link = $(this);
 
-        // insert spinner (need new element to properly position)
-        var spinner = $('<span>&nbsp;</span>').addClass('spinner');
-        spinner.insertAfter(link);
-        link.blur();
-        spinner.spin('tiny');
+        var spinner = getSpinnerForActionLink(link);
 
         var success = function(data) {
             var url = "http://www.metaflop.com/font/" + data;
@@ -302,23 +331,25 @@ $(function () {
             spinner.remove();
         };
 
-        // don't create new url each time for unchanged setting
-        if ($.fn.metaflop.shortendedUrl) {
-            success($.fn.metaflop.shortendedUrl);
-            complete();
-        }
-        else {
-            $.ajax({
-                url: '/font/create' + $.fn.metaflop.queryString,
-                success: function(data) {
-                    $.fn.metaflop.shortendedUrl = data;
-                    success(data);
-                },
-                complete: function() {
-                    complete();
-                }
-            });
-        }
+        callWithFontHash(complete, success);
+
+        return false;
+    });
+
+    // export the font
+    $('#action-export-font').click(function(e) {
+        e.preventDefault();
+
+        var spinner = getSpinnerForActionLink($(this));
+
+        var complete = function() {
+            spinner.spin(false);
+            spinner.remove();
+        };
+
+        callWithFontHash(complete, function(data) {
+            window.location = "/export/font/otf/" + data;
+        });
 
         return false;
     });

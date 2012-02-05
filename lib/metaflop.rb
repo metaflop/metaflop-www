@@ -19,11 +19,14 @@ class Metaflop
 
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
+        # general options
         :out_dir,
         :char_number,
         :text,
         :font_hash,
+        :fontface,
 
+        # mf parameters
         :unit_width,
         :cap_height,
         :mean_height,
@@ -71,10 +74,13 @@ class Metaflop
         end
 
         # defaults
+        @fontface ||= 'Bespoke'
+
         if @out_dir && !File.directory?(@out_dir)
             Dir.mkdir(@out_dir)
-            FileUtils.cp_r(Dir["{mf/metaflop-font-bespoke/*,bin/*}"], "#{@out_dir}")
         end
+        # copy each time, the font might have changed
+        FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
 
         @char_number ||= 1
     end
@@ -129,7 +135,7 @@ class Metaflop
     # @option options [String] :file defaults to "mf/font.mf" (containing the default parameters)
     def mf_args(options = {})
         if !@mf_args || options[:force]
-            options[:file] ||= "mf/metaflop-font-bespoke/font.mf"
+            options[:file] ||= "mf/metaflop-font-#{@fontface.downcase}/font.mf"
             @mf_args = { :values => {}, :instruction => '', :ranges => {} }
 
             lines = File.readlines(options[:file])

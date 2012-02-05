@@ -69,9 +69,11 @@ class App < Sinatra::Application
 
 
     get '/' do
-        mf_args = mf_instance_from_request.mf_args
+        mf = mf_instance_from_request
+        mf_args = mf.mf_args
         @ranges = mf_args[:ranges]
         @defaults = mf_args[:values]
+        @fontface = mf.fontface
 
         mustache :index
     end
@@ -88,9 +90,11 @@ class App < Sinatra::Application
             redirect '/'
         end
 
-        mf_args = mf_instance_from_request(url[:params]).mf_args
+        mf = mf_instance_from_request(url[:params])
+        mf_args = mf.mf_args
         @ranges = mf_args[:ranges]
         @defaults = mf_args[:values]
+        @fontface = mf.fontface
 
         mustache :index
     end
@@ -125,6 +129,14 @@ class App < Sinatra::Application
     end
 
     get '/:page' do |page|
+        if (page == 'parameter_panel')
+            mf = mf_instance_from_request
+            mf_args = mf.mf_args
+            @ranges = mf_args[:ranges]
+            @defaults = mf_args[:values]
+            @fontface = mf.fontface
+        end
+
         mustache page.to_sym, :layout => false
     end
 

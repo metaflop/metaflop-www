@@ -89,6 +89,10 @@ class App
             def ranges
                 @ranges
             end
+
+            def fontface
+                @fontface
+            end
         end
 
     end

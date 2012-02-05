@@ -7,8 +7,15 @@
             <div class="beta">beta</div>
             <div class="box-content">
                 <fieldset>
-                    <legend class="first">
-                        <label>Typeface</label><div class="static-value">Bespoke</div></legend>
+                    <legend class="first" id="action-select-typeface">
+                        <div class="clearfix">
+                            <label>Typeface</label><div class="static-value" id="param-fontface">{{fontface}}</div>
+                        </div>
+                        <ul>
+                            <li><a href="#">Bespoke</a></li>
+                            <li><a href="#">Adjuster</a></li>
+                        </ul>
+                    </legend>
 
                     <ul>
                         <li>information <span class="action">on</span> / <span class="action active">off</span></li>
@@ -22,37 +29,7 @@
         </div>
 
         <div id="parameter-panel">
-            <h2>Parameters</h2>
-            <div class="parameter-panel-mode-toggle">
-                <span class="action sliders active">dummy</span> / <span class="action adjusters">nerd</span>
-            </div>
-            <div class="box-content">
-                {{#parameters}}
-                    <fieldset>
-                    <legend{{#css_class}} class="{{css_class}}"{{/css_class}}>{{title}}</legend>
-                    {{#items}}
-                    <div class="clearfix inputblock{{#css_class}} {{css_class}}{{/css_class}}">
-                        <label for="param-{{name}}">{{title}}</label>
-                        {{{html}}}
-                        {{^html}}
-                        <div class="adjuster param-{{name}}">
-                            <a href="#" class="sub10" title="decrease by 0.1">--</a>
-                            <a href="#" class="sub1" title="decrease by 0.01">-</a>
-                            <input type="text" name="param-{{name}}" id="param-{{name}}" tabindex="{{tabindex}}" value="{{default}}" class="param init" />
-                            <a href="#" class="add1" title="increase by 0.01">+</a>
-                            <a href="#" class="add10" title="increase by 0.1">++</a>
-                        </div>
-                        <div class="slider">
-                            <input id="slider-{{name}}" type="text" maxlength="6" name="inputTest" value="{{default}}"
-                                data-range-from="{{range.from}}" data-range-to="{{range.to}}" data-default="{{default}}" />
-                        </div>
-                        {{/html}}
-                    </div>
-                    {{/items}}
-
-                    </fieldset>
-                {{/parameters}}
-            </div>
+            {{> parameter_panel}}
         </div>
 
     </div>

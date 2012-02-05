@@ -120,6 +120,10 @@ legend {
     &.first {
         border-top: none;
     }
+
+    ul {
+        font-weight: normal;
+    }
 }
 
 ul {
@@ -611,6 +615,21 @@ a.char-chooser {
                 margin-left: 10px;
             }
         }
+    }
+}
+
+#action-select-typeface {
+    cursor: pointer;
+
+    &:hover {
+        color: $active_link_color;
+    }
+
+    * {
+        cursor: inherit;
+    }
+    ul {
+        display: none;
     }
 }
 

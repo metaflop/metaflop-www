@@ -10,7 +10,12 @@ $(function () {
 
     // create a namespace for later use
     $.fn.metaflop = {
-        ready: false // is set to true when the initial preview has been generated (i.e. the UI is ready)
+        ready: false, // is set to true when the initial preview has been generated (i.e. the UI is ready)
+        settings: {
+            panelToggleDuration: 500,
+            panelToggleEasing: 'easeInOutExpo'
+        },
+        parameterPanel: $('#parameter-panel')
     };
 
     // set background to corresponding inputs
@@ -109,6 +114,20 @@ $(function () {
         return spinner;
     }
 
+    var createQueryString = function() {
+        $.fn.metaflop.queryString = '?' +
+            $.makeArray($('input:text,textarea').not('[id^=slider-]')).map(function(element){
+                return element.id.remove('param-') + '=' + element.value
+            })
+            // add the selected character param
+            .add('char-number=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
+            // add the fontface
+            .add('fontface=' + $('#param-fontface').html())
+            .join("&");
+
+        return $.fn.metaflop.queryString;
+    }
+
     // we have 2 preview images, the next preview is loaded into the invisible one
     var previewImageCall = function(){
         var previewBox = $('.preview-box.active');
@@ -119,13 +138,7 @@ $(function () {
         var content = previewBox.find('.preview-box-content');
         var previewType = previewBox.attr('id').remove('preview-');
 
-        var queryString = $.fn.metaflop.queryString = '?' +
-            $.makeArray($('input:text,textarea').not('[id^=slider-]')).map(function(element){
-                return element.id.remove('param-') + '=' + element.value
-            })
-            // add the selected character param
-            .add('char-number' + '=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
-            .join("&");
+        var queryString = createQueryString();
 
         var url = '/preview/' + previewType + queryString;
 
@@ -212,14 +225,11 @@ $(function () {
                [46, 9, 35, 36, 37, 39].some(keyCode); // backspace, delete, tab, cursors
     }
 
-    var paramInputs = $('.adjuster input.param');
-
-    paramInputs
-        .focus(function() {
+    $.fn.metaflop.parameterPanel.on('focus', '.adjuster input.param', function() {
             $this = $(this);
             setActiveInputs($this);
         })
-        .keydown(function(event) {
+        .on('keydown', '.adjuster input.param', function(event) {
             // allow backspace, delete, tab, cursors and metakeys
             if (isAllowedMetaKey(event.keyCode)) {
             }
@@ -244,22 +254,47 @@ $(function () {
             }
 
         })
-        .keyup(function(event) {
+        .on('keyup', '.adjuster input.param', function(event) {
             // defer evaluation when allowed trailing characters (e.g. ".", wait for the next number)
             // ignore meta keys
             if (!(isAllowedTrailingCharacter(event.keyCode) || isAllowedMetaKey(event.keyCode))) {
                 setValue($(this));
             }
         })
-        .blur(function() {
+        .on('blur', '.adjuster input.param', function() {
             setValue($(this), null);
         });
+
+    // select typeface
+    var selectTypeface =  $('#action-select-typeface');
+    selectTypeface.click(function() {
+        $(this).find('ul').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
+    });
+    selectTypeface.find('a').click(function(e) {
+        e.preventDefault();
+
+        $('#param-fontface').html($(this).html());
+        selectTypeface.click(); // close panel
+
+        $.ajax({
+            url: '/parameter_panel' + createQueryString(),
+            success: function(data) {
+                $('#parameter-panel').html(data);
+                initSliders();
+                previewImage();
+            }
+        });
+
+        //previewImage();
+
+        return false;
+    });
 
     // reset
     $('#action-reset-values').click(function(e) {
         e.preventDefault();
 
-        paramInputs.each(function() {
+        $('.adjuster input.param').each(function() {
             var $this = $(this);
 
             var sliderInput = getTwinInput($this);
@@ -276,7 +311,7 @@ $(function () {
     $('#action-randomize-values').click(function(e) {
         e.preventDefault();
 
-        paramInputs.each(function() {
+        $('.adjuster input.param').each(function() {
             var $this = $(this);
 
             var sliderInput = getTwinInput($this);
@@ -296,7 +331,7 @@ $(function () {
     var hideSharePanel = function() {
         var li = $('.collapsible-list-item.share');
         if (li.length > 0) {
-            li.hide(500, 'easeInOutExpo', function() {
+            li.hide($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing, function() {
                 li.remove();
             });
 
@@ -322,7 +357,7 @@ $(function () {
                 var content = $.mustache($('#collapsibleShare').html(), { url: url, text: text });
                 var li = $(content);
                 link.parent().after(li);
-                li.show(500, 'easeInOutExpo');
+                li.show($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
             };
 
             var complete = function() {
@@ -355,23 +390,20 @@ $(function () {
     });
 
     // toggle the +/- buttons for the inputs
-    var parameterPanel = $('#parameter-panel');
-    var parameterPanelBlocks = parameterPanel.find('.adjuster');
-
-    parameterPanelBlocks.mouseover(function() {
+    $.fn.metaflop.parameterPanel.on('mouseover', '.adjuster', function() {
         var $this = $(this);
-        parameterPanel.find('.adjuster a').hide();
+        $.fn.metaflop.parameterPanel.find('.adjuster a').hide();
         $this.find('a').show();
 
-        parameterPanel.find('input').removeClass('active');
+        $.fn.metaflop.parameterPanel.find('input').removeClass('active');
         $this.find('input').addClass('active');
     });
-    parameterPanel.find('.inputblock').mouseleave(function() {
+    $.fn.metaflop.parameterPanel.on('mouseleave', '.inputblock', function() {
         $(this).find('a').hide();
     });
 
 
-    $('.add1, .add10, .sub1, .sub10').click(function(e) {
+    $.fn.metaflop.parameterPanel.on('click', '.add1, .add10, .sub1, .sub10', function(e) {
         e.preventDefault();
         $this = $(this);
         var input = $this.parent().find('input');
@@ -383,8 +415,7 @@ $(function () {
     });
 
     // sliders
-    function updateValue(cbObj) {
-
+    var updateValue = function(cbObj) {
         // update the associated input field
         var input = getTwinInput(cbObj.elem);
 
@@ -399,20 +430,23 @@ $(function () {
             $(cbObj.elem).siblings().find('.fd-slider-handle').tipsy('show');
         }
     }
-    parameterPanel.find('.slider input').each(function() {
-        fdSlider.createSlider({
-            inp: this,
-            step: "0.01",
-            maxStep: 1, // (for keyboard users)
-            min: $(this).attr('data-range-from'),
-            max: $(this).attr('data-range-to'),
-            animation:"timed",
-            hideInput: true,
-            callbacks:{
-                "change":[updateValue]
-            }
+    var initSliders = function() {
+        $.fn.metaflop.parameterPanel.find('.slider input').each(function() {
+            fdSlider.createSlider({
+                inp: this,
+                step: "0.01",
+                maxStep: 1, // (for keyboard users)
+                min: $(this).attr('data-range-from'),
+                max: $(this).attr('data-range-to'),
+                animation:"timed",
+                hideInput: true,
+                callbacks:{
+                    "change":[updateValue]
+                }
+            });
         });
-    });
+    }
+    initSliders();
 
     // character chooser for single preview
     var charLinks = $('div.char-chooser a');
@@ -489,14 +523,13 @@ $(function () {
     });
 
     // switch basic/pro mode for parameter panel
-    var parameterPanelToggleMode = $('.parameter-panel-mode-toggle span');
-    parameterPanelToggleMode.click(function() {
+    $.fn.metaflop.parameterPanel.on('click', '.parameter-panel-mode-toggle span', function() {
         var $this = $(this);
         var parameterPanel = $('#parameter-panel');
         var adjusters = parameterPanel.find('.adjuster');
         var sliders = parameterPanel.find('.slider');
 
-        parameterPanelToggleMode.removeClass('active');
+        $('.parameter-panel-mode-toggle span').removeClass('active');
         $this.addClass('active');
 
         if ($this.hasClass('sliders')) {
@@ -513,7 +546,7 @@ $(function () {
     var informationToggle = $('#menu').find('.action');
     informationToggle.click(function() {
         informationToggle.toggleClass('active');
-        $('#info-panel').toggle(500, 'easeInOutExpo');
+        $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
     });
 
     // fancybox links
@@ -528,7 +561,7 @@ $(function () {
         'easingIn' : 'easeOutBack',
         'easingOut' : 'easeInBack'
     });
-    $('.popup-back').live('click', function(e) {
+    $('.popup-back').on('click', function(e) {
         e.preventDefault();
 
         $.fancybox.prev();

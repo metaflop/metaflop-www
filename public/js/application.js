@@ -383,7 +383,7 @@ $(function () {
         };
 
         callWithFontHash(complete, function(data) {
-            window.location = "/export/font/otf/" + data;
+            window.location = "/export/font/otf/" + $('#param-fontface').html() + "/" + data;
         });
 
         return false;

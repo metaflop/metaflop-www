@@ -115,13 +115,13 @@ class App < Sinatra::Application
         end
     end
 
-    get '/export/font/:type/:hash' do |type, hash|
-        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash })
+    get '/export/font/:type/:face/:hash' do |type, face, hash|
+        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
         mf.settings = settings.metaflop
         mf.logger = logger
         method = "font_#{type}"
         if mf.respond_to? method
-            attachment 'Bespoke-Regular.otf'
+            attachment "#{face}-#{hash}.otf"
             file = mf.method(method).call
         else
             [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]

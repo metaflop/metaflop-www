@@ -119,7 +119,7 @@ class Metaflop
         mf_args(:force => true, :file => "#{@out_dir}/font.mf")
         generate_mf
 
-        command = Mustache.render("#{settings[:font_otf]}", :font_hash => @font_hash)
+        command = Mustache.render("#{settings[:font_otf]}", :font_hash => @font_hash, :fontface => @fontface)
 
         `cd #{@out_dir} && #{command}`
 

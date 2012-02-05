@@ -317,16 +317,10 @@ $(function () {
 
             var success = function(data) {
                 var url = "http://www.metaflop.com/font/" + data;
-                var text = 'I created a nice metaflop font!';
-                var textAndUrl = text + ' ' + url;
+                var text = 'I created a nice metaflop font! ' + url;
 
-                var content =
-                    '<a href="http://twitter.com/home?status=' + textAndUrl + '" target="_blank" class="action-icon share-twitter" title="post a tweet"><img src="/img/blank.png" /></a>' +
-                    '<a href="http://www.facebook.com/sharer.php?u=' + textAndUrl + '" target="_blank" class="action-icon share-facebook" title="post on facebook"><img src="/img/blank.png" /></a>' +
-                    '<a href="mailto:?subject=metaflop font&body=' + textAndUrl + '" class="action-icon share-email" title="send by email"><img src="/img/blank.png" /></a>' +
-                    '<span><img src="/img/blank.png" /><object width="16" height="16" id="clippy" class="clippy" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" title="copy to clipboard"><param value="/flash/clippy.swf" name="movie"><param value="always" name="allowScriptAccess"><param value="high" name="quality"><param value="noscale" name="scale"><param value="text=' + url + '" name="FlashVars"><param value="#FFFFFF" name="bgcolor"><param value="opaque" name="wmode"><embed width="16" height="16" wmode="opaque" bgcolor="#FFFFFF" flashvars="text=' + url + '" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="/flash/clippy.swf"></object></span>';
-
-                var li = $('<li class="collapsible-list-item share">' + content + '</li>');
+                var content = $.mustache($('#collapsibleShare').html(), { url: url, text: text });
+                var li = $(content);
                 link.parent().after(li);
                 li.show(500, 'easeInOutExpo');
             };

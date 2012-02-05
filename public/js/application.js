@@ -559,14 +559,16 @@ $(function () {
         'transitionIn' : 'face',
         'transitionOut' : 'fade',
         'easingIn' : 'easeOutBack',
-        'easingOut' : 'easeInBack'
-    });
-    $('.popup-back').on('click', function(e) {
-        e.preventDefault();
+        'easingOut' : 'easeInBack',
+        'onComplete' : function() {
+            $('.popup-back').click(function(e) {
+                e.preventDefault();
 
-        $.fancybox.prev();
+                $.fancybox.prev();
 
-        return false;
+                return false;
+            });
+        }
     });
 
     // load the first image

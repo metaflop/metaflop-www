@@ -56,6 +56,7 @@ class App < Sinatra::Application
 
     configure :development do
         register Sinatra::Reloader
+        also_reload '**/*.rb'
     end
 
     configure :production do

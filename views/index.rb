@@ -15,7 +15,7 @@ class App
                     {
                         :title => "Dimension",
                         :items => [
-                            { :title => 'box height', :html => '<div class="static-value">100%</div>' },
+                            { :title => 'box height', :default => defaults[:ht], :html => '<div class="static-value">100%</div>' },
                             { :title => 'unit width', :default => defaults[:u], :range => ranges[:u] },
                             { :title => 'overshoot', :default => defaults[:o], :range => ranges[:o] },
                             { :title => 'pen size', :default => defaults[:px], :range => ranges[:px] }
@@ -39,7 +39,9 @@ class App
                             { :title => 'apperture', :default => defaults[:appert], :range => ranges[:appert] },
                             { :title => 'contrast', :default => defaults[:cont], :range => ranges[:cont] },
                             { :title => 'superness', :default => defaults[:superness], :range => ranges[:superness] },
-                            { :title => 'corner', :default => defaults[:corner], :range => ranges[:corner] }
+                            { :title => 'corner', :default => defaults[:corner], :range => ranges[:corner] },
+                            { :title => 'pen angle', :default => defaults[:penang], :range => ranges[:penang]},
+                            { :title => 'pen shape', :default => defaults[:penshape], :html => '<select id="pen-shape"><option value="1">Circle</option><option value="2">Square</option><option value="3">Razor</option><select>'}
                         ]
                     }
                 ]

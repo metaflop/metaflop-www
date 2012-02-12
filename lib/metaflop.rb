@@ -41,7 +41,9 @@ class Metaflop
         :pen_size,
         :corner,
         :contrast,
-        :sidebearing
+        :sidebearing,
+        :pen_angle,
+        :pen_shape
     ]
 
     # the mapping between the defined params in the mf file and this class' properties
@@ -61,7 +63,9 @@ class Metaflop
         'py#' => :pen_size,
         'corner#' => :corner,
         'cont' => :contrast,
-        'sidebearing' => :sidebearing
+        'sidebearing' => :sidebearing,
+        'penang' => :pen_angle,
+        'penshape' => :pen_shape
     }
 
     attr_accessor *VALID_OPTIONS_KEYS

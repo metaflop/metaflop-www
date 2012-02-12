@@ -116,8 +116,8 @@ $(function () {
 
     var createQueryString = function() {
         $.fn.metaflop.queryString = '?' +
-            $.makeArray($('input:text,textarea').not('[id^=slider-]')).map(function(element){
-                return element.id.remove('param-') + '=' + element.value
+            $.makeArray($('input:text,textarea,select').not('[id^=slider-]')).map(function(element){
+                return element.id.remove('param-') + '=' + $(element).val()
             })
             // add the selected character param
             .add('char-number=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
@@ -265,6 +265,12 @@ $(function () {
             setValue($(this), null);
         });
 
+    // parameter list dropdown menus
+    var initParameterDropdowns = function() {
+        $('select:visible').dropdownpanel({ onClicked: previewImage });
+    };
+    initParameterDropdowns();
+
     // select typeface
     var selectTypeface =  $('#action-select-typeface');
     selectTypeface.click(function() {
@@ -281,6 +287,7 @@ $(function () {
             success: function(data) {
                 $('#parameter-panel').html(data);
                 initSliders();
+                initParameterDropdowns();
                 previewImage();
             }
         });

@@ -140,7 +140,7 @@ class Metaflop
     def mf_args(options = {})
         if !@mf_args || options[:force]
             options[:file] ||= "mf/metaflop-font-#{@fontface.downcase}/font.mf"
-            @mf_args = { :values => {}, :instruction => '', :ranges => {} }
+            @mf_args = { :defaults => {}, :values => {}, :instruction => '', :ranges => {} }
 
             lines = File.readlines(options[:file])
             # in case the file is a one-liner already, split each statement onto a line
@@ -159,14 +159,17 @@ class Metaflop
 
                         # replace the default value from the file if we have a value set for the parameter
                         mapping = MF_MAPPINGS[splits[0]]
+                        value_from_file = splits[1].to_f
 
                         value = mapping ? send(mapping) : nil
 
                         if (value && !value.empty?)
                             pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
                         else
-                            value = splits[1].to_f
+                            value = value_from_file
                         end
+
+                        @mf_args[:defaults][key] = value_from_file
 
                         # store as key/value pairs
                         @mf_args[:values][key] = value

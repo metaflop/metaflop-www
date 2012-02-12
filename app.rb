@@ -73,7 +73,8 @@ class App < Sinatra::Application
         mf = mf_instance_from_request
         mf_args = mf.mf_args
         @ranges = mf_args[:ranges]
-        @defaults = mf_args[:values]
+        @defaults = mf_args[:defaults]
+        @values = mf_args[:values]
         @fontface = mf.fontface
 
         mustache :index
@@ -94,7 +95,8 @@ class App < Sinatra::Application
         mf = mf_instance_from_request(url[:params])
         mf_args = mf.mf_args
         @ranges = mf_args[:ranges]
-        @defaults = mf_args[:values]
+        @defaults = mf_args[:defaults]
+        @values = mf_args[:values]
         @fontface = mf.fontface
 
         mustache :index
@@ -134,7 +136,8 @@ class App < Sinatra::Application
             mf = mf_instance_from_request
             mf_args = mf.mf_args
             @ranges = mf_args[:ranges]
-            @defaults = mf_args[:values]
+            @defaults = mf_args[:defaults]
+            @values = mf_args[:values]
             @fontface = mf.fontface
         end
 

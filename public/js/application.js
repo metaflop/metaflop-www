@@ -121,8 +121,6 @@ $(function () {
             })
             // add the selected character param
             .add('char-number=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
-            // add the fontface
-            .add('fontface=' + $('#param-fontface').html())
             .join("&");
 
         return $.fn.metaflop.queryString;
@@ -267,21 +265,12 @@ $(function () {
 
     // parameter list dropdown menus
     var initParameterDropdowns = function() {
-        $('select:visible').dropdownpanel({ onClicked: previewImage });
+        $.fn.metaflop.parameterPanel.find('select:visible').dropdownpanel({ onClicked: previewImage });
     };
     initParameterDropdowns();
 
     // select typeface
-    var selectTypeface =  $('#action-select-typeface');
-    selectTypeface.click(function() {
-        $(this).find('ul').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
-    });
-    selectTypeface.find('a').click(function(e) {
-        e.preventDefault();
-
-        $('#param-fontface').html($(this).html());
-        selectTypeface.click(); // close panel
-
+    $('#menu').find('select:visible').dropdownpanel({ onClicked: function() {
         $.ajax({
             url: '/parameter_panel' + createQueryString(),
             success: function(data) {
@@ -291,11 +280,7 @@ $(function () {
                 previewImage();
             }
         });
-
-        //previewImage();
-
-        return false;
-    });
+    }});
 
     // reset
     $('#action-reset-values').click(function(e) {
@@ -550,7 +535,7 @@ $(function () {
     });
 
     // toggle the information header
-    var informationToggle = $('#menu').find('.action');
+    var informationToggle = $('#menu').find('.toggle-info-panel .action');
     informationToggle.click(function() {
         informationToggle.toggleClass('active');
         $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);

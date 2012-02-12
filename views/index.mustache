@@ -9,16 +9,17 @@
                 <fieldset>
                     <legend class="first" id="action-select-typeface">
                         <div class="clearfix">
-                            <label>Typeface</label><div class="static-value" id="param-fontface">{{fontface}}</div>
+                            <label>Typeface</label>
+                            <select id="param-fontface">
+                                {{#fontfaces}}
+                                <option value="{{name}}"{{#active}} selected="selected"{{/active}}>{{name}}</option>
+                                {{/fontfaces}}
+                            </select>
                         </div>
-                        <ul>
-                            <li><a href="#">Bespoke</a></li>
-                            <li><a href="#">Adjuster</a></li>
-                        </ul>
                     </legend>
 
                     <ul>
-                        <li>information <span class="action">on</span> / <span class="action active">off</span></li>
+                        <li class="toggle-info-panel">information <span class="action">on</span> / <span class="action active">off</span></li>
                         <li><a href="#" id="action-reset-values">reset</a></li>
                         <li><a href="#" id="action-randomize-values">flop it!</a></li>
                         <li><a href="#" id="action-share-url">share it</a></li>

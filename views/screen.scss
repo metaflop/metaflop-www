@@ -402,10 +402,6 @@ a.action-icon {
         line-height: 24px;
     }
 
-    .dropdown-list {
-        margin-left: 70%;
-    }
-
     .parameter-panel-mode-toggle {
         @include box-heading;
 
@@ -650,9 +646,14 @@ a.char-chooser {
 .dropdown-list {
     display: none;
     clear: both;
+    margin-left: 70%;
 
     li.active {
         display: none;
+    }
+
+    span {
+        color: lighten(#000, 80%);
     }
 }
 

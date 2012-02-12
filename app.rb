@@ -75,7 +75,7 @@ class App < Sinatra::Application
         @ranges = mf_args[:ranges]
         @defaults = mf_args[:defaults]
         @values = mf_args[:values]
-        @fontface = mf.fontface
+        @active_fontface = mf.fontface
 
         mustache :index
     end
@@ -97,7 +97,7 @@ class App < Sinatra::Application
         @ranges = mf_args[:ranges]
         @defaults = mf_args[:defaults]
         @values = mf_args[:values]
-        @fontface = mf.fontface
+        @active_fontface = mf.fontface
 
         mustache :index
     end
@@ -119,7 +119,7 @@ class App < Sinatra::Application
     end
 
     get '/export/font/:type/:face/:hash' do |type, face, hash|
-        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
+        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :active_fontface => face })
         mf.settings = settings.metaflop
         mf.logger = logger
         method = "font_#{type}"
@@ -138,7 +138,7 @@ class App < Sinatra::Application
             @ranges = mf_args[:ranges]
             @defaults = mf_args[:defaults]
             @values = mf_args[:values]
-            @fontface = mf.fontface
+            @active_fontface = mf.fontface
         end
 
         mustache page.to_sym, :layout => false

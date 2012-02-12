@@ -31,7 +31,7 @@
             // list of all available options
             $this.find('option').each(function() {
                 ul += '<li id="'
-                     + $(this).val() + $this[0].id
+                     + $(this).val() + '-' + $this[0].id
                      + '"><span class="action">' + $(this).html() + '</span></li>';
             });
 
@@ -40,6 +40,7 @@
             var lis = $ul.find('li');
             // mark the currently selected option
             lis.filter(function() { return $(this).find('span').html() == selectedOption.html() }).addClass('active');
+
             lis.click(function() {
                 var selectEl = $this;
                 var listItems = lis;
@@ -50,7 +51,7 @@
                 li.addClass('active');
 
                 // set select value
-                selectEl.val(this.id.toNumber() + '');
+                selectEl.val(this.id.split('-')[0]);
 
                 // set display value
                 displayEl.html(li.find('span').text());

@@ -271,6 +271,9 @@ $(function () {
 
     // select typeface
     $('#menu').find('select:visible').dropdownpanel({ onClicked: function() {
+        $.fn.metaflop.parameterPanel.fadeTo(0, 0.5);
+        $.fn.metaflop.parameterPanel.spin('large');
+
         $.ajax({
             url: '/parameter_panel' + createQueryString(),
             success: function(data) {
@@ -278,6 +281,9 @@ $(function () {
                 initSliders();
                 initParameterDropdowns();
                 previewImage();
+
+                $.fn.metaflop.parameterPanel.fadeTo(0, 1);
+                $.fn.metaflop.parameterPanel(false);
             }
         });
     }});

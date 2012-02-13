@@ -1,3 +1,4 @@
+$font_size: 15px;
 $input_height: 14px;
 $input_color: #ccc9bc;
 $active_color: #60eb00;
@@ -35,8 +36,8 @@ $footer_height: 25px;
 }
 
 @mixin box-heading {
-    font-size: 15px;
-    line-height: 15px;
+    font-size: $font_size;
+    line-height: $font_size;
     margin: 0;
     padding: 5px 8px 4px 7px;
     display: inline-block;
@@ -50,7 +51,7 @@ html, body {
 
 body {
     font-family: helvetica, sans-serif;
-    font-size: 15px;
+    font-size: $font_size;
     background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
 }
 
@@ -119,6 +120,10 @@ legend {
 
     &.first {
         border-top: none;
+    }
+
+    ul {
+        font-weight: normal;
     }
 }
 
@@ -392,6 +397,11 @@ a.action-icon {
         line-height: 21px;
     }
 
+    .dropdown-value {
+        font-size: $font_size;
+        line-height: 24px;
+    }
+
     .parameter-panel-mode-toggle {
         @include box-heading;
 
@@ -523,7 +533,7 @@ div.char-chooser {
     left: 0;
     width: $preview_box_content_width;
     height: 16px;
-    line-height: 15px;
+    line-height: $font_size;
     overflow: hidden;
 
 
@@ -611,6 +621,39 @@ a.char-chooser {
                 margin-left: 10px;
             }
         }
+    }
+}
+
+#action-select-typeface {
+    cursor: pointer;
+
+    &:hover {
+        color: $active_link_color;
+    }
+
+    * {
+        cursor: inherit;
+    }
+    ul {
+        display: none;
+    }
+}
+
+.dropdown-value {
+    cursor: pointer;
+}
+
+.dropdown-list {
+    display: none;
+    clear: both;
+    margin-left: 70%;
+
+    li.active {
+        display: none;
+    }
+
+    span {
+        color: lighten(#000, 80%);
     }
 }
 
@@ -703,7 +746,7 @@ a.char-chooser {
 
     h3 {
         clear: both; // clear h2 float
-        font-size: 15px;
+        font-size: $font_size;
         padding: 0;
         margin: 0 0 5px 0;
     }

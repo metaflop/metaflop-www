@@ -19,11 +19,14 @@ class Metaflop
 
     # these options can be set when instantiating this class
     VALID_OPTIONS_KEYS = [
+        # general options
         :out_dir,
         :char_number,
         :text,
         :font_hash,
+        :fontface,
 
+        # mf parameters
         :unit_width,
         :cap_height,
         :mean_height,
@@ -38,7 +41,9 @@ class Metaflop
         :pen_size,
         :corner,
         :contrast,
-        :sidebearing
+        :sidebearing,
+        :pen_angle,
+        :pen_shape
     ]
 
     # the mapping between the defined params in the mf file and this class' properties
@@ -58,7 +63,9 @@ class Metaflop
         'py#' => :pen_size,
         'corner#' => :corner,
         'cont' => :contrast,
-        'sidebearing' => :sidebearing
+        'sidebearing' => :sidebearing,
+        'penang' => :pen_angle,
+        'penshape' => :pen_shape
     }
 
     attr_accessor *VALID_OPTIONS_KEYS
@@ -71,9 +78,14 @@ class Metaflop
         end
 
         # defaults
+        @fontface ||= 'Bespoke'
+        # one tmp dir per fontface
+        @out_dir = File.join(@out_dir, @fontface.downcase)
+
         if @out_dir && !File.directory?(@out_dir)
-            Dir.mkdir(@out_dir)
-            FileUtils.cp_r(Dir["{mf/metaflop-font-bespoke/*,bin/*}"], "#{@out_dir}")
+            FileUtils.mkdir_p(@out_dir)
+            # copy everything we need to generate the fonts to the tmp dir
+            FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
         end
 
         @char_number ||= 1
@@ -113,7 +125,7 @@ class Metaflop
         mf_args(:force => true, :file => "#{@out_dir}/font.mf")
         generate_mf
 
-        command = Mustache.render("#{settings[:font_otf]}", :font_hash => @font_hash)
+        command = Mustache.render("#{settings[:font_otf]}", :font_hash => @font_hash, :fontface => @fontface)
 
         `cd #{@out_dir} && #{command}`
 
@@ -129,8 +141,8 @@ class Metaflop
     # @option options [String] :file defaults to "mf/font.mf" (containing the default parameters)
     def mf_args(options = {})
         if !@mf_args || options[:force]
-            options[:file] ||= "mf/metaflop-font-bespoke/font.mf"
-            @mf_args = { :values => {}, :instruction => '', :ranges => {} }
+            options[:file] ||= "mf/metaflop-font-#{@fontface.downcase}/font.mf"
+            @mf_args = { :defaults => {}, :values => {}, :instruction => '', :ranges => {} }
 
             lines = File.readlines(options[:file])
             # in case the file is a one-liner already, split each statement onto a line
@@ -149,14 +161,17 @@ class Metaflop
 
                         # replace the default value from the file if we have a value set for the parameter
                         mapping = MF_MAPPINGS[splits[0]]
+                        value_from_file = splits[1].to_f
 
                         value = mapping ? send(mapping) : nil
 
                         if (value && !value.empty?)
                             pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
                         else
-                            value = splits[1].to_f
+                            value = value_from_file
                         end
+
+                        @mf_args[:defaults][key] = value_from_file
 
                         # store as key/value pairs
                         @mf_args[:values][key] = value

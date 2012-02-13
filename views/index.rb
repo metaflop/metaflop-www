@@ -15,40 +15,46 @@ class App
                     {
                         :title => "Dimension",
                         :items => [
-                            { :title => 'box height', :html => '<div class="static-value">100%</div>' },
-                            { :title => 'unit width', :default => defaults[:u], :range => ranges[:u] },
-                            { :title => 'overshoot', :default => defaults[:o], :range => ranges[:o] },
-                            { :title => 'pen size', :default => defaults[:px], :range => ranges[:px] }
+                            { :title => 'box height', :key => :ht, :html => '<div class="static-value">100%</div>' },
+                            { :title => 'unit width', :key => :u },
+                            { :title => 'overshoot', :key => :o },
+                            { :title => 'pen size', :key => :px }
                         ]
                     },
                     {
                         :title => "Proportion",
                         :items => [
-                            { :title => 'cap height', :default => defaults[:cap], :range => ranges[:cap] },
-                            { :title => 'mean height', :default => defaults[:mean], :range => ranges[:mean] },
-                            { :title => 'bar height', :default => defaults[:bar], :range => ranges[:bar] },
-                            { :title => 'ascender height', :default => defaults[:asc], :range => ranges[:asc] },
-                            { :title => 'descender height', :default => defaults[:des], :range => ranges[:des] }
+                            { :title => 'cap height', :key => :cap },
+                            { :title => 'mean height', :key => :mean },
+                            { :title => 'bar height', :key => :bar },
+                            { :title => 'ascender height', :key => :asc },
+                            { :title => 'descender height', :key => :des }
                         ]
                     },
                     {
                         :title => "Shape",
                         :items => [
-                            { :title => 'horizontal increase', :default => defaults[:incx], :range => ranges[:incx] },
-                            { :title => 'vertical increase', :default => defaults[:incy], :range => ranges[:incy] },
-                            { :title => 'apperture', :default => defaults[:appert], :range => ranges[:appert] },
-                            { :title => 'contrast', :default => defaults[:cont], :range => ranges[:cont] },
-                            { :title => 'superness', :default => defaults[:superness], :range => ranges[:superness] },
-                            { :title => 'corner', :default => defaults[:corner], :range => ranges[:corner] }
+                            { :title => 'horizontal increase', :key => :incx },
+                            { :title => 'vertical increase', :key => :incy },
+                            { :title => 'apperture', :key => :appert },
+                            { :title => 'contrast', :key => :cont },
+                            { :title => 'superness', :key => :superness },
+                            { :title => 'corner', :key => :corner },
+                            { :title => 'pen angle', :key => :penang },
+                            { :title => 'pen shape', :key => :penshape, :html => '<select id="pen-shape"><option value="1">Circle</option><option value="2">Square</option><option value="3">Razor</option><select>'}
                         ]
                     }
                 ]
 
-                # add a name (css class compliant) and tab index
+                # add properties needed for view
                 i = 1
                 groups.each do |group|
                     group[:items].each do |x|
-                        x[:name] = x[:title].gsub(' ', '-')
+                        key = x[:key]
+                        x[:default] = defaults[key]
+                        x[:value] = values[key]
+                        x[:range] = ranges[key]
+                        x[:name] = x[:title].gsub(' ', '-') # (css class compliant)
                         x[:tabindex] = i
                         i = i + 1
                     end
@@ -82,12 +88,22 @@ class App
                 end
             end
 
+            def values
+                @values
+            end
+
             def defaults
                 @defaults
             end
 
             def ranges
                 @ranges
+            end
+
+            def fontfaces
+                %w(Bespoke Adjuster).map do |x|
+                    { :name => x, :active => @active_fontface == x }
+                end
             end
         end
 

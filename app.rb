@@ -56,6 +56,7 @@ class App < Sinatra::Application
 
     configure :development do
         register Sinatra::Reloader
+        also_reload '**/*.rb'
     end
 
     configure :production do
@@ -69,9 +70,12 @@ class App < Sinatra::Application
 
 
     get '/' do
-        mf_args = mf_instance_from_request.mf_args
+        mf = mf_instance_from_request
+        mf_args = mf.mf_args
         @ranges = mf_args[:ranges]
-        @defaults = mf_args[:values]
+        @defaults = mf_args[:defaults]
+        @values = mf_args[:values]
+        @active_fontface = mf.fontface
 
         mustache :index
     end
@@ -88,9 +92,12 @@ class App < Sinatra::Application
             redirect '/'
         end
 
-        mf_args = mf_instance_from_request(url[:params]).mf_args
+        mf = mf_instance_from_request(url[:params])
+        mf_args = mf.mf_args
         @ranges = mf_args[:ranges]
-        @defaults = mf_args[:values]
+        @defaults = mf_args[:defaults]
+        @values = mf_args[:values]
+        @active_fontface = mf.fontface
 
         mustache :index
     end
@@ -111,13 +118,13 @@ class App < Sinatra::Application
         end
     end
 
-    get '/export/font/:type/:hash' do |type, hash|
-        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash })
+    get '/export/font/:type/:face/:hash' do |type, face, hash|
+        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
         mf.settings = settings.metaflop
         mf.logger = logger
         method = "font_#{type}"
         if mf.respond_to? method
-            attachment 'Bespoke-Regular.otf'
+            attachment "#{face}-#{hash}.otf"
             file = mf.method(method).call
         else
             [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]
@@ -125,6 +132,15 @@ class App < Sinatra::Application
     end
 
     get '/:page' do |page|
+        if (page == 'parameter_panel')
+            mf = mf_instance_from_request
+            mf_args = mf.mf_args
+            @ranges = mf_args[:ranges]
+            @defaults = mf_args[:defaults]
+            @values = mf_args[:values]
+            @active_fontface = mf.fontface
+        end
+
         mustache page.to_sym, :layout => false
     end
 

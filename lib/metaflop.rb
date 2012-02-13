@@ -79,12 +79,14 @@ class Metaflop
 
         # defaults
         @fontface ||= 'Bespoke'
+        # one tmp dir per fontface
+        @out_dir = File.join(@out_dir, @fontface.downcase)
 
         if @out_dir && !File.directory?(@out_dir)
-            Dir.mkdir(@out_dir)
+            FileUtils.mkdir_p(@out_dir)
+            # copy everything we need to generate the fonts to the tmp dir
+            FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
         end
-        # copy each time, the font might have changed
-        FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
 
         @char_number ||= 1
     end

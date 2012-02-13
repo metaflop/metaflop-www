@@ -119,7 +119,7 @@ class App < Sinatra::Application
     end
 
     get '/export/font/:type/:face/:hash' do |type, face, hash|
-        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :active_fontface => face })
+        mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
         mf.settings = settings.metaflop
         mf.logger = logger
         method = "font_#{type}"

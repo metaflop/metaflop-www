@@ -381,7 +381,7 @@ $(function () {
         };
 
         callWithFontHash(complete, function(data) {
-            window.location = "/export/font/otf/" + $('#param-fontface').html() + "/" + data;
+            window.location = "/export/font/otf/" + $('#param-fontface').val() + "/" + data;
         });
 
         return false;

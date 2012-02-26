@@ -96,8 +96,8 @@ class Metaflop
         generate(
             generate: "#{settings[:preview_single]['generate']}",
             convert_svg: "#{settings[:preview_single]['convert_svg']}",
-            convert_gif: "#{settings[:preview_single]['convert_gif']}",
-            char_number: char_number
+            convert_gif: Mustache.render(settings[:preview_single]['convert_gif'],
+                         { :height => settings[:preview_height], :preview_y_offset => preview_y_offset })
         )
     end
 
@@ -105,15 +105,15 @@ class Metaflop
         cleanup_tmp_dir
         generate(
             generate: "#{settings[:preview_chart]['generate']}",
-            convert_custom: "#{settings[:preview_chart]['convert_custom']}"
+            convert_custom: Mustache.render(settings[:preview_typewriter]['convert_custom'], :height => settings[:preview_height])
         )
     end
 
     def preview_typewriter
         cleanup_tmp_dir
         generate(
-            generate: Mustache.render("#{settings[:preview_typewriter]['generate']}", :text => @text),
-            convert_custom: "#{settings[:preview_typewriter]['convert_custom']}"
+            generate: Mustache.render(settings[:preview_typewriter]['generate'], :text => @text),
+            convert_custom: Mustache.render(settings[:preview_typewriter]['convert_custom'], :height => settings[:preview_height])
         )
     end
 
@@ -125,7 +125,7 @@ class Metaflop
         mf_args(:force => true, :file => "#{@out_dir}/font.mf")
         generate_mf
 
-        command = Mustache.render("#{settings[:font_otf]}", :font_hash => @font_hash, :fontface => @fontface)
+        command = Mustache.render(settings[:font_otf], :font_hash => @font_hash, :fontface => @fontface)
 
         `cd #{@out_dir} && #{command}`
 
@@ -142,7 +142,7 @@ class Metaflop
     def mf_args(options = {})
         if !@mf_args || options[:force]
             options[:file] ||= "mf/metaflop-font-#{@fontface.downcase}/font.mf"
-            @mf_args = { :defaults => {}, :values => {}, :instruction => '', :ranges => {} }
+            @mf_args = { :defaults => {}, :values => {}, :units => {}, :instruction => '', :ranges => {} }
 
             lines = File.readlines(options[:file])
             # in case the file is a one-liner already, split each statement onto a line
@@ -175,6 +175,7 @@ class Metaflop
 
                         # store as key/value pairs
                         @mf_args[:values][key] = value
+                        @mf_args[:units][key] = splits[1][/[^\d;#\.]+/]
 
                         # get the ranges
                         range = x.gsub(/\s+/, '').scan(/\$([\d\.]+)\w*\/([\d\.]+)\w*$/).flatten!
@@ -196,9 +197,8 @@ class Metaflop
     # @option options [String] :convert_svg parameters for the 'convert' task for the svg image
     # @option options [String] :convert_gif parameters for the 'convert' task for the gif image
     # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
-    # @option options [String] :char_number the nth character
     def generate(options = {})
-        char_number = options[:char_number]
+        char_number = @char_number
 
         if char_number
             char_number = char_number.to_s.rjust(2, '0')
@@ -233,6 +233,28 @@ class Metaflop
             echo "#{mf_args[:instruction]}" > font.mf &&
             mf -halt-on-error -jobname=font \\\\"#{mf_args[:instruction]}" > /dev/null}
         )
+    end
+
+    def preview_y_offset
+        glyph_category = settings[:glyph_categories][@char_number.to_i - 1]
+        factor = settings[:preview_height].to_f / mf_args[:values][:ht].to_f
+
+        return 0 if glyph_category == :cap
+        return -absolute_mf_arg_value(:o) * factor if glyph_category == :capo
+        return (-absolute_mf_arg_value(:o) + absolute_mf_arg_value(:cap) - absolute_mf_arg_value(:mean)) * factor if glyph_category == :meano
+        return (-absolute_mf_arg_value(:o) + absolute_mf_arg_value(:cap) - absolute_mf_arg_value(:asc)) * factor if glyph_category == :asco
+        return (absolute_mf_arg_value(:cap) - absolute_mf_arg_value(:asc)) * factor if glyph_category == :asc
+        0
+    end
+
+    def absolute_mf_arg_value(arg_key, value = mf_args[:values][arg_key].to_f)
+        if mf_args[:units][arg_key] != mf_args[:units][:ht]
+            arg_key = mf_args[:units][arg_key].to_sym
+            value = mf_args[:values][arg_key].to_f * value
+            absolute_mf_arg_value(arg_key, value)
+        else
+            value
+        end
     end
 
     def cleanup_tmp_dir

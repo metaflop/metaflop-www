@@ -6,23 +6,14 @@
 # licensed under gpl v3
 #
 
-require 'fileutils'
+require './lib/font_settings.rb'
 
 FontParameter = Struct.new(:value, :default, :unit, :range)
 
 class FontParameters
 
-    # general options
-    VALID_OPTIONS_KEYS = [
-        :out_dir,
-        :char_number,
-        :text,
-        :font_hash,
-        :fontface
-    ]
-
     # mf parameters
-    VALID_FONT_PARAMETERS_KEYS = [
+    VALID_PARAMETERS_KEYS = [
         :box_height,
         :unit_width,
         :cap_height,
@@ -66,37 +57,24 @@ class FontParameters
         'penshape' => :pen_shape
     }
 
-    attr_accessor *VALID_OPTIONS_KEYS
-    attr_accessor *VALID_FONT_PARAMETERS_KEYS
+    attr_accessor *VALID_PARAMETERS_KEYS
+
+    attr_accessor :settings
 
     # initialize with optional options defined in VALID_OPTIONS_KEYS
-    def initialize(args = {})
-        VALID_OPTIONS_KEYS.each do |key|
-            instance_variable_set("@#{key}".to_sym, args[key])
-        end
+    def initialize(args = {}, settings = FontSettings.new)
+        @settings = settings
 
-        VALID_FONT_PARAMETERS_KEYS.each do |key|
+        VALID_PARAMETERS_KEYS.each do |key|
             instance_variable_set("@#{key}".to_sym, FontParameter.new(args[key]))
         end
-
-        # defaults
-        @fontface ||= 'Bespoke'
-        @out_dir ||= '/tmp/metaflop/'
-        # one tmp dir per fontface
-        @out_dir = File.join(@out_dir, @fontface.downcase)
-        @char_number ||= 1
-
-        setup_dir
     end
 
     # loads the metafont parameter instructions (aka font.mf) from the file
     #
-    # @param options [Hash] optional parameters
-    # @option options [String] :file defaults to "mf/font.mf" (containing the default parameters)
-    def from_file(options = {})
-        options[:file] ||= "mf/metaflop-font-#{@fontface.downcase}/font.mf"
-
-        lines = File.readlines(options[:file])
+    # @param file [String] :file defaults to the original file containing the default parameters
+    def from_file(file = original_file)
+        lines = File.readlines(file)
         # in case the file is a one-liner already, split each statement onto a line
         lines = lines[0].split(';').map{ |x| "#{x};" } if lines.length == 1
 
@@ -133,15 +111,18 @@ class FontParameters
         end
     end
 
+    # write the params to the the output dir (see @settings.out_dir)
     def to_file
-        content = File.read("mf/metaflop-font-#{@fontface.downcase}/font.mf")
+        content = File.read(original_file)
+        # replace the original values
         MF_MAPPINGS.each do |mapping|
             param = instance_variable_get("@#{mapping[1]}".to_sym)
             unless param.value.nil?
                 content.gsub! /(#{mapping[0]}:=)[\d\/\.]+/, "\\1#{param.value}"
             end
         end
-        File.open(File.join(@out_dir, 'font.mf'), "w") do |file|
+                puts "@out_dir = #{File.join(@settings.out_dir, 'font.mf')}"
+        File.open(File.join(@settings.out_dir, 'font.mf'), "w") do |file|
             file.write(content)
         end
     end
@@ -162,16 +143,13 @@ class FontParameters
 
     # @param key [String] / [Symbol] either the metafont param name or the instance variable name
     def instance_param(key)
-        return instance_variable_get("@#{key.to_sym}") if VALID_FONT_PARAMETERS_KEYS.include?(key.to_sym)
+        return instance_variable_get("@#{key.to_sym}") if VALID_PARAMETERS_KEYS.include?(key.to_sym)
         return instance_variable_get("@#{MF_MAPPINGS[key.to_s]}") unless MF_MAPPINGS[key.to_s].nil?
         nil
     end
 
-    def setup_dir
-        if @out_dir && !File.directory?(@out_dir)
-            FileUtils.mkdir_p(@out_dir)
-            # copy everything we need to generate the fonts to the tmp dir
-            FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
-        end
+    def original_file
+        "mf/metaflop-font-#{@settings.fontface.downcase}/font.mf"
     end
+
 end

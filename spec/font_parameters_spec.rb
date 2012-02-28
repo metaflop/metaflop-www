@@ -41,14 +41,14 @@ describe FontParameters do
 
     describe 'save to file' do
         it 'no passed in value, the original and new file are the same' do
-            params = FontParameters.new :out_dir => '/tmp/metaflop/spec'
+            params = FontParameters.new({}, FontSettings.new(:out_dir => '/tmp/metaflop/spec'))
             params.to_file
             File.read('/tmp/metaflop/spec/bespoke/font.mf').should ==
             File.read('mf/metaflop-font-bespoke/font.mf')
         end
 
         it 'passed in value is in file' do
-            params = FontParameters.new({ :out_dir => '/tmp/metaflop/spec', :unit_width => '1.0' })
+            params = FontParameters.new({ :unit_width => '1.0' }, FontSettings.new(:out_dir => '/tmp/metaflop/spec'))
             params.to_file
             File.read('/tmp/metaflop/spec/bespoke/font.mf').should include 'u#:=1.0pt#;'
         end

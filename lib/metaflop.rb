@@ -8,8 +8,8 @@
 # licensed under gpl v3
 #
 
-require './lib/racklogger'
-require './lib/racksettings'
+require './lib/rack_logger'
+require './lib/rack_settings'
 require './lib/font_parameters'
 require './lib/font_settings'
 require 'mustache'
@@ -138,20 +138,20 @@ class Metaflop
         end
 
         if glyph_category == :meano
-            return (- @font_parameters.absolute_value(:overshoot)
-                    + @font_parameters.absolute_value(:cap_height)
-                    - @font_parameters.absolute_value(:mean_height)) * factor
+            return (-@font_parameters.absolute_value(:overshoot) +
+                    @font_parameters.absolute_value(:cap_height) -
+                    @font_parameters.absolute_value(:mean_height)) * factor
         end
 
         if glyph_category == :asco
-            return (- @font_parameters.absolute_value(:overshoot)
-                    + @font_parameters.absolute_value(:cap_height)
-                    - @font_parameters.absolute_value(:ascender_height)) * factor
+            return (-@font_parameters.absolute_value(:overshoot) +
+                    @font_parameters.absolute_value(:cap_height) -
+                    @font_parameters.absolute_value(:ascender_height)) * factor
         end
 
         if glyph_category == :asc
-            return (@font_parameters.absolute_value(:cap_height)
-                    - @font_parameters.absolute_value(:ascender_height)) * factor
+            return (@font_parameters.absolute_value(:cap_height) -
+                    @font_parameters.absolute_value(:ascender_height)) * factor
         end
 
         0

@@ -73,7 +73,8 @@ class FontParameters
     # loads the metafont parameter instructions (aka font.mf) from the file
     #
     # @param file [String] :file defaults to the original file containing the default parameters
-    def from_file(file = original_file)
+    def from_file(file = nil)
+        file = original_file if file.nil?
         lines = File.readlines(file)
         # in case the file is a one-liner already, split each statement onto a line
         lines = lines[0].split(';').map{ |x| "#{x};" } if lines.length == 1
@@ -91,7 +92,7 @@ class FontParameters
                 value_from_file = splits[1].to_f
                 mapping = MF_MAPPINGS[splits[0]]
                 param = mapping ? send(mapping) : nil
-                value = if param && param.value && !param.value.empty?
+                value = if param && param.value && !param.value.to_s.empty?
                             param.value
                         else
                             value_from_file
@@ -121,7 +122,7 @@ class FontParameters
                 content.gsub! /(#{mapping[0]}:=)[\d\/\.]+/, "\\1#{param.value}"
             end
         end
-                puts "@out_dir = #{File.join(@settings.out_dir, 'font.mf')}"
+
         File.open(File.join(@settings.out_dir, 'font.mf'), "w") do |file|
             file.write(content)
         end

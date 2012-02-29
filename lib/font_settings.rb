@@ -32,15 +32,20 @@ class FontSettings
         @out_dir = File.join(@out_dir, @fontface.downcase)
         @char_number ||= 1
 
-        setup_dir
+        setup_tmp_dir
     end
 
-    def setup_dir
+    def setup_tmp_dir
         if @out_dir && !File.directory?(@out_dir)
             FileUtils.mkdir_p(@out_dir)
             # copy everything we need to generate the fonts to the tmp dir
             FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
         end
+    end
+
+    def cleanup_tmp_dir
+        raise '@out_dir is empty!' unless @out_dir
+        FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
     end
 
 end

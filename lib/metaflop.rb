@@ -10,6 +10,8 @@
 
 require './lib/racklogger'
 require './lib/racksettings'
+require './lib/font_parameters'
+require './lib/font_settings'
 require 'mustache'
 
 class Metaflop
@@ -17,78 +19,23 @@ class Metaflop
     include RackLogger
     include RackSettings
 
-    # these options can be set when instantiating this class
-    VALID_OPTIONS_KEYS = [
-        # general options
-        :out_dir,
-        :char_number,
-        :text,
-        :font_hash,
-        :fontface,
-
-        # mf parameters
-        :unit_width,
-        :cap_height,
-        :mean_height,
-        :bar_height,
-        :ascender_height,
-        :descender_height,
-        :overshoot,
-        :horizontal_increase,
-        :vertical_increase,
-        :apperture,
-        :superness,
-        :pen_size,
-        :corner,
-        :contrast,
-        :sidebearing,
-        :pen_angle,
-        :pen_shape
-    ]
-
-    # the mapping between the defined params in the mf file and this class' properties
-    MF_MAPPINGS = {
-        'u#' => :unit_width,
-        'cap#' => :cap_height,
-        'mean#' => :mean_height,
-        'bar' => :bar_height,
-        'asc#' => :ascender_height,
-        'des#' => :descender_height,
-        'o#' => :overshoot,
-        'incx' => :horizontal_increase,
-        'incy' => :vertical_increase,
-        'appert' => :apperture,
-        'superness' => :superness,
-        'px#' => :pen_size,
-        'py#' => :pen_size,
-        'corner#' => :corner,
-        'cont' => :contrast,
-        'sidebearing' => :sidebearing,
-        'penang' => :pen_angle,
-        'penshape' => :pen_shape
-    }
-
-    attr_accessor *VALID_OPTIONS_KEYS
-
-    # initialize with optional options defined in VALID_OPTIONS_KEYS
+    # args: see FontParameter
     def initialize(args = {})
-        args = options.merge(args)
-        VALID_OPTIONS_KEYS.each do |key|
-            instance_variable_set("@#{key}".to_sym, args[key])
+        @font_settings = FontSettings.new(args)
+        @font_parameters = FontParameters.new(args, @font_settings)
+    end
+
+    def font_parameters(file = nil)
+        if (!@font_parameters_initialized)
+            @font_parameters.from_file file
+            @font_parameters_initialized = true
         end
 
-        # defaults
-        @fontface ||= 'Bespoke'
-        # one tmp dir per fontface
-        @out_dir = File.join(@out_dir, @fontface.downcase)
+        @font_parameters
+    end
 
-        if @out_dir && !File.directory?(@out_dir)
-            FileUtils.mkdir_p(@out_dir)
-            # copy everything we need to generate the fonts to the tmp dir
-            FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
-        end
-
-        @char_number ||= 1
+    def font_settings
+        @font_settings
     end
 
     # returns an gif image for a single character preview
@@ -102,7 +49,7 @@ class Metaflop
     end
 
     def preview_chart
-        cleanup_tmp_dir
+        @font_settings.cleanup_tmp_dir
         generate(
             generate: "#{settings[:preview_chart]['generate']}",
             convert_custom: Mustache.render(settings[:preview_typewriter]['convert_custom'], :height => settings[:preview_height])
@@ -110,84 +57,27 @@ class Metaflop
     end
 
     def preview_typewriter
-        cleanup_tmp_dir
+        @font_settings.cleanup_tmp_dir
         generate(
-            generate: Mustache.render(settings[:preview_typewriter]['generate'], :text => @text),
+            generate: Mustache.render(settings[:preview_typewriter]['generate'], @font_settings),
             convert_custom: Mustache.render(settings[:preview_typewriter]['convert_custom'], :height => settings[:preview_height])
         )
     end
 
     def font_otf
-        cleanup_tmp_dir
-
+        @font_settings.cleanup_tmp_dir
         # regenerate from the latest parameters with the sidebearings turned off
-        @sidebearing = '0'
-        mf_args(:force => true, :file => "#{@out_dir}/font.mf")
+        @font_parameters.sidebearing.value = '0'
+        font_parameters "#{@font_settings.out_dir}/font.mf"
         generate_mf
 
-        command = Mustache.render(settings[:font_otf], :font_hash => @font_hash, :fontface => @fontface)
+        command = Mustache.render(settings[:font_otf], @font_settings)
 
-        `cd #{@out_dir} && #{command}`
+        `cd #{@font_settings.out_dir} && #{command}`
 
-        @sidebearing = nil
+        @font_parameters.sidebearing.value = nil
 
-        File.read("#{@out_dir}/font.otf")
-    end
-
-    # returns the metafont parameter instructions (aka font.mf) as an array (each param)
-    #
-    # @param options [Hash] optional parameters
-    # @option options [String] :force always regenerates the mf
-    # @option options [String] :file defaults to "mf/font.mf" (containing the default parameters)
-    def mf_args(options = {})
-        if !@mf_args || options[:force]
-            options[:file] ||= "mf/metaflop-font-#{@fontface.downcase}/font.mf"
-            @mf_args = { :defaults => {}, :values => {}, :units => {}, :instruction => '', :ranges => {} }
-
-            lines = File.readlines(options[:file])
-            # in case the file is a one-liner already, split each statement onto a line
-            lines = lines[0].split(';').map{ |x| "#{x};" } if lines.length == 1
-
-            lines.delete_if do |x|            # remove comment and empty lines
-                    stripped = x.strip
-                    stripped == '' || stripped[0] == '%'
-                end
-                .each do |x|                  # remove comments at the end of the line
-                    pair = x[/([^%]+)/, 0].strip
-                    splits = pair.split(':=')
-
-                    if (splits.length == 2)
-                        key = splits[0].delete('#').to_sym
-
-                        # replace the default value from the file if we have a value set for the parameter
-                        mapping = MF_MAPPINGS[splits[0]]
-                        value_from_file = splits[1].to_f
-
-                        value = mapping ? send(mapping) : nil
-
-                        if (value && !value.empty?)
-                            pair = splits[0] + ':=' + splits[1].gsub(/[\d\/\.]+/, value)
-                        else
-                            value = value_from_file
-                        end
-
-                        @mf_args[:defaults][key] = value_from_file
-
-                        # store as key/value pairs
-                        @mf_args[:values][key] = value
-                        @mf_args[:units][key] = splits[1][/[^\d;#\.]+/]
-
-                        # get the ranges
-                        range = x.gsub(/\s+/, '').scan(/\$([\d\.]+)\w*\/([\d\.]+)\w*$/).flatten!
-                        range = [0, 1] if range.nil?
-                        @mf_args[:ranges][key] = { :from => range[0], :to => range[1] }
-                    end
-                    # the instruction oneliner for the mf command
-                    @mf_args[:instruction] = @mf_args[:instruction] + pair
-                end
-        end
-
-        @mf_args
+        File.read("#{@font_settings.out_dir}/font.otf")
     end
 
     # generates the image for the specified tool chain
@@ -198,8 +88,7 @@ class Metaflop
     # @option options [String] :convert_gif parameters for the 'convert' task for the gif image
     # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
     def generate(options = {})
-        char_number = @char_number
-
+        char_number = @font_settings.char_number
         if char_number
             char_number = char_number.to_s.rjust(2, '0')
             svg_name = "font-#{char_number}.svg"
@@ -212,7 +101,7 @@ class Metaflop
 
         # don't bother if metafont failed
         if generate_mf
-            command = %Q{cd #{@out_dir} &&
+            command = %Q{cd #{@font_settings.out_dir} &&
                          #{options[:generate]} > /dev/null &&
                          dvisvgm -TS0.75 -M16 -n -p #{char_number} font.dvi > /dev/null &&
                          #{convert} gif:-}
@@ -221,50 +110,50 @@ class Metaflop
             # hide all output but the last one, which returns the image
             `#{command}`
         else
-            logger.error "mf generation failed for '#{mf_args}'"
+            logger.error "mf generation failed."
             nil
         end
     end
 
     # returns true if the mf was successfully generated
     def generate_mf
+        @font_parameters.to_file
         system(
-            %Q{cd #{@out_dir} &&
-            echo "#{mf_args[:instruction]}" > font.mf &&
-            mf -halt-on-error -jobname=font \\\\"#{mf_args[:instruction]}" > /dev/null}
+            %Q{cd #{@font_settings.out_dir} &&
+            mf -halt-on-error -jobname=font font.mf > /dev/null}
         )
     end
 
     def preview_y_offset
-        glyph_category = settings[:glyph_categories][@char_number.to_i - 1]
-        factor = settings[:preview_height].to_f / mf_args[:values][:ht].to_f
+        glyph_category = settings[:glyph_categories][@font_settings.char_number.to_i - 1]
+        factor = settings[:preview_height].to_f /
+                 font_parameters.box_height.value.to_f # call method -> need box_height from file
 
-        return 0 if glyph_category == :cap
-        return -absolute_mf_arg_value(:o) * factor if glyph_category == :capo
-        return (-absolute_mf_arg_value(:o) + absolute_mf_arg_value(:cap) - absolute_mf_arg_value(:mean)) * factor if glyph_category == :meano
-        return (-absolute_mf_arg_value(:o) + absolute_mf_arg_value(:cap) - absolute_mf_arg_value(:asc)) * factor if glyph_category == :asco
-        return (absolute_mf_arg_value(:cap) - absolute_mf_arg_value(:asc)) * factor if glyph_category == :asc
-        0
-    end
-
-    def absolute_mf_arg_value(arg_key, value = mf_args[:values][arg_key].to_f)
-        if mf_args[:units][arg_key] != mf_args[:units][:ht]
-            arg_key = mf_args[:units][arg_key].to_sym
-            value = mf_args[:values][arg_key].to_f * value
-            absolute_mf_arg_value(arg_key, value)
-        else
-            value
+        if glyph_category == :cap
+            return 0
         end
-    end
 
-    def cleanup_tmp_dir
-        raise '@out_dir is empty!' unless @out_dir
-        FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
-    end
+        if glyph_category == :capo
+            return - @font_parameters.absolute_value(:overshoot) * factor
+        end
 
-    def options
-        options = {}
-        VALID_OPTIONS_KEYS.each{ |k| options[k] = send(k) }
-        options
+        if glyph_category == :meano
+            return (- @font_parameters.absolute_value(:overshoot)
+                    + @font_parameters.absolute_value(:cap_height)
+                    - @font_parameters.absolute_value(:mean_height)) * factor
+        end
+
+        if glyph_category == :asco
+            return (- @font_parameters.absolute_value(:overshoot)
+                    + @font_parameters.absolute_value(:cap_height)
+                    - @font_parameters.absolute_value(:ascender_height)) * factor
+        end
+
+        if glyph_category == :asc
+            return (@font_parameters.absolute_value(:cap_height)
+                    - @font_parameters.absolute_value(:ascender_height)) * factor
+        end
+
+        0
     end
 end

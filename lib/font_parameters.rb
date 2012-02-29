@@ -117,7 +117,7 @@ class FontParameters
         content = File.read(original_file)
         # replace the original values
         MF_MAPPINGS.each do |mapping|
-            param = instance_variable_get("@#{mapping[1]}".to_sym)
+            param = instance_param mapping[1]
             unless param.value.nil?
                 content.gsub! /(#{mapping[0]}:=)[\d\/\.]+/, "\\1#{param.value}"
             end

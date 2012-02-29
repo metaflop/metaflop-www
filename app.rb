@@ -12,7 +12,6 @@ require 'sinatra/reloader'
 require 'sinatra/config_file'
 require 'sass'
 require 'mustache/sinatra'
-require 'fileutils'
 require 'time'
 require 'data_mapper' # metagem, requires common plugins too.
 require './lib/metaflop'
@@ -57,6 +56,7 @@ class App < Sinatra::Application
     configure :development do
         register Sinatra::Reloader
         also_reload '**/*.rb'
+        dont_reload '**/*spec.rb'
     end
 
     configure :production do
@@ -71,11 +71,8 @@ class App < Sinatra::Application
 
     get '/' do
         mf = mf_instance_from_request
-        mf_args = mf.mf_args
-        @ranges = mf_args[:ranges]
-        @defaults = mf_args[:defaults]
-        @values = mf_args[:values]
-        @active_fontface = mf.fontface
+        @font_parameters = mf.font_parameters
+        @active_fontface = mf.font_settings.fontface
 
         mustache :index
     end
@@ -92,12 +89,9 @@ class App < Sinatra::Application
             redirect '/'
         end
 
-        mf = mf_instance_from_request(url[:params])
-        mf_args = mf.mf_args
-        @ranges = mf_args[:ranges]
-        @defaults = mf_args[:defaults]
-        @values = mf_args[:values]
-        @active_fontface = mf.fontface
+        mf = mf_instance_from_request url[:params]
+        @font_parameters = mf.font_parameters
+        @active_fontface = mf.font_settings.fontface
 
         mustache :index
     end
@@ -134,11 +128,8 @@ class App < Sinatra::Application
     get '/:page' do |page|
         if (page == 'parameter_panel')
             mf = mf_instance_from_request
-            mf_args = mf.mf_args
-            @ranges = mf_args[:ranges]
-            @defaults = mf_args[:defaults]
-            @values = mf_args[:values]
-            @active_fontface = mf.fontface
+            @font_parameters = mf.font_parameters
+            @active_fontface = mf.font_settings.fontface
         end
 
         mustache page.to_sym, :layout => false
@@ -152,7 +143,7 @@ class App < Sinatra::Application
     def mf_instance_from_request(params = params)
         # map all query params
         args = { :out_dir => out_dir }
-        Metaflop::VALID_OPTIONS_KEYS.each do |key|
+        (FontParameters::VALID_PARAMETERS_KEYS + FontSettings::VALID_OPTIONS_KEYS).each do |key|
             # query params come in with dashes -> replace by underscores to match properties
             value = params[key.to_s.gsub("_", "-")]
 

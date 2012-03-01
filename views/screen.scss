@@ -514,7 +514,6 @@ a.action-icon {
 }
 
 .inputblock {
-    border-bottom: 1px solid $input_color;
     position: relative;
 
     &.last {
@@ -640,6 +639,12 @@ a.char-chooser {
 
 .dropdown-value {
     cursor: pointer;
+    padding-right: 5px;
+    background: url(/img/arrows.png) no-repeat right -120px transparent;
+
+    &.active {
+        background-position: right 5px;
+    }
 }
 
 .dropdown-list {

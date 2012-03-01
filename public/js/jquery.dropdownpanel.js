@@ -67,7 +67,9 @@
 
             // toggle panel
             $div.click(function() {
-                $(this).parent().find('.dropdown-list')
+                var parent = $(this).parent();
+                parent.find('.dropdown-value').toggleClass('active');
+                parent.find('.dropdown-list')
                     .animate({ height: 'toggle' }, settings.panelToggleDuration, settings.panelToggleEasing);
             });
         });

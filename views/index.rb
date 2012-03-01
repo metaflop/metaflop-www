@@ -59,15 +59,10 @@ class App
                         i = i + 1
                     end
                     .delete_if { |v| !v[:default] } # remove non-mapped params
-
-                    # add css class to last item
-                    group[:items][-1][:css_class] = "last" unless group[:items].empty?
                 end
 
                 # remove empty groups
                 groups.delete_if { |x| x[:items].empty? }
-
-                groups[0][:css_class] = "first"
 
                 groups
             end

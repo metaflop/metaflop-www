@@ -111,16 +111,11 @@ fieldset {
 legend {
     margin: 0;
     padding: 0;
-    border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     width: 100%;
     line-height: 24px;
     font-weight: bold;
     overflow: hidden;
-
-    &.first {
-        border-top: none;
-    }
 
     ul {
         font-weight: normal;
@@ -515,10 +510,6 @@ a.action-icon {
 
 .inputblock {
     position: relative;
-
-    &.last {
-        border-bottom: none;
-    }
 
     &:hover {
         background: #eee;

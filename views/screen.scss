@@ -551,7 +551,6 @@ div.char-chooser {
 
             &.active {
                 font-weight: bold;
-                border: 1px solid $active-color;
             }
         }
     }
@@ -561,17 +560,17 @@ a.char-chooser {
     position: absolute;
     bottom: 3px;
     z-index: 1;
-    width: 10px;
+    width: 14px;
     color: transparent;
 
     &.left {
         left: 2px;
-        background: url(/img/icons.png) no-repeat scroll -99px -18px #fff;
+        background: url(/img/arrows.png) no-repeat scroll 0 -189px #fff;
     }
 
     &.right {
         right: 2px;
-        background: url(/img/icons.png) no-repeat scroll -36px -19px #fff;
+        background: url(/img/arrows.png) no-repeat scroll 0 -64px #fff;
     }
 }
 

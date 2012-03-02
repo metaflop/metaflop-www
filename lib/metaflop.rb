@@ -52,7 +52,7 @@ class Metaflop
         @font_settings.cleanup_tmp_dir
         generate(
             generate: "#{settings[:preview_chart]['generate']}",
-            convert_custom: Mustache.render(settings[:preview_typewriter]['convert_custom'], :height => settings[:preview_height])
+            convert_custom: Mustache.render(settings[:preview_chart]['convert_custom'], :height => settings[:preview_height])
         )
     end
 

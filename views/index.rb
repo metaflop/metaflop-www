@@ -15,33 +15,33 @@ class App
                     {
                         :title => "Dimension",
                         :items => [
-                            { :title => 'box height', :key => :ht, :html => '<div class="static-value">100%</div>' },
-                            { :title => 'unit width', :key => :u },
-                            { :title => 'overshoot', :key => :o },
-                            { :title => 'pen size', :key => :px }
+                            { :title => 'box height', :key => :box_height, :html => '<div class="static-value">100%</div>' },
+                            { :title => 'unit width', :key => :unit_width },
+                            { :title => 'overshoot', :key => :overshoot },
+                            { :title => 'pen size', :key => :pen_size }
                         ]
                     },
                     {
                         :title => "Proportion",
                         :items => [
-                            { :title => 'cap height', :key => :cap },
-                            { :title => 'mean height', :key => :mean },
-                            { :title => 'bar height', :key => :bar },
-                            { :title => 'ascender height', :key => :asc },
-                            { :title => 'descender height', :key => :des }
+                            { :title => 'cap height', :key => :cap_height },
+                            { :title => 'mean height', :key => :mean_height },
+                            { :title => 'bar height', :key => :bar_height },
+                            { :title => 'ascender height', :key => :ascender_height },
+                            { :title => 'descender height', :key => :descender_height }
                         ]
                     },
                     {
                         :title => "Shape",
                         :items => [
-                            { :title => 'horizontal increase', :key => :incx },
-                            { :title => 'vertical increase', :key => :incy },
-                            { :title => 'apperture', :key => :appert },
-                            { :title => 'contrast', :key => :cont },
+                            { :title => 'horizontal increase', :key => :horizontal_increase },
+                            { :title => 'vertical increase', :key => :vertical_increase },
+                            { :title => 'apperture', :key => :apperture },
+                            { :title => 'contrast', :key => :contrast },
                             { :title => 'superness', :key => :superness },
                             { :title => 'corner', :key => :corner },
-                            { :title => 'pen angle', :key => :penang },
-                            { :title => 'pen shape', :key => :penshape, :html => '<select id="pen-shape"><option value="1">Circle</option><option value="2">Square</option><option value="3">Razor</option><select>'}
+                            { :title => 'pen angle', :key => :pen_angle },
+                            { :title => 'pen shape', :key => :pen_shape, :html => '<select id="pen-shape"><option value="1">Circle</option><option value="2">Square</option><option value="3">Razor</option><select>'}
                         ]
                     }
                 ]
@@ -50,10 +50,11 @@ class App
                 i = 1
                 groups.each do |group|
                     group[:items].each do |x|
-                        key = x[:key]
-                        x[:default] = defaults[key]
-                        x[:value] = values[key]
-                        x[:range] = ranges[key]
+                        param = @font_parameters.send(x[:key])
+                        puts param
+                        x[:default] = param.default
+                        x[:value] = param.value
+                        x[:range] = param.range
                         x[:name] = x[:title].gsub(' ', '-') # (css class compliant)
                         x[:tabindex] = i
                         i = i + 1
@@ -81,18 +82,6 @@ class App
                         end
                     }
                 end
-            end
-
-            def values
-                @values
-            end
-
-            def defaults
-                @defaults
-            end
-
-            def ranges
-                @ranges
             end
 
             def fontfaces

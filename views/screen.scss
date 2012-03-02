@@ -127,12 +127,16 @@ ul {
     margin: 0;
     padding: 0;
 
+    &.collapsible-list {
+        display: none;
+        clear: both;
+    }
+
     li {
         overflow: hidden;
 
         &.collapsible-list-item {
             padding-top: 2px;
-            display: none;
         }
     }
 }
@@ -269,6 +273,19 @@ a.action-icon {
 
     .box-content {
         height: inherit;
+
+        .static-value {
+            width: 40%;
+        }
+
+        label {
+            width: 50%;
+            overflow: hidden;
+        }
+
+        .dropdown-list {
+            margin-left: 60%;
+        }
     }
 
     .action {
@@ -283,16 +300,14 @@ a.action-icon {
         }
     }
 
-    ul li {
-        a {
-            float: left;
-        }
-        .spinner {
-            display: block;
-            float: left;
-            overflow: hidden;
-            width: 20px;
-        }
+    a {
+        float: left;
+    }
+    .spinner {
+        display: block;
+        float: left;
+        overflow: hidden;
+        width: 20px;
     }
 }
 

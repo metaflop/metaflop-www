@@ -7,9 +7,33 @@
             <div class="beta">beta</div>
             <div class="box-content">
                 <fieldset>
+                    <legend>Generator</legend>
+
+                    <div class="clearfix inputblock">
+                        <label>anatomy</label>
+                        <div class="static-value toggle-info-panel">
+                            <span class="action">on</span>
+                            <span class="action active">off</span>
+                        </div>
+                    </div>
+                    <div class="clearfix inputblock parameter-panel-mode-toggle">
+                        <label>mode</label>
+                        <div class="static-value">
+                            <span class="action sliders active">dummy</span>
+                            <span class="action adjusters">nerd</span>
+                        </div>
+                    </div>
+                    <div class="clearfix inputblock">
+                        <label><a href="#" id="action-reset-values">reset</a></label>
+                    </div>
+                    <div class="clearfix inputblock">
+                        <label><a href="#" id="action-randomize-values">flop it!</a></label>
+                    </div>
+                </fieldset>
+                <fieldset>
                     <legend class="first" id="action-select-typeface">
                         <div class="clearfix">
-                            <label>Typeface</label>
+                            <label>Font</label>
                             <select id="param-fontface">
                                 {{#fontfaces}}
                                 <option value="{{name}}"{{#active}} selected="selected"{{/active}}>{{name}}</option>
@@ -18,13 +42,15 @@
                         </div>
                     </legend>
 
-                    <ul>
-                        <li class="toggle-info-panel">information <span class="action">on</span> / <span class="action active">off</span></li>
-                        <li><a href="#" id="action-reset-values">reset</a></li>
-                        <li><a href="#" id="action-randomize-values">flop it!</a></li>
-                        <li><a href="#" id="action-share-url">share it</a></li>
-                        <li><a href="#" id="action-export-font">export font (.otf)</a></li>
-                    </ul>
+                    <div class="clearfix inputblock">
+                        <label><a href="#" id="action-share-url">share font</a></label>
+                    </div>
+                    <div class="clearfix inputblock">
+                        <label>export font</label>
+                        <div class="static-value">
+                            <a href="#" id="action-export-font">otf</a>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
         </div>

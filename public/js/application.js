@@ -327,7 +327,7 @@ $(function () {
     });
 
     var hideSharePanel = function() {
-        var li = $('.collapsible-list-item.share');
+        var li = $('.collapsible-list.share');
         if (li.length > 0) {
             li.hide($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing, function() {
                 li.remove();
@@ -521,7 +521,7 @@ $(function () {
     });
 
     // switch basic/pro mode for parameter panel
-    $.fn.metaflop.parameterPanel.on('click', '.parameter-panel-mode-toggle span', function() {
+    $('.parameter-panel-mode-toggle span').click(function() {
         var $this = $(this);
         var parameterPanel = $('#parameter-panel');
         var adjusters = parameterPanel.find('.adjuster');

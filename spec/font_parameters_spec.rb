@@ -9,7 +9,7 @@
 require './lib/font_parameters'
 
 describe FontParameters do
-    describe 'initialize' do
+    context '#initialize' do
         it 'no param value passed initializes with nil' do
             FontParameters.new.unit_width.should == FontParameter.new
         end
@@ -19,7 +19,7 @@ describe FontParameters do
         end
     end
 
-    describe 'load from file' do
+    context '#from_file' do
         it 'no param values passed initializes with default values' do
             params = FontParameters.new
             params.from_file
@@ -39,7 +39,7 @@ describe FontParameters do
         end
     end
 
-    describe 'save to file' do
+    context '#to_file' do
         it 'no passed in value, the original and new file are the same' do
             params = FontParameters.new({}, FontSettings.new(:out_dir => '/tmp/metaflop/spec'))
             params.to_file
@@ -54,7 +54,7 @@ describe FontParameters do
         end
     end
 
-    describe 'instance param' do
+    context '#instance_param' do
         it 'param key is instance variable name as symbol' do
             params = FontParameters.new(:unit_width => '1.0')
             params.instance_param(:unit_width).should == FontParameter.new('1.0')
@@ -76,7 +76,7 @@ describe FontParameters do
         end
     end
 
-    describe 'get absolute value' do
+    context '#absolute_value' do
         it 'param has super unit, get value itself' do
             params = FontParameters.new
             params.box_height = FontParameter.new('1.0', '1.0', 'pt#')

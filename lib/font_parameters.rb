@@ -75,7 +75,7 @@ class FontParameters
     # @param file [String] :file defaults to the original file containing the default parameters
     def from_file(file = nil)
         file = original_file if file.nil?
-        lines = File.readlines(file)
+        lines = File.open(file, 'r:utf-8'){ |f| f.readlines }
         # in case the file is a one-liner already, split each statement onto a line
         lines = lines[0].split(';').map{ |x| "#{x};" } if lines.length == 1
 
@@ -114,7 +114,7 @@ class FontParameters
 
     # write the params to the the output dir (see @settings.out_dir)
     def to_file
-        content = File.read(original_file)
+        content = File.open(original_file, 'r:utf-8'){ |f| f.read }
         # replace the original values
         MF_MAPPINGS.each do |mapping|
             param = instance_param mapping[1]
@@ -123,7 +123,7 @@ class FontParameters
             end
         end
 
-        File.open(File.join(@settings.out_dir, 'font.mf'), "w") do |file|
+        File.open(File.join(@settings.out_dir, 'font.mf'), "w:utf-8") do |file|
             file.write(content)
         end
     end

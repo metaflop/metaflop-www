@@ -451,11 +451,14 @@ $(function () {
     charLinks.click(function(e) {
         e.preventDefault();
 
-        if ($(this).parents('.preview-box.active').length > 0) {
-            charLinks.removeClass('active');
-            $(this).addClass('active').blur();
-            previewImage();
+        var box = $(this).parents('.preview-box');
+        if (!box.hasClass('active')) {
+            $('.preview-box.active').removeClass('active').find('textarea').hide();
+            box.addClass('active');
         }
+        charLinks.removeClass('active');
+        $(this).addClass('active').blur();
+        previewImage();
 
         return false;
     });
@@ -463,6 +466,7 @@ $(function () {
 
     $('a.char-chooser').click(function(e) {
         e.preventDefault();
+
         var $this = $(this);
         var div = $('div.char-chooser');
         var activeItem = div.find('li.active');

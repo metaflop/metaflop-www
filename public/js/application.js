@@ -326,27 +326,30 @@ $(function () {
         return false;
     });
 
+    // returns true when the panel was visible -> is now hidden
     var hideSharePanel = function() {
         var li = $('.collapsible-list.share');
         if (li.length > 0) {
-            li.hide($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing, function() {
+            li.animate({ height: 'toggle' }, $.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing, function() {
                 li.remove();
             });
 
+            $('#action-share-url').removeClass('active');
+
             return true;
         }
+        $('#action-share-url').addClass('active');
         return false;
     };
 
     // share the current settings
     $('#action-share-url').click(function(e) {
-        e.preventDefault();
-
-        var link = $(this);
+        var $this = $(this);
 
         // don't show if the share buttons were already visible
-        if (!hideSharePanel()) {
-            var spinner = getSpinnerForActionLink(link);
+        var shown = hideSharePanel();
+        if (!shown) {
+            var spinner = getSpinnerForActionLink($this.find('span'));
 
             var success = function(data) {
                 var url = "http://www.metaflop.com/font/" + data;
@@ -354,8 +357,8 @@ $(function () {
 
                 var content = $.mustache($('#collapsibleShare').html(), { url: url, text: text });
                 var li = $(content);
-                link.parent().after(li);
-                li.show($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
+                $this.parent().after(li);
+                li.animate({ height: 'toggle' }, $.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
             };
 
             var complete = function() {
@@ -365,8 +368,6 @@ $(function () {
 
             callWithFontHash(complete, success);
         }
-
-        return false;
     });
 
     // export the font

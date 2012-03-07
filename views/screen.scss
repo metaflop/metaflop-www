@@ -130,6 +130,10 @@ ul {
     &.collapsible-list {
         display: none;
         clear: both;
+
+        &.share {
+            margin-left: 55%;
+        }
     }
 
     li {
@@ -157,45 +161,45 @@ a, span.action {
     }
 }
 
+span.action {
+    margin-right: 5px;
+}
+
 a.action-icon {
     background: url(/img/share-icons.png) no-repeat top left;
-    margin-right: 7px;
+    margin-right: 9px;
 
-    &.share-clipboard {
+    &.share-facebook {
         background-position: 0 0;
 
         &:hover {
-            background-position: 0 -66px;
-        }
-     }
-
-    &.share-facebook {
-        background-position: 0 -132px;
-
-        &:hover {
-            background-position: 0 -198px;
+            background-position: 0 -70px;
         }
      }
     &.share-email {
-        background-position: 0 -264px;
+        background-position: 0 -280px;
 
         &:hover {
-            background-position: 0 -330px;
+            background-position: 0 -350px;
         }
     }
     &.share-twitter {
-        background-position: 0 -396px;
+        background-position: 0 -140px;
 
         &:hover {
-            background-position: 0 -462px;
+            background-position: 0 -210px;
         }
     }
 
 
     img {
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
     }
+}
+
+.share-clipboard {
+    margin-left: -5px;
 }
 
 .clearfix {
@@ -275,7 +279,7 @@ a.action-icon {
         height: inherit;
 
         .static-value {
-            width: 40%;
+            width: 45%;
         }
 
         label {
@@ -284,11 +288,11 @@ a.action-icon {
         }
 
         .dropdown-list {
-            margin-left: 60%;
+            margin-left: 55%;
         }
     }
 
-    .action {
+    .action.exclusive {
         color: lighten(#000, 80%);
 
         &:hover {
@@ -627,18 +631,11 @@ a.char-chooser {
     }
 }
 
-#action-select-typeface {
-    cursor: pointer;
+#menu #action-share-url {
+    width: 100%;
 
-    &:hover {
-        color: $active_link_color;
-    }
-
-    * {
-        cursor: inherit;
-    }
-    ul {
-        display: none;
+    span {
+        float: left;
     }
 }
 

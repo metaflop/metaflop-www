@@ -2,7 +2,7 @@ $font_size: 15px;
 $input_height: 14px;
 $input_color: #ccc9bc;
 $active_color: #60eb00;
-$active_link_color: darken($active_color, 30%);
+$active_link_color: #ff0000;
 $text_link_color: darken($input_color, 25%);
 
 $content_width: 1000px;
@@ -317,8 +317,6 @@ a.action-icon {
 
 .beta {
     @include box-heading;
-
-    color: #fff;
 }
 
 #info-panel {

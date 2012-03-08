@@ -137,6 +137,11 @@ class Metaflop
             return - @font_parameters.absolute_value(:overshoot) * factor
         end
 
+        if glyph_category == :mean
+            return (@font_parameters.absolute_value(:cap_height) -
+                    @font_parameters.absolute_value(:mean_height)) * factor
+        end
+
         if glyph_category == :meano
             return (-@font_parameters.absolute_value(:overshoot) +
                     @font_parameters.absolute_value(:cap_height) -
@@ -154,6 +159,6 @@ class Metaflop
                     @font_parameters.absolute_value(:ascender_height)) * factor
         end
 
-        0
+        raise ArgumentError, "glyph_category '#{glyph_category}' is invalid."
     end
 end

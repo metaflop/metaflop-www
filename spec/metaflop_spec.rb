@@ -13,6 +13,7 @@ describe Metaflop do
         [
             { :category => :cap, :value => 0 },
             { :category => :capo, :value => -2.0 },
+            { :category => :mean, :value => 4.0 },
             { :category => :meano, :value => 2.0 },
             { :category => :asco, :value => 2.0 },
             { :category => :asc, :value => 4.0 }
@@ -24,6 +25,12 @@ describe Metaflop do
                 mf.settings = { :preview_height => 1, :glyph_categories => { 0 => x[:category] } }
                 mf.preview_y_offset.should == x[:value]
             end
+        end
+
+        it 'raises an exception on non existing category' do
+            mf = Metaflop.new
+            mf.settings = { :preview_height => 1, :glyph_categories => { 0 => :asdf } }
+            expect {mf.preview_y_offset}.to raise_error(ArgumentError)
         end
     end
 end

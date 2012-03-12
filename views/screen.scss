@@ -55,6 +55,10 @@ body {
     background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
 }
 
+image {
+    border: 0;
+}
+
 input {
     border: 1px solid $input_color;
     font-family: helvetica, sans-serif;

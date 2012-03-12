@@ -338,7 +338,6 @@ $(function () {
 
             return true;
         }
-        $('#action-share-url').addClass('active');
         return false;
     };
 
@@ -349,6 +348,7 @@ $(function () {
         // don't show if the share buttons were already visible
         var shown = hideSharePanel();
         if (!shown) {
+            $('#action-share-url').addClass('active');
             var spinner = getSpinnerForActionLink($this.find('span'));
 
             var success = function(data) {

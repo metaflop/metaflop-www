@@ -15,7 +15,6 @@ class App
                     {
                         :title => "Dimension",
                         :items => [
-                            { :title => 'box height', :key => :box_height, :html => '<div class="static-value">100%</div>' },
                             { :title => 'unit width', :key => :unit_width },
                             { :title => 'overshoot', :key => :overshoot },
                             { :title => 'pen size', :key => :pen_size }

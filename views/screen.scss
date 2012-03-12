@@ -227,7 +227,7 @@ a.action-icon {
 
     .static-value {
         float: right;
-        width: 30%;
+        width: 45%;
     }
 }
 
@@ -282,17 +282,9 @@ a.action-icon {
     .box-content {
         height: inherit;
 
-        .static-value {
-            width: 45%;
-        }
-
         label {
             width: 50%;
             overflow: hidden;
-        }
-
-        .dropdown-list {
-            margin-left: 55%;
         }
     }
 
@@ -405,16 +397,6 @@ a.action-icon {
                 }
             }
         }
-    }
-
-    .static-value {
-        font-size: 12px;
-        line-height: 21px;
-    }
-
-    .dropdown-value {
-        font-size: $font_size;
-        line-height: 24px;
     }
 
     .parameter-panel-mode-toggle {
@@ -643,6 +625,8 @@ a.char-chooser {
 
 .dropdown-value {
     cursor: pointer;
+    font-size: $font_size;
+    line-height: 24px;
     background: url(/img/arrows.png) no-repeat right -120px transparent;
 
     &.active {
@@ -653,7 +637,7 @@ a.char-chooser {
 .dropdown-list {
     display: none;
     clear: both;
-    margin-left: 70%;
+    margin-left: 55%;
 
     li.active {
         display: none;

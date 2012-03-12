@@ -4,7 +4,7 @@ metaflop:
     preview_single:
         generate: gftodvi font.2602gf
         convert_svg: -density 60
-        convert_gif: -chop 0x15 -extent 'x{{height}}' -bordercolor white -border 0x{{preview_y_offset}}
+        convert_gif: -chop 0x15 -extent 'x{{height}}' -bordercolor white -border 0x{{border_y_offset}} -gravity north -crop 'x{{height}}+0+{{crop_y_offset}}' +repage -flatten
 
     preview_chart:
         generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"

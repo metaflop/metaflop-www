@@ -40,11 +40,14 @@ class Metaflop
 
     # returns an gif image for a single character preview
     def preview_single
+        offset = preview_y_offset
         generate(
             generate: "#{settings[:preview_single]['generate']}",
             convert_svg: "#{settings[:preview_single]['convert_svg']}",
             convert_gif: Mustache.render(settings[:preview_single]['convert_gif'],
-                         { :height => settings[:preview_height], :preview_y_offset => preview_y_offset })
+                         { :height => settings[:preview_height],
+                           :border_y_offset => offset.abs,
+                           :crop_y_offset => offset < 0 ? offset.abs * 2 : 0 })
         )
     end
 
@@ -128,7 +131,6 @@ class Metaflop
         glyph_category = settings[:glyph_categories][@font_settings.char_number.to_i - 1]
         factor = settings[:preview_height].to_f /
                  font_parameters.box_height.value.to_f # call method -> need box_height from file
-
         if glyph_category == :cap
             return 0
         end

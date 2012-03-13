@@ -69,20 +69,20 @@ class App < Sinatra::Application
     end
 
 
-    get '/' do
+    get '/generator' do
         mf = mf_instance_from_request
         @font_parameters = mf.font_parameters
         @active_fontface = mf.font_settings.fontface
 
-        mustache :index
+        mustache :generator
     end
 
     # creates a shortened url for the current params (i.e. font setting)
-    get '/font/create' do
+    get '/generator/font/create' do
         Url.create(:params => params)[:short]
     end
 
-    get '/font/:url' do |url|
+    get '/generator/font/:url' do |url|
         url = Url.first(:short => url)
 
         if url.nil?
@@ -93,7 +93,7 @@ class App < Sinatra::Application
         @font_parameters = mf.font_parameters
         @active_fontface = mf.font_settings.fontface
 
-        mustache :index
+        mustache :generator
     end
 
     get '/assets/css/:name.scss' do |name|
@@ -101,7 +101,7 @@ class App < Sinatra::Application
         scss name.to_sym, :layout => false
     end
 
-    get '/preview/:type' do |type|
+    get '/generator/preview/:type' do |type|
         mf = mf_instance_from_request
         method = "preview_#{type}"
         if mf.respond_to? method
@@ -112,7 +112,7 @@ class App < Sinatra::Application
         end
     end
 
-    get '/export/font/:type/:face/:hash' do |type, face, hash|
+    get '/generator/export/font/:type/:face/:hash' do |type, face, hash|
         mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
         mf.settings = settings.metaflop
         mf.logger = logger

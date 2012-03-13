@@ -8,7 +8,7 @@
 
 class App
     module Views
-        class Index < Layout
+        class Generator < Layout
 
             def parameters
                 groups = [

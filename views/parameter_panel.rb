@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-require './views/index.rb'
+require './views/generator.rb'
 
 class App
     module Views

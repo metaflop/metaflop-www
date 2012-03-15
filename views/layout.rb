@@ -12,6 +12,14 @@ class App
             def title
                 @title || "metaflop"
             end
+
+            def main_navigation
+               @main_navigation 
+            end
+
+            def meta_navigation
+               @meta_navigation 
+            end
         end
     end
 end

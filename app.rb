@@ -10,6 +10,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/config_file'
+require 'sinatra/simple-navigation'
 require 'sass'
 require 'mustache/sinatra'
 require 'time'
@@ -22,6 +23,8 @@ class App < Sinatra::Application
     configure do
         register Sinatra::ConfigFile
         config_file ['./config.yml', './db.yml']
+
+        register Sinatra::SimpleNavigation
 
         # setup the tmp dir where the generated fonts go
         tmp_dir = "/tmp/metaflop"
@@ -68,6 +71,14 @@ class App < Sinatra::Application
         $stdout.reopen(logger)
     end
 
+    before do
+        @main_navigation = render_navigation :context => :main
+        @meta_navigation = render_navigation :context => :meta
+    end
+
+    get '/' do
+        mustache :news
+    end
 
     get '/generator' do
         mf = mf_instance_from_request
@@ -132,7 +143,7 @@ class App < Sinatra::Application
             @active_fontface = mf.font_settings.fontface
         end
 
-        mustache page.to_sym, :layout => false
+        mustache page.to_sym
     end
 
     def out_dir

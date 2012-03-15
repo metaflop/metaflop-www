@@ -552,28 +552,6 @@ $(function () {
         $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
     });
 
-    // fancybox links
-    $('.popup').fancybox({
-        'titleShow' : false,
-        'width' : 1000,
-        'height' : 650,
-        'autoDimensions' : false,
-        'showNavArrows' : false,
-        'transitionIn' : 'face',
-        'transitionOut' : 'fade',
-        'easingIn' : 'easeOutBack',
-        'easingOut' : 'easeInBack',
-        'onComplete' : function() {
-            $('.popup-back').click(function(e) {
-                e.preventDefault();
-
-                $.fancybox.prev();
-
-                return false;
-            });
-        }
-    });
-
     // load the first image
     previewImage();
 });

@@ -3,6 +3,7 @@ $input_height: 14px;
 $input_color: #ccc9bc;
 $active_color: #60eb00;
 $active_link_color: #ff0000;
+$inactive_link_color: lighten(#000, 80%);
 $text_link_color: darken($input_color, 25%);
 
 $content_width: 1000px;
@@ -242,6 +243,45 @@ a.action-icon {
     padding: 0 10px 0 10px;
 }
 
+#navigation {
+    background: #fff;
+    @include box-heading;
+    display: block;
+    overflow: hidden;
+
+    ul {
+        float: left;
+
+        &.main {
+            width: 75%;
+
+            li {
+                padding-right: 5px;
+            }
+        }
+        &.meta {
+            width: 25%;
+            text-align: right;
+
+            li {
+                padding-left: 5px;
+            }
+        }
+    }
+    
+    li {
+        display: inline;
+
+        a {
+            color: $inactive_link_color;
+
+            &.selected { 
+                color: #000;
+            }
+        }
+    }
+}
+
 .arrow-up {
     width: 0;
     height: 0;
@@ -289,7 +329,7 @@ a.action-icon {
     }
 
     .action.exclusive {
-        color: lighten(#000, 80%);
+        color: $inactive_link_color;
 
         &:hover {
             color: $active_link_color;
@@ -576,45 +616,6 @@ a.char-chooser {
     display: none;
 }
 
-#footer-push {
-    height: 25px;
-    clear: both;
-}
-
-#footer {
-    overflow: hidden;
-    height: $footer_height;
-    clear: both;
-    text-align: right;
-    position: relative;
-    margin: 0 auto;
-    width: $content_width;
-
-    a {
-        text-decoration: underline;
-        color: $input_color;
-
-        &.link {
-            text-decoration: none;
-        }
-
-        &:hover {
-            color: $active_link_color;
-        }
-    }
-
-    ul {
-        float: right;
-        li {
-            display: inline;
-
-            a {
-                margin-left: 10px;
-            }
-        }
-    }
-}
-
 #menu #action-share-url {
     width: 100%;
 
@@ -720,38 +721,3 @@ a.char-chooser {
   .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
   .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
 
-/* fancybox */
-.MyTagStyle
-{
-    max-height:600px;
-    max-width:940px;
-    overflow:auto;
-}
-
-#fancybox-content {
-    h2 {
-        background: none;
-        padding-left: 0;
-        margin: 0 0 16px 0;
-    }
-
-    h3 {
-        clear: both; // clear h2 float
-        font-size: $font_size;
-        padding: 0;
-        margin: 0 0 5px 0;
-    }
-
-    p {
-        clear: both; // clear h2 float
-        margin: 0 0 10px 0;
-    }
-
-    a {
-        color: $text_link_color;
-
-        &:hover {
-            color: $active_link_color;
-        }
-    }
-}

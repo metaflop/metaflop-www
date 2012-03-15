@@ -1,0 +1,21 @@
+@mixin col {
+    float: left;
+    overflow: hidden;
+    padding-top: 30px;
+}
+
+@mixin header-row {
+    margin-bottom: $box_spacing_y;
+}
+
+@mixin box-shadow {
+    box-shadow: 2px 3px 3px $input_color;
+}
+
+@mixin box-heading {
+    font-size: $font_size;
+    line-height: $font_size;
+    margin: 0;
+    padding: 5px 8px 4px 7px;
+    display: inline-block;
+}

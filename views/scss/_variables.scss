@@ -1,0 +1,23 @@
+$font_size: 15px;
+$input_height: 14px;
+$input_color: #ccc9bc;
+$active_color: #60eb00;
+$active_link_color: #ff0000;
+$inactive_link_color: lighten(#000, 80%);
+$text_link_color: darken($input_color, 25%);
+
+$content_width: 1000px;
+$right_column_width: 710px;
+$border_width: 3px;
+$box_spacing_y: 7px;
+
+$box_spacing_x: 27px;
+$preview_box_width: ($right_column_width - $box_spacing_x) / 2;
+$preview_box_width_full: $right_column_width;
+$preview_box_height: 340px;
+$preview_box_content_width: $preview_box_width - 2 * $border_width;
+$preview_box_content_width_full: $preview_box_width_full - 2 * $border_width;
+
+$left_column_width: $content_width - $right_column_width - $box_spacing_x;
+
+$footer_height: 25px;

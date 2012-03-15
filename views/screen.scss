@@ -1,48 +1,5 @@
-$font_size: 15px;
-$input_height: 14px;
-$input_color: #ccc9bc;
-$active_color: #60eb00;
-$active_link_color: #ff0000;
-$inactive_link_color: lighten(#000, 80%);
-$text_link_color: darken($input_color, 25%);
-
-$content_width: 1000px;
-$right_column_width: 710px;
-$border_width: 3px;
-$box_spacing_y: 7px;
-
-$box_spacing_x: 27px;
-$preview_box_width: ($right_column_width - $box_spacing_x) / 2;
-$preview_box_width_full: $right_column_width;
-$preview_box_height: 340px;
-$preview_box_content_width: $preview_box_width - 2 * $border_width;
-$preview_box_content_width_full: $preview_box_width_full - 2 * $border_width;
-
-$left_column_width: $content_width - $right_column_width - $box_spacing_x;
-
-$footer_height: 25px;
-
-@mixin col {
-    float: left;
-    overflow: hidden;
-    padding-top: 30px;
-}
-
-@mixin header-row {
-    margin-bottom: $box_spacing_y;
-}
-
-@mixin box-shadow {
-    box-shadow: 2px 3px 3px $input_color;
-}
-
-@mixin box-heading {
-    font-size: $font_size;
-    line-height: $font_size;
-    margin: 0;
-    padding: 5px 8px 4px 7px;
-    display: inline-block;
-}
+@import 'scss/variables';
+@import 'scss/mixins';
 
 html, body {
     height: 100%;
@@ -649,75 +606,6 @@ a.char-chooser {
     }
 }
 
-/* slider */
-.fd-form-element-hidden {
-    display: none;
-}
+@import 'scss/slider.scss';
 
-.fd-slider {
-    width: 100%;
-    height: 24px;
-    display: block;
-    position: relative;
-
-    &.fd-slider-hover {
-        .fd-slider-handle {
-            background: $active-color;
-        }
-    }
-
-    span {
-        position: absolute;
-    }
-
-    .fd-slider-handle {
-        width: 7px;
-        height: 15px;
-        background: #eee;
-        border: 1px solid $input_color;
-        top: 4px;
-        z-index: 2;
-    }
-
-    .fd-slider-bar {
-        height: 1px;
-        width: 100%;
-        background: #aaa;
-        top: 50%;
-    }
-
-    .fd-slider-range {
-        height: 1px;
-        top: 50%;
-        background: #333;
-        z-index: 1;
-    }
-}
-
-/* tipsy: standard */
-.tipsy { font-size: 12px; position: absolute; padding: 5px; z-index: 100000; }
-  .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
-
-  /* Rounded corners */
-  .tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-
-  /* Uncomment for shadow */
-  /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
-
-  .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
-
-  /* Rules to colour arrows */
-  .tipsy-arrow-n { border-bottom-color: #000; }
-  .tipsy-arrow-s { border-top-color: #000; }
-  .tipsy-arrow-e { border-left-color: #000; }
-  .tipsy-arrow-w { border-right-color: #000; }
-
-	.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
-    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
-    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
-  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
-    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
-    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
-  .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
-  .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
-
+@import 'scss/tipsy.scss';

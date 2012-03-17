@@ -10,6 +10,10 @@ class App
     module Views
         class Generator < Layout
 
+            def js
+                ['/js/generator.js']
+            end
+
             def parameters
                 groups = [
                     {

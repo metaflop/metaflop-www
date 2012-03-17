@@ -13,6 +13,14 @@ class App
                 @title || "metaflop"
             end
 
+            def css
+                []
+            end
+
+            def js
+                []
+            end
+
             def main_navigation
                @main_navigation 
             end

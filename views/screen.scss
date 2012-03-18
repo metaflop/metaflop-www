@@ -260,6 +260,17 @@ a.action-icon {
     background: $input_color;
 }
 
+#fullcontent {
+    @include col;
+
+    width: $content_width; 
+
+    .box-content {
+        border: $border_width solid $active-color;
+    }
+}
+
+
 #col1 {
     @include col;
 

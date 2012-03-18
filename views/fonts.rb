@@ -6,12 +6,9 @@
 # licensed under gpl v3
 #
 
-require './lib/showoff_page'
-
 class App
     module Views
-        class Projects < Layout
-            include ShowoffPage
+        class Fonts < Layout
         end
     end
 end

@@ -2,18 +2,17 @@
     <div id="menu">
         <h2>Projects</h2>
         <div class="box-content">
+            {{#all}}
             <div class="clearfix inputblock">
-                <label><a href="#" class="dynamic-menu action exclusive active">vetter</a></label>
+                <label><a href="/projects/{{title}}.json" class="dynamic-menu action exclusive{{#active}} active{{/active}}">{{title}}</a></label>
             </div>
-            <div class="clearfix inputblock">
-                <label><a href="#" class="dynamic-menu action exclusive">gruppe</a></label>
-            </div>
+            {{/all}}
         </div>
     </div>
     <div id="parameter-panel">
         <h2>Info</h2>
         <div class="box-content">
-            asdf
+            {{first.description}}
         </div>
     </div>
 </div>
@@ -24,8 +23,9 @@
         <div class="preview-box-content">
             <div id="slideshow">
                 <ul class="bjqs">
-                    <li>asdf</li>
-                    <li>asdfasdfasdf asdf asdf</li>
+                    {{#first.images}}
+                    <li><img src="{{.}}" /></li>
+                    {{/first.images}}
                 </ul>
             </div>
         </div>

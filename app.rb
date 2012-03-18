@@ -15,6 +15,7 @@ require 'sass'
 require 'mustache/sinatra'
 require 'time'
 require 'data_mapper' # metagem, requires common plugins too.
+require 'json'
 require './lib/metaflop'
 require './lib/url'
 
@@ -136,13 +137,31 @@ class App < Sinatra::Application
         end
     end
 
+    get '/:page/:name.json' do |page, name|
+        content_type :json
+
+        require "./views/#{page}"
+        instance = Views::const_get(page.capitalize).new
+        instance.settings = settings.projects
+        data = instance.single name
+
+        if data.nil?
+            [404, { 'Content-Type' => 'text/html' }, "the specified name does not exist"]
+        else
+            data.to_json
+        end
+    end
+
     get '/:page' do |page|
         if (page == 'parameter_panel')
             mf = mf_instance_from_request
             @font_parameters = mf.font_parameters
             @active_fontface = mf.font_settings.fontface
         end
-
+ 
+        if settings.respond_to? page
+            @settings = settings.method(page).call
+        end
         mustache page.to_sym
     end
 

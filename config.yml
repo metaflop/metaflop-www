@@ -71,3 +71,12 @@ metaflop:
         - !ruby/symbol mean # x
         - !ruby/symbol mean # y
         - !ruby/symbol mean # z
+
+projects:
+    vetter: 
+        description: vetter asdf
+        images: [/img/error.png, /img/icons.png]
+    gruppe: 
+        description: gruppe asdf
+        images: [/img/error.png, /img/icons.png]
+

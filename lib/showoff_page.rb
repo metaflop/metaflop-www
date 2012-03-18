@@ -19,6 +19,14 @@ module ShowoffPage
         ['/assets/css/basic-jquery-slider.scss']
     end
 
+    def page_title
+        self.class.name.split('::').last
+    end
+
+    def page_name
+        page_title.downcase
+    end
+
     def single(name)
         settings[name]
     end

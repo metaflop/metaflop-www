@@ -80,3 +80,11 @@ projects:
         description: gruppe asdf
         images: [/img/error.png, /img/icons.png]
 
+fonts:
+    bespoke: 
+        description: bespoke asdf
+        images: [/img/error.png, /img/icons.png]
+    adjuster: 
+        description: adjuster asdf
+        images: [/img/error.png, /img/icons.png]
+

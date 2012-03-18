@@ -120,7 +120,7 @@ class App < Sinatra::Application
             image = mf.method(method).call
             [image ? 200 : 404, { 'Content-Type' => 'image/gif' }, image]
         else
-            [404, { 'Content-Type' => 'text/html' }, "The preview type could not be found"]
+            not_found "The preview type could not be found"
         end
     end
 
@@ -133,23 +133,25 @@ class App < Sinatra::Application
             attachment "#{face}-#{hash}.otf"
             file = mf.method(method).call
         else
-            [404, { 'Content-Type' => 'text/html' }, "The font type is not supported"]
+            not_found "The font type is not supported"
         end
     end
 
     get '/:page/:name.json' do |page, name|
         content_type :json
 
+        not_found_message = 'the specified name does not exist'
+
         require "./views/#{page}"
         instance = Views::const_get(page.capitalize).new
-        instance.settings = settings.projects
-        data = instance.single name
 
-        if data.nil?
-            [404, { 'Content-Type' => 'text/html' }, "the specified name does not exist"]
-        else
-            data.to_json
-        end
+        not_found not_found_message unless settings.respond_to? page
+        instance.settings = settings.method(page).call
+
+        data = instance.single name
+        not_found not_found_message if data.nil?
+
+        data.to_json
     end
 
     get '/:page' do |page|

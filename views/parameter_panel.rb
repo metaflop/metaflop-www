@@ -10,7 +10,7 @@ require './views/generator.rb'
 
 class App
     module Views
-        class ParameterPanel < Index
+        class ParameterPanel < Generator
 
         end
     end

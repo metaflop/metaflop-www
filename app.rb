@@ -154,13 +154,16 @@ class App < Sinatra::Application
         data.to_json
     end
 
-    get '/:page' do |page|
+    get '/:page/partial' do |page|
         if (page == 'parameter_panel')
             mf = mf_instance_from_request
             @font_parameters = mf.font_parameters
             @active_fontface = mf.font_settings.fontface
         end
- 
+        mustache page.to_sym, :layout => false
+    end
+
+    get '/:page' do |page|
         if settings.respond_to? page
             @settings = settings.method(page).call
         end

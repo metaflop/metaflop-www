@@ -275,7 +275,7 @@ $(function () {
         $.fn.metaflop.parameterPanel.spin('large');
 
         $.ajax({
-            url: '/parameter_panel' + createQueryString(),
+            url: '/parameter_panel/partial' + createQueryString(),
             success: function(data) {
                 $('#parameter-panel').html(data);
                 initSliders();

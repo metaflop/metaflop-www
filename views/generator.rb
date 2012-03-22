@@ -10,6 +10,8 @@ class App
     module Views
         class Generator < Layout
 
+            attr_accessor :chars
+
             def js
                 ['/js/generator.js']
             end
@@ -72,16 +74,14 @@ class App
             end
 
             # single preview char chooser
+            # [{ :items => [] }, { :items => [] } ]
             def char_sets
                 number = 0
-                [
-                    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-                    ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-                ].map do |set|
+                [:uc, :lc, :num, :punct].map{ |type| @chars[type] }.delete_if(&:empty?).map do |set|
                     {
                         :items => set.map do |item|
                             number = number + 1
-                            { :title => item, :number => number }
+                            { :title => item, :number => number, :active => number == 1 }
                         end
                     }
                 end

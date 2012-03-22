@@ -275,15 +275,21 @@ $(function () {
         $.fn.metaflop.parameterPanel.spin('large');
 
         $.ajax({
-            url: '/parameter_panel/partial' + createQueryString(),
+            url: '/char_chooser/partial' + createQueryString(),
             success: function(data) {
-                $('#parameter-panel').html(data);
-                initSliders();
-                initParameterDropdowns();
-                previewImage();
+                $('#preview-single').find('div.char-chooser').html(data);
+                $.ajax({
+                    url: '/parameter_panel/partial' + createQueryString(),
+                    success: function(data) {
+                        $('#parameter-panel').html(data);
+                        initSliders();
+                        initParameterDropdowns();
+                        previewImage();
 
-                $.fn.metaflop.parameterPanel.fadeTo(0, 1);
-                $.fn.metaflop.parameterPanel(false);
+                        $.fn.metaflop.parameterPanel.fadeTo(0, 1);
+                        $.fn.metaflop.parameterPanel(false);
+                    }
+                });
             }
         });
     }});
@@ -448,8 +454,8 @@ $(function () {
     initSliders();
 
     // character chooser for single preview
-    var charLinks = $('div.char-chooser a');
-    charLinks.click(function(e) {
+    var charChooser = $('div.char-chooser');
+    charChooser.on('click', 'a', function(e) {
         e.preventDefault();
 
         var box = $(this).parents('.preview-box');
@@ -457,13 +463,12 @@ $(function () {
             $('.preview-box.active').removeClass('active').find('textarea').hide();
             box.addClass('active');
         }
-        charLinks.removeClass('active');
+        charChooser.find('a').removeClass('active');
         $(this).addClass('active').blur();
         previewImage();
 
         return false;
     });
-    charLinks.first().addClass('active');
 
     $('a.char-chooser').click(function(e) {
         e.preventDefault();

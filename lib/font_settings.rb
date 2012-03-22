@@ -48,4 +48,14 @@ class FontSettings
         FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
     end
 
+    def chars
+        chars = Hash.new{ |h, k| h[k.to_sym] = []}
+        tuples = Dir["mf/metaflop-font-#{@fontface.downcase}/glyphs/**/*.mf"].map do |x|
+            parts = x.split '/'
+            [ parts[-2], parts.last.gsub(/(_lc)|(.mf)/,'') ]
+        end.sort
+        tuples.each { |x| chars[x[0].to_sym] << x[1] }
+        chars
+    end
+
 end

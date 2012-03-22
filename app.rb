@@ -85,6 +85,7 @@ class App < Sinatra::Application
         mf = mf_instance_from_request
         @font_parameters = mf.font_parameters
         @active_fontface = mf.font_settings.fontface
+        @chars = mf.font_settings.chars
 
         mustache :generator
     end
@@ -155,11 +156,11 @@ class App < Sinatra::Application
     end
 
     get '/:page/partial' do |page|
-        if (page == 'parameter_panel')
-            mf = mf_instance_from_request
-            @font_parameters = mf.font_parameters
-            @active_fontface = mf.font_settings.fontface
-        end
+        mf = mf_instance_from_request
+        @font_parameters = mf.font_parameters
+        @active_fontface = mf.font_settings.fontface
+        @chars = mf.font_settings.chars
+
         mustache page.to_sym, :layout => false
     end
 
@@ -167,6 +168,7 @@ class App < Sinatra::Application
         if settings.respond_to? page
             @settings = settings.method(page).call
         end
+
         mustache page.to_sym
     end
 

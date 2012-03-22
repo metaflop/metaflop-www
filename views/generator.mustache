@@ -77,13 +77,7 @@
                 <img src="/img/blank.png" class="preview-image" style="display: none;" />
                 <a href="#" class="char-chooser left">&lt;</a>
                 <div class="char-chooser">
-                    <ul>
-                        {{#char_sets}}
-                        <li class="active">
-                            {{#items}}<a href="#{{number}}">{{title}}</a>{{/items}}
-                        </li>
-                        {{/char_sets}}
-                    </ul>
+                    {{> char_chooser}}
                 </div>
                 <a href="#" class="char-chooser right">&gt;</a>
             </div>

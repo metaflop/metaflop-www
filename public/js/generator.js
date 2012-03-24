@@ -147,12 +147,6 @@ $(function () {
             if (error) {
                 preloadImage.attr('src', '/img/error.png');
                 preloadImage.addClass('error');
-
-                content.tipsy({
-                    trigger: 'manual',
-                    fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.',
-                    gravity: 's'
-                }).tipsy('show');
             }
             else {
                 preloadImage.removeClass('error');
@@ -165,6 +159,14 @@ $(function () {
             content.find('textarea').hide();
             image.hide();
             preloadImage.show();
+
+            if (error) {
+                preloadImage.tipsy({
+                    trigger: 'manual',
+                    fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.',
+                    gravity: 's'
+                }).tipsy('show');
+            }
 
             $.fn.metaflop.preloadImageInProgress = false;
 
@@ -184,7 +186,7 @@ $(function () {
             stopRequest();
         }
         else {
-            content.tipsy('hide');
+            image.tipsy('hide');
             content.fadeTo(0, 0.5);
             loadingText.show();
             loading.spin('large');

@@ -14,7 +14,8 @@ $(function () {
             height: 340,
             nextText: '',
             prevText: '',
-            rotationSpeed: 7000
+            rotationSpeed: 7000,
+            showControls: false
         });
     };
 

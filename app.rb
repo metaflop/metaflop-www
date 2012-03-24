@@ -110,6 +110,7 @@ class App < Sinatra::Application
     end
 
     get '/assets/css/:name.scss' do |name|
+        require './views/scss/bourbon/lib/bourbon.rb'
         content_type :css
         scss name.to_sym, :layout => false
     end

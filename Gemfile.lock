@@ -11,6 +11,8 @@ GEM
     autotest-growl (0.2.16)
     backports (2.3.0)
     bcrypt-ruby (3.0.1)
+    bourbon (1.4.0)
+      sass (>= 3.1)
     data_mapper (1.2.0)
       dm-aggregates (~> 1.2.0)
       dm-constraints (~> 1.2.0)
@@ -110,6 +112,7 @@ DEPENDENCIES
   ZenTest
   autotest-fsevent
   autotest-growl
+  bourbon
   data_mapper
   dm-mysql-adapter
   json

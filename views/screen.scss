@@ -1,3 +1,4 @@
+@import 'scss/bourbon/bourbon';
 @import 'scss/variables';
 @import 'scss/mixins';
 
@@ -61,6 +62,7 @@ h1 {
 
 h2 {
     @include box-heading;
+    @include box-shadow(1px 0px 4px #CCC);
 
     font-weight: bold;
     background: $active_color;
@@ -182,9 +184,9 @@ a.action-icon {
 }
 
 .box-content {
-    clear: both; // clear h2 float
+    @include box;
+
     padding: 2px 7px;
-    background: #fff;
 
     .static-value {
         float: right;
@@ -204,7 +206,7 @@ a.action-icon {
 }
 
 #navigation {
-    background: #fff;
+    @include box;
     @include box-heading;
     margin: 13px 0 27px;
     display: block;
@@ -434,7 +436,8 @@ a.action-icon {
     }
 
     .preview-box-content {
-        clear: both; // clear h2 float
+        @include box;
+
         margin-top: $border_width * -1; // correct the border width, such that h2 corresponds to parameters h2
         border: $border_width solid #fff;
         width: $preview_box_content_width;
@@ -444,7 +447,6 @@ a.action-icon {
         position: relative;
         line-height: $preview_box_height;
         font-size: 9px;
-        background: #fff;
 
         * {
             line-height: 11px;

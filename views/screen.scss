@@ -52,8 +52,11 @@ textarea {
 }
 
 h1 {
-    position: absolute;
-    left: -9999px;
+    font-size: $font_size;
+    color: $active_color;
+    margin: 0 5px 0 0;
+    padding: 0;
+    float: left;
 }
 
 h2 {
@@ -203,6 +206,7 @@ a.action-icon {
 #navigation {
     background: #fff;
     @include box-heading;
+    margin: 13px 0 27px;
     display: block;
     overflow: hidden;
 
@@ -210,14 +214,14 @@ a.action-icon {
         float: left;
 
         &.main {
-            width: 75%;
+            margin: 0 0 0 180px;
 
             li {
                 padding-right: 5px;
             }
         }
         &.meta {
-            width: 25%;
+            float: right;
             text-align: right;
 
             li {
@@ -320,7 +324,7 @@ a.action-icon {
 }
 
 .beta {
-    @include box-heading;
+    float: left;
 }
 
 #info-panel {

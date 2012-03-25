@@ -23,7 +23,8 @@ class App
                         :items => [
                             { :title => 'unit width', :key => :unit_width },
                             { :title => 'overshoot', :key => :overshoot },
-                            { :title => 'pen size', :key => :pen_size }
+                            { :title => 'pen width', :key => :pen_width },
+                            { :title => 'pen height', :key => :pen_height }
                         ]
                     },
                     {

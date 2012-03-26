@@ -279,8 +279,9 @@ a.action-icon {
 }
 
 #fullcontent {
-    width: $content_width; 
-    margin: 0 0 $box_spacing_y 0;
+    a {
+        color: $inactive_link_color;
+    }
 }
 
 

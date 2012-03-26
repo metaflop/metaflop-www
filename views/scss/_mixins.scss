@@ -1,22 +1,9 @@
 @mixin box {
-    @include box-shadow(1px 1px 4px #CCC);
+    @include box-shadow(2px 2px 2px #ccc);
     clear: both; // clear h2 float
     background: #fff;
 }
 
-@mixin col {
-    float: left;
-    overflow: hidden;
-}
-
 @mixin header-row {
     margin-bottom: $box_spacing_y;
-}
-
-@mixin box-heading {
-    font-size: $font_size;
-    line-height: $font_size;
-    margin: 0;
-    padding: 5px 8px 4px 7px;
-    display: inline-block;
 }

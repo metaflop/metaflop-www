@@ -228,10 +228,10 @@ a.action-icon {
         float: left;
 
         &.main {
-            margin: 0 0 0 180px;
+            margin: 0 0 0 31px;
 
             li {
-                padding-right: 5px;
+                padding-right: 10px;
             }
         }
         &.meta {
@@ -239,7 +239,7 @@ a.action-icon {
             text-align: right;
 
             li {
-                padding-left: 5px;
+                padding-left: 10px;
             }
         }
     }
@@ -252,6 +252,10 @@ a.action-icon {
 
             &.selected { 
                 color: #000;
+            }
+
+            &:hover {
+                color: $active_link_color;
             }
         }
     }

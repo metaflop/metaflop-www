@@ -6,6 +6,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    text-transform: lowercase;
 }
 
 body {
@@ -279,10 +280,7 @@ a.action-icon {
 
 #fullcontent {
     width: $content_width; 
-
-    .box-content {
-        border: $border_width solid $active-color;
-    }
+    margin: 0 0 $box_spacing_y 0;
 }
 
 

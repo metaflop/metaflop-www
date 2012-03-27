@@ -8,12 +8,12 @@
 
 class App
     module Views
-        class Generator < Layout
+        class Modulator < Layout
 
             attr_accessor :chars
 
             def js
-                ['/js/generator.js']
+                ['/js/modulator.js']
             end
 
             def parameters

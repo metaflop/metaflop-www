@@ -6,11 +6,11 @@
 # licensed under gpl v3
 #
 
-require './views/generator.rb'
+require './views/modulator.rb'
 
 class App
     module Views
-        class CharChooser < Generator
+        class CharChooser < Modulator
 
         end
     end

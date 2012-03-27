@@ -3,7 +3,7 @@ SimpleNavigation::Configuration.run do |navigation|
         primary.item :news, 'News', '/', :highlights_on => /\/$/
         primary.item :projects, 'Projects', '/projects'
         primary.item :fonts, 'Fonts', '/fonts'
-        primary.item :generator, 'Generator', '/generator'
+        primary.item :modulator, 'Modulator', '/modulator'
 
         primary.dom_class = 'main'
     end

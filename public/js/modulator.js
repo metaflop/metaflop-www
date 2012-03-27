@@ -92,7 +92,7 @@ $(function () {
         }
         else {
             $.ajax({
-                url: '/generator/font/create' + $.fn.metaflop.queryString,
+                url: '/modulator/font/create' + $.fn.metaflop.queryString,
                 success: function(data) {
                     $.fn.metaflop.shortendedUrl = data;
                     success(data);
@@ -138,7 +138,7 @@ $(function () {
 
         var queryString = createQueryString();
 
-        var url = '/generator/preview/' + previewType + queryString;
+        var url = '/modulator/preview/' + previewType + queryString;
 
         var done = function(error) {
             preloadImage.unbind('load');
@@ -360,7 +360,7 @@ $(function () {
             var spinner = getSpinnerForActionLink($this.find('span'));
 
             var success = function(data) {
-                var url = "http://www.metaflop.com/generator/font/" + data;
+                var url = "http://www.metaflop.com/modulator/font/" + data;
                 var text = 'I created a nice metaflop font! ' + url;
 
                 var content = $.mustache($('#collapsibleShare').html(), { url: url, text: text });
@@ -390,7 +390,7 @@ $(function () {
         };
 
         callWithFontHash(complete, function(data) {
-            window.location = "/generator/export/font/otf/" + $('#param-fontface').val() + "/" + data;
+            window.location = "/modulator/export/font/otf/" + $('#param-fontface').val() + "/" + data;
         });
 
         return false;

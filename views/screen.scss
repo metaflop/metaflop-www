@@ -71,7 +71,7 @@ h2 {
         @include box-shadow(2px 2px 2px #ccc);
         display: block;
         background: $active_color;
-        padding: $box-heading-padding;
+        padding: $box_heading_padding;
     }
 
     overflow: hidden;
@@ -217,8 +217,8 @@ a.action-icon {
 
 #navigation {
     @include box;
-    margin: 13px 0 27px;
-    padding: $box-heading-padding;
+    margin: ($box_spacing_x / 2) 0 $box_spacing_x;
+    padding: $box_heading_padding;
     font-size: $font_size;
     line-height: $font_size;
     display: block;

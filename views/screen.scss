@@ -13,10 +13,20 @@ body {
     font-family: helvetica, sans-serif;
     font-size: $font_size;
     background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
+    line-height: 1.5;
 }
 
 image {
     border: 0;
+}
+
+p {
+    margin: 0 0 ($box_spacing_x / 2) 0;
+}
+
+h3 {
+    margin: 0;
+    font-size: $font_size;
 }
 
 input {
@@ -125,7 +135,6 @@ ul {
 label {
     float: left;
     width: 55%;
-    line-height: 24px;
 }
 
 a, span.action {
@@ -283,6 +292,11 @@ a.action-icon {
 }
 
 #fullcontent {
+
+    .box-content {
+        padding-top: $box_spacing_x / 2;
+    }
+
     a {
         color: $inactive_link_color;
     }

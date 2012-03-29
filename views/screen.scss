@@ -65,7 +65,6 @@ textarea {
 
 h1 {
     font-size: $font_size;
-    color: $active_color;
     margin: 0 5px 0 0;
     padding: 0;
     float: left;
@@ -225,9 +224,7 @@ a.action-icon {
 }
 
 #navigation {
-    @include box;
     margin: ($box_spacing_x / 2) 0 $box_spacing_x;
-    padding: $box_heading_padding;
     font-size: $font_size;
     line-height: $font_size;
     display: block;
@@ -257,7 +254,8 @@ a.action-icon {
         display: inline;
 
         a {
-            color: $inactive_link_color;
+            color: #fff;
+            font-weight: bold;
 
             &.selected { 
                 color: #000;

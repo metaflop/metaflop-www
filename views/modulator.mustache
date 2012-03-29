@@ -1,11 +1,19 @@
 <div id="col1">
 
     <div id="menu">
-        <h2><span>Metaflop</span></h2>
+        <h2><span>Modulator</span></h2>
         <div class="box-content">
             <fieldset>
-                <legend>Modulator</legend>
-
+                <legend class="first">
+                    <div class="clearfix">
+                        <label>Font</label>
+                        <select id="param-fontface">
+                            {{#fontfaces}}
+                            <option value="{{name}}"{{#active}} selected="selected"{{/active}}>{{name}}</option>
+                            {{/fontfaces}}
+                        </select>
+                    </div>
+                </legend>
                 <div class="clearfix inputblock">
                     <label>anatomy</label>
                     <div class="static-value toggle-info-panel">
@@ -29,17 +37,6 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend class="first">
-                    <div class="clearfix">
-                        <label>Font</label>
-                        <select id="param-fontface">
-                            {{#fontfaces}}
-                            <option value="{{name}}"{{#active}} selected="selected"{{/active}}>{{name}}</option>
-                            {{/fontfaces}}
-                        </select>
-                    </div>
-                </legend>
-
                 <div class="clearfix inputblock">
                     <label id="action-share-url" class="dropdown-value"><span>share</span></label>
                 </div>

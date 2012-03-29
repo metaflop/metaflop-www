@@ -141,6 +141,14 @@ a, span.action {
     text-decoration: none;
     cursor: pointer;
 
+    &.active {
+        cursor: default;
+
+        &:hover {
+            color: #000;
+        }
+    }
+
     &:hover {
         color: $active_link_color;
     }
@@ -259,6 +267,11 @@ a.action-icon {
 
             &.selected { 
                 color: #000;
+                cursor: default;
+
+                &:hover {
+                    color: #000;
+                }
             }
 
             &:hover {
@@ -297,6 +310,10 @@ a.action-icon {
 
     a {
         color: $inactive_link_color;
+
+        &:hover {
+            color: $active_link_color;
+        }
     }
 }
 

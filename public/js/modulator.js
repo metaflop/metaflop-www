@@ -158,24 +158,25 @@ $(function () {
             loading.spin(false);
             content.find('textarea').hide();
             image.hide();
-            preloadImage.show();
+            preloadImage.show(0, function() {
+                if (error) {
+                    preloadImage.tipsy({
+                        offset: 8,
+                        trigger: 'manual',
+                        fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.',
+                        gravity: 's'
+                    }).tipsy('show');
+                }
 
-            if (error) {
-                preloadImage.tipsy({
-                    trigger: 'manual',
-                    fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.',
-                    gravity: 's'
-                }).tipsy('show');
-            }
+                $.fn.metaflop.preloadImageInProgress = false;
 
-            $.fn.metaflop.preloadImageInProgress = false;
-
-            if (!$.fn.metaflop.ready) {
-                // add tooltips to the sliders (only after the initial preview has been loaded,
-                // we don't want to show them prematurely)
-                $('.fd-slider-handle').tipsy({ title: 'aria-valuetext', gravity: 's' });
-                $.fn.metaflop.ready = true;
-            }
+                if (!$.fn.metaflop.ready) {
+                    // add tooltips to the sliders (only after the initial preview has been loaded,
+                    // we don't want to show them prematurely)
+                    $('.fd-slider-handle').tipsy({ title: 'aria-valuetext', gravity: 's' });
+                    $.fn.metaflop.ready = true;
+                }
+            });
         };
 
         // clear cached shortend url
@@ -555,8 +556,10 @@ $(function () {
     // toggle the information header
     var informationToggle = $('#menu').find('.toggle-info-panel .action');
     informationToggle.click(function() {
-        informationToggle.toggleClass('active');
-        $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
+        if (!$(this).is('.active')) { 
+            informationToggle.toggleClass('active');
+            $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
+        }
     });
 
     // load the first image

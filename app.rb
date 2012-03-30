@@ -110,6 +110,11 @@ class App < Sinatra::Application
         mustache :modulator
     end
 
+    # redirect for legacy short urls
+    get '/font/:url' do |url|
+        redirect to "/modulator/font/#{url}"
+    end
+
     get '/assets/css/:name.scss' do |name|
         require './views/scss/bourbon/lib/bourbon.rb'
         content_type :css

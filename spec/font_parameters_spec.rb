@@ -17,6 +17,20 @@ describe FontParameters do
         it 'param value passed initializes with passed value' do
             FontParameters.new(:unit_width => '1.0').unit_width.should == FontParameter.new('1.0')
         end
+
+        context 'with legacy params' do
+            it 'pen_size is stored in pen_width' do
+                FontParameters.new(:pen_size => '3.2').pen_width.should == FontParameter.new('3.2')
+            end
+
+            it 'pen_width is stored in pen_width' do
+                FontParameters.new(:pen_width => '3.2').pen_width.should == FontParameter.new('3.2')
+            end
+
+            it 'non legacy param unit_width is stored in unit_width' do
+                FontParameters.new(:unit_width => '3.2').unit_width.should == FontParameter.new('3.2')
+            end
+        end
     end
 
     context '#from_file' do
@@ -77,14 +91,14 @@ describe FontParameters do
     end
 
     context '#absolute_value' do
-        it 'param has super unit, get value itself' do
+        it 'param has not super unit, get value itself' do
             params = FontParameters.new
             params.box_height = FontParameter.new('1.0', '1.0', 'pt#')
             params.unit_width = FontParameter.new('2.0', '2.0', 'pt#')
             params.absolute_value(:unit_width).should == 2.0
         end
 
-        it 'param has not super unit, get value times super-unit value' do
+        it 'param has super unit, get value times super-unit value' do
             params = FontParameters.new
             params.box_height = FontParameter.new('1.5', '1.5', 'pt#')
             params.unit_width = FontParameter.new('2.0', '2.0', 'ht#')

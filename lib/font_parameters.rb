@@ -26,6 +26,7 @@ class FontParameters
         :vertical_increase,
         :apperture,
         :superness,
+        :pen_size, # legacy for pen_width
         :pen_width,
         :pen_height,
         :corner,
@@ -66,9 +67,13 @@ class FontParameters
     # initialize with optional options defined in VALID_OPTIONS_KEYS
     def initialize(args = {}, settings = FontSettings.new)
         @settings = settings
-
+ 
         VALID_PARAMETERS_KEYS.each do |key|
-            instance_variable_set("@#{key}".to_sym, FontParameter.new(args[key]))
+            instance_key = (key == :pen_size ? :pen_width : key);  # handle legacy param
+            instance_value = instance_param(instance_key.to_sym)
+            if instance_value.nil? || instance_value.value.nil? # don't overwrite if already set
+                instance_variable_set("@#{instance_key}".to_sym, FontParameter.new(args[key]))
+            end
         end
     end
 

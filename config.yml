@@ -74,17 +74,45 @@ metaflop:
 
 projects:
     vetter: 
-        description: vetter asdf
-        images: [/img/error.png, /img/icons.png]
+        description: vetter Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        images:
+            - under_construction1.png
+            - under_construction2.png
+            - under_construction3.png
+            - under_construction4.png
+            - under_construction5.png
     gruppe: 
-        description: gruppe asdf
-        images: [/img/error.png, /img/icons.png]
+        description: gruppe Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        images:
+            - under_construction1.png
+            - under_construction2.png
+            - under_construction3.png
+            - under_construction4.png
+            - under_construction5.png
+    akku: 
+        description: akku Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        images:
+            - under_construction1.png
+            - under_construction2.png
+            - under_construction3.png
+            - under_construction4.png
+            - under_construction5.png
 
 fonts:
     bespoke: 
-        description: bespoke asdf
-        images: [/img/error.png, /img/icons.png]
+        description: bespoke Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        images:
+            - under_construction1.png
+            - under_construction2.png
+            - under_construction3.png
+            - under_construction4.png
+            - under_construction5.png
     adjuster: 
-        description: adjuster asdf
-        images: [/img/error.png, /img/icons.png]
+        description: adjuster Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        images:
+            - under_construction1.png
+            - under_construction2.png
+            - under_construction3.png
+            - under_construction4.png
+            - under_construction5.png
 

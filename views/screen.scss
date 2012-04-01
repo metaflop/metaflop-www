@@ -478,6 +478,10 @@ a.action-icon {
         line-height: $preview_box_height;
         font-size: 9px;
 
+        &.showoff {
+            height: $showoff_preview_box_height;
+        }
+
         * {
             line-height: 11px;
         }

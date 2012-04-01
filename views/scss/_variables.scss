@@ -15,6 +15,7 @@ $box_spacing_x: 31px;
 $preview_box_width: ($right_column_width - $box_spacing_x) / 2;
 $preview_box_width_full: $right_column_width;
 $preview_box_height: 340px;
+$showoff_preview_box_height: 500px;
 $preview_box_content_width: $preview_box_width - 2 * $border_width;
 $preview_box_content_width_full: $preview_box_width_full - 2 * $border_width;
 

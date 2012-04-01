@@ -11,7 +11,7 @@ $(function () {
     var initSlideshow = function() {
         slideshow.bjqs({
             width: 704,
-            height: 340,
+            height: 500,
             nextText: '',
             prevText: '',
             rotationSpeed: 7000,

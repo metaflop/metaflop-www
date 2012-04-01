@@ -28,11 +28,17 @@ module ShowoffPage
     end
 
     def single(name)
-        settings[name]
+        all.find { |x| x[:title] == name }
     end
 
     def all
-        all = settings.to_a.map{ |x| x[1]["title"] = x[0]; x[1] }
+        all = settings.to_a.map do |x|
+            {
+                :title => x[0],
+                :description => x[1]["description"],
+                :images => x[1]["images"].map { |img| "/img/#{page_name}/#{img}" }
+            }
+        end
         all[0]["active"] = true
         all
     end

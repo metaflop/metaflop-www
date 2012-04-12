@@ -32,18 +32,23 @@ module ShowoffPage
     end
 
     def all
-        all = settings.to_a.map do |x|
+        pages = settings.to_a.map do |x|
             {
                 :title => x[0],
                 :description => x[1]["description"],
                 :images => x[1]["images"].map { |img| "/img/#{page_name}/#{img}" }
             }
         end
-        all[0]["active"] = true
-        all
+        current(pages)["active"] = true
+        pages
     end
 
-    def first
-        all[0]
+    def current(pages = nil)
+        pages ||= all
+        unless @subpage.nil?
+            pages.find { |x| x[:title] == @subpage } 
+        else
+            pages[0]
+        end
     end
 end

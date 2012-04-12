@@ -12,20 +12,20 @@
     <div id="parameter-panel">
         <h2><span>Info</span></h2>
         <div class="box-content">
-            {{first.description}}
+            {{current.description}}
         </div>
     </div>
 </div>
 
 <div id="col2">
     <div class="preview-box preview-box-fullwidth active">
-        <h2><span>{{first.title}}</span></h2>
+        <h2><span>{{current.title}}</span></h2>
         <div class="preview-box-content showoff">
             <div id="slideshow">
                 <ul class="bjqs">
-                    {{#first.images}}
+                    {{#current.images}}
                     <li><img src="{{.}}" /></li>
-                    {{/first.images}}
+                    {{/current.images}}
                 </ul>
             </div>
         </div>

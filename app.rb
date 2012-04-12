@@ -171,9 +171,13 @@ class App < Sinatra::Application
         mustache page.to_sym, :layout => false
     end
 
-    get '/:page' do |page|
+    get '/:page/?:subpage?' do |page, subpage|
         if settings.respond_to? page
             @settings = settings.method(page).call
+        end
+
+        unless subpage.nil?
+            @subpage = subpage
         end
 
         mustache page.to_sym

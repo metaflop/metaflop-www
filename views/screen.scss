@@ -214,8 +214,13 @@ a.action-icon {
 
     padding: 2px 7px;
 
-    &.text a {
-        @include content-link;
+    &.text {
+        padding-top: $box_spacing_x / 2;
+        padding-bottom: $box_spacing_x / 2;
+
+        a {
+            @include content-link;
+        }
     }
 
     .static-value {

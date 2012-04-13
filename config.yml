@@ -100,7 +100,7 @@ projects:
 
 fonts:
     bespoke: 
-        description: bespoke Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        description: mf bespoke is geard to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters "increase" and "superness" to an octagon. the parameter "superness" generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of contrast to the default settings.
         images:
             - under_construction1.png
             - under_construction2.png
@@ -108,7 +108,7 @@ fonts:
             - under_construction4.png
             - under_construction5.png
     adjuster: 
-        description: adjuster Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        description: 'mf adjuster comes along with a rather reduced set of parameters. this charmingly rough font follows a strict grid and a simple no-curves-policy. although the dimension and proportion of <a href="/modulator?fontface=Adjuster">mf adjuster</a> can widely vary, its sophistication derives from the pen parameter: you can choose from circle, square or razor.'
         images:
             - under_construction1.png
             - under_construction2.png

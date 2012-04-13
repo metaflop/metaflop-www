@@ -7,3 +7,11 @@
 @mixin header-row {
     margin-bottom: $box_spacing_y;
 }
+
+@mixin content-link {
+    color: $inactive_link_color;
+
+    &:hover {
+        color: $active_link_color;
+    }
+}

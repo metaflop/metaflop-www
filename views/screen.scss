@@ -214,6 +214,10 @@ a.action-icon {
 
     padding: 2px 7px;
 
+    &.text a {
+        @include content-link;
+    }
+
     .static-value {
         float: right;
         width: 45%;
@@ -222,8 +226,8 @@ a.action-icon {
 
 #main {
     min-height: 100%;
-	height: auto !important;
-	height: 100%;
+    height: auto !important;
+    height: 100%;
     margin: 0 auto ($footer_height * -1) auto;
     position: relative;
     width: $content_width;
@@ -309,11 +313,7 @@ a.action-icon {
     }
 
     a {
-        color: $inactive_link_color;
-
-        &:hover {
-            color: $active_link_color;
-        }
+        @include content-link;
     }
 }
 
@@ -344,11 +344,7 @@ a.action-icon {
     }
 
     .action.exclusive {
-        color: $inactive_link_color;
-
-        &:hover {
-            color: $active_link_color;
-        }
+        @include content-link;
 
         &.active {
             color: #000;

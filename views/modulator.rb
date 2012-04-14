@@ -57,15 +57,15 @@ class App
                 groups.each do |group|
                     group[:items].each do |x|
                         param = @font_parameters.send(x[:key])
-                        puts param
                         x[:default] = param.default
                         x[:value] = param.value
                         x[:range] = param.range
+                        x[:hidden] = param.hidden
                         x[:name] = x[:title].gsub(' ', '-') # (css class compliant)
                         x[:tabindex] = i
                         i = i + 1
                     end
-                    .delete_if { |v| !v[:default] } # remove non-mapped params
+                    .keep_if { |x| x[:default] && !x[:hidden] } # remove non-mapped params
                 end
 
                 # remove empty groups

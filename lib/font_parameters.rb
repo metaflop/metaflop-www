@@ -8,7 +8,7 @@
 
 require './lib/font_settings.rb'
 
-FontParameter = Struct.new(:value, :default, :unit, :range)
+FontParameter = Struct.new(:value, :default, :unit, :range, :hidden)
 
 class FontParameters
 
@@ -113,7 +113,8 @@ class FontParameters
                     value, # value
                     value_from_file, # default
                     splits[1][/[^\d;\.]+/], # unit
-                    { :from => range[0], :to => range[1] } # range
+                    { :from => range[0], :to => range[1] }, # range
+                    (x.include? '@hidden') # hidden
                 )
             end
         end

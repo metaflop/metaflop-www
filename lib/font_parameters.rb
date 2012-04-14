@@ -32,6 +32,7 @@ class FontParameters
         :corner,
         :contrast,
         :sidebearing,
+        :glyph_angle,
         :pen_angle,
         :pen_shape
     ]
@@ -56,6 +57,7 @@ class FontParameters
         'corner#' => :corner,
         'cont' => :contrast,
         'sidebearing' => :sidebearing,
+        'ang' => :glyph_angle,
         'penang' => :pen_angle,
         'penshape' => :pen_shape
     }

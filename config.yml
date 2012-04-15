@@ -45,6 +45,7 @@ metaflop:
         - !ruby/symbol cap # X
         - !ruby/symbol cap # Y
         - !ruby/symbol cap # Z
+
         - !ruby/symbol meano # a
         - !ruby/symbol asc # b
         - !ruby/symbol meano # c
@@ -71,6 +72,27 @@ metaflop:
         - !ruby/symbol mean # x
         - !ruby/symbol mean # y
         - !ruby/symbol mean # z
+
+        - !ruby/symbol cap # 0
+        - !ruby/symbol cap # 1
+        - !ruby/symbol cap # 2
+        - !ruby/symbol cap # 3
+        - !ruby/symbol cap # 4
+        - !ruby/symbol cap # 5
+        - !ruby/symbol cap # 6
+        - !ruby/symbol cap # 7
+        - !ruby/symbol cap # 8
+        - !ruby/symbol cap # 9
+
+        - !ruby/symbol mean # amp
+        - !ruby/symbol mean # colon
+        - !ruby/symbol mean # comma
+        - !ruby/symbol cap # exclam
+        - !ruby/symbol mean # hyphen
+        - !ruby/symbol mean # period
+        - !ruby/symbol mean # plus
+        - !ruby/symbol mean # semicolon
+        - !ruby/symbol mean # space
 
 projects:
     lovehate: 

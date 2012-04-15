@@ -78,12 +78,15 @@ class App
             # single preview char chooser
             # [{ :items => [] }, { :items => [] } ]
             def char_sets
+                title_replacements = {'amp' => '&', 'colon' => ':', 'comma' => ',','exclam' => '!', 'hyphen' => "'", 'period' => '.', 'plus' => '+', 'semicolon' => ';'}
                 number = 0
                 [:uc, :lc, :num, :punct].map{ |type| @chars[type] }.delete_if(&:empty?).map do |set|
                     {
                         :items => set.map do |item|
                             number = number + 1
-                            { :title => item, :number => number, :active => number == 1 }
+                            title = item
+                            title_replacements.each { |k, v| title.sub!(/\b#{k}\b/, v) }
+                            { :title => title, :number => number, :active => number == 1 }
                         end
                     }
                 end

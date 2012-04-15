@@ -73,40 +73,38 @@ metaflop:
         - !ruby/symbol mean # z
 
 projects:
-    vetter: 
-        description: vetter Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+    lovehate: 
+        description: 'all the works of <a href="http://www.christianvetter.ch" target="_blank">christian vetter</a> gravitate around the topic of painting and generating new possibilities of perception: how can a work stay as an ornament, completely abstract, and in the same time produce a meaning, a content? christian vetter uses <a href="/fonts/adjuster">mf adjuster</a> as a structure, as a construction kit in order to build autonomous in-between spaces. this time, as an exception in his work, the meaning of the words is not secondary, but the main focus stays on the affiliation of the font to image. the phrase structure stays, one word or one letter changes which creates not only a different space disposition but simultaneously a new meaning.'
         images:
-            - under_construction1.png
-            - under_construction2.png
-            - under_construction3.png
-            - under_construction4.png
-            - under_construction5.png
+            - lovehate2-01.png
+            - lovehate2-02.png
+            - lovehate2-03.png
+            - lovehate2-04.png
+            - lovehate2-05.png
+            - lovehate2-06.png
+            - lovehate2-07.png
     gruppe: 
-        description: gruppe Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        description: boris gusic, christoph junk and nicolas lobo brennan from tom emerson's architectural studio founded an experimental practice called gruppe. metaflop fitted perfectly their concept. a rather unusual grid of a triangle was used for their logo type and a customized metafont for their stationery and lecture papers. 
         images:
-            - under_construction1.png
-            - under_construction2.png
-            - under_construction3.png
-            - under_construction4.png
-            - under_construction5.png
+            - gruppe1-01.png
+            - gruppe1-02.png
+            - gruppe1-03.png
+            - gruppe1-04.png
     akku: 
-        description: akku Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae consequat odio. Curabitur luctus, tortor eu ultricies gravida, leo neque congue turpis, eget egestas nisl mauris non nisi. Aenean euismod tempor rhoncus. Quisque ligula magna, ultrices pellentesque lobortis vel, pulvinar quis nulla. Ut ac ligula et magna dictum euismod. Suspendisse eros est, aliquam et feugiat non, mattis a nunc.
+        description: akku is a young art space in emmenbrücke (in the centre of switzerland). they have limited financial means but still they would like to produce accurate visual communication. the new posters are using mf <a href="/fonts/bespoke">bespoke</a>, in a flexible grid able to react to various forms of exhibitions.
         images:
-            - under_construction1.png
-            - under_construction2.png
-            - under_construction3.png
-            - under_construction4.png
-            - under_construction5.png
+            - akku1-01.png
+            - akku1-02.png
+            - akku1-03.png
+            - akku1-04.png
 
 fonts:
     bespoke: 
-        description: mf bespoke is geard to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters "increase" and "superness" to an octagon. the parameter "superness" generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of contrast to the default settings.
+        description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of contrast to the default settings.
         images:
-            - under_construction1.png
-            - under_construction2.png
-            - under_construction3.png
-            - under_construction4.png
-            - under_construction5.png
+            - bespoke1-01.png
+            - bespoke1-02.png
+            - bespoke1-03.png
     adjuster: 
         description: 'mf adjuster comes along with a rather reduced set of parameters. this charmingly rough font follows a strict grid and a simple no-curves-policy. although the dimension and proportion of <a href="/modulator?fontface=Adjuster">mf adjuster</a> can widely vary, its sophistication derives from the pen parameter: you can choose from circle, square or razor.'
         images:

@@ -100,17 +100,15 @@ projects:
 
 fonts:
     bespoke: 
-        description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of contrast to the default settings.
+        description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of <em>contrast</em> to the default settings.
         images:
             - bespoke1-01.png
             - bespoke1-02.png
             - bespoke1-03.png
     adjuster: 
-        description: 'mf adjuster comes along with a rather reduced set of parameters. this charmingly rough font follows a strict grid and a simple no-curves-policy. although the dimension and proportion of <a href="/modulator?fontface=Adjuster">mf adjuster</a> can widely vary, its sophistication derives from the pen parameter: you can choose from circle, square or razor.'
+        description: 'mf adjuster is a font with a very basic form, plain architectural, highly functional, almost crystalline. it follows a strict grid and a simple no-curves-policy and comes along with a rather reduced set of parameters. although the dimension and proportion of mf <a href="/modulator?fontface=Adjuster">mf adjuster</a> can vary, its sophistication derives from the pen parameter: you can choose from <em>circle</em>, <em>square</em> or <em>razor</em>.'
         images:
-            - under_construction1.png
-            - under_construction2.png
-            - under_construction3.png
-            - under_construction4.png
-            - under_construction5.png
+            - adjuster1-01.png
+            - adjuster1-02.png
+            - adjuster1-03.png
 

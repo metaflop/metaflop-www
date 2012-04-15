@@ -33,10 +33,10 @@ $(function () {
             success: function(data) {
                 // update slideshow
                 var html = '';
-                console.debug(data);
                 data.images.each(function(image) {
                     html += '<li><img src="' + image + '" /></li>';
                 });
+                slideshow.find('ol.bjqs-markers').remove();
                 slideshow.find('ul.bjqs').html(html);
                 initSlideshow();
                 

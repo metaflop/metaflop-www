@@ -104,5 +104,12 @@ describe FontParameters do
             params.unit_width = FontParameter.new('2.0', '2.0', 'ht#')
             params.absolute_value(:unit_width).should == 1.5 * 2.0
         end
+
+        it 'param has no unit, get value itself' do
+            params = FontParameters.new
+            params.box_height = FontParameter.new('1.5', '1.5', 'pt#')
+            params.pen_angle = FontParameter.new('1.0')
+            params.absolute_value(:pen_angle).should == 1.0
+        end
     end
 end

@@ -143,7 +143,7 @@ class FontParameters
     # @param value [Symbol] the value of the param (recursively calculated, no need to pass initially)
     def absolute_value(key, value = instance_param(key).value.to_f)
         param = instance_param(key)
-        if !param.nil? && param.unit != @box_height.unit
+        if !param.nil? && !param.unit.nil? && param.unit != @box_height.unit
             key = param.unit.to_sym
             value = instance_param(key).value.to_f * value
             absolute_value(key, value)

@@ -22,6 +22,10 @@ image {
 
 p {
     margin: 0 0 ($box_spacing_x / 2) 0;
+
+    &.minor-para {
+        margin: 0 0 ($box_spacing_x / 4) 0;
+    }
 }
 
 h3 {
@@ -319,6 +323,16 @@ a.action-icon {
 
     a {
         @include content-link;
+    }
+
+    ul {
+        margin: 0 0 ($box_spacing_x / 4) 0;
+        padding: 0 0 0 $box_spacing_x;
+        list-style: disc outside none;
+
+        li {
+            overflow: visible;
+        }
     }
 }
 
@@ -652,6 +666,11 @@ a.char-chooser {
     span {
         color: lighten(#000, 80%);
     }
+}
+
+// basic jquery slider (gallery)
+ol.bjqs-markers li a {
+    border-width: 2px;
 }
 
 @import 'scss/slider.scss';

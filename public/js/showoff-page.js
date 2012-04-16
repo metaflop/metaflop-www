@@ -43,6 +43,9 @@ $(function () {
                 // update description
                 $('#parameter-panel').find('.box-content').html(data.description);
 
+                // update title
+                $('.preview-box-fullwidth h2 span').html(data.title);
+
                 // toggle active menu entry
                 $('#menu').find('.dynamic-menu').removeClass('active');
                 link.addClass('active').blur();

@@ -48,11 +48,6 @@ class FontSettings
         FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
     end
 
-    # adjuster only has uppercase letters (TODO: inject this behaviour)
-    def text
-        @fontface == 'Adjuster' ? @text.upcase : @text
-    end
-
     def chars
         chars = Hash.new{ |h, k| h[k.to_sym] = []}
         tuples = Dir["mf/metaflop-font-#{@fontface.downcase}/glyphs/**/*.mf"].map do |x|

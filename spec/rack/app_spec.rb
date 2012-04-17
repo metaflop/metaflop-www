@@ -26,7 +26,7 @@ describe 'metaflop app' do
     end
     
     it 'valid project returns the json data' do
-        get '/projects/vetter.json'
+        get '/projects/lovehate.json'
         last_response.should be_ok
         json = JSON.parse last_response.body
         json['description'].should_not be_nil

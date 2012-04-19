@@ -105,20 +105,6 @@ projects:
             - lovehate2-05.png
             - lovehate2-06.png
             - lovehate2-07.png
-    gruppe: 
-        description: boris gusic, christoph junk and nicolas lobo brennan from tom emerson's architectural studio founded an experimental practice called gruppe. metaflop fitted perfectly their concept. a rather unusual grid of a triangle was used for their logo type and a customized metafont for their stationery and lecture papers. 
-        images:
-            - gruppe1-01.png
-            - gruppe1-02.png
-            - gruppe1-03.png
-            - gruppe1-04.png
-    akku: 
-        description: akku is a young art space in emmenbrücke (in the centre of switzerland). they have limited financial means but still they would like to produce accurate visual communication. the new posters are using mf <a href="/fonts/bespoke">bespoke</a>, in a flexible grid able to react to various forms of exhibitions.
-        images:
-            - akku1-01.png
-            - akku1-02.png
-            - akku1-03.png
-            - akku1-04.png
 
 fonts:
     bespoke: 

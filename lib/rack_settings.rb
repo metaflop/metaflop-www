@@ -7,9 +7,9 @@
 #
 
 module RackSettings
-    attr_accessor :settings
+  attr_accessor :settings
 
-    def settings
-        @settings
-    end
+  def settings
+    @settings
+  end
 end

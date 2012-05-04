@@ -7,8 +7,8 @@
 #
 
 class App
-    module Views
-        class Faq < Layout
-        end
+  module Views
+    class Faq < Layout
     end
+  end
 end

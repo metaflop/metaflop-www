@@ -9,21 +9,21 @@
 require './lib/font_settings'
 
 describe FontSettings do
-    context '#chars' do
-        before do
-            @chars = FontSettings.new.chars
-        end
-
-        it 'returns a hash with char categories' do
-            @chars.keys.length.should > 0
-        end
-
-        it 'returns a hash with 26 upper case chars' do
-            @chars[:uc].length == 26
-        end
-
-        it 'returns char names without ending' do
-            @chars[:lc][0].should == 'a'
-        end
+  context '#chars' do
+    before do
+      @chars = FontSettings.new.chars
     end
+
+    it 'returns a hash with char categories' do
+      @chars.keys.length.should > 0
+    end
+
+    it 'returns a hash with 26 upper case chars' do
+      @chars[:uc].length == 26
+    end
+
+    it 'returns char names without ending' do
+      @chars[:lc][0].should == 'a'
+    end
+  end
 end

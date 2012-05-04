@@ -9,9 +9,8 @@
 require './views/modulator.rb'
 
 class App
-    module Views
-        class CharChooser < Modulator
-
-        end
+  module Views
+    class CharChooser < Modulator
     end
+  end
 end

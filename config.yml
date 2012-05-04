@@ -1,122 +1,122 @@
 metaflop:
-    preview_height: 315
+  preview_height: 315
 
-    preview_single:
-        generate: gftodvi font.2602gf
-        convert_svg: -density 60
-        convert_gif: -chop 0x15 -extent 'x{{height}}' -bordercolor white -border 0x{{preview_y_offset}}
+  preview_single:
+    generate: gftodvi font.2602gf
+    convert_svg: -density 60
+    convert_gif: -chop 0x15 -extent 'x{{height}}' -bordercolor white -border 0x{{preview_y_offset}}
 
-    preview_chart:
-        generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"
+  preview_chart:
+    generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"
 
-        convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize 'x{{height}}'
+    convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize 'x{{height}}'
 
-    preview_typewriter:
-        generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 20pt \noindent \big \begin{flushleft}{{text}} \end{flushleft} \end{document}"
+  preview_typewriter:
+    generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 20pt \noindent \big \begin{flushleft}{{text}} \end{flushleft} \end{document}"
 
-        convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'
+    convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'
 
-    font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
+  font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
 
-    glyph_categories:
-        - !ruby/symbol cap # A
-        - !ruby/symbol cap # B
-        - !ruby/symbol capo # C
-        - !ruby/symbol cap # D
-        - !ruby/symbol cap # E
-        - !ruby/symbol cap # F
-        - !ruby/symbol capo # G
-        - !ruby/symbol cap # H
-        - !ruby/symbol cap # I
-        - !ruby/symbol cap # J
-        - !ruby/symbol cap # K
-        - !ruby/symbol cap # L
-        - !ruby/symbol cap # M
-        - !ruby/symbol cap # N
-        - !ruby/symbol capo # O
-        - !ruby/symbol cap # P
-        - !ruby/symbol capo # Q
-        - !ruby/symbol cap # R
-        - !ruby/symbol capo # S
-        - !ruby/symbol cap # T
-        - !ruby/symbol cap # U
-        - !ruby/symbol cap # V
-        - !ruby/symbol cap # W
-        - !ruby/symbol cap # X
-        - !ruby/symbol cap # Y
-        - !ruby/symbol cap # Z
+  glyph_categories:
+    - !ruby/symbol cap # A
+    - !ruby/symbol cap # B
+    - !ruby/symbol capo # C
+    - !ruby/symbol cap # D
+    - !ruby/symbol cap # E
+    - !ruby/symbol cap # F
+    - !ruby/symbol capo # G
+    - !ruby/symbol cap # H
+    - !ruby/symbol cap # I
+    - !ruby/symbol cap # J
+    - !ruby/symbol cap # K
+    - !ruby/symbol cap # L
+    - !ruby/symbol cap # M
+    - !ruby/symbol cap # N
+    - !ruby/symbol capo # O
+    - !ruby/symbol cap # P
+    - !ruby/symbol capo # Q
+    - !ruby/symbol cap # R
+    - !ruby/symbol capo # S
+    - !ruby/symbol cap # T
+    - !ruby/symbol cap # U
+    - !ruby/symbol cap # V
+    - !ruby/symbol cap # W
+    - !ruby/symbol cap # X
+    - !ruby/symbol cap # Y
+    - !ruby/symbol cap # Z
 
-        - !ruby/symbol meano # a
-        - !ruby/symbol asc # b
-        - !ruby/symbol meano # c
-        - !ruby/symbol asc # d
-        - !ruby/symbol meano # e
-        - !ruby/symbol asco # f
-        - !ruby/symbol meano # g
-        - !ruby/symbol asc # h
-        - !ruby/symbol asc # i
-        - !ruby/symbol asc # j
-        - !ruby/symbol asc # k
-        - !ruby/symbol asc # l
-        - !ruby/symbol meano # m
-        - !ruby/symbol meano # n
-        - !ruby/symbol meano # o
-        - !ruby/symbol meano # p
-        - !ruby/symbol meano # q
-        - !ruby/symbol meano # r
-        - !ruby/symbol meano # s
-        - !ruby/symbol asc # t
-        - !ruby/symbol mean # u
-        - !ruby/symbol mean # v
-        - !ruby/symbol mean # w
-        - !ruby/symbol mean # x
-        - !ruby/symbol mean # y
-        - !ruby/symbol mean # z
+    - !ruby/symbol meano # a
+    - !ruby/symbol asc # b
+    - !ruby/symbol meano # c
+    - !ruby/symbol asc # d
+    - !ruby/symbol meano # e
+    - !ruby/symbol asco # f
+    - !ruby/symbol meano # g
+    - !ruby/symbol asc # h
+    - !ruby/symbol asc # i
+    - !ruby/symbol asc # j
+    - !ruby/symbol asc # k
+    - !ruby/symbol asc # l
+    - !ruby/symbol meano # m
+    - !ruby/symbol meano # n
+    - !ruby/symbol meano # o
+    - !ruby/symbol meano # p
+    - !ruby/symbol meano # q
+    - !ruby/symbol meano # r
+    - !ruby/symbol meano # s
+    - !ruby/symbol asc # t
+    - !ruby/symbol mean # u
+    - !ruby/symbol mean # v
+    - !ruby/symbol mean # w
+    - !ruby/symbol mean # x
+    - !ruby/symbol mean # y
+    - !ruby/symbol mean # z
 
-        - !ruby/symbol cap # 0
-        - !ruby/symbol cap # 1
-        - !ruby/symbol cap # 2
-        - !ruby/symbol cap # 3
-        - !ruby/symbol cap # 4
-        - !ruby/symbol cap # 5
-        - !ruby/symbol cap # 6
-        - !ruby/symbol cap # 7
-        - !ruby/symbol cap # 8
-        - !ruby/symbol cap # 9
+    - !ruby/symbol cap # 0
+    - !ruby/symbol cap # 1
+    - !ruby/symbol cap # 2
+    - !ruby/symbol cap # 3
+    - !ruby/symbol cap # 4
+    - !ruby/symbol cap # 5
+    - !ruby/symbol cap # 6
+    - !ruby/symbol cap # 7
+    - !ruby/symbol cap # 8
+    - !ruby/symbol cap # 9
 
-        - !ruby/symbol mean # amp
-        - !ruby/symbol mean # colon
-        - !ruby/symbol mean # comma
-        - !ruby/symbol cap # exclam
-        - !ruby/symbol mean # hyphen
-        - !ruby/symbol mean # period
-        - !ruby/symbol mean # plus
-        - !ruby/symbol mean # semicolon
-        - !ruby/symbol mean # space
+    - !ruby/symbol mean # amp
+    - !ruby/symbol mean # colon
+    - !ruby/symbol mean # comma
+    - !ruby/symbol cap # exclam
+    - !ruby/symbol mean # hyphen
+    - !ruby/symbol mean # period
+    - !ruby/symbol mean # plus
+    - !ruby/symbol mean # semicolon
+    - !ruby/symbol mean # space
 
 projects:
-    lovehate: 
-        description: 'all the works of <a href="http://www.christianvetter.ch" target="_blank">christian vetter</a> gravitate around the topic of painting and generating new possibilities of perception: how can a work stay as an ornament, completely abstract, and in the same time produce a meaning, a content? christian vetter uses <a href="/fonts/adjuster">mf adjuster</a> as a structure, as a construction kit in order to build autonomous in-between spaces. this time, as an exception in his work, the meaning of the words is not secondary, but the main focus stays on the affiliation of the font to image. the phrase structure stays, one word or one letter changes which creates not only a different space disposition but simultaneously a new meaning.'
-        images:
-            - lovehate2-01.png
-            - lovehate2-02.png
-            - lovehate2-03.png
-            - lovehate2-04.png
-            - lovehate2-05.png
-            - lovehate2-06.png
-            - lovehate2-07.png
+  lovehate: 
+    description: 'all the works of <a href="http://www.christianvetter.ch" target="_blank">christian vetter</a> gravitate around the topic of painting and generating new possibilities of perception: how can a work stay as an ornament, completely abstract, and in the same time produce a meaning, a content? christian vetter uses <a href="/fonts/adjuster">mf adjuster</a> as a structure, as a construction kit in order to build autonomous in-between spaces. this time, as an exception in his work, the meaning of the words is not secondary, but the main focus stays on the affiliation of the font to image. the phrase structure stays, one word or one letter changes which creates not only a different space disposition but simultaneously a new meaning.'
+    images:
+      - lovehate2-01.png
+      - lovehate2-02.png
+      - lovehate2-03.png
+      - lovehate2-04.png
+      - lovehate2-05.png
+      - lovehate2-06.png
+      - lovehate2-07.png
 
 fonts:
-    bespoke: 
-        description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of <em>contrast</em> to the default settings.
-        images:
-            - bespoke1-01.png
-            - bespoke1-02.png
-            - bespoke1-03.png
-    adjuster: 
-        description: 'mf adjuster is a font with a very basic form, plain architectural, highly functional, almost crystalline. it follows a strict grid and a simple no-curves-policy and comes along with a rather reduced set of parameters. although the dimension and proportion of mf <a href="/modulator?fontface=Adjuster">mf adjuster</a> can vary, its sophistication derives from the pen parameter: you can choose from <em>circle</em>, <em>square</em> or <em>razor</em>.'
-        images:
-            - adjuster1-01.png
-            - adjuster1-02.png
-            - adjuster1-03.png
+  bespoke: 
+    description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of <em>contrast</em> to the default settings.
+    images:
+      - bespoke1-01.png
+      - bespoke1-02.png
+      - bespoke1-03.png
+  adjuster: 
+    description: 'mf adjuster is a font with a very basic form, plain architectural, highly functional, almost crystalline. it follows a strict grid and a simple no-curves-policy and comes along with a rather reduced set of parameters. although the dimension and proportion of mf <a href="/modulator?fontface=Adjuster">mf adjuster</a> can vary, its sophistication derives from the pen parameter: you can choose from <em>circle</em>, <em>square</em> or <em>razor</em>.'
+    images:
+      - adjuster1-01.png
+      - adjuster1-02.png
+      - adjuster1-03.png
 

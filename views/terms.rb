@@ -7,8 +7,8 @@
 #
 
 class App
-    module Views
-        class Terms < Layout
-        end
+  module Views
+    class Terms < Layout
     end
+  end
 end

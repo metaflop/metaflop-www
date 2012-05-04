@@ -9,9 +9,8 @@
 require './views/modulator.rb'
 
 class App
-    module Views
-        class ParameterPanel < Modulator
-
-        end
+  module Views
+    class ParameterPanel < Modulator
     end
+  end
 end

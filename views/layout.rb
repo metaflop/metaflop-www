@@ -7,27 +7,27 @@
 #
 
 class App
-    module Views
-        class Layout < Mustache
-            def title
-                @title || "metaflop"
-            end
+  module Views
+    class Layout < Mustache
+      def title
+        @title || "metaflop"
+      end
 
-            def css
-                []
-            end
+      def css
+        []
+      end
 
-            def js
-                []
-            end
+      def js
+        []
+      end
 
-            def main_navigation
-               @main_navigation 
-            end
+      def main_navigation
+        @main_navigation 
+      end
 
-            def meta_navigation
-               @meta_navigation 
-            end
-        end
+      def meta_navigation
+        @meta_navigation 
+      end
     end
+  end
 end

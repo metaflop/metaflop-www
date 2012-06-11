@@ -15,6 +15,7 @@ class App
 
       property :id, Serial
       property :created_at, DateTime
+      property :facebook_id, String, :length => 50
       property :title, String, :required => true, :length => 255
       property :text, Text, :required => true
       property :published_at, DateTime

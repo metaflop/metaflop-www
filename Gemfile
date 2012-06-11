@@ -9,6 +9,7 @@ gem 'dm-mysql-adapter'
 gem 'sinatra-simple-navigation'
 gem 'json'
 gem 'bourbon'
+gem 'fb_graph'
 
 group :development do
   gem 'rspec'

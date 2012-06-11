@@ -52,9 +52,13 @@ class App < Sinatra::Application
       :password => settings.db[:password],
       :database => settings.db[:database]
     })
+    DataMapper.repository(:default).adapter.resource_naming_convention =
+      DataMapper::NamingConventions::Resource::UnderscoredAndPluralizedWithoutModule
 
     DataMapper.finalize
     Url.auto_upgrade!
+    require './views/news'
+    Views::News.auto_upgrade!
   end
 
   configure :development do

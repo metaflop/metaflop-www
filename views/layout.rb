@@ -6,6 +6,9 @@
 # licensed under gpl v3
 #
 
+require 'mustache'
+require 'data_mapper'
+
 class App
   module Views
     class Layout < Mustache

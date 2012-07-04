@@ -76,7 +76,7 @@ class App
       def char_sets
         title_replacements = {'amp' => '&', 'colon' => ':', 'comma' => ',','exclam' => '!', 'hyphen' => "'", 'period' => '.', 'plus' => '+', 'semicolon' => ';'}
         number = 0
-        [:uc, :lc, :num, :punct].map{ |type| @chars[type] }.delete_if(&:empty?).map do |set|
+        [:uc, :lc, :num].map{ |type| @chars[type] }.delete_if(&:empty?).map do |set|
           {
             :items => set.map do |item|
             number = number + 1

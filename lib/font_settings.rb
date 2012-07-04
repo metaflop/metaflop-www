@@ -48,6 +48,9 @@ class FontSettings
     FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
   end
 
+  # A hash of all the available glyphs (read from the filesystem, see mf/ folder)
+  #
+  # @return [Hash] {:lc=>["a", ...], :num=>["0", ...], :punct=>["amp", ...], :uc=>["A", ...]}
   def chars
     chars = Hash.new{ |h, k| h[k.to_sym] = []}
     tuples = Dir["mf/metaflop-font-#{@fontface.downcase}/glyphs/**/*.mf"].map do |x|

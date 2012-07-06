@@ -12,7 +12,7 @@
 
 ########################################################################
 # mf2pt1                                                               #
-# Copyright (C) 2011 Scott Pakin                                       #
+# Copyright (C) 2012 Scott Pakin                                       #
 #                                                                      #
 # This program may be distributed and/or modified under the conditions #
 # of the LaTeX Project Public License, either version 1.3c of this     #
@@ -26,7 +26,7 @@
 # version 2006/05/20 or later.                                         #
 ########################################################################
 
-our $VERSION = "2.4.5";   # mf2pt1 version number
+our $VERSION = "2.5";     # mf2pt1 version number
 require 5.6.1;            # I haven't tested mf2pt1 with older Perl versions
 
 use File::Basename;
@@ -165,7 +165,7 @@ my $filedir;
 my $filenoext;
 my $versionmsg = "mf2pt1 version $VERSION
 
-Copyright (C) 2011 Scott Pakin
+Copyright (C) 2012 Scott Pakin
 
 This program may be distributed and/or modified under the conditions
 of the LaTeX Project Public License, either version 1.3c of this
@@ -432,7 +432,7 @@ ENDHEADER
 sub get_bboxes ($)
 {
     execute_command 1, ("mpost", "-mem=mf2pt1", "-progname=mpost",
-                        "\\mode:=localfont; mag:=$mag; bpppix $bpppix; input $mffile");
+                        "\\mode:=localfont; mag:=$mag; bpppix $bpppix; nonstopmode; input $mffile");
     opendir (CURDIR, ".") || die "${progname}: $! ($filedir)\n";
     @charfiles = sort
                    { ($a=~ /\.(\d+)$/)[0] <=> ($b=~ /\.(\d+)$/)[0] }
@@ -593,7 +593,7 @@ sub output_font_programs ()
         my @fontprog;
         push @fontprog, ("/$gname {",
                          frac_string (frac_approx ($charbbox[$charnum]->[0]),
-                                      frac_approx ($charwd[$charnum] * $mag))
+                                      frac_approx ($charbbox[$charnum]->[2]))
                          . "hsbw");
         my ($cpx, $cpy) =
             ($charbbox[$charnum]->[0], 0);  # Current point (PostScript)
@@ -907,16 +907,17 @@ else {
     print FFSCRIPT <<'AUTOHINT';
 Open($1);
 SelectAll();
-# Simplify(0, 2);         # Switch these off to get pure font elements (S.Egli)
- RemoveOverlap();        
-# AddExtrema();
+RemoveOverlap();
+# AddExtrema(); # Switch these off to get pure font elements (S.Egli)
 # Simplify(0, 2);
- CorrectDirection();
- Simplify(0, 2);
- RoundToInt();
+CorrectDirection();
+Simplify(0, 2);
+RoundToInt();
 AutoHint();
 Generate($1);
 Generate($1:r + ".otf")   # Use different endings to get specific file format: .ttf .pfb .otf  (S.Egli)
+Generate($1:r + ".ttf");
+Generate($1:r + ".svg");
 Quit(0);
 AUTOHINT
     ;
@@ -929,9 +930,7 @@ unlink $ffscript if !$user_script;
 print "\n";
 
 # Finish up.
-print "*** Successfully generated $pfbfile ! ***\n";
-print "*** (.otf file output added by Simon Egli) ***\n";
-
+print "*** Successfully generated $pfbfile! ***\n";
 exit 0;
 
 ######################################################################

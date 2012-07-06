@@ -138,8 +138,9 @@ class App < Sinatra::Application
     mf.logger = logger
     method = "font_#{type}"
     if mf.respond_to? method
-      attachment "#{face}-#{hash}.otf"
       file = mf.method(method).call
+      attachment file[:name]
+      file[:data]
     else
       not_found "The font type is not supported"
     end

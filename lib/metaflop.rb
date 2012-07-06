@@ -76,14 +76,17 @@ class Metaflop
 
     @font_parameters.sidebearing.value = nil
 
-    File.read("#{@font_settings.out_dir}/font.otf")
+    { :name => "#{@font_settings.font_name}.otf",
+      :data => File.read("#{@font_settings.out_dir}/font.otf") }
   end
 
   def font_web
     font_otf
     `cd #{@font_settings.out_dir} && #{settings[:font_web]}`
 
-    WebFont.new(@font_settings).zip
+    font = WebFont.new(@font_settings)
+    { :name => "#{font.font_name}_webfont.zip",
+      :data => font.zip }
   end
 
   # generates the image for the specified tool chain

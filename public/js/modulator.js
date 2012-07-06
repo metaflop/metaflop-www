@@ -384,10 +384,9 @@ $(function () {
     });
 
     // export the font
-    $('#action-export-font').click(function(e) {
-        e.preventDefault();
-
-        var spinner = getSpinnerForActionLink($(this));
+    $('.action-export-font').click(function(e) {
+        var $this = $(this);
+        var spinner = getSpinnerForActionLink($this);
 
         var complete = function() {
             spinner.spin(false);
@@ -395,10 +394,8 @@ $(function () {
         };
 
         callWithFontHash(complete, function(data) {
-            window.location = "/modulator/export/font/otf/" + $('#param-fontface').val() + "/" + data;
+            window.location = "/modulator/export/font/" + $this.attr('data-type') + "/" + $('#param-fontface').val() + "/" + data;
         });
-
-        return false;
     });
 
     // toggle the +/- buttons for the inputs

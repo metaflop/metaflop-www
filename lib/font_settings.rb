@@ -35,6 +35,10 @@ class FontSettings
     setup_tmp_dir
   end
 
+  def font_name
+    "#{@fontface}-#{@font_hash}"
+  end
+
   def setup_tmp_dir
     if @out_dir && !File.directory?(@out_dir)
       FileUtils.mkdir_p(@out_dir)

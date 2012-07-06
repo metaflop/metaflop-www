@@ -15,14 +15,14 @@ class WebFont
     @dir = font_settings.out_dir
     @fontface = font_settings.fontface
     @font_hash = font_settings.font_hash
-    @font_name = "#{@fontface}-#{@font_hash}"
+    @font_name = font_settings.font_name
   end
 
-  attr_reader :dir, :fontface, :font_hash
+  attr_reader :dir, :fontface, :font_hash, :font_name
 
   def zip
     zipfile_name = File.join(@dir, "font.zip")
-    FileUtils.rm(zipfile_name)
+    FileUtils.rm(zipfile_name, :force => true)
 
     Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
       %w(eot woff ttf svg).map do |x|

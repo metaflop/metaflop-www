@@ -62,6 +62,8 @@ metaflop:
 
   font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
 
+  font_web: sfnt2woff font.otf && ttf2eot font.ttf > font.eot
+
 projects:
   lovehate: 
     description: 'all the works of <a href="http://www.christianvetter.ch" target="_blank">christian vetter</a> gravitate around the topic of painting and generating new possibilities of perception: how can a work stay as an ornament, completely abstract, and in the same time produce a meaning, a content? christian vetter uses <a href="/fonts/adjuster">mf adjuster</a> as a structure, as a construction kit in order to build autonomous in-between spaces. this time, as an exception in his work, the meaning of the words is not secondary, but the main focus stays on the affiliation of the font to image. the phrase structure stays, one word or one letter changes which creates not only a different space disposition but simultaneously a new meaning.'

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Metaflop @font-face sample</title>
+        <style type="text/css">
+            @font-face {
+                font-family: '{{fontface}}-{{font_hash}}';
+                src: url('{{fontface}}-{{font_hash}}.eot');
+                src: url('{{fontface}}-{{font_hash}}.eot?#iefix') format('embedded-opentype'),
+                     url('{{fontface}}-{{font_hash}}.woff') format('woff'),
+                     url('{{fontface}}-{{font_hash}}.ttf') format('truetype'),
+                     url('{{fontface}}-{{font_hash}}.svg#{{fontface}}-{{font_hash}}') format('svg');
+            }
+        </style>
+    </head>
+
+    <body style="font-family:'{{fontface}}-{{font_hash}}'; padding: 60px; text-align: center;">
+        <h1>This is metaflop (heading 1)!</h1>
+        <h2>This is metaflop (heading 2)!</h2>
+        <h3>This is metaflop (heading 3)!</h3>
+        <p>This is a paragraph...</p>
+        <p>Created by <a href="http://www.metaflop.com/modulator">Metaflop modulator</a>.</p>
+    </body>
+</html>

@@ -24,6 +24,8 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * lcdf-typetools
 * dvisvgm
 * imagemagick (convert)
+* [sfnt2woff](http://people.mozilla.com/~jkew/woff/)
+* [ttf2eot](https://github.com/greyfont/ttf2eot)
 
 ## License
 

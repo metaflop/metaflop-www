@@ -9,6 +9,7 @@ gem 'dm-mysql-adapter'
 gem 'sinatra-simple-navigation'
 gem 'json'
 gem 'bourbon'
+gem 'rubyzip'
 
 group :development do
   gem 'capistrano'

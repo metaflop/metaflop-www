@@ -92,6 +92,7 @@ GEM
     rspec-expectations (2.5.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.5.0)
+    rubyzip (0.9.9)
     sass (3.1.12)
     simple-navigation (3.7.0)
       activesupport (>= 2.3.2)
@@ -123,6 +124,7 @@ DEPENDENCIES
   json
   mustache
   rspec
+  rubyzip
   sass
   sinatra
   sinatra-contrib

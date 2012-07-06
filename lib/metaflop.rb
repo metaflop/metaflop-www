@@ -12,6 +12,7 @@ require './lib/rack_logger'
 require './lib/rack_settings'
 require './lib/font_parameters'
 require './lib/font_settings'
+require './lib/web_font'
 require 'mustache'
 
 class Metaflop
@@ -76,6 +77,13 @@ class Metaflop
     @font_parameters.sidebearing.value = nil
 
     File.read("#{@font_settings.out_dir}/font.otf")
+  end
+
+  def font_web
+    font_otf
+    `cd #{@font_settings.out_dir} && #{settings[:font_web]}`
+
+    WebFont.new(@font_settings).zip
   end
 
   # generates the image for the specified tool chain

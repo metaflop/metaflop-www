@@ -214,7 +214,7 @@ a.action-icon {
 .box-content {
     @include box;
 
-    padding: 2px 7px;
+    padding: 2px $box_spacing_y;
 
     &.text {
         padding-top: $box_spacing_x / 2;
@@ -243,11 +243,16 @@ a.action-icon {
 }
 
 #navigation {
-    margin: ($box_spacing_x / 2) 0 $box_spacing_x;
+    margin: 0 0 $box_spacing_x 0;
+    padding: ($box_spacing_x / 2) $box_spacing_y ($box_spacing_x / 2 - 2px);
+    border-bottom: 2px solid #fff;
     font-size: $font_size;
     line-height: $font_size;
-    display: block;
+    position: fixed;
     overflow: hidden;
+    width: $content_width - (2 * $box_spacing_y);
+    background: $box_bg_color;
+    z-index: 9;
 
     ul {
         float: left;
@@ -336,14 +341,14 @@ a.action-icon {
 
 
 #col1 {
-    float: left;
-
+    @include content-col;
     width: $left_column_width;
     margin-right: $box_spacing_x;
 }
 
 #col2 {
-    float: left;
+    @include content-col;
+    margin-top: $box_spacing_x + $font_size + $box_spacing_x;
 
     width: 710px;
 }

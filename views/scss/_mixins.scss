@@ -14,3 +14,8 @@
         color: $active_link_color;
     }
 }
+
+@mixin content-col {
+    float: left;
+    margin-top: $box_spacing_x + $font_size + $box_spacing_x;
+}

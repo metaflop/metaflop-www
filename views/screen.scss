@@ -481,9 +481,7 @@ a.action-icon {
     .preview-box-content {
         @include box;
 
-        margin-top: $border_width * -1; // correct the border width, such that h2 corresponds to parameters h2
-        border: $border_width solid $box_bg_color;
-        width: $preview_box_content_width;
+        width: $preview_box_width;
         height: $preview_box_height;
         overflow: hidden;
         text-align: center;
@@ -537,7 +535,7 @@ a.action-icon {
     width: $preview_box_width_full;
 
     .preview-box-content {
-        width: $preview_box_content_width_full;
+        width: $preview_box_width_full;
 
         .preview-image {
             vertical-align: top;
@@ -580,7 +578,7 @@ div.char-chooser {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: $preview_box_content_width;
+    width: $preview_box_width;
     height: 16px;
     line-height: $font_size;
     overflow: hidden;
@@ -594,7 +592,7 @@ div.char-chooser {
 
     li {
         float: left;
-        width: $preview_box_content_width;
+        width: $preview_box_width;
 
         a {
             font-size: 11px;

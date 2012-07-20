@@ -11,5 +11,6 @@ gem 'json'
 gem 'bourbon'
 
 group :development do
+  gem 'capistrano'
   gem 'rspec'
 end

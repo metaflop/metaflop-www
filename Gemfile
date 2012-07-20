@@ -12,7 +12,4 @@ gem 'bourbon'
 
 group :development do
   gem 'rspec'
-  gem 'ZenTest'
-  gem 'autotest-growl'
-  gem 'autotest-fsevent'
 end

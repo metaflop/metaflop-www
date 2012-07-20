@@ -12,7 +12,6 @@ html, body {
 body {
     font-family: helvetica, sans-serif;
     font-size: $font_size;
-    background: url(/img/bg-gradient.png) repeat-x #fff 0 0;
     line-height: 1.5;
 }
 
@@ -81,7 +80,6 @@ h2 {
     padding: 0 10px 0 0; // margin -> visible dropshadow of inner span
 
     span {
-        @include box-shadow(2px 2px 2px #ccc);
         display: block;
         background: $active_color;
         padding: $box_heading_padding;
@@ -477,14 +475,14 @@ a.action-icon {
     margin: 0 0 $box_spacing_y 0;
 
     h2 span {
-        background: #fff;
+        background: $box_bg_color;
     }
 
     .preview-box-content {
         @include box;
 
         margin-top: $border_width * -1; // correct the border width, such that h2 corresponds to parameters h2
-        border: $border_width solid #fff;
+        border: $border_width solid $box_bg_color;
         width: $preview_box_content_width;
         height: $preview_box_height;
         overflow: hidden;

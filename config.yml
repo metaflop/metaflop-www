@@ -49,7 +49,6 @@ metaflop:
     latex: |
       \documentclass[a4paper]{report}
       \usepackage{color}
-      \usepackage{ngerman}
       \definecolor{bgcolor}{rgb}{0.9,1,0.843}
       \begin{document}
       \pagestyle{empty}

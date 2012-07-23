@@ -17,7 +17,7 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
   ``$ gem install bundler``
 * required rubies
   ``$ bundle``
-* texlive (incl. package 'ngerman')
+* texlive
 * texlive-metapost
 * fontforge
 * dvipng

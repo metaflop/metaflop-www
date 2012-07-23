@@ -568,6 +568,9 @@ $(function () {
         }
     });
 
+    // autogrow textarea
+    $('#preview-typewriter').find('textarea').autogrow().hide();
+
     // load the first image
     previewImage();
 });

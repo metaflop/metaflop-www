@@ -1,30 +1,65 @@
 metaflop:
   preview_width: 340
 
+  # the "latex" sections are mustachified with <% %> tags instead of std {{}}
   preview_single:
     latex: |
-      \documentclass[a4paper]{report}\
-      \usepackage{color}\
-      \definecolor{bgcolor}{rgb}{0.9,1,0.843}\
-      \begin{document}\
-      \pagestyle{empty}\
-      \font\big=font at 56pt\
-      \noindent\
-      \big\
-      \put(-55,-50){\colorbox{bgcolor}{\makebox(150,150){}}}\
-      \put(2,0){{{text}}}\
-      \thinlines\
+      \documentclass[a4paper]{report}
+      \usepackage{color}
+      \definecolor{bgcolor}{rgb}{0.9,1,0.843}
+      \begin{document}
+      \pagestyle{empty}
+      \font\big=font at 56pt
+      \noindent
+      \big
+      \put(-55,-50){\colorbox{bgcolor}{\makebox(150,150){}}}
+      \put(2,0){<% text %>}
+      \thinlines
       \end{document}
 
   preview_chart:
-    generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"
-
-    convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize 'x{{height}}'
+    latex: |
+      \documentclass[a4paper]{report}
+      \usepackage{color}
+      \definecolor{bgcolor}{rgb}{0.9,1,0.843}
+      \begin{document}
+      \pagestyle{empty}
+      \font\big=font at 9pt
+      \noindent
+      \big
+      \put(-2,-97){\colorbox{bgcolor}{\makebox(200,200){}}}
+      \begin{minipage}[-50,-50]{200pt}
+      \begin{center}
+      \setlength{\tabcolsep}{10pt}
+      \begin{tabular}{ c  c  c  c  c  c  c }
+      A & B & C & D & E & F & G
+      \cr H & I & J & K & L & M & N
+      \cr O & P & Q & R & S & T & U
+      \cr V & W & X & Y & Z
+      \cr a & b & c & d & e & f & g
+      \cr h & i & j & k & l & m & n
+      \cr o & p & q & r & s & t & u
+      \cr v & w & x & y & z
+      \end{tabular}
+      \end{center}
+      \end{minipage}
+      \end{document}
 
   preview_typewriter:
-    generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 20pt \noindent \big \begin{flushleft}{{text}} \end{flushleft} \end{document}"
-
-    convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'
+    latex: |
+      \documentclass[a4paper]{report}
+      \usepackage{color}
+      \usepackage{ngerman}
+      \definecolor{bgcolor}{rgb}{0.9,1,0.843}
+      \begin{document}
+      \pagestyle{empty}
+      \font\big=font at 16pt
+      \noindent
+      \big
+      \setlength{\fboxrule}{5pt}
+      \setlength{\fboxsep}{5pt}
+      \put(-55,-50){\fcolorbox{bgcolor}{bgcolor}{\parbox{300pt}{<% text %>}}}
+      \end{document}
 
   font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
 

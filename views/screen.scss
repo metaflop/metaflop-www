@@ -59,11 +59,13 @@ option {
 
 textarea {
     display: none;
+    vertical-align: top;
+    border: 1px solid $box_bg_color;
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
-    border: 0;
+    padding: ($box_spacing_x / 2) $box_spacing_y 0 $box_spacing_y;
 }
 
 h1 {
@@ -548,13 +550,16 @@ a.action-icon {
 
     .preview-box-content {
         width: $preview_box_width_full;
+        height: auto;
+        min-height: 200px;
 
         .preview-image {
-            vertical-align: top;
-            margin: 9px 0;
+            display: block;
+            position: relative;
 
             &.error {
                 vertical-align: middle;
+                display: inline;
             }
         }
     }

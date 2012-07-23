@@ -159,7 +159,10 @@ $(function () {
             content.find('textarea').hide();
             image.hide();
             preloadImage.show(0, function() {
-                preloadImage.css('display', 'inline'); // set to inline instead of block
+                // set display to inline (instead of block) for small previews (not typewriter)
+                if (preloadImage.parents('.preview-box-fullwidth').length == 0){
+                    preloadImage.css('display', 'inline');
+                }
                 if (error) {
                     preloadImage.tipsy({
                         offset: 8,
@@ -525,7 +528,9 @@ $(function () {
             $this.attr('title', 'enter edit mode');
         }
         else {
-            textarea.show();
+            textarea.show(0, function(){
+                $(this).css('display', 'block'); // set to block instead of inline
+            });
             $this.attr('title', 'exit edit mode');
         }
 

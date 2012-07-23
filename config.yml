@@ -1,9 +1,8 @@
 metaflop:
-  preview_height: 315
   preview_width: 340
 
   preview_single:
-    generate: |
+    latex: |
       \documentclass[a4paper]{report}\
       \usepackage{color}\
       \definecolor{bgcolor}{rgb}{0.9,1,0.843}\
@@ -16,8 +15,6 @@ metaflop:
       \put(2,0){{{text}}}\
       \thinlines\
       \end{document}
-
-    convert_custom: dvigif -D 200 font.dvi -o font.gif > /dev/null && convert font.gif -resize '{{width}}'
 
   preview_chart:
     generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"

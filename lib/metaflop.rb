@@ -41,10 +41,13 @@ class Metaflop
   # returns an gif image for a single character preview
   def preview_single
     generate(
-      generate: "#{settings[:preview_single]['generate']}",
-      convert_svg: "#{settings[:preview_single]['convert_svg']}",
-      convert_gif: Mustache.render(settings[:preview_single]['convert_gif'],
-                                   { :height => settings[:preview_height], :preview_y_offset => preview_y_offset })
+      generate: Mustache.render(
+        %Q{latex -output-format=dvi -jobname=font "\\#{settings[:preview_single]['generate'].strip}"},
+        { :text => @font_settings.char}
+      ),
+      convert_custom: Mustache.render("#{settings[:preview_single]['convert_custom']}", {
+        :width => settings[:preview_width]
+      })
     )
   end
 
@@ -88,22 +91,13 @@ class Metaflop
   # @option options [String] :convert_gif parameters for the 'convert' task for the gif image
   # @option options [String] :convert_custom the custom convert call, use this instead of :convert_svg / :convert_gif
   def generate(options = {})
-    char_number = @font_settings.char_number
-    if char_number
-      char_number = char_number.to_s.rjust(2, '0')
-      svg_name = "font-#{char_number}.svg"
-    else
-      char_number = "01"
-      svg_name = "font.svg"
-    end
-
     convert = options[:convert_custom] || "convert #{options[:convert_svg]} #{svg_name} #{options[:convert_gif]}"
 
     # don't bother if metafont failed
     if generate_mf
       command = %Q{cd #{@font_settings.out_dir} &&
                    #{options[:generate]} > /dev/null &&
-                   dvisvgm -TS0.75 -M16 -n -p #{char_number} font.dvi > /dev/null &&
+                   dvisvgm -TS0.75 -M16 -n  font.dvi > /dev/null &&
                    #{convert} gif:-}
 
         logger.info command
@@ -124,41 +118,4 @@ class Metaflop
     )
   end
 
-  def preview_y_offset
-    glyph_category = settings[:glyph_categories][@font_settings.char_number.to_i - 1]
-    factor = settings[:preview_height].to_f /
-      font_parameters.box_height.value.to_f # call method -> need box_height from file
-
-    if glyph_category == :cap
-      return 0
-    end
-
-    if glyph_category == :capo
-      return - @font_parameters.absolute_value(:overshoot) * factor
-    end
-
-    if glyph_category == :mean
-      return (@font_parameters.absolute_value(:cap_height) -
-              @font_parameters.absolute_value(:mean_height)) * factor
-    end
-
-    if glyph_category == :meano
-      return (-@font_parameters.absolute_value(:overshoot) +
-              @font_parameters.absolute_value(:cap_height) -
-              @font_parameters.absolute_value(:mean_height)) * factor
-    end
-
-    if glyph_category == :asco
-      return (-@font_parameters.absolute_value(:overshoot) +
-              @font_parameters.absolute_value(:cap_height) -
-              @font_parameters.absolute_value(:ascender_height)) * factor
-    end
-
-    if glyph_category == :asc
-      return (@font_parameters.absolute_value(:cap_height) -
-              @font_parameters.absolute_value(:ascender_height)) * factor
-    end
-
-    raise ArgumentError, "glyph_category '#{glyph_category}' is invalid."
-  end
 end

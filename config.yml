@@ -1,10 +1,23 @@
 metaflop:
   preview_height: 315
+  preview_width: 340
 
   preview_single:
-    generate: gftodvi font.2602gf
-    convert_svg: -density 60
-    convert_gif: -chop 0x15 -extent 'x{{height}}' -bordercolor white -border 0x{{preview_y_offset}}
+    generate: |
+      \documentclass[a4paper]{report}\
+      \usepackage{color}\
+      \definecolor{bgcolor}{rgb}{0.9,1,0.843}\
+      \begin{document}\
+      \pagestyle{empty}\
+      \font\big=font at 56pt\
+      \noindent\
+      \big\
+      \put(-55,-50){\colorbox{bgcolor}{\makebox(150,150){}}}\
+      \put(2,0){{{text}}}\
+      \thinlines\
+      \end{document}
+
+    convert_custom: dvigif -D 200 font.dvi -o font.gif > /dev/null && convert font.gif -resize '{{width}}'
 
   preview_chart:
     generate: latex -output-format=dvi -jobname=font "\\documentclass[a4paper]{report} \begin{document} \pagestyle{empty} \font\big=font at 22pt \noindent \big \begin{center} \setlength{\tabcolsep}{18pt} \begin{tabular}{ c  c  c  c  c  c  c }  A & B & C & D & E & F & G \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr H & I & J & K & L & M & N \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr  O & P & Q & R & S & T & U  \\  \cr  &   &   &   &   &   &   \\ \cr  &   &   &   &   &   &   \\ \cr  V & W & X & Y & Z   \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr a & b & c & d & e & f & g \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr h & i & j & k & l & m & n \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr o & p & q & r & s & t & u \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr v & w & x & y & z & . & ! \\ \cr   &   &   &   &   &   &   \\ \cr   &   &   &   &   &   &   \\ \cr \end{tabular}  \end{center} \end{document}"
@@ -17,82 +30,6 @@ metaflop:
     convert_custom: dvigif -D 200 font.dvi -o font.gif >> /dev/null && convert font.gif -trim +repage -resize '675'
 
   font_otf: 'perl mf2pt1.pl --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
-
-  glyph_categories:
-    - !ruby/symbol cap # A
-    - !ruby/symbol cap # B
-    - !ruby/symbol capo # C
-    - !ruby/symbol cap # D
-    - !ruby/symbol cap # E
-    - !ruby/symbol cap # F
-    - !ruby/symbol capo # G
-    - !ruby/symbol cap # H
-    - !ruby/symbol cap # I
-    - !ruby/symbol cap # J
-    - !ruby/symbol cap # K
-    - !ruby/symbol cap # L
-    - !ruby/symbol cap # M
-    - !ruby/symbol cap # N
-    - !ruby/symbol capo # O
-    - !ruby/symbol cap # P
-    - !ruby/symbol capo # Q
-    - !ruby/symbol cap # R
-    - !ruby/symbol capo # S
-    - !ruby/symbol cap # T
-    - !ruby/symbol cap # U
-    - !ruby/symbol cap # V
-    - !ruby/symbol cap # W
-    - !ruby/symbol cap # X
-    - !ruby/symbol cap # Y
-    - !ruby/symbol cap # Z
-
-    - !ruby/symbol meano # a
-    - !ruby/symbol asc # b
-    - !ruby/symbol meano # c
-    - !ruby/symbol asc # d
-    - !ruby/symbol meano # e
-    - !ruby/symbol asco # f
-    - !ruby/symbol meano # g
-    - !ruby/symbol asc # h
-    - !ruby/symbol asc # i
-    - !ruby/symbol asc # j
-    - !ruby/symbol asc # k
-    - !ruby/symbol asc # l
-    - !ruby/symbol meano # m
-    - !ruby/symbol meano # n
-    - !ruby/symbol meano # o
-    - !ruby/symbol meano # p
-    - !ruby/symbol meano # q
-    - !ruby/symbol meano # r
-    - !ruby/symbol meano # s
-    - !ruby/symbol asc # t
-    - !ruby/symbol mean # u
-    - !ruby/symbol mean # v
-    - !ruby/symbol mean # w
-    - !ruby/symbol mean # x
-    - !ruby/symbol mean # y
-    - !ruby/symbol mean # z
-
-    - !ruby/symbol cap # 0
-    - !ruby/symbol cap # 1
-    - !ruby/symbol cap # 2
-    - !ruby/symbol cap # 3
-    - !ruby/symbol cap # 4
-    - !ruby/symbol cap # 5
-    - !ruby/symbol cap # 6
-    - !ruby/symbol cap # 7
-    - !ruby/symbol cap # 8
-    - !ruby/symbol cap # 9
-
-    - !ruby/symbol mean # amp
-    - !ruby/symbol mean # colon
-    - !ruby/symbol mean # comma
-    - !ruby/symbol cap # exclam
-    - !ruby/symbol mean # hyphen
-    - !ruby/symbol mean # period
-    - !ruby/symbol mean # plus
-    - !ruby/symbol mean # semicolon
-    - !ruby/symbol mean # space
 
 projects:
   lovehate: 

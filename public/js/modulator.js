@@ -120,7 +120,7 @@ $(function () {
                 return element.id.remove('param-') + '=' + $(element).val()
             })
             // add the selected character param
-            .add('char-number=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
+            .add('char=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
 
         return $.fn.metaflop.queryString;
@@ -159,6 +159,7 @@ $(function () {
             content.find('textarea').hide();
             image.hide();
             preloadImage.show(0, function() {
+                preloadImage.css('display', 'inline'); // set to inline instead of block
                 if (error) {
                     preloadImage.tipsy({
                         offset: 8,

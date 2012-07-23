@@ -520,8 +520,15 @@ a.action-icon {
         }
 
         .preview-image {
-            vertical-align: middle;
+            position: absolute;
             display: inline;
+            bottom: 0;
+            left: 0;
+
+            &.error {
+                vertical-align: middle;
+                position: static;
+            }
         }
     }
 
@@ -561,6 +568,7 @@ a.action-icon {
     position: absolute;
     top: 50%;
     left: 50%;
+    z-index: 99;
 }
 
 .preview-loading-text {

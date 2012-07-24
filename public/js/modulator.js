@@ -159,10 +159,8 @@ $(function () {
             content.find('textarea').hide();
             image.hide();
             preloadImage.show(0, function() {
-                // set display to inline (instead of block) for small previews (not typewriter)
-                if (preloadImage.parents('.preview-box-fullwidth').length == 0){
-                    preloadImage.css('display', 'inline');
-                }
+                preloadImage.css('display', 'inline'); // set display to inline (instead of block)
+
                 if (error) {
                     preloadImage.tipsy({
                         offset: 8,

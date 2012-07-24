@@ -26,6 +26,7 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * imagemagick (convert)
 * [sfnt2woff](http://people.mozilla.com/~jkew/woff/)
 * [ttf2eot](https://github.com/greyfont/ttf2eot)
+* t1utils
 
 ## License
 

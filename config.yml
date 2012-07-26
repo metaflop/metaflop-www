@@ -64,18 +64,6 @@ metaflop:
 
   font_web: sfnt2woff font.otf && ttf2eot font.ttf > font.eot
 
-projects:
-  lovehate: 
-    description: 'all the works of <a href="http://www.christianvetter.ch" target="_blank">christian vetter</a> gravitate around the topic of painting and generating new possibilities of perception: how can a work stay as an ornament, completely abstract, and in the same time produce a meaning, a content? christian vetter uses <a href="/fonts/adjuster">mf adjuster</a> as a structure, as a construction kit in order to build autonomous in-between spaces. this time, as an exception in his work, the meaning of the words is not secondary, but the main focus stays on the affiliation of the font to image. the phrase structure stays, one word or one letter changes which creates not only a different space disposition but simultaneously a new meaning.'
-    images:
-      - lovehate2-01.png
-      - lovehate2-02.png
-      - lovehate2-03.png
-      - lovehate2-04.png
-      - lovehate2-05.png
-      - lovehate2-06.png
-      - lovehate2-07.png
-
 fonts:
   bespoke: 
     description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of <em>contrast</em> to the default settings.

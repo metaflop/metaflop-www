@@ -160,6 +160,11 @@ a, span.action {
 
 span.action {
     margin-right: 3px;
+    position: relative;
+
+    &.action-export-font {
+        display: block;
+    }
 }
 
 a.action-icon {
@@ -379,8 +384,8 @@ a.action-icon {
         float: left;
     }
     .spinner {
-        display: block;
-        float: left;
+        position: absolute;
+        right: -5px;
         overflow: hidden;
         width: 20px;
     }

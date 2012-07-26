@@ -107,7 +107,7 @@ $(function () {
     var getSpinnerForActionLink = function(link) {
         // insert spinner (need new element to properly position)
         var spinner = $('<span>&nbsp;</span>').addClass('spinner');
-        spinner.insertAfter(link);
+        spinner.appendTo(link);
         link.blur();
         spinner.spin('tiny');
 

@@ -83,7 +83,7 @@ h2 {
 
     span {
         display: block;
-        background: $active_color;
+        background: $box_bg_color;
         padding: $box_heading_padding;
     }
 
@@ -486,10 +486,6 @@ a.action-icon {
     width: $preview_box_width;
     margin: 0 0 $box_spacing_y 0;
 
-    h2 span {
-        background: $box_bg_color;
-    }
-
     .preview-box-content {
         @include box;
 
@@ -536,12 +532,6 @@ a.action-icon {
                 vertical-align: middle;
                 position: static;
             }
-        }
-    }
-
-    &.active {
-        h2 span {
-            background: $active_color;
         }
     }
 }

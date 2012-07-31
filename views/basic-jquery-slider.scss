@@ -11,6 +11,10 @@ ol.bjqs-markers li { float: left; }
 
 p.bjqs-caption { display: block; width: 96%; margin: 0; padding: 2%; position: absolute; bottom: 0; }
 
+.bjqs-mouse-nav { position: absolute; top: 0; width: 50%; z-index: 99; }
+.bjqs-mouse-nav.left { left: 0; cursor: w-resize; }
+.bjqs-mouse-nav.right { right: 0; cursor: e-resize; }
+
 /* metaflop styles */
 ul.bjqs-controls li a {
     display: block;
@@ -21,12 +25,12 @@ ul.bjqs-controls li a {
 
     &.bjqs-prev {
         left: 0;
-        background: url(/img/arrows.png) no-repeat scroll 0 -189px #fff;
+        background: url(/img/arrows.png) no-repeat scroll 0 -189px transparent;
     }
 
     &.bjqs-next {
         right: 0;
-        background: url(/img/arrows.png) no-repeat scroll 0 -64px #fff;
+        background: url(/img/arrows.png) no-repeat scroll 0 -64px transparent;
     }
 }
 

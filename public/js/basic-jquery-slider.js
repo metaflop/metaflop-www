@@ -1,5 +1,5 @@
 /*
- * Basic jQuery Slider plug-in v.1.1
+ * Basic jQuery Slider plug-in v.1.3
  * 
  * http://www.basic-slider.com
  *
@@ -14,6 +14,7 @@
  * First published: August 2011
  * Updated v1.1: September 2011
  * Updated v1.2: Janurary 2012
+ * Updated v1.3: July 2012
  * 
  */ (function ($) {
     $.fn.bjqs = function (options) {
@@ -44,8 +45,12 @@
                 showMarkers: true,
 				// Center the positional indicators
                 centerMarkers: true,
+                // Callback when next image is shown
+                nextImageLoaded: function(position, slideCount){},
 				// Allow navigation with arrow keys
                 keyboardNav: true,
+                // Allow navigation with mouse clicks
+                mouseNav: false,
 				// Use image title text as caption
                 useCaptions: true 
             },
@@ -192,6 +197,23 @@
             });
         }
 
+        // Enable mouse navigation
+        if (settings.mouseNav && slideCount > 1) {
+            var leftClick = $('<div class="bjqs-mouse-nav left"></div>');
+            var rightClick = $('<div class="bjqs-mouse-nav right"></div>');
+
+            leftClick
+                .click(function(){ bjqsGo(back, false); })
+                .css('height', settings.height);
+            rightClick
+                .click(function(){ bjqsGo(forward, false); })
+                .css('height', settings.height);
+
+            $container
+                .css('position', 'relative')
+                .append(leftClick, rightClick);
+        }
+
         // Show captions
         if (settings.useCaptions) {
 
@@ -302,6 +324,7 @@
         // Show the first slide	
         slides.eq(current).show();
         $slider.show();
+        settings.nextImageLoaded(0, slideCount);
 
         // What comes next? Hey, Bust a move!
         var bjqsGo = function (direction, position) {
@@ -376,6 +399,7 @@
                     }
 
                 }
+                settings.nextImageLoaded(next, slideCount);
 
             }
 

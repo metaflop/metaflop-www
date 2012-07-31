@@ -10,7 +10,7 @@ require './lib/showoff_page'
 
 class App
   module Views
-    class Fonts < Layout
+    class Metafonts < Layout
       include ShowoffPage
     end
   end

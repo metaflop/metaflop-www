@@ -64,7 +64,7 @@ metaflop:
 
   font_web: sfnt2woff font.otf && ttf2eot font.ttf > font.eot
 
-fonts:
+metafonts:
   bespoke: 
     description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of <em>contrast</em> to the default settings.
     images:

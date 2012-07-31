@@ -121,7 +121,6 @@ DEPENDENCIES
   capistrano
   data_mapper
   dm-mysql-adapter
-  json
   mustache
   rspec
   rubyzip

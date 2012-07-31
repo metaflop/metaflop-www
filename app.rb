@@ -15,7 +15,6 @@ require 'sass'
 require 'mustache/sinatra'
 require 'time'
 require 'data_mapper' # metagem, requires common plugins too.
-require 'json'
 require './lib/metaflop'
 require './lib/url'
 
@@ -144,23 +143,6 @@ class App < Sinatra::Application
     else
       not_found "The font type is not supported"
     end
-  end
-
-  get '/:page/:name.json' do |page, name|
-    content_type :json
-
-    not_found_message = 'the specified name does not exist'
-
-    require "./views/#{page}"
-    instance = Views::const_get(page.capitalize).new
-
-    not_found not_found_message unless settings.respond_to? page
-    instance.settings = settings.method(page).call
-
-    data = instance.single name
-    not_found not_found_message if data.nil?
-
-    data.to_json
   end
 
   get '/:page/partial' do |page|

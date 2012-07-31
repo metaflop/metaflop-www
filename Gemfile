@@ -7,7 +7,6 @@ gem 'mustache'
 gem 'data_mapper'
 gem 'dm-mysql-adapter'
 gem 'sinatra-simple-navigation'
-gem 'json'
 gem 'bourbon'
 gem 'rubyzip'
 

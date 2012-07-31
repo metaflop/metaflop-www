@@ -36,7 +36,14 @@ module ShowoffPage
       {
         :title => x[0],
         :description => x[1]["description"],
-        :images => x[1]["images"].map { |img| "/img/#{page_name}/#{img}" }
+        :images => x[1]["images"].map { |img| "/img/#{page_name}/#{img}" },
+        :subimages => (x[1]["subimages"] || []).map.with_index do |img, i|
+          {
+            :url => "/img/#{page_name}/#{img[0]}",
+            :short => img[1],
+            :first => i == 0
+          }
+        end
       }
     end
     current(pages)["active"] = true

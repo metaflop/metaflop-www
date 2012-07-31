@@ -30,4 +30,15 @@
             </div>
         </div>
     </div>
+
+    {{#current.subimages}}
+    <div class="preview-box preview-box-fullwidth">
+        {{#first}}
+        <h2><span>derivations</span></h2>
+        {{/first}}
+        <div class="preview-box-content showoff-derivations">
+            <a href="/modulator/font/{{short}}"><img src="{{url}}" /></a>
+        </div>
+    </div>
+    {{/current.subimages}}
 </div>

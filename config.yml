@@ -71,6 +71,44 @@ metafonts:
       - bespoke1-01.png
       - bespoke1-02.png
       - bespoke1-03.png
+    subimages:
+      -
+        - bespoke-derivations-01.png
+        - W2wMVl1oOf
+      -
+        - bespoke-derivations-02.png
+        - wEEJXpb_F_
+      -
+        - bespoke-derivations-03.png
+        - X_nuDV5EKb
+      -
+        - bespoke-derivations-04.png
+        - xQZl0I4bG4
+      -
+        - bespoke-derivations-05.png
+        - bBv88L09e8
+      -
+        - bespoke-derivations-06.png
+        - f0ySyHr68Q
+      -
+        - bespoke-derivations-07.png
+        - bQCd3GYPgX
+      -
+        - bespoke-derivations-08.png
+        - Hb-V8s8C70
+      -
+        - bespoke-derivations-09.png
+        - jVzgqoraQu
+      -
+        - bespoke-derivations-10.png
+        - L9JtCtna31
+      -
+        - bespoke-derivations-11.png
+        - tRp6NK0eyw
+      -
+        - bespoke-derivations-12.png
+        - UcH5rxsNVi
+
   adjuster: 
     description: 'mf adjuster is a font with a very basic form, plain architectural, highly functional, almost crystalline. it follows a strict grid and a simple no-curves-policy and comes along with a rather reduced set of parameters. although the dimension and proportion of mf <a href="/modulator?fontface=Adjuster">mf adjuster</a> can vary, its sophistication derives from the pen parameter: you can choose from <em>circle</em>, <em>square</em> or <em>razor</em>.'
     images:

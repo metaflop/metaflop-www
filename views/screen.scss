@@ -501,6 +501,11 @@ a.action-icon {
             height: $showoff_preview_box_height;
         }
 
+        &.showoff-derivations {
+            min-height: 0;
+            line-height: 1;
+        }
+
         * {
             line-height: 11px;
         }

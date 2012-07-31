@@ -13,6 +13,14 @@ class App
         @title || "metaflop"
       end
 
+      def page_title
+        self.class.name.split('::').last
+      end
+
+      def page_name
+        page_title.downcase
+      end
+
       def css
         []
       end

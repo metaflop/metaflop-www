@@ -1,0 +1,46 @@
+@mixin page-style($bg_color) {
+    h2 span {
+        background: $bg_color;
+    }
+
+    // the following 2 are the ones that
+    // use the "box" mixin
+    .box-content {
+        background: $bg_color;
+    }
+
+    .preview-box,
+    .preview-box-fullwidth {
+        .preview-box-content {
+            background: $bg_color;
+        }
+    }
+}
+
+#main {
+    &.modulator {
+        @include page-style($bg_color_modulator);
+
+        // make the inactive previews 50% opague
+        .preview-box,
+        .preview-box-fullwidth {
+            opacity: 0.5;
+
+            &.active {
+              opacity: 1;
+            }
+        }
+    }
+
+    &.metafonts {
+        @include page-style($bg_color_metafonts);
+    }
+
+    &.projects {
+        @include page-style($bg_color_projects);
+    }
+
+    &.media {
+        @include page-style($bg_color_media);
+    }
+}

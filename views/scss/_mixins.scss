@@ -1,6 +1,6 @@
 @mixin box {
     clear: both; // clear h2 float
-    background: $box_bg_color;
+    background: $bg_color_base;
 }
 
 @mixin header-row {

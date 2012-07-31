@@ -5,7 +5,11 @@ $active_color: #60eb00;
 $active_link_color: #ff0000;
 $inactive_link_color: lighten(#000, 80%);
 $text_link_color: darken($input_color, 25%);
-$box_bg_color: #e6ffd7;
+$bg_color_base: #f2f2f2;
+$bg_color_modulator: #e6ffd7;
+$bg_color_metafonts: #d7ffff;
+$bg_color_projects: #ffffc8;
+$bg_color_media: #ffe1e1;
 
 $content_width: 1000px;
 $right_column_width: 710px;

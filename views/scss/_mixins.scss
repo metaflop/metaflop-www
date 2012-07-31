@@ -8,10 +8,10 @@
 }
 
 @mixin content-link {
-    color: $inactive_link_color;
+    color: $link_color;
 
     &:hover {
-        color: $active_link_color;
+        color: $link_color_hover;
     }
 }
 

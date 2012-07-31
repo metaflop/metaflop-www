@@ -1,15 +1,15 @@
 $font_size: 15px;
 $input_height: 14px;
 $input_color: #ccc9bc;
-$active_color: #60eb00;
-$active_link_color: #ff0000;
-$inactive_link_color: lighten(#000, 80%);
-$text_link_color: darken($input_color, 25%);
+$link_color: #666;
+$link_color_hover: #ff0000;
 $bg_color_base: #f2f2f2;
 $bg_color_modulator: #e6ffd7;
 $bg_color_metafonts: #d7ffff;
 $bg_color_projects: #ffffc8;
 $bg_color_media: #ffe1e1;
+
+$modulator_active_color: darken($bg_color_modulator, 10%);
 
 $content_width: 1000px;
 $right_column_width: 710px;

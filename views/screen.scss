@@ -154,7 +154,7 @@ a, span.action {
     }
 
     &:hover {
-        color: $active_link_color;
+        color: $link_color_hover;
     }
 }
 
@@ -288,17 +288,16 @@ a.action-icon {
             color: #000;
 
             &.selected { 
-                color: $active_color;
                 font-weight: bold;
                 cursor: default;
 
                 &:hover {
-                    color: $active_color;
+                    color: #000;
                 }
             }
 
             &:hover {
-                color: $active_link_color;
+                color: $link_color_hover;
             }
         }
     }
@@ -516,7 +515,6 @@ a.action-icon {
             right: -1px;
             width: 15px;
             height: 15px;
-            border: 1px solid $active_color;
             background-image: url(/img/icons.png);
             background-color: #fff;
             background-repeat: no-repeat;
@@ -566,7 +564,7 @@ a.action-icon {
 }
 
 .adjuster input.active {
-    background-color: $active_color;
+    background-color: $modulator_active_color;
 }
 
 .preview-loading {
@@ -586,10 +584,6 @@ a.action-icon {
 
 .inputblock {
     position: relative;
-
-    &:hover {
-        background: #eee;
-    }
 }
 
 div.char-chooser {
@@ -632,12 +626,12 @@ a.char-chooser {
 
     &.left {
         left: 2px;
-        background: url(/img/arrows.png) no-repeat scroll 0 -189px #fff;
+        background: url(/img/arrows.png) no-repeat scroll 0 -189px transparent;
     }
 
     &.right {
         right: 2px;
-        background: url(/img/arrows.png) no-repeat scroll 0 -64px #fff;
+        background: url(/img/arrows.png) no-repeat scroll 0 -64px transparent;
     }
 }
 

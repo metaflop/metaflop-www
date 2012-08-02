@@ -27,11 +27,6 @@ p {
     }
 }
 
-h3 {
-    margin: 0;
-    font-size: $font_size;
-}
-
 input {
     border: 1px solid $input_color;
     font-family: helvetica, sans-serif;
@@ -92,6 +87,11 @@ h2 {
     float: left;
 }
 
+h3 {
+    margin: 0;
+    font-size: $font_size;
+}
+
 fieldset {
     border: none;
     padding: 0;
@@ -140,30 +140,21 @@ label {
     width: 55%;
 }
 
-a, span.action {
-    color: #000;
+a {
     text-decoration: none;
-    cursor: pointer;
+    color: $link_color;
+
+    &:hover {
+        color: $link_color_hover;
+    }
 
     &.active {
+        color: #000;
         cursor: default;
 
         &:hover {
             color: #000;
         }
-    }
-
-    &:hover {
-        color: $link_color_hover;
-    }
-}
-
-span.action {
-    margin-right: 3px;
-    position: relative;
-
-    &.action-export-font {
-        display: block;
     }
 }
 
@@ -226,10 +217,6 @@ a.action-icon {
     &.text {
         padding-top: $box_spacing_x / 2;
         padding-bottom: $box_spacing_x / 2;
-
-        a {
-            @include content-link;
-        }
     }
 
     .static-value {
@@ -330,9 +317,6 @@ a.action-icon {
         padding-top: $box_spacing_x / 2;
     }
 
-    a {
-        @include content-link;
-    }
 
     ul {
         margin: 0 0 ($box_spacing_x / 4) 0;
@@ -371,17 +355,15 @@ a.action-icon {
         }
     }
 
-    .action.exclusive {
-        @include content-link;
+    a {
+        margin-right: 3px;
+        position: relative;
 
-        &.active {
-            color: #000;
+        &.export-font {
+            display: block;
         }
     }
 
-    a {
-        float: left;
-    }
     .spinner {
         position: absolute;
         right: -5px;
@@ -674,11 +656,6 @@ a.char-chooser {
     span {
         color: lighten(#000, 80%);
     }
-}
-
-// basic jquery slider (gallery)
-ol.bjqs-markers li a {
-    border-width: 2px;
 }
 
 @import 'scss/slider.scss';

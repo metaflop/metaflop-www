@@ -32,14 +32,14 @@
             $this.find('option').each(function() {
                 ul += '<li id="'
                      + $(this).val() + '-' + $this[0].id
-                     + '"><span class="action">' + $(this).html() + '</span></li>';
+                     + '"><a href="#">' + $(this).html() + '</a></li>';
             });
 
             ul += '</ul>';
             var $ul = $(ul);
             var lis = $ul.find('li');
             // mark the currently selected option
-            lis.filter(function() { return $(this).find('span').html() == selectedOption.html() }).addClass('active');
+            lis.filter(function() { return $(this).find('a').html() == selectedOption.html() }).addClass('active');
 
             lis.click(function() {
                 var selectEl = $this;
@@ -54,7 +54,7 @@
                 selectEl.val(this.id.split('-')[0]);
 
                 // set display value
-                displayEl.html(li.find('span').text());
+                displayEl.html(li.find('a').text());
 
                 // hide
                 displayEl.click();

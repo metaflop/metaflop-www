@@ -7,14 +7,6 @@
     margin-bottom: $box_spacing_y;
 }
 
-@mixin content-link {
-    color: $link_color;
-
-    &:hover {
-        color: $link_color_hover;
-    }
-}
-
 @mixin content-col {
     float: left;
     margin-top: $box_spacing_x + $font_size + $box_spacing_x;

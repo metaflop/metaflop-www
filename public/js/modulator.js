@@ -292,7 +292,7 @@ $(function () {
                         previewImage();
 
                         $.fn.metaflop.parameterPanel.fadeTo(0, 1);
-                        $.fn.metaflop.parameterPanel(false);
+                        $.fn.metaflop.parameterPanel.spin(false);
                     }
                 });
             }
@@ -382,7 +382,9 @@ $(function () {
     });
 
     // export the font
-    $('.action-export-font').click(function(e) {
+    $('.export-font').click(function(e) {
+        e.preventDefault();
+
         var $this = $(this);
         var spinner = getSpinnerForActionLink($this);
 
@@ -535,13 +537,15 @@ $(function () {
     });
 
     // switch basic/pro mode for parameter panel
-    $('.parameter-panel-mode-toggle span').click(function() {
+    $('.parameter-panel-mode-toggle').click(function(e) {
+        e.preventDefault();
+
         var $this = $(this);
         var parameterPanel = $('#parameter-panel');
         var adjusters = parameterPanel.find('.adjuster');
         var sliders = parameterPanel.find('.slider');
 
-        $('.parameter-panel-mode-toggle span').removeClass('active');
+        $('.parameter-panel-mode-toggle').removeClass('active');
         $this.addClass('active');
 
         if ($this.hasClass('sliders')) {
@@ -552,15 +556,22 @@ $(function () {
             adjusters.show();
             sliders.hide();
         }
+
+        $this.blur();
     });
 
     // toggle the information header
-    var informationToggle = $('#menu').find('.toggle-info-panel .action');
-    informationToggle.click(function() {
-        if (!$(this).is('.active')) { 
+    var informationToggle = $('#menu').find('.toggle-info-panel');
+    informationToggle.click(function(e) {
+        e.preventDefault();
+
+        $this = $(this);
+        if (!$this.is('.active')) {
             informationToggle.toggleClass('active');
             $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
         }
+
+        $this.blur();
     });
 
     // autogrow textarea

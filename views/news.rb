@@ -5,11 +5,12 @@
 #
 # licensed under gpl v3
 #
+require './lib/slideshow_page'
 
 class App
   module Views
     class News < Layout
-      include SlideshowPage
+      include ::SlideshowPage
 
       def images
         (1..12).map { |i| "img/helloworld/bespoke-helloworld-%02d.png" % i}

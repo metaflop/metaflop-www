@@ -210,17 +210,6 @@ a.action-icon {
     }
 }
 
-.box-content {
-    @include box;
-
-    padding: 2px $box_spacing_y;
-
-    .static-value {
-        float: right;
-        width: 45%;
-    }
-}
-
 #main {
     min-height: 100%;
     height: auto !important;
@@ -322,22 +311,14 @@ a.action-icon {
 
 #menu {
     @include header-row;
-
-    .box-content {
-        height: inherit;
-
-        label {
-            width: 50%;
-            overflow: hidden;
-        }
-    }
+    @extend .box-text;
 
     a {
         margin-right: 3px;
         position: relative;
 
         &.export-font {
-            display: block;
+            display: block; // -> for proper spinner positioning
         }
     }
 
@@ -361,6 +342,8 @@ a.action-icon {
 }
 
 #parameter-panel {
+    @extend .box-text;
+
     position: relative;
 
     .slider {
@@ -533,6 +516,15 @@ a.action-icon {
 
 .box-text {
     .box-content {
+        @include box;
+
+        padding: 2px $box_spacing_y;
+
+        .static-value {
+            float: right;
+            width: 45%;
+        }
+
         text-align: left;
         font-size: inherit;
         height: auto;

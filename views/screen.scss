@@ -669,6 +669,14 @@ a.char-chooser {
     }
 }
 
+#feedback {
+    @include transform(rotate(-90deg));
+    @include transform-origin(center right);
+    position: fixed;
+    top: 45%;
+    right: $font_size;
+}
+
 @import 'scss/slider.scss';
 
 @import 'scss/tipsy.scss';

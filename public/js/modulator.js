@@ -147,10 +147,12 @@ $(function () {
             if (error) {
                 preloadImage.attr('src', '/img/error.png');
                 preloadImage.addClass('error');
+                content.addClass('error');
             }
             else {
                 preloadImage.removeClass('error');
                 image.removeClass('error');
+                content.removeClass('error');
             }
 
             content.fadeTo(0, 1);

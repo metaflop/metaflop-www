@@ -435,6 +435,10 @@ a.action-icon {
         position: relative;
         font-size: 9px;
 
+        &.error {
+            line-height: $preview_box_height;
+        }
+
         &.showoff-derivations {
             min-height: 0;
             line-height: 1;

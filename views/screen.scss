@@ -214,11 +214,6 @@ a.action-icon {
 
     padding: 2px $box_spacing_y;
 
-    &.text {
-        padding-top: $box_spacing_x / 2;
-        padding-bottom: $box_spacing_x / 2;
-    }
-
     .static-value {
         float: right;
         width: 45%;
@@ -461,8 +456,7 @@ a.action-icon {
     }
 }
 
-.box,
-.box-fullwidth {
+.box {
     float: left;
     width: $preview_box_width;
     margin: 0 0 $box_spacing_y 0;
@@ -477,10 +471,6 @@ a.action-icon {
         position: relative;
         line-height: $preview_box_height;
         font-size: 9px;
-
-        &.showoff {
-            height: $showoff_preview_box_height;
-        }
 
         &.showoff-derivations {
             min-height: 0;
@@ -521,11 +511,9 @@ a.action-icon {
     }
 }
 
-#preview-chart {
-    margin-left: $box_spacing_x;
-}
+.box-doublewidth {
+    @extend .box;
 
-.box-fullwidth {
     width: $preview_box_width_full;
 
     .box-content {
@@ -543,6 +531,44 @@ a.action-icon {
             }
         }
     }
+}
+
+.box-fullwidth {
+    @extend .box;
+
+    width: $content_width;
+
+    .box-content {
+        width: $content_width;
+    }
+}
+
+.box-slideshow {
+    h2 {
+        font-weight: normal;
+    }
+
+    .box-content {
+        padding: 0;
+    }
+
+}
+
+.box-text {
+    .box-content {
+        text-align: left;
+        font-size: inherit;
+        height: auto;
+        padding-top: 5px;
+
+        p {
+            line-height: 1.5;
+        }
+    }
+}
+
+#preview-chart {
+    margin-left: $box_spacing_x;
 }
 
 .adjuster input.active {

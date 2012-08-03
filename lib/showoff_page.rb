@@ -7,17 +7,11 @@
 #
 
 require './lib/rack_settings'
+require './lib/slideshow_page'
 
 module ShowoffPage
   include RackSettings
-
-  def js
-    ['/js/basic-jquery-slider.min.js', "/js/showoff-page.js"]
-  end
-
-  def css
-    ['/assets/css/basic-jquery-slider.scss']
-  end
+  include SlideshowPage
 
   def single(name)
     all.find { |x| x[:title] == name }

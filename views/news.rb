@@ -9,6 +9,11 @@
 class App
   module Views
     class News < Layout
+      include SlideshowPage
+
+      def images
+        (1..12).map { |i| "img/helloworld/bespoke-helloworld-%02d.png" % i}
+      end
     end
   end
 end

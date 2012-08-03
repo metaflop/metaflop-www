@@ -7,15 +7,16 @@
  */
 
 $(function () {
-    var slideshow = $('#slideshow');
-    var progress = slideshow.parents('.box').find('h2 span');
+    var box = $('.box-slideshow');
+    var slideshow = box.find('.box-content');
+    var progress = box.find('h2 span');
     var initSlideshow = function() {
         slideshow.bjqs({
-            width: 704,
+            width: slideshow.width(),
             height: 500,
             nextText: '',
             prevText: '',
-            rotationSpeed: 400000,
+            rotationSpeed: 2000,
             showControls: false,
             showMarkers: false,
             mouseNav: true,

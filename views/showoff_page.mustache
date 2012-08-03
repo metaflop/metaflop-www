@@ -11,28 +11,26 @@
     </div>
     <div id="parameter-panel">
         <h2><span>Info</span></h2>
-        <div class="box-content text">
+        <div class="box-content">
             {{{current.description}}}
         </div>
     </div>
 </div>
 
 <div id="col2">
-    <div class="box box-fullwidth">
+    <div class="box-doublewidth box-slideshow">
         <h2><span></span></h2>
-        <div class="box-content showoff">
-            <div id="slideshow">
-                <ul class="bjqs">
-                    {{#current.images}}
-                    <li><img src="{{.}}" /></li>
-                    {{/current.images}}
-                </ul>
-            </div>
+        <div class="box-content">
+            <ul class="bjqs">
+                {{#current.images}}
+                <li><img src="{{.}}" /></li>
+                {{/current.images}}
+            </ul>
         </div>
     </div>
 
     {{#current.subimages}}
-    <div class="box box-fullwidth">
+    <div class="box box-doublewidth">
         {{#first}}
         <h2><span>derivations</span></h2>
         {{/first}}

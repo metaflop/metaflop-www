@@ -461,13 +461,13 @@ a.action-icon {
     }
 }
 
-.preview-box,
-.preview-box-fullwidth {
+.box,
+.box-fullwidth {
     float: left;
     width: $preview_box_width;
     margin: 0 0 $box_spacing_y 0;
 
-    .preview-box-content {
+    .box-content {
         @include box;
 
         width: $preview_box_width;
@@ -525,10 +525,10 @@ a.action-icon {
     margin-left: $box_spacing_x;
 }
 
-.preview-box-fullwidth {
+.box-fullwidth {
     width: $preview_box_width_full;
 
-    .preview-box-content {
+    .box-content {
         width: $preview_box_width_full;
         height: auto;
         min-height: 200px;

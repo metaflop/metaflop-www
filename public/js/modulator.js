@@ -128,12 +128,12 @@ $(function () {
 
     // we have 2 preview images, the next preview is loaded into the invisible one
     var previewImageCall = function(){
-        var previewBox = $('.preview-box.active');
+        var previewBox = $('.box.active');
         var loading = previewBox.find('.preview-loading');
         var loadingText = previewBox.find('.preview-loading-text');
         var image = previewBox.find('.preview-image:visible');
         var preloadImage = previewBox.find('.preview-image:hidden');
-        var content = previewBox.find('.preview-box-content');
+        var content = previewBox.find('.box-content');
         var previewType = previewBox.attr('id').remove('preview-');
 
         var queryString = createQueryString();
@@ -462,9 +462,9 @@ $(function () {
     charChooser.on('click', 'a', function(e) {
         e.preventDefault();
 
-        var box = $(this).parents('.preview-box');
+        var box = $(this).parents('.box');
         if (!box.hasClass('active')) {
-            $('.preview-box.active').removeClass('active').find('textarea').hide();
+            $('.box.active').removeClass('active').find('textarea').hide();
             box.addClass('active');
         }
         charChooser.find('a').removeClass('active');
@@ -494,12 +494,12 @@ $(function () {
     });
 
     // activate preview box
-    $('.preview-box').click(function(e) {
+    $('.box').click(function(e) {
         e.preventDefault();
 
         var $this = $(this);
         if ($this.not('.active').length > 0) {
-            $('.preview-box.active').removeClass('active').find('textarea').hide();
+            $('.box.active').removeClass('active').find('textarea').hide();
             $this.addClass('active');
 
             previewImage();

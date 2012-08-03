@@ -9,9 +9,9 @@
         background: $bg_color;
     }
 
-    .preview-box,
-    .preview-box-fullwidth {
-        .preview-box-content {
+    .box,
+    .box-fullwidth {
+        .box-content {
             background: $bg_color;
         }
     }
@@ -22,8 +22,8 @@
         @include page-style($bg_color_modulator);
 
         // make the inactive previews 50% opague
-        .preview-box,
-        .preview-box-fullwidth {
+        .box,
+        .box-fullwidth {
             opacity: 0.5;
 
             &.active {

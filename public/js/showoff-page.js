@@ -8,7 +8,7 @@
 
 $(function () {
     var slideshow = $('#slideshow');
-    var progress = slideshow.parents('.preview-box').find('h2 span');
+    var progress = slideshow.parents('.box').find('h2 span');
     var initSlideshow = function() {
         slideshow.bjqs({
             width: 704,

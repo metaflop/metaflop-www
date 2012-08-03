@@ -223,15 +223,14 @@ a.action-icon {
 
 #navigation {
     margin: 0 0 $box_spacing_x 0;
-    padding: ($box_spacing_x / 2) $box_spacing_y ($box_spacing_x / 2 - 2px);
-    border-bottom: 2px solid #fff;
+    padding: ($box_spacing_x / 2) $box_spacing_y ($box_spacing_x / 2);
     font-size: $font_size;
     line-height: $font_size;
     position: fixed;
     overflow: hidden;
     width: $content_width - (2 * $box_spacing_y);
-    background: $bg_color_base;
-    z-index: 9;
+    background: #fff;
+    z-index: 99;
 
     ul {
         float: left;

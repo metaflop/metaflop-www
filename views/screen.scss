@@ -113,32 +113,20 @@ legend {
     }
 }
 
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    &.collapsible-list {
-        display: none;
-        clear: both;
-
-        &.share {
-            margin-left: 55%;
-        }
-    }
-
-    li {
-        overflow: hidden;
-
-        &.collapsible-list-item {
-            padding-top: 2px;
-        }
-    }
-}
-
 label {
     float: left;
     width: 55%;
+}
+
+ul {
+    margin: 0 0 ($box_spacing_x / 4) 0;
+    padding: 0 0 0 $box_spacing_x;
+    list-style: disc outside none;
+
+    li {
+        overflow: visible;
+        line-height: 1.5;
+    }
 }
 
 a {
@@ -537,17 +525,6 @@ a.action-icon {
             @extend .minor-para;
             line-height: 1.5;
         }
-
-        ul {
-            margin: 0 0 ($box_spacing_x / 4) 0;
-            padding: 0 0 0 $box_spacing_x;
-            list-style: disc outside none;
-
-            li {
-                overflow: visible;
-                line-height: 1.5;
-            }
-        }
     }
 }
 
@@ -589,6 +566,9 @@ div.char-chooser {
     text-transform: none;
 
     ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
         position: absolute;
         top: 3px;
         width: 2000px;
@@ -658,10 +638,30 @@ a.char-chooser {
 .dropdown-list {
     display: none;
     clear: both;
-    margin-left: 55%;
+    margin: 0 0 0 55%;
+    padding: 0;
 
-    li.active {
+    list-style: none;
+
+    &.collapsible-list {
         display: none;
+        clear: both;
+
+        &.share {
+            margin-left: 55%;
+        }
+    }
+
+    li {
+        overflow: hidden;
+
+        &.collapsible-list-item {
+            padding-top: 2px;
+        }
+
+        &.active {
+            display: none;
+        }
     }
 
     span {

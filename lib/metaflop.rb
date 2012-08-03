@@ -98,6 +98,8 @@ class Metaflop
   def generate(options = {})
     latex = options[:latex].strip.gsub(/\n/, "\\\n") # add a backslash for bash multiline
 
+    @font_settings.cleanup_tmp_dir
+
     # don't bother if metafont failed
     if generate_mf
       # hide all output but the last one, which returns the image

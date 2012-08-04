@@ -180,6 +180,11 @@ a.action-icon {
     }
 }
 
+object {
+    vertical-align: top;
+    background: $bg_color_modulator;
+}
+
 .share-clipboard {
     margin-left: -5px;
 }
@@ -311,7 +316,7 @@ a.action-icon {
 
     .spinner {
         position: absolute;
-        right: -5px;
+        right: -4px;
         overflow: hidden;
         width: 20px;
     }
@@ -614,14 +619,6 @@ a.char-chooser {
 
 #templates {
     display: none;
-}
-
-#menu #action-share-url {
-    width: 100%;
-
-    span {
-        float: left;
-    }
 }
 
 .dropdown-value {

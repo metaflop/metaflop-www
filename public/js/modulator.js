@@ -13,7 +13,12 @@ $(function () {
         ready: false, // is set to true when the initial preview has been generated (i.e. the UI is ready)
         settings: {
             panelToggleDuration: 500,
-            panelToggleEasing: 'easeInOutExpo'
+            panelToggleEasing: 'easeInOutExpo',
+            shareUrls: {
+                twitter: 'http://twitter.com/home?status={{text}}',
+                facebook: 'http://www.facebook.com/sharer.php?u={{text}}',
+                email: 'mailto:?subject=metaflop font&body={{text}}',
+            }
         },
         parameterPanel: $('#parameter-panel')
     };
@@ -56,8 +61,6 @@ $(function () {
             fdSlider.updateSlider(sliderInput[0].id);
         }
 
-        hideSharePanel();
-
         previewImage();
     }
 
@@ -82,6 +85,8 @@ $(function () {
     }
 
     // don't create new url each time for unchanged setting
+    // makes an ajax request with async:false! as this is
+    // deprecated as of 1.8, find a new solution! TODO
     var callWithFontHash = function(complete, success) {
         complete = complete || function(){};
         success = success || function(){};
@@ -92,6 +97,7 @@ $(function () {
         }
         else {
             $.ajax({
+                async: false,
                 url: '/modulator/font/create' + $.fn.metaflop.queryString,
                 success: function(data) {
                     $.fn.metaflop.shortendedUrl = data;
@@ -231,7 +237,7 @@ $(function () {
     }
 
     $.fn.metaflop.parameterPanel.on('focus', '.adjuster input.param', function() {
-            $this = $(this);
+            var $this = $(this);
             setActiveInputs($this);
         })
         .on('keydown', '.adjuster input.param', function(event) {
@@ -339,48 +345,54 @@ $(function () {
         return false;
     });
 
-    // returns true when the panel was visible -> is now hidden
-    var hideSharePanel = function() {
-        var li = $('.collapsible-list.share');
-        if (li.length > 0) {
-            li.animate({ height: 'toggle' }, $.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing, function() {
-                li.remove();
-            });
-
-            $('#action-share-url').removeClass('active');
-
-            return true;
-        }
-        return false;
-    };
-
     // share the current settings
-    $('#action-share-url').click(function(e) {
-        var $this = $(this);
+    // this function is called from flash clippy
+    $.fn.metaflop.getFlashShareUrl = function() {
+        var container = $('#action-share-url');
 
-        // don't show if the share buttons were already visible
-        var shown = hideSharePanel();
-        if (!shown) {
-            $('#action-share-url').addClass('active');
-            var spinner = getSpinnerForActionLink($this.find('span'));
-
-            var success = function(data) {
-                var url = "http://www.metaflop.com/modulator/font/" + data;
-                var text = 'I created a nice metaflop font! ' + url;
-
-                var content = $.mustache($('#collapsibleShare').html(), { url: url, text: text });
-                var li = $(content);
-                $this.parent().after(li);
-                li.animate({ height: 'toggle' }, $.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
-            };
+        console.debug("1", $.fn.metaflop.shortendedUrl);
+        if (!$.fn.metaflop.shortendedUrl) {
+            var spinner = getSpinnerForActionLink(container);
 
             var complete = function() {
                 spinner.spin(false);
                 spinner.remove();
             };
 
-            callWithFontHash(complete, success);
+            callWithFontHash(complete);
         }
+
+        return $.fn.metaflop.shortendedUrl;
+    };
+
+    $('#action-share-url a').click(function(e) {
+        e.preventDefault();
+        var $this = $(this);
+
+        var spinner = getSpinnerForActionLink($('#action-share-url'));
+
+        var success = function(data) {
+            var url = "http://www.metaflop.com/modulator/font/" + data;
+            var text = 'I created a nice metaflop font! ' + url;
+            var type = $this.attr('data-type');
+
+            var link = $.mustache($.fn.metaflop.settings.shareUrls[type], { url: url, text: text });
+
+            if (type == 'email') {
+                window.location = link;
+            }
+            // open in new window
+            else {
+                window.open(link);
+            }
+        };
+
+        var complete = function() {
+            spinner.spin(false);
+            spinner.remove();
+        };
+
+        callWithFontHash(complete, success);
     });
 
     // export the font
@@ -416,7 +428,7 @@ $(function () {
 
     $.fn.metaflop.parameterPanel.on('click', '.add1, .add10, .sub1, .sub10', function(e) {
         e.preventDefault();
-        $this = $(this);
+        var $this = $(this);
         var input = $this.parent().find('input');
 
         setActiveInputs(input);
@@ -567,7 +579,7 @@ $(function () {
     informationToggle.click(function(e) {
         e.preventDefault();
 
-        $this = $(this);
+        var $this = $(this);
         if (!$this.is('.active')) {
             informationToggle.toggleClass('active');
             $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);

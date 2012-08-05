@@ -91,8 +91,8 @@ $(function () {
         complete = complete || function(){};
         success = success || function(){};
 
-        if ($.fn.metaflop.shortendedUrl) {
-            success($.fn.metaflop.shortendedUrl);
+        if ($.fn.metaflop.shortenendUrl) {
+            success($.fn.metaflop.shortenendUrl);
             complete();
         }
         else {
@@ -100,7 +100,7 @@ $(function () {
                 async: false,
                 url: '/modulator/font/create' + $.fn.metaflop.queryString,
                 success: function(data) {
-                    $.fn.metaflop.shortendedUrl = data;
+                    $.fn.metaflop.shortenendUrl = data;
                     success(data);
                 },
                 complete: function() {
@@ -190,7 +190,7 @@ $(function () {
         };
 
         // clear cached shortend url
-        $.fn.metaflop.shortendedUrl = null;
+        $.fn.metaflop.shortenendUrl = null;
 
         // there is already a request on its way -> cancel it
         if ($.fn.metaflop.preloadImageInProgress) {
@@ -345,13 +345,19 @@ $(function () {
         return false;
     });
 
+    // gets the absolute shareable font url for the
+    var getFontUrl = function(shortenendUrl) {
+        var url = $.url();
+        var baseUrl = url.attr('source').remove(url.attr('relative'));
+        return baseUrl + "/modulator/font/" + shortenendUrl; 
+    };
+
     // share the current settings
     // this function is called from flash clippy
     $.fn.metaflop.getFlashShareUrl = function() {
         var container = $('#action-share-url');
 
-        console.debug("1", $.fn.metaflop.shortendedUrl);
-        if (!$.fn.metaflop.shortendedUrl) {
+        if (!$.fn.metaflop.shortenendUrl) {
             var spinner = getSpinnerForActionLink(container);
 
             var complete = function() {
@@ -362,7 +368,7 @@ $(function () {
             callWithFontHash(complete);
         }
 
-        return $.fn.metaflop.shortendedUrl;
+        return getFontUrl($.fn.metaflop.shortenendUrl);
     };
 
     $('#action-share-url a').click(function(e) {
@@ -372,7 +378,7 @@ $(function () {
         var spinner = getSpinnerForActionLink($('#action-share-url'));
 
         var success = function(data) {
-            var url = "http://www.metaflop.com/modulator/font/" + data;
+            var url = getFontUrl(data);
             var text = 'I created a nice metaflop font! ' + url;
             var type = $this.attr('data-type');
 

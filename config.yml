@@ -13,7 +13,7 @@ metaflop:
       \noindent
       \big
       \put(-55,-50){\colorbox{bgcolor}{\makebox(150,150){}}}
-      \put(2,0){<% text %>}
+      \put(-77,2){\parbox[b]{200pt}{\centerline{<% text %>}}}
       \thinlines
       \end{document}
 

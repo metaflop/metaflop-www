@@ -41,7 +41,9 @@
             // mark the currently selected option
             lis.filter(function() { return $(this).find('a').html() == selectedOption.html() }).addClass('active');
 
-            lis.click(function() {
+            lis.click(function(e) {
+                e.preventDefault();
+
                 var selectEl = $this;
                 var listItems = lis;
                 var li = $(this);

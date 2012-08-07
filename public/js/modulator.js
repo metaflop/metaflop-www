@@ -428,7 +428,7 @@ $(function () {
         $this.find('input').addClass('active');
     });
     $.fn.metaflop.parameterPanel.on('mouseleave', '.inputblock', function() {
-        $(this).find('a').hide();
+        $(this).find('.adjuster a').hide();
     });
 
 

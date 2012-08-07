@@ -497,6 +497,12 @@ embed {
 
     width: $content_width;
 
+    &.box-text .box-content {
+        // because of the padding, decrease the width
+        // see .box-text .box-content definition
+        width: $content_width - (2 * $box_spacing_y);
+    }
+
     .box-content {
         width: $content_width;
     }

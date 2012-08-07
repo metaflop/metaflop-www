@@ -84,7 +84,6 @@ class App < Sinatra::Application
     mf = mf_instance_from_request
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
-    @chars = mf.font_settings.chars
 
     mustache :modulator
   end
@@ -104,7 +103,6 @@ class App < Sinatra::Application
     mf = mf_instance_from_request url[:params]
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
-    @chars = mf.font_settings.chars
 
     mustache :modulator
   end
@@ -149,7 +147,6 @@ class App < Sinatra::Application
     mf = mf_instance_from_request
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
-    @chars = mf.font_settings.chars
 
     mustache page.to_sym, :layout => false
   end

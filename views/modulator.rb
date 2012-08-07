@@ -10,8 +10,6 @@ class App
   module Views
     class Modulator < Layout
 
-      attr_accessor :chars
-
       def js
         ['/js/modulator.js']
       end
@@ -74,10 +72,10 @@ class App
       # single preview char chooser
       # [{ :items => [] }, { :items => [] } ]
       def char_sets
-        [:uc, :lc, :num].map{ |type| @chars[type] }.delete_if(&:empty?).map do |set|
+        ['A'..'Z', 'a'..'z', 0..9].map do |set|
           {
             :items => set.map do |item|
-            { :char => item, :active => item == 'A' }
+              { :char => item, :active => item == 'A' }
             end
           }
         end

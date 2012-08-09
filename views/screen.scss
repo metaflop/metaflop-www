@@ -228,7 +228,7 @@ embed {
         float: left;
 
         &.main {
-            margin: 0 0 0 31px;
+            margin: 0 0 0 10px;
 
             li {
                 padding-right: 10px;
@@ -247,21 +247,21 @@ embed {
     li {
         display: inline;
 
-        a {
-            color: #000;
+    }
+    a {
+        color: #000;
 
-            &.selected { 
-                font-weight: bold;
-                cursor: default;
-
-                &:hover {
-                    color: #000;
-                }
-            }
+        &.selected { 
+            font-weight: bold;
+            cursor: default;
 
             &:hover {
-                color: $link_color_hover;
+                color: #000;
             }
+        }
+
+        &:hover {
+            color: $link_color_hover;
         }
     }
 }
@@ -681,6 +681,14 @@ a.char-chooser {
     position: fixed;
     top: 45%;
     right: $font_size;
+
+    a {
+        color: #000;
+
+        &:hover {
+            color: $link_color_hover;
+        }
+    }
 }
 
 @import 'scss/slider.scss';

@@ -12,7 +12,7 @@ html, body {
 body {
     font-family: helvetica, sans-serif;
     font-size: $font_size;
-    line-height: 1.5;
+    line-height: $line_height;
 }
 
 image {
@@ -90,7 +90,7 @@ h2 {
 h3 {
     margin: 0;
     font-size: $font_size;
-    line-height: 1.5;
+    line-height: $line_height;
 }
 
 fieldset {
@@ -120,12 +120,12 @@ label {
 
 ul {
     margin: 0 0 ($box_spacing_x / 4) 0;
-    padding: 0 0 0 $box_spacing_x;
+    padding: 0 0 0 ($box_spacing_x / 2);
     list-style: disc outside none;
 
     li {
         overflow: visible;
-        line-height: 1.5;
+        line-height: $line_height;
     }
 }
 
@@ -228,7 +228,7 @@ embed {
         float: left;
 
         &.main {
-            margin: 0 0 0 10px;
+            margin: 0 0 0 20px;
 
             li {
                 padding-right: 10px;
@@ -501,7 +501,7 @@ embed {
     &.box-text .box-content {
         // because of the padding, decrease the width
         // see .box-text .box-content definition
-        width: $content_width - (2 * $box_spacing_y);
+        width: $content_width_box_fullwidth;
     }
 
     .box-content {
@@ -538,7 +538,7 @@ embed {
 
         p {
             @extend .minor-para;
-            line-height: 1.5;
+            line-height: $line_height;
         }
     }
 }
@@ -572,7 +572,7 @@ embed {
 
 div.char-chooser {
     position: absolute;
-    bottom: 0;
+    bottom: $box_spacing_y;
     left: 0;
     width: $preview_box_width;
     height: 16px;
@@ -584,8 +584,6 @@ div.char-chooser {
         list-style: none;
         padding: 0;
         margin: 0;
-        position: absolute;
-        top: 3px;
         width: 2000px;
     }
 
@@ -606,7 +604,7 @@ div.char-chooser {
 
 a.char-chooser {
     position: absolute;
-    bottom: -3px;
+    bottom: 3px;
     z-index: 1;
     width: 14px;
     color: transparent;
@@ -673,6 +671,24 @@ a.char-chooser {
 
     span {
         color: lighten(#000, 80%);
+    }
+}
+
+.text-col {
+    float: left;
+    width: ($content_width_box_fullwidth - $box_spacing_y) / 4 - ($box_spacing_y * 2);
+    margin: 0 ($box_spacing_y * 2) 0 0;
+
+    &.last {
+        margin: 0;
+    }
+
+    &.no-heading{
+        margin-top: $line_height;
+    }
+
+    &.no-heading-double {
+        margin-top: $line_height * 2;
     }
 }
 

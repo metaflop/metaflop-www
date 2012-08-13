@@ -301,8 +301,9 @@ embed {
 }
 
 #menu {
-    @include header-row;
     @extend .box-text;
+
+    margin-bottom: $box_spacing_y;
 
     a {
         margin-right: 3px;
@@ -327,8 +328,7 @@ embed {
 }
 
 #info-panel {
-    @include header-row;
-    margin-top: 23px;
+    margin: 23px 0 $box_spacing_y 0;
     height: 192px;
     display: none;
 }
@@ -336,6 +336,7 @@ embed {
 #parameter-panel {
     @extend .box-text;
 
+    margin-bottom: $box_spacing_y;
     position: relative;
 
     .slider {

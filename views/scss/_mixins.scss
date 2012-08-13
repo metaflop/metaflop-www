@@ -3,10 +3,6 @@
     background: $bg_color_base;
 }
 
-@mixin header-row {
-    margin-bottom: $box_spacing_y;
-}
-
 @mixin content-col {
     float: left;
     margin-top: $box_spacing_x + $font_size + $box_spacing_x;

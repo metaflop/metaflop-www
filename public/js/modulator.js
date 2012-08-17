@@ -287,6 +287,8 @@ $(function () {
         $.fn.metaflop.parameterPanel.fadeTo(0, 0.5);
         $.fn.metaflop.parameterPanel.spin('large');
 
+        var activeNerdMode = $('.parameter-panel-mode-toggle.active.adjusters');
+
         $.ajax({
             url: '/char_chooser/partial' + createQueryString(),
             success: function(data) {
@@ -297,6 +299,7 @@ $(function () {
                         $('#parameter-panel').html(data);
                         initSliders();
                         initParameterDropdowns();
+                        if (activeNerdMode.length > 0) togglePanelMode(activeNerdMode);
                         previewImage();
 
                         $.fn.metaflop.parameterPanel.fadeTo(0, 1);
@@ -556,19 +559,15 @@ $(function () {
         return false;
     });
 
-    // switch basic/pro mode for parameter panel
-    $('.parameter-panel-mode-toggle').click(function(e) {
-        e.preventDefault();
-
-        var $this = $(this);
+    var togglePanelMode = function(element) {
         var parameterPanel = $('#parameter-panel');
         var adjusters = parameterPanel.find('.adjuster');
         var sliders = parameterPanel.find('.slider');
 
         $('.parameter-panel-mode-toggle').removeClass('active');
-        $this.addClass('active');
+        element.addClass('active');
 
-        if ($this.hasClass('sliders')) {
+        if (element.hasClass('sliders')) {
             sliders.show();
             adjusters.hide();
         }
@@ -576,6 +575,15 @@ $(function () {
             adjusters.show();
             sliders.hide();
         }
+    }
+
+    // switch basic/pro mode for parameter panel
+    $('.parameter-panel-mode-toggle').click(function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        togglePanelMode($this);
 
         $this.blur();
     });

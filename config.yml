@@ -71,6 +71,16 @@ metafonts:
       - bespoke1-01.png
       - bespoke1-02.png
       - bespoke1-03.png
+      - bespoke1-04.png
+      - bespoke1-05.png
+      - bespoke1-06.png
+      - bespoke1-07.png
+      - bespoke2-01.png
+      - bespoke2-02.png
+      - bespoke2-03.png
+      - bespoke2-04.png
+      - bespoke2-05.png
+      - bespoke2-06.png
     subimages:
       -
         - bespoke-derivations-01.png
@@ -115,4 +125,16 @@ metafonts:
       - adjuster1-01.png
       - adjuster1-02.png
       - adjuster1-03.png
-
+      - adjuster1-04.png
+      - adjuster1-05.png
+      - adjuster1-06.png
+      - adjuster1-07.png
+      - adjuster2-01.png
+      - adjuster2-02.png
+      - adjuster2-03.png
+      - adjuster2-04.png
+      - adjuster2-05.png
+    subimages:
+      -
+        - adjuster-derivations-01.png
+        - QLiweKaNal

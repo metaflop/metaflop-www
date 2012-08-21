@@ -66,7 +66,7 @@ metaflop:
 
 metafonts:
   bespoke: 
-    description: mf bespoke is geared to contemporary and simply constructed sans serif fonts. the geometrical construction is based on a rectangle and can easily be transformed by means of the parameters <em>increase</em> and <em>superness</em> to an octagon. the parameter <em>superness</em> generates in its lower values unusual and playful results of curves.<br /> <a href="/modulator?fontface=Bespoke">mf bespoke</a> consists of adjustable parameters grouped in classes of dimension, proportion and shape. this wide range enables you to create sans serif fonts for a broad variety of use. for a classic and elegant version just add a bit of <em>contrast</em> to the default settings.
+    description: <a href="/modulator?fontface=Bespoke">MF Bespoke</a> is geared to simply constructed sans serif fonts. This metafont consists of 14 adjustable parameters grouped in classes of dimension, proportion and shape. By using this range of parameters a high variety of derivates can be achieved. The standard font and font-box has the size of 10 unit points.
     images:
       - bespoke1-01.png
       - bespoke1-02.png
@@ -120,7 +120,7 @@ metafonts:
         - UcH5rxsNVi
 
   adjuster: 
-    description: 'mf adjuster is a font with a very basic form, plain architectural, highly functional, almost crystalline. it follows a strict grid and a simple no-curves-policy and comes along with a rather reduced set of parameters. although the dimension and proportion of mf <a href="/modulator?fontface=Adjuster">mf adjuster</a> can vary, its sophistication derives from the pen parameter: you can choose from <em>circle</em>, <em>square</em> or <em>razor</em>.'
+    description: '<a href="/modulator?fontface=Adjuster">MF Adjuster</a> is a Metafont with a basic form, highly functional, almost crystalline. It follows a strict grid and a simple no-curves policy and it comes along with a reduced set of parameters. The font''s sophistication derives from the angle and pen parameter (circle, square or razor). The standard font and font-box has the size of 10 unit points and is divided into 9 horizontal sections.'
     images:
       - adjuster1-01.png
       - adjuster1-02.png

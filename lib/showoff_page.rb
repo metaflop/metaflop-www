@@ -22,7 +22,12 @@ module ShowoffPage
       {
         :title => x[0],
         :description => x[1]["description"],
-        :images => x[1]["images"].map { |img| "/img/#{page_name}/#{img}" },
+        :images => x[1]["images"].map do |img|
+          {
+            :url => "/img/#{page_name}/#{img[0]}",
+            :title => img[1]
+          }
+        end,
         :subimages => (x[1]["subimages"] || []).map.with_index do |img, i|
           {
             :url => "/img/#{page_name}/#{img[0]}",

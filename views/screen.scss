@@ -709,6 +709,16 @@ a.char-chooser {
     }
 }
 
+/* basic jquery slider */
+p.bjqs-caption {
+    width: 100%;
+    font-size: $font-size - 2px;
+    text-align: left;
+    color: $link_color;
+    padding: $box_spacing_y;
+    border-top: 1px solid #fff;
+}
+
 @import 'scss/slider.scss';
 
 @import 'scss/tipsy.scss';

@@ -13,10 +13,10 @@ $(function () {
     var initSlideshow = function() {
         slideshow.bjqs({
             width: slideshow.width(),
-            height: 500,
+            height: 540,
             nextText: '',
             prevText: '',
-            rotationSpeed: 2000,
+            rotationSpeed: 4000,
             showControls: false,
             showMarkers: false,
             mouseNav: true,

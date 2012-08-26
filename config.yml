@@ -68,19 +68,45 @@ metafonts:
   bespoke: 
     description: <a href="/modulator?fontface=Bespoke">MF Bespoke</a> is geared to simply constructed sans serif fonts. This metafont consists of 14 adjustable parameters grouped in classes of dimension, proportion and shape. By using this range of parameters a high variety of derivates can be achieved. The standard font and font-box has the size of 10 unit points.
     images:
-      - bespoke1-01.png
-      - bespoke1-02.png
-      - bespoke1-03.png
-      - bespoke1-04.png
-      - bespoke1-05.png
-      - bespoke1-06.png
-      - bespoke1-07.png
-      - bespoke2-01.png
-      - bespoke2-02.png
-      - bespoke2-03.png
-      - bespoke2-04.png
-      - bespoke2-05.png
-      - bespoke2-06.png
+      -
+        - bespoke1-01.png
+        - Construction of MF Bespoke using base points and geometrical relations.
+      -
+        - bespoke1-02.png
+        - Construction of MF Bespoke using base points and geometrical relations.
+      -
+        - bespoke1-03.png
+        - Construction of MF Bespoke using base points and geometrical relations.
+      -
+        - bespoke1-04.png
+        -
+      -
+        - bespoke1-05.png
+        -
+      -
+        - bespoke1-06.png
+        -
+      -
+        - bespoke1-07.png
+        - 'Transformation of single parameters – dimension, proportion and shape.'
+      -
+        - bespoke2-01.png
+        - Superness curve transformation from 1.0 to 0.3 and vice versa.
+      -
+        - bespoke2-02.png
+        - Contrast transformation from 18 to 1 and vice versa.
+      -
+        - bespoke2-03.png
+        - Horizontal and vertical increase transformation from 1.0 to 0.0 points and vice versa.
+      -
+        - bespoke2-04.png
+        - Unit width transformation from 0.2 to 5.0 points.
+      -
+        - bespoke2-05.png
+        - Unit width transformation from 5.0 to 0.2 points.
+      -
+        - bespoke2-06.png
+        - Horizontal and vertical increase transformation from 1.0 to 0.0 points and vice versa.
     subimages:
       -
         - bespoke-derivations-01.png
@@ -122,18 +148,42 @@ metafonts:
   adjuster: 
     description: '<a href="/modulator?fontface=Adjuster">MF Adjuster</a> is a Metafont with a basic form, highly functional, almost crystalline. It follows a strict grid and a simple no-curves policy and it comes along with a reduced set of parameters. The font''s sophistication derives from the angle and pen parameter (circle, square or razor). The standard font and font-box has the size of 10 unit points and is divided into 9 horizontal sections.'
     images:
-      - adjuster1-01.png
-      - adjuster1-02.png
-      - adjuster1-03.png
-      - adjuster1-04.png
-      - adjuster1-05.png
-      - adjuster1-06.png
-      - adjuster1-07.png
-      - adjuster2-01.png
-      - adjuster2-02.png
-      - adjuster2-03.png
-      - adjuster2-04.png
-      - adjuster2-05.png
+      -
+        - adjuster1-01.png
+        - Construction of MF Adjuster using base points and geometrical relations.
+      -
+        - adjuster1-02.png
+        - Construction of MF Adjuster using base points and geometrical relations.
+      -
+        - adjuster1-03.png
+        - Construction of MF Adjuster using base points and geometrical relations.
+      -
+        - adjuster1-04.png
+        -
+      -
+        - adjuster1-05.png
+        -
+      -
+        - adjuster1-06.png
+        -
+      -
+        - adjuster1-07.png
+        - Transformation of the Angle parameter.
+      -
+        - adjuster2-01.png
+        - Angle transformation from 90 to 15 degree and vice versa.
+      -
+        - adjuster2-02.png
+        - Pen Width transformation from 2.0 to 0.05 points and vice versa.
+      -
+        - adjuster2-03.png
+        - Unit width transformation from 0.2 to 5.0 points.
+      -
+        - adjuster2-04.png
+        - Unit width transformation from 5.0 to 0.2 points.
+      -
+        - adjuster2-05.png
+        - Pen Razor transformation from 0 to 45 degree and vice versa.
     subimages:
       -
         - adjuster-derivations-01.png

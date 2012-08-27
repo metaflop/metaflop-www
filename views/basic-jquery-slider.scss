@@ -10,5 +10,5 @@ ol.bjqs-markers li { float: left; }
 p.bjqs-caption { display: block; width: 96%; margin: 0; padding: 2%; position: absolute; bottom: 0; }
 
 .bjqs-mouse-nav { position: absolute; top: 0; width: 50%; z-index: 9; }
-.bjqs-mouse-nav.left { left: 0; cursor: w-resize; }
-.bjqs-mouse-nav.right { right: 0; cursor: e-resize; }
+.bjqs-mouse-nav.left { left: 0; cursor: url(img/arrow-left.cur), url(../../img/arrow-left.cur), w-resize; }
+.bjqs-mouse-nav.right { right: 0; cursor: url(img/arrow-right.cur), url(../../img/arrow-right.cur), e-resize; }

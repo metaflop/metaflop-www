@@ -299,6 +299,7 @@ $(function () {
                         $('#parameter-panel').html(data);
                         initSliders();
                         initParameterDropdowns();
+                        resetParameters();
                         if (activeNerdMode.length > 0) togglePanelMode(activeNerdMode);
                         previewImage();
 
@@ -310,10 +311,8 @@ $(function () {
         });
     }});
 
-    // reset
-    $('#action-reset-values').click(function(e) {
-        e.preventDefault();
-
+    // reset parameter values
+    var resetParameters = function(){
         $('.adjuster input.param').each(function() {
             var $this = $(this);
 
@@ -323,6 +322,12 @@ $(function () {
 
             setValue($this, sliderInput.attr('data-default'));
         });
+    }
+
+    $('#action-reset-values').click(function(e) {
+        e.preventDefault();
+
+        resetParameters();
 
         return false;
     });

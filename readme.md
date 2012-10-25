@@ -31,4 +31,3 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 ## License
 
 All components and generated fonts of this project are licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html). 
-You may use it freely for non commercial purpose.

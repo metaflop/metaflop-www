@@ -16,9 +16,13 @@ class WebFont
     @fontface = font_settings.fontface
     @font_hash = font_settings.font_hash
     @font_name = font_settings.font_name
+    @specimen_sizes = [48, 36, 30, 24, 18, 14]
+    @samples_sizes = [18, 16, 14, 12]
+    @all_sizes = (@specimen_sizes + @samples_sizes).uniq
   end
 
-  attr_reader :dir, :fontface, :font_hash, :font_name
+  attr_reader :dir, :fontface, :font_hash, :font_name,
+              :specimen_sizes, :samples_sizes, :all_sizes
 
   def zip
     zipfile_name = File.join(@dir, "font.zip")

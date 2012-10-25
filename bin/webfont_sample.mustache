@@ -12,14 +12,133 @@
                      url('{{fontface}}-{{font_hash}}.ttf') format('truetype'),
                      url('{{fontface}}-{{font_hash}}.svg#{{fontface}}-{{font_hash}}') format('svg');
             }
+
+            body {
+                font-family:'{{fontface}}-{{font_hash}}';
+                padding: 10px 0;
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 48px;
+                font-weight: normal;
+            }
+
+            h2 {
+                margin: 0;
+                position: absolute;
+                top: 0;
+                right: 10px;
+                font-weight: normal;
+            }
+
+            dl {
+                position: relative;
+                line-height: 1;
+                margin: 0 0 20px 0;
+            }
+
+            dt {
+                position: absolute;
+                font-size: 10px;
+            }
+
+            dt span {
+                position: absolute;
+                bottom: 17%;
+            }
+
+            dd {
+                margin: 0 0 0 40px;
+            }
+
+            a, a:visited, a:active, a:hover {
+                font-size: 12px;
+                text-decoration: none;
+                color: #000;
+            }
+
+            a:hover {
+                color: #ff0000;
+            }
+
+            #main {
+                width: 860px;
+                margin: 0 auto;
+                padding: 20px 10px;
+                position: relative;
+                background: #d7ffff;
+            }
+
+            header, section {
+                margin: 0 0 40px 0;
+            }
+
+            section header {
+                margin: 0 0 10px 0;
+                font-size: 12px;
+            }
+
+            section header span {
+                color: #ff0000;
+            }
+
+            #samples dd {
+                line-height: 1.4em;
+            }
+
+            {{#all_sizes}}
+            .size-{{.}} dd {
+                font-size: {{.}}px;
+            }
+
+            .size-{{.}} dt {
+                height: {{.}}px;
+            }
+
+            {{/all_sizes}}
+            .uppercase {
+                text-transform: uppercase;
+            }
+
+            .last {
+                margin-bottom: 0;
+            }
         </style>
     </head>
 
-    <body style="font-family:'{{fontface}}-{{font_hash}}'; padding: 60px; text-align: center;">
-        <h1>This is metaflop (heading 1)!</h1>
-        <h2>This is metaflop (heading 2)!</h2>
-        <h3>This is metaflop (heading 3)!</h3>
-        <p>This is a paragraph...</p>
-        <p>Created by <a href="http://www.metaflop.com/modulator">Metaflop modulator</a>.</p>
+    <body>
+        <div id="main">
+            <header>
+                <hgroup>
+                    <h1>{{fontface}}-{{font_hash}}</h1>
+                    <h2><a href="http://www.metaflop.com">www.metaflop.com</a></h2>
+                </hgroup>
+            </header>
+            <section id="specimen">
+                <header><span>size</span> - css font-size (px)</header>
+                {{#specimen_sizes}}
+                <dl class="size-{{.}} uppercase">
+                    <dt><span>{{.}}</span></dt>
+                    <dd>Our life is frittered</dd>
+                </dl>
+                {{/specimen_sizes}}
+                {{#specimen_sizes}}
+                <dl class="size-{{.}}">
+                    <dt><span>{{.}}</span></dt>
+                    <dd>Our life is frittered</dd>
+                </dl>
+                {{/specimen_sizes}}
+            </section>
+            <section id="samples" class="last">
+                <header><span>text sample</span> - css font-size (px) with 1.4em line-height</header>
+                {{#samples_sizes}}
+                <dl class="size-{{.}}">
+                    <dt><span>{{.}}</span></dt>
+                    <dd>Our life is frittered away by detail. An honest man has hardly need to count more than his ten fingers, or in extreme cases he may add his ten toes, and lump the rest. Simplicity, simplicity, simplicity! - Henry David Thoreau, Walden (1854)</dd>
+                </dl>
+                {{/samples_sizes}}
+            </section>
+        </div>
     </body>
 </html>

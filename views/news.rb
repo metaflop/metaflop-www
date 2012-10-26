@@ -12,8 +12,14 @@ class App
     class News < Layout
       include ::SlideshowPage
 
+      # randomly create a sequence of 12 images,
+      # varying by language, keeping the order
       def images
-        (1..12).map { |i| "img/helloworld/bespoke-helloworld-%02d.png" % i}
+        random = Random.new
+        (1..12).map do |i|
+          random_lang = %w{de en fr it}[random.rand(0..3)]
+          "img/helloworld/bespoke-helloworld-%02d-%s.png" % [i, random_lang]
+        end
       end
     end
   end

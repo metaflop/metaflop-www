@@ -109,40 +109,40 @@ metafonts:
         - Horizontal and vertical increase transformation from 1.0 to 0.0 points and vice versa.
     subimages:
       -
-        - bespoke-derivations-01.png
+        - bespoke-derivations-01.png?v=1
         - W2wMVl1oOf
       -
-        - bespoke-derivations-02.png
+        - bespoke-derivations-02.png?v=1
         - wEEJXpb_F_
       -
-        - bespoke-derivations-03.png
+        - bespoke-derivations-03.png?v=1
         - X_nuDV5EKb
       -
-        - bespoke-derivations-04.png
+        - bespoke-derivations-04.png?v=1
         - xQZl0I4bG4
       -
-        - bespoke-derivations-05.png
+        - bespoke-derivations-05.png?v=1
         - bBv88L09e8
       -
-        - bespoke-derivations-06.png
+        - bespoke-derivations-06.png?v=1
         - f0ySyHr68Q
       -
-        - bespoke-derivations-07.png
+        - bespoke-derivations-07.png?v=1
         - bQCd3GYPgX
       -
-        - bespoke-derivations-08.png
+        - bespoke-derivations-08.png?v=1
         - Hb-V8s8C70
       -
-        - bespoke-derivations-09.png
+        - bespoke-derivations-09.png?v=1
         - jVzgqoraQu
       -
-        - bespoke-derivations-10.png
+        - bespoke-derivations-10.png?v=1
         - L9JtCtna31
       -
-        - bespoke-derivations-11.png
+        - bespoke-derivations-11.png?v=1
         - tRp6NK0eyw
       -
-        - bespoke-derivations-12.png
+        - bespoke-derivations-12.png?v=1
         - UcH5rxsNVi
 
   adjuster: 
@@ -186,5 +186,15 @@ metafonts:
         - Pen Razor transformation from 0 to 45 degree and vice versa.
     subimages:
       -
-        - adjuster-derivations-01.png
-        - QLiweKaNal
+        - adjuster-derivations-01.png?v=1
+        - WitXxEC_wq
+      -
+        - adjuster-derivations-02.png?v=1
+        - B_DF7u3XWz
+      -
+        - adjuster-derivations-03.png?v=1
+        - BL4uWv2Vdt
+      -
+        - adjuster-derivations-04.png?v=1
+        - IVhW3c2vuS
+

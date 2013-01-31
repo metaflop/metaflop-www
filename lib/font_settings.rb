@@ -39,6 +39,10 @@ class FontSettings
     "#{@fontface}-#{@font_hash}"
   end
 
+  def year
+    Time.new.year
+  end
+
   def setup_tmp_dir
     if @out_dir && !File.directory?(@out_dir)
       FileUtils.mkdir_p(@out_dir)

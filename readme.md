@@ -30,4 +30,5 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 
 ## License
 
-All components and generated fonts of this project are licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html). 
+The sourcecode of this project is licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html).
+All generated fonts of this project are dual licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html) and the [OFL](http://scripts.sil.org/OFL).

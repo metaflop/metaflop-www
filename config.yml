@@ -60,7 +60,8 @@ metaflop:
       \put(-55,-50){\fcolorbox{bgcolor}{bgcolor}{\parbox{300pt}{<% text %>}}}
       \end{document}
 
-  font_otf: 'perl mf2pt1.pl --encoding=t1 --comment="Copyright (C) 2012 by Metaflop - Simon Egli, Marco Mueller. http://www.metaflop.com. All rights reserved. License: A copy of the End-User License Agreement to this font software can be found online at http://www.metaflop.com." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
+  font_otf: 'perl mf2pt1.pl --encoding=t1 --comment="Copyright (c) {{year}}, Metaflop (http://www.metaflop.com),
+Simon Egli, Marco Mueller, Alexis Reigel, with Reserved Font Name {{fontface}}. Dual licensed under the GPL v3 (http://www.gnu.org/copyleft/gpl.html) and the OFL v1.1 (http://scripts.sil.org/OFL_web)." --family={{fontface}} --nofixedpitch --fullname="{{fontface}} {{font_hash}}" --name="{{fontface}}-{{font_hash}}" --weight={{font_hash}} font.mf'
 
   font_web: sfnt2woff font.otf && ttf2eot font.ttf > font.eot
 

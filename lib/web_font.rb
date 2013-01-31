@@ -19,10 +19,12 @@ class WebFont
     @specimen_sizes = [48, 36, 30, 24, 18, 14]
     @samples_sizes = [18, 16, 14, 12]
     @all_sizes = (@specimen_sizes + @samples_sizes).uniq
+    @year = Time.new.year
   end
 
   attr_reader :dir, :fontface, :font_hash, :font_name,
-              :specimen_sizes, :samples_sizes, :all_sizes
+              :specimen_sizes, :samples_sizes, :all_sizes,
+              :year
 
   def zip
     zipfile_name = File.join(@dir, "font.zip")
@@ -33,14 +35,19 @@ class WebFont
         zipfile.add("#{@font_name}.#{x}", File.join(@dir, "font.#{x}"))
       end
 
-      html_filename = "#{@font_name}_sample.html"
-      html_file = File.join(@dir, html_filename)
-      File.open('bin/webfont_sample.mustache', 'r') do |infile|
-        File.open(html_file, 'w') do |outfile|
-          outfile.write(Mustache.render(infile.read, self))
+      [
+        ['bin/webfont_sample.mustache', "#{@font_name}_sample.html"],
+        ['bin/license.gpl', 'license.gpl'],
+        ['bin/license.ofl', 'license.ofl']
+      ].each do |x|
+        file = File.join(@dir, x[1])
+        File.open(x[0], 'r') do |infile|
+          File.open(file, 'w') do |outfile|
+            outfile.write(Mustache.render(infile.read, self))
+          end
         end
+        zipfile.add(x[1], file)
       end
-      zipfile.add(html_filename, html_file)
     end
 
     File.read(zipfile_name)

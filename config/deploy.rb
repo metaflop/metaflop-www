@@ -11,6 +11,9 @@
 # if your local username is the same as the ssh-user you might not need this
 load './config/user'
 
+require 'bundler/capistrano'
+require 'rvm/capistrano'
+
 require 'capistrano/ext/multistage'
 set :stages, %w(production staging)
 set :default_stage, "staging"
@@ -23,6 +26,8 @@ set :branch, "master"
 set :git_enable_submodules, 1
 
 set :use_sudo, false
+
+set :rvm_ruby_string, 'ruby-1.9.2-p290'
 
 # passenger mod_rails restart
 namespace :deploy do

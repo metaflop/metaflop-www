@@ -93,6 +93,8 @@ GEM
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.5.0)
     rubyzip (0.9.9)
+    rvm-capistrano (1.2.7)
+      capistrano (>= 2.0.0)
     sass (3.1.12)
     simple-navigation (3.7.0)
       activesupport (>= 2.3.2)
@@ -124,6 +126,7 @@ DEPENDENCIES
   mustache
   rspec
   rubyzip
+  rvm-capistrano
   sass
   sinatra
   sinatra-contrib

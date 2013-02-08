@@ -12,5 +12,6 @@ gem 'rubyzip'
 
 group :development do
   gem 'capistrano'
+  gem 'rvm-capistrano'
   gem 'rspec'
 end

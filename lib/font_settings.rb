@@ -12,8 +12,6 @@ class FontSettings
 
   VALID_OPTIONS_KEYS = [
     :out_dir,
-    :char,
-    :text,
     :font_hash,
     :fontface
   ]
@@ -30,7 +28,6 @@ class FontSettings
     @out_dir ||= '/tmp/metaflop/'
     # one tmp dir per fontface
     @out_dir = File.join(@out_dir, @fontface.downcase)
-    @char ||= 'A'
 
     setup_tmp_dir
   end

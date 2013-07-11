@@ -118,15 +118,9 @@ class App < Sinatra::Application
     scss name.to_sym, :layout => false
   end
 
-  get '/modulator/preview/:type' do |type|
+  get '/modulator/preview' do
     mf = mf_instance_from_request
-    method = "preview_#{type}"
-    if mf.respond_to? method
-      image = mf.method(method).call
-      [image ? 200 : 404, { 'Content-Type' => 'image/gif' }, image]
-    else
-      not_found "The preview type could not be found"
-    end
+    mf.font_preview
   end
 
   get '/modulator/export/font/:type/:face/:hash' do |type, face, hash|
@@ -175,8 +169,9 @@ class App < Sinatra::Application
       # query params come in with dashes -> replace by underscores to match properties
       value = params[key.to_s.gsub("_", "-")]
 
-      # whitelist allowed characters
-      args[key] = value.delete "^a-zA-Z0-9., " if value && !value.empty?
+      if value && !value.empty?
+        args[key] = value
+      end
     end
 
     mf = Metaflop.new(args)

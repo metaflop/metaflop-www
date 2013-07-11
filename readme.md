@@ -6,7 +6,7 @@ Metaflop is...
 
 * ... a javascript powered web interface
 * ... a sinatra based backend
-* ... an extensive external tool chain that generates the preview images and output fonts
+* ... a unix tool chain that generates the preview and output fonts
 
 The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenType).
 
@@ -20,10 +20,7 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * texlive
 * texlive-metapost
 * fontforge
-* dvipng
 * lcdf-typetools
-* dvisvgm
-* imagemagick (convert)
 * [sfnt2woff](http://people.mozilla.com/~jkew/woff/)
 * [ttf2eot](https://github.com/greyfont/ttf2eot)
 * t1utils

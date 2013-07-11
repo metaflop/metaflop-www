@@ -61,7 +61,7 @@ $(function () {
             fdSlider.updateSlider(sliderInput[0].id);
         }
 
-        previewImage();
+        generatePreview();
     }
 
     // finds the corresponding counterpart input field
@@ -125,69 +125,15 @@ $(function () {
             $.makeArray($('input:text,textarea,select').not('[id^=slider-]')).map(function(element){
                 return element.id.remove('param-') + '=' + $(element).val()
             })
-            // add the selected character param
-            .add('char=' + ($('div.char-chooser a.active').attr('href') || '1').remove('#'))
             .join("&");
 
         return $.fn.metaflop.queryString;
     }
 
-    // we have 2 preview images, the next preview is loaded into the invisible one
-    var previewImageCall = function(){
-        var previewBox = $('.box.active');
-        var loading = previewBox.find('.preview-loading');
-        var loadingText = previewBox.find('.preview-loading-text');
-        var image = previewBox.find('.preview-image:visible');
-        var preloadImage = previewBox.find('.preview-image:hidden');
-        var content = previewBox.find('.box-content');
-        var previewType = previewBox.attr('id').remove('preview-');
-
-        var queryString = createQueryString();
-
-        var url = '/modulator/preview/' + previewType + queryString;
-
-        var done = function(error) {
-            preloadImage.unbind('load');
-            preloadImage.unbind('error');
-
-            if (error) {
-                preloadImage.attr('src', '/img/error.png');
-                preloadImage.addClass('error');
-                content.addClass('error');
-            }
-            else {
-                preloadImage.removeClass('error');
-                image.removeClass('error');
-                content.removeClass('error');
-            }
-
-            content.fadeTo(0, 1);
-            loadingText.hide();
-            loading.spin(false);
-            content.find('textarea').hide();
-            image.hide();
-            preloadImage.show(0, function() {
-                preloadImage.css('display', 'inline'); // set display to inline (instead of block)
-
-                if (error) {
-                    preloadImage.tipsy({
-                        offset: 8,
-                        trigger: 'manual',
-                        fallback: 'The entered value is out of a valid range.\nPlease correct your parameters.',
-                        gravity: 's'
-                    }).tipsy('show');
-                }
-
-                $.fn.metaflop.preloadImageInProgress = false;
-
-                if (!$.fn.metaflop.ready) {
-                    // add tooltips to the sliders (only after the initial preview has been loaded,
-                    // we don't want to show them prematurely)
-                    $('.fd-slider-handle').tipsy({ title: 'aria-valuetext', gravity: 's' });
-                    $.fn.metaflop.ready = true;
-                }
-            });
-        };
+    var generatePreviewCall = function() {
+        var progressPanel = $('#progress-panel');
+        var messagePanel = $('#message-panel');
+        var content = $('.box');
 
         // clear cached shortend url
         $.fn.metaflop.shortenendUrl = null;
@@ -197,34 +143,59 @@ $(function () {
             stopRequest();
         }
         else {
-            image.tipsy('hide');
             content.fadeTo(0, 0.5);
-            loadingText.show();
-            loading.spin('large');
+            messagePanel.text('Server action! Updating previews...');
+            progressPanel.spin('tiny');
 
             $.fn.metaflop.preloadImageInProgress = true;
         }
 
-        // events when image is loaded
-        preloadImage.unbind('load');
-        preloadImage.unbind('error');
+        $.ajax({
+            url: '/modulator/preview' + createQueryString(),
+            complete: function() {
+                messagePanel.text('');
+                progressPanel.spin(false);
+                content.find('textarea').hide();
 
-        preloadImage.bind('load', function() {
-            done();
+                $.fn.metaflop.preloadImageInProgress = false;
+
+                if (!$.fn.metaflop.ready) {
+                  // add tooltips to the sliders (only after the initial preview has been loaded,
+                  // we don't want to show them prematurely)
+                  $('.fd-slider-handle').tipsy({ title: 'aria-valuetext', gravity: 's' });
+                  $.fn.metaflop.ready = true;
+                }
+            },
+            success: function(data) {
+                content.fadeTo(0, 1);
+
+                // TODO only find once initially
+                for (var i = 0; i < document.styleSheets.length; ++i) {
+                    var styleSheet = document.styleSheets[i];
+                    if (styleSheet.ownerNode.id == 'font-face-css') {
+                        styleSheet.deleteRule(0);
+
+                        rule =
+                          "@font-face {" +
+                          "    font-family: 'preview';" +
+                          "    src: url(data:font/opentype;base64," + data + ") format('opentype');" +
+                          "}";
+                        styleSheet.insertRule(rule, 0);
+
+                        break;
+                    }
+                }
+            },
+            error: function() {
+                messagePanel.text('The entered value is out of a valid range. Please correct your parameters.');
+            }
         });
-
-        preloadImage.bind('error', function() {
-            done(true);
-        });
-
-        // start preloading
-        preloadImage.attr('src', url);
     }
 
     var timeout;
-    var previewImage = function(){
+    var generatePreview = function(){
         if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(previewImageCall, 300);
+        timeout = setTimeout(generatePreviewCall, 300);
     }
 
     var isAllowedTrailingCharacter = function(keyCode) {
@@ -278,7 +249,7 @@ $(function () {
 
     // parameter list dropdown menus
     var initParameterDropdowns = function() {
-        $.fn.metaflop.parameterPanel.find('select:visible').dropdownpanel({ onClicked: previewImage });
+        $.fn.metaflop.parameterPanel.find('select:visible').dropdownpanel({ onClicked: generatePreview });
     };
     initParameterDropdowns();
 
@@ -301,7 +272,7 @@ $(function () {
                         initParameterDropdowns();
                         resetParameters();
                         if (activeNerdMode.length > 0) togglePanelMode(activeNerdMode);
-                        previewImage();
+                        generatePreview();
 
                         $.fn.metaflop.parameterPanel.fadeTo(0, 1);
                         $.fn.metaflop.parameterPanel.spin(false);
@@ -490,14 +461,11 @@ $(function () {
     charChooser.on('click', 'a', function(e) {
         e.preventDefault();
 
-        var box = $(this).parents('.box');
-        if (!box.hasClass('active')) {
-            $('.box.active').removeClass('active').find('textarea').hide();
-            box.addClass('active');
-        }
+        $this = $(this);
+        var box = $this.parents('.box');
         charChooser.find('a').removeClass('active');
-        $(this).addClass('active').blur();
-        previewImage();
+        $this.addClass('active').blur();
+        box.find('.preview-text').text($this.text());
 
         return false;
     });
@@ -521,39 +489,22 @@ $(function () {
         return false;
     });
 
-    // activate preview box
-    $('.box').click(function(e) {
-        e.preventDefault();
-
-        var $this = $(this);
-        if ($this.not('.active').length > 0) {
-            $('.box.active').removeClass('active').find('textarea').hide();
-            $this.addClass('active');
-
-            previewImage();
-        }
-        // show textarea
-        else if ($this[0].id == 'preview-typewriter') {
-            $this.find('textarea').show().focus();
-        }
-
-        return false;
-    });
-
     // edit/view mode for typewriter preview (textarea on/off)
     $('#preview-typewriter').find('.toggle-mode').click(function(e) {
         e.preventDefault();
 
         var $this = $(this);
         var textarea = $this.siblings('textarea');
+        var previewText = $this.siblings('.preview-text');
 
         if ($this.hasClass('edit-mode')) {
+            previewText.text(textarea.val());
             textarea.hide();
-            previewImage();
             $this.attr('title', 'enter edit mode');
         }
         else {
             textarea.show(0, function(){
+                previewText.text('');
                 $(this).css('display', 'block'); // set to block instead of inline
             });
             $this.attr('title', 'exit edit mode');
@@ -611,5 +562,5 @@ $(function () {
     $('#preview-typewriter').find('textarea').autogrow().hide();
 
     // load the first image
-    previewImage();
+    generatePreview();
 });

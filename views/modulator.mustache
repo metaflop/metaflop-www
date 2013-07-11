@@ -1,3 +1,10 @@
+<style type="text/css" id="font-face-css">
+    @font-face {
+        font-family: 'preview';
+        src: url('') format('opentype');
+    }
+</style>
+
 <form autocomplete="off">
 <div id="col1">
 
@@ -77,14 +84,11 @@
     </div>
 
     <div id="preview-panel">
-        <div id="preview-single" class="box active">
+        <div id="preview-single" class="box">
             <h2><span>Glyph</span></h2>
-            <div class="preview-loading-text">server action! updating glyph...</div>
 
             <div class="box-content">
-                <div class="preview-loading"></div>
-                <img src="/img/blank.png" class="preview-image" />
-                <img src="/img/blank.png" class="preview-image" style="display: none;" />
+                <div class="preview-text">A</div>
                 <a href="#" class="char-chooser left">&lt;</a>
                 <div class="char-chooser">
                     {{> char_chooser}}
@@ -94,24 +98,107 @@
         </div>
         <div id="preview-chart" class="box">
             <h2><span>Chart</span></h2>
-            <div class="preview-loading-text">server action! updating chart...</div>
 
             <div class="box-content">
-                <div class="preview-loading"></div>
-                <img src="/img/blank.png" class="preview-image" />
-                <img src="/img/blank.png" class="preview-image" style="display: none;" />
+                <table cellpadding="0" cellspacing="0" class="preview-text">
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                        <td>F</td>
+                        <td>G</td>
+                        <td>H</td>
+                        <td>I</td>
+                        <td>J</td>
+                    </tr>
+                    <tr>
+                        <td>K</td>
+                        <td>L</td>
+                        <td>M</td>
+                        <td>N</td>
+                        <td>O</td>
+                        <td>P</td>
+                        <td>Q</td>
+                        <td>R</td>
+                        <td>S</td>
+                        <td>T</td>
+                    </tr>
+                    <tr>
+                        <td>U</td>
+                        <td>V</td>
+                        <td>W</td>
+                        <td>X</td>
+                        <td>Y</td>
+                        <td>Z</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                        <td>a</td>
+                        <td>b</td>
+                        <td>c</td>
+                        <td>d</td>
+                        <td>e</td>
+                        <td>f</td>
+                        <td>g</td>
+                        <td>h</td>
+                        <td>i</td>
+                        <td>j</td>
+                    </tr>
+                    <tr>
+                        <td>k</td>
+                        <td>l</td>
+                        <td>m</td>
+                        <td>n</td>
+                        <td>o</td>
+                        <td>p</td>
+                        <td>q</td>
+                        <td>r</td>
+                        <td>s</td>
+                        <td>t</td>
+                    </tr>
+                    <tr>
+                        <td>u</td>
+                        <td>v</td>
+                        <td>w</td>
+                        <td>x</td>
+                        <td>y</td>
+                        <td>z</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
             </div>
         </div>
         <div id="preview-typewriter" class="box box-doublewidth">
             <h2><span>Typewriter</span></h2>
-            <div class="preview-loading-text">server action! updating text...</div>
 
             <div class="box-content">
-                <div class="preview-loading"></div>
                 <textarea id="param-text">Font design is in fact lots of fun, especially when you make mistakes.</textarea>
+                <div class="preview-text">Font design is in fact lots of fun, especially when you make mistakes.</div>
                 <a href="#" class="toggle-mode" title="enter edit mode">&nbsp;</a>
-                <img src="/img/blank.png" class="preview-image" />
-                <img src="/img/blank.png" class="preview-image" style="display: none;" />
             </div>
         </div>
     </div>

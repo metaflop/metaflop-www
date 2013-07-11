@@ -20,16 +20,6 @@
 #main {
     &.modulator {
         @include page-style($bg_color_modulator);
-
-        // make the inactive previews 50% opague
-        .box,
-        .box-fullwidth {
-            opacity: 0.5;
-
-            &.active {
-              opacity: 1;
-            }
-        }
     }
 
     &.metafonts {

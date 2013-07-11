@@ -20,8 +20,24 @@ $(function () {
                 email: 'mailto:?subject=metaflop font&body=',
             }
         },
-        parameterPanel: $('#parameter-panel')
+        parameterPanel: $('#parameter-panel'),
+        messagePanel: $('#message-panel'),
+        progressPanel: $('#progress-panel')
     };
+
+    var showProgress = function(message) {
+        $.fn.metaflop.messagePanel.text(message);
+        $.fn.metaflop.progressPanel.spin('tiny');
+    }
+
+    var hideProgress = function() {
+        $.fn.metaflop.messagePanel.text('');
+        $.fn.metaflop.progressPanel.spin(false);
+    }
+
+    var showMessage = function(message) {
+        $.fn.metaflop.messagePanel.text(message);
+    }
 
     // set background to corresponding inputs
     var setActiveInputs = function(inputField) {
@@ -87,8 +103,10 @@ $(function () {
     // don't create new url each time for unchanged setting
     // makes an ajax request with async:false! as this is
     // deprecated as of 1.8, find a new solution! TODO
-    var callWithFontHash = function(complete, success) {
-        complete = complete || function(){};
+    var callWithFontHash = function(success) {
+        complete = function() {
+            hideProgress();
+        };
         success = success || function(){};
 
         if ($.fn.metaflop.shortenendUrl) {
@@ -110,16 +128,6 @@ $(function () {
         }
     }
 
-    var getSpinnerForActionLink = function(link) {
-        // insert spinner (need new element to properly position)
-        var spinner = $('<span>&nbsp;</span>').addClass('spinner');
-        spinner.appendTo(link);
-        link.blur();
-        spinner.spin('tiny');
-
-        return spinner;
-    }
-
     var createQueryString = function() {
         $.fn.metaflop.queryString = '?' +
             $.makeArray($('input:text,textarea,select').not('[id^=slider-]')).map(function(element){
@@ -131,8 +139,6 @@ $(function () {
     }
 
     var generatePreviewCall = function() {
-        var progressPanel = $('#progress-panel');
-        var messagePanel = $('#message-panel');
         var content = $('.box');
 
         // clear cached shortend url
@@ -144,8 +150,7 @@ $(function () {
         }
         else {
             content.fadeTo(0, 0.5);
-            messagePanel.text('Server action! Updating previews...');
-            progressPanel.spin('tiny');
+            showProgress('Updating previews...');
 
             $.fn.metaflop.preloadImageInProgress = true;
         }
@@ -153,8 +158,7 @@ $(function () {
         $.ajax({
             url: '/modulator/preview' + createQueryString(),
             complete: function() {
-                messagePanel.text('');
-                progressPanel.spin(false);
+                hideProgress();
                 content.find('textarea').hide();
 
                 $.fn.metaflop.preloadImageInProgress = false;
@@ -187,7 +191,7 @@ $(function () {
                 }
             },
             error: function() {
-                messagePanel.text('The entered value is out of a valid range. Please correct your parameters.');
+                showMessage('The entered value is out of a valid range. Please correct your parameters.');
             }
         });
     }
@@ -255,8 +259,8 @@ $(function () {
 
     // select typeface
     $('#menu').find('select:visible').dropdownpanel({ onClicked: function() {
+        showProgress('Loading parameter panel...');
         $.fn.metaflop.parameterPanel.fadeTo(0, 0.5);
-        $.fn.metaflop.parameterPanel.spin('large');
 
         var activeNerdMode = $('.parameter-panel-mode-toggle.active.adjusters');
 
@@ -272,10 +276,12 @@ $(function () {
                         initParameterDropdowns();
                         resetParameters();
                         if (activeNerdMode.length > 0) togglePanelMode(activeNerdMode);
-                        generatePreview();
-
                         $.fn.metaflop.parameterPanel.fadeTo(0, 1);
-                        $.fn.metaflop.parameterPanel.spin(false);
+                        generatePreview();
+                    },
+                    error: function() {
+                        hideProgress();
+                        showMessage('The parameter panel could not be loaded.');
                     }
                 });
             }
@@ -337,14 +343,9 @@ $(function () {
         var container = $('#action-share-url');
 
         if (!$.fn.metaflop.shortenendUrl) {
-            var spinner = getSpinnerForActionLink(container);
+            showProgress('Generating share url...');
 
-            var complete = function() {
-                spinner.spin(false);
-                spinner.remove();
-            };
-
-            callWithFontHash(complete);
+            callWithFontHash();
         }
 
         return getFontUrl($.fn.metaflop.shortenendUrl);
@@ -354,7 +355,7 @@ $(function () {
         e.preventDefault();
         var $this = $(this);
 
-        var spinner = getSpinnerForActionLink($('#action-share-url'));
+        showProgress('Generating share url...');
 
         var success = function(data) {
             var url = getFontUrl(data);
@@ -372,12 +373,7 @@ $(function () {
             }
         };
 
-        var complete = function() {
-            spinner.spin(false);
-            spinner.remove();
-        };
-
-        callWithFontHash(complete, success);
+        callWithFontHash(success);
     });
 
     // export the font
@@ -385,14 +381,9 @@ $(function () {
         e.preventDefault();
 
         var $this = $(this);
-        var spinner = getSpinnerForActionLink($this);
+        showProgress('Exporting the font...');
 
-        var complete = function() {
-            spinner.spin(false);
-            spinner.remove();
-        };
-
-        callWithFontHash(complete, function(data) {
+        callWithFontHash(function(data) {
             window.location = "/modulator/export/font/" + $this.attr('data-type') + "/" + $('#param-fontface').val() + "/" + data;
         });
     });

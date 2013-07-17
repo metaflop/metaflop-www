@@ -319,7 +319,7 @@ embed {
     margin-bottom: $box_spacing_y;
 
     a {
-        margin-right: 3px;
+        margin-right: $box_spacing_y;
         position: relative;
 
         &.export-font {
@@ -606,7 +606,7 @@ div.char-chooser {
 
         a {
             font-size: 11px;
-            padding: 0 2px;
+            padding: 0 0.5px;
 
             &.active {
                 font-weight: bold;

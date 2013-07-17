@@ -8,7 +8,11 @@
 
 class App
   module Views
-    class Layout < Mustache
+    class Layout
+      def self.template(template = nil)
+        @template ||= template
+      end
+
       def title
         @title || "metaflop"
       end

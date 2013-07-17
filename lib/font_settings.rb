@@ -13,7 +13,8 @@ class FontSettings
   VALID_OPTIONS_KEYS = [
     :out_dir,
     :font_hash,
-    :fontface
+    :fontface,
+    :year
   ]
 
   attr_accessor *VALID_OPTIONS_KEYS
@@ -28,16 +29,13 @@ class FontSettings
     @out_dir ||= '/tmp/metaflop/'
     # one tmp dir per fontface
     @out_dir = File.join(@out_dir, @fontface.downcase)
+    @year = Time.new.year
 
     setup_tmp_dir
   end
 
   def font_name
     "#{@fontface}-#{@font_hash}"
-  end
-
-  def year
-    Time.new.year
   end
 
   def setup_tmp_dir
@@ -53,4 +51,10 @@ class FontSettings
     FileUtils.rm_f Dir["#{@out_dir}/*.{dvi,aux,tfm,pfb,afm,*pk,*gf}"]
   end
 
+  def to_hash
+    instance_variables.inject({}) do |hash,var|
+      hash[var.to_s.delete("@").to_sym] = instance_variable_get(var)
+      hash
+    end
+  end
 end

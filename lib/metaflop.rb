@@ -13,7 +13,6 @@ require './lib/rack_settings'
 require './lib/font_parameters'
 require './lib/font_settings'
 require './lib/web_font'
-require 'mustache'
 
 class Metaflop
 
@@ -46,7 +45,7 @@ class Metaflop
     font_parameters "#{@font_settings.out_dir}/font.mf"
     generate_mf
 
-    command = Mustache.render(settings[:font_otf], @font_settings)
+    command = settings[:font_otf] % @font_settings.to_hash
 
     `cd #{@font_settings.out_dir} && #{command}`
 

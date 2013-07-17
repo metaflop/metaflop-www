@@ -54,7 +54,8 @@ class App
             param = @font_parameters.send(x[:key])
             x[:default] = param.default
             x[:value] = param.value
-            x[:range] = param.range
+            x[:range_from] = param.range.nil? ? nil : param.range[:from]
+            x[:range_to] = param.range.nil? ? nil : param.range[:to]
             x[:hidden] = param.hidden
             x[:name] = x[:title].gsub(' ', '-') # (css class compliant)
             x[:tabindex] = i
@@ -75,7 +76,7 @@ class App
         ['A'..'Z', 'a'..'z', 0..9].map do |set|
           {
             :items => set.map do |item|
-              { :char => item, :active => item == 'A' }
+              { :char => item, :css_class => item == 'A' ? 'active' : '' }
             end
           }
         end
@@ -87,6 +88,5 @@ class App
         end
       end
     end
-
   end
 end

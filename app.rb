@@ -12,13 +12,16 @@ require 'sinatra/reloader'
 require 'sinatra/config_file'
 require 'sinatra/simple-navigation'
 require 'sass'
-require 'mustache/sinatra'
+require 'slim/logic_less'
 require 'time'
+require 'active_support'
 require 'data_mapper' # metagem, requires common plugins too.
 require './lib/metaflop'
 require './lib/url'
+require './lib/logic_less_slim'
 
 class App < Sinatra::Application
+  include LogicLessSlim
 
   configure do
     register Sinatra::ConfigFile
@@ -32,11 +35,9 @@ class App < Sinatra::Application
     Dir.mkdir(tmp_dir)
 
     require './views/layout'
-    register Mustache::Sinatra
 
-    set :mustache, {
-      :views => './views',
-      :templates => './views'
+    set :slim, {
+      :pretty => true
     }
 
     mime_type :otf, 'font/opentype'
@@ -77,7 +78,7 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    mustache :news
+    slim :news
   end
 
   get '/modulator' do
@@ -85,7 +86,7 @@ class App < Sinatra::Application
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
-    mustache :modulator
+    slim :modulator
   end
 
   # creates a shortened url for the current params (i.e. font setting)
@@ -104,7 +105,7 @@ class App < Sinatra::Application
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
-    mustache :modulator
+    slim :modulator
   end
 
   # redirect for legacy short urls
@@ -142,7 +143,7 @@ class App < Sinatra::Application
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
-    mustache page.to_sym, :layout => false
+    slim page.to_sym, :layout => false
   end
 
   get '/:page/?:subpage?' do |page, subpage|
@@ -154,7 +155,7 @@ class App < Sinatra::Application
       @subpage = subpage
     end
 
-    mustache page.to_sym
+    slim page.to_sym
   end
 
   def out_dir

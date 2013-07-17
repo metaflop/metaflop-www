@@ -1,0 +1,29 @@
+div#col1
+  div#menu
+    h2: span = page_title
+    div.box-content
+      - all
+        div.clearfix.inputblock
+          label: a href="/#{page_name}/#{title}" class="action exclusive #{css_class}" = title
+  div#parameter-panel
+    h2: span Info
+    div.box-content
+      - current
+        == description
+
+div#col2
+  div.box-doublewidth.box-slideshow
+    h2: span
+    div.box-content
+      ul.bjqs
+        - current
+          - images
+            li: img src="#{url}" title="#{title}"
+
+  - current
+    - subimages
+      div.box.box-doublewidth
+        - first
+          h2: span derivations
+        div.box-content.showoff-derivations
+          a href="/modulator/font/#{short}": img src="#{url}"

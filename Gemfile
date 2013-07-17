@@ -3,12 +3,13 @@ source :rubygems
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sass'
-gem 'mustache'
+gem 'slim'
 gem 'data_mapper'
 gem 'dm-mysql-adapter'
 gem 'sinatra-simple-navigation'
 gem 'bourbon'
 gem 'rubyzip'
+gem 'activesupport'
 
 group :development do
   gem 'capistrano'

@@ -1,0 +1,191 @@
+style type="text/css" id="font-face-css"
+  | @font-face {
+      font-family: 'preview';
+      src: url('') format('opentype');
+    }
+
+form autocomplete="off"
+  div#col1
+
+    div#menu
+      h2: span Modulator
+      div.box-content
+        fieldset
+          legend.first
+            div.clearfix
+              label Font
+              select#param-fontface
+                - fontfaces
+                  option(value=name selected=active) = name
+
+          div.clearfix.inputblock
+            label anatomy
+            div.static-value
+              a.toggle-info-panel href="#" on
+              a.toggle-info-panel.active href="#" off
+
+          div.clearfix.inputblock
+            label mode
+            div.static-value
+              a.parameter-panel-mode-toggle.sliders.active href="#" dummy
+              a.parameter-panel-mode-togglewadjusters href="#" nerd
+
+          div.clearfix.inputblock
+            label setting
+            div.static-value
+              a#action-reset-values.action href="#" reset
+              a#action-randomize-values.action href="#" flop it!
+
+          div.clearfix.inputblock
+            label share
+            div#action-share-url.static-value
+              a href="#" data-type="twitter": i.icon-twitter
+              a href="#" data-type="facebook": i.icon-facebook
+              a href="#" data-type="email": i.icon-envelope
+              object#clippy.clippy width="14" height="20" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" title="copy to clipboard"
+                param value="/flash/clippy.swf" name="movie"
+                param value="always" name="allowScriptAccess"
+                param value="high" name="quality"
+                param value="noscale" name="scale"
+                param value="text=" name="FlashVars"
+                param value="#FFFFFF" name="bgcolor"
+                param value="opaque" name="wmode"
+                embed width="14" height="20" wmode="opaque" bgcolor="#FFFFFF" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="/flash/clippy.swf"
+
+          div.clearfix.inputblock
+            label download
+            div.static-value
+              a.export-font href="#" data-type="otf" open type font
+              a.export-font href="#" data-type="web" webfont
+          
+    div#parameter-panel
+      h2: span Parameters
+      div.box-content
+        - parameters
+          fieldset
+            legend class="#{css_class}" = title
+            - items
+              div.clearfix.inputblock class="#{css_class}"
+                label for="param-#{name}" = title
+                === html
+                -! html
+                  div class="adjuster param-#{name}"
+                    a.sub10 href="#" title="decrease by 0.1" --
+                    a.sub1 href="#" title="decrease by 0.01" -
+                    input type="text" name="param-#{name}" id="param-#{name}" tabindex="#{tabindex}" value="#{value}" class="param init"
+                    a.add1 href="#" title="increase by 0.01" +
+                    a.add10 href="#" title="increase by 0.1" ++
+                  div class="slider"
+                    input(id="slider-#{name}" type="text" maxlength="6" name="inputTest" value="#{value}"
+                      data-range-from="#{range_from}" data-range-to="#{range_to}" data-default="#{default}")
+
+  div#col2
+
+    div#info-panel
+      img src="/img/typoglossary.png"
+
+    div#preview-panel
+      div#preview-single.box
+        h2: span Glyph
+
+        div.box-content
+          div.preview-text A
+          a.char-chooser.left href="#" &lt;
+          div.char-chooser
+            ul
+              - char_sets
+                li.active
+                  - items
+                    a href="##{char}" class="#{css_class}" = char
+          a.char-chooser.right href="#" &gt;
+
+      div#preview-chart.box
+        h2: span Chart
+
+        div.box-content
+          table.preview-text cellpadding="0" cellspacing="0"
+            tr
+              td A
+              td B
+              td C
+              td D
+              td E
+              td F
+              td G
+              td H
+              td I
+              td J
+            tr
+              td K
+              td L
+              td M
+              td N
+              td O
+              td P
+              td Q
+              td R
+              td S
+              td T
+            tr
+              td U
+              td V
+              td W
+              td X
+              td Y
+              td Z
+              td
+              td
+              td
+              td
+            tr
+              td a
+              td b
+              td c
+              td d
+              td e
+              td f
+              td g
+              td h
+              td i
+              td j
+            tr
+              td k
+              td l
+              td m
+              td n
+              td o
+              td p
+              td q
+              td r
+              td s
+              td t
+            tr
+              td u
+              td v
+              td w
+              td x
+              td y
+              td z
+              td
+              td
+              td
+              td
+            tr
+              td 0
+              td 1
+              td 2
+              td 3
+              td 4
+              td 5
+              td 6
+              td 7
+              td 8
+              td 9
+
+      div#preview-typewriter.box.box-doublewidth
+        h2: span Typewriter
+
+        div.box-content
+          textarea#param-text Font design is in fact lots of fun, especially when you make mistakes.
+          div.preview-text Font design is in fact lots of fun, especially when you make mistakes.
+          a.toggle-mode href="#" title="enter edit mode" &nbsp;

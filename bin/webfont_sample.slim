@@ -1,0 +1,133 @@
+doctype html
+html
+  head
+    meta charset="utf-8"
+    title Metaflop @font-face sample
+    css:
+      @font-face {
+        font-family: '#{fontface}-#{font_hash}';
+        src: url('#{fontface}-#{font_hash}.eot');
+        src: url('#{fontface}-#{font_hash}.eot?#iefix') format('embedded-opentype'),
+           url('#{fontface}-#{font_hash}.woff') format('woff'),
+           url('#{fontface}-#{font_hash}.ttf') format('truetype'),
+           url('#{fontface}-#{font_hash}.svg##{fontface}-#{font_hash}') format('svg');
+      }
+
+      body {
+        font-family:'#{fontface}-#{font_hash}';
+        padding: 10px 0;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 48px;
+        font-weight: normal;
+      }
+
+      h2 {
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-weight: normal;
+      }
+
+      dl {
+        position: relative;
+        line-height: 1;
+        margin: 0 0 20px 0;
+      }
+
+      dt {
+        position: absolute;
+        font-size: 10px;
+      }
+
+      dt span {
+        position: absolute;
+        bottom: 17%;
+      }
+
+      dd {
+        margin: 0 0 0 40px;
+      }
+
+      a, a:visited, a:active, a:hover {
+        font-size: 12px;
+        text-decoration: none;
+        color: #000;
+      }
+
+      a:hover {
+        color: #ff0000;
+      }
+
+      #main {
+        width: 860px;
+        margin: 0 auto;
+        padding: 20px 10px;
+        position: relative;
+        background: #d7ffff;
+      }
+
+      header, section {
+        margin: 0 0 40px 0;
+      }
+
+      section header {
+        margin: 0 0 10px 0;
+        font-size: 12px;
+      }
+
+      section header span {
+        color: #ff0000;
+      }
+
+      #samples dd {
+        line-height: 1.4em;
+      }
+
+    style type="text/css"
+      - all_sizes
+        | .size-#{self} dd {
+            font-size: #{self}px;
+          }
+
+        | .size-#{self} dt {
+            height: #{self}px;
+          }
+
+      | .uppercase {
+          text-transform: uppercase;
+        }
+
+      | .last {
+          margin-bottom: 0;
+        }
+
+  body
+    div#main
+      header
+        hgroup
+          h1 = "#{fontface}-#{font_hash}"
+          h2: a href="http://www.metaflop.com" www.metaflop.com
+      section#specimen
+        header
+          span size
+          |&nbsp;- css font-size (px)
+        - specimen_sizes
+          dl class="size-#{self} uppercase"
+            dt: span = self
+            dd Our life is frittered
+        - specimen_sizes
+          dl class="size-#{self}"
+            dt: span = self
+            dd Our life is frittered
+      section#samples.last
+        header
+          span text sample
+          |&nbsp;- css font-size (px) with 1.4em line-height
+        - samples_sizes
+          dl class="size-#{self}"
+            dt: span = self
+            dd Our life is frittered away by detail. An honest man has hardly need to count more than his ten fingers, or in extreme cases he may add his ten toes, and lump the rest. Simplicity, simplicity, simplicity! - Henry David Thoreau, Walden (1854)

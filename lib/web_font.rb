@@ -7,8 +7,9 @@
 #
 
 require './lib/font_settings'
-require 'mustache'
 require 'zip/zip'
+require 'slim'
+require 'tilt'
 
 class WebFont
   def initialize(font_settings)
@@ -35,18 +36,17 @@ class WebFont
         zipfile.add("#{@font_name}.#{x}", File.join(@dir, "font.#{x}"))
       end
 
-      [
-        ['bin/webfont_sample.mustache', "#{@font_name}_sample.html"],
-        ['bin/license.gpl', 'license.gpl'],
-        ['bin/license.ofl', 'license.ofl']
-      ].each do |x|
-        file = File.join(@dir, x[1])
-        File.open(x[0], 'r') do |infile|
-          File.open(file, 'w') do |outfile|
-            outfile.write(Mustache.render(infile.read, self))
-          end
-        end
-        zipfile.add(x[1], file)
+      # html sample
+      html_sample_filename = "#{@font_name}_sample.html"
+      html_sample_file = File.join(@dir, html_sample_filename)
+      File.open(html_sample_file, 'w') do |outfile|
+        outfile.write(Tilt.new('bin/webfont_sample.slim', :pretty => true).render(self))
+      end
+      zipfile.add(html_sample_filename, html_sample_file)
+
+      # misc files
+      ['bin/license.gpl', 'bin/license.ofl'].each do |x|
+        zipfile.add(File.basename(x), x)
       end
     end
 

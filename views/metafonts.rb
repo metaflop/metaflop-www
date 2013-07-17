@@ -6,12 +6,15 @@
 # licensed under gpl v3
 #
 
-require './lib/showoff_page'
+require_relative 'showoff_page'
+require './lib/slideshow_page'
 
 class App
   module Views
-    class Metafonts < Layout
-      include ShowoffPage
+    class Metafonts < ShowoffPage
+      template :showoff_page
+
+      include ::SlideshowPage
     end
   end
 end

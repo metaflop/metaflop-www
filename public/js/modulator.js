@@ -552,6 +552,21 @@ $(function () {
     // autogrow textarea
     $('#preview-typewriter').find('textarea').autogrow().hide();
 
-    // load the first image
-    generatePreview();
+    // insertRule is not supported by IE < 9, which also don't
+    // support otf font faces
+    if (Modernizr.fontface && document.styleSheets[0].insertRule) {
+        // load the first image
+        generatePreview();
+    }
+    else {
+        var unsupported = $(
+                '<div id="modulator-unsupported" style="height: ' +
+                $('#main').height() +
+                'px;"><p>Your browser <a href="http://caniuse.com/ttf">' +
+                'is not supported</a> by our modulator.<br />' +
+                'Please try to upgrade to a more contemporary browser.</p>' +
+                '</div>');
+        $('#main').append(unsupported);
+        unsupported.fadeTo(0, 0.9);
+    }
 });

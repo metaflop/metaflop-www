@@ -703,6 +703,21 @@ a.char-chooser {
     }
 }
 
+#modulator-unsupported {
+    position:absolute;
+    margin-top: 77px;
+    padding: 15.5px 7px;
+    width: 986px;
+    background-color: #fff;
+    z-index: 4;
+    font-weight: bold;
+    text-align: center;
+
+    p {
+      margin-top: $box_spacing_x * 2;
+    }
+}
+
 #feedback {
     @include transform(rotate(-90deg));
     @include transform-origin(center right);

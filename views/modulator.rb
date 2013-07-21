@@ -11,7 +11,7 @@ class App
     class Modulator < Layout
 
       def js
-        ['/js/modernizr.js', '/js/modulator.js']
+        ['/js/modernizr.js', '/js/modulator.js?version=1']
       end
 
       def parameters

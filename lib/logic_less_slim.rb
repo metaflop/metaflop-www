@@ -6,10 +6,14 @@
 # licensed under gpl v3
 #
 
+require 'slim/logic_less'
+
 # mixin for sinatra app
 #
 # provides a slim renderer that sets the template and view model from
 # the views directory
+#
+# it can also be used for views that need to render a partial
 module LogicLessSlim
   attr_reader :view_model
 
@@ -29,6 +33,14 @@ module LogicLessSlim
       @view_model.instance_variable_set(name, instance_variable_get(name))
     end
 
-    render :slim, template, options.merge(:dictionary => 'self.view_model')
+    options.merge!(:dictionary => 'self.view_model')
+
+    if respond_to? :render, true
+      render :slim, template, options
+    else
+      require 'slim'
+      require 'tilt'
+      Tilt.new("./views/#{template}.slim", options).render(self)
+    end
   end
 end

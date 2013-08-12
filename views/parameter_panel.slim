@@ -1,0 +1,19 @@
+h2: span Parameters
+div.box-content
+  - parameters
+    fieldset
+      legend class="#{css_class}" = title
+      - items
+        div.clearfix.inputblock class="#{css_class}"
+          label for="param-#{name}" = title
+          === html
+          -! html
+            div class="adjuster param-#{name}"
+              a.sub10 href="#" title="decrease by 0.1" --
+              a.sub1 href="#" title="decrease by 0.01" -
+              input type="text" name="param-#{name}" id="param-#{name}" tabindex="#{tabindex}" value="#{value}" class="param init"
+              a.add1 href="#" title="increase by 0.01" +
+              a.add10 href="#" title="increase by 0.1" ++
+            div class="slider"
+              input(id="slider-#{name}" type="text" maxlength="6" name="inputTest" value="#{value}"
+                data-range-from="#{range_from}" data-range-to="#{range_to}" data-default="#{default}")

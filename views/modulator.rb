@@ -9,6 +9,7 @@
 class App
   module Views
     class Modulator < Layout
+      include LogicLessSlim
 
       def js
         ['/js/modernizr.js', '/js/modulator.js?version=1']
@@ -86,6 +87,14 @@ class App
         %w(Bespoke Adjuster).map do |x|
           { :name => x, :active => @active_fontface == x }
         end
+      end
+
+      def char_chooser
+        slim :char_chooser, :layout => false
+      end
+
+      def parameter_panel
+        slim :parameter_panel, :layout => false
       end
     end
   end

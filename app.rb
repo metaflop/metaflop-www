@@ -12,7 +12,6 @@ require 'sinatra/reloader'
 require 'sinatra/config_file'
 require 'sinatra/simple-navigation'
 require 'sass'
-require 'slim/logic_less'
 require 'time'
 require 'active_support'
 require 'data_mapper' # metagem, requires common plugins too.
@@ -36,9 +35,7 @@ class App < Sinatra::Application
 
     require './views/layout'
 
-    set :slim, {
-      :pretty => true
-    }
+    Slim::Engine.set_default_options :pretty => true
 
     mime_type :otf, 'font/opentype'
 

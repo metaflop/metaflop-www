@@ -9,10 +9,8 @@
 # the file "user" only contains the following line
 # set :user, "<username>"
 # if your local username is the same as the ssh-user you might not need this
-load './config/user'
-
 require 'bundler/capistrano'
-require 'rvm/capistrano'
+require 'capistrano-rbenv'
 
 require 'capistrano/ext/multistage'
 set :stages, %w(production staging)
@@ -25,16 +23,17 @@ set :application, "metaflop"
 set :branch, "master"
 set :git_enable_submodules, 1
 
+set :user, "rails"
+
 set :use_sudo, false
 
-set :rvm_ruby_string, 'ruby-1.9.2-p290'
+set :rbenv_ruby_version, '2.0.0-p247'
+set :rbenv_install_dependencies, false
 
-# passenger mod_rails restart
+# unicorn wrapper restart
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    run "RAILS_ENV=#{rails_env} $HOME/bin/unicorn_wrapper restart"
   end
 end
 

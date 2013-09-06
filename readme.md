@@ -12,7 +12,7 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 
 ## Prerequisites
 
-* ruby >= 1.9.2 ([rvm](http://beginrescueend.com/) recommended)
+* ruby >= 1.9.2 ([rbenv](http://rbenv.org/) or [rvm](http://beginrescueend.com/) recommended)
 * bundler
   ``$ gem install bundler``
 * required rubies

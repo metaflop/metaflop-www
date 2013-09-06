@@ -1,7 +1,7 @@
 set :scm, :none
 set :repository,  "."
 set :deploy_via, :copy
-set :deploy_to, "/local/metaflop/www/test.metaflop.greyfont.com"
+set :deploy_to, "/home/rails/app"
 
-role :web, "test.metaflop.greyfont.com"
-role :app, "test.metaflop.greyfont.com"
+role :web, "metaflop-staging.panter.ch"
+role :app, "metaflop-staging.panter.ch"

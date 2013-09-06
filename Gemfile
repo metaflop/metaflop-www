@@ -10,9 +10,10 @@ gem 'sinatra-simple-navigation'
 gem 'bourbon'
 gem 'rubyzip'
 gem 'activesupport'
+gem 'unicorn'
 
 group :development do
   gem 'capistrano'
-  gem 'rvm-capistrano'
+  gem 'capistrano-rbenv'
   gem 'rspec'
 end

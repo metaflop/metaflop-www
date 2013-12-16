@@ -133,6 +133,10 @@ class FontParameters
       end
     end
 
+    if has_preview_file?
+      content.sub! 'input glyphs;', 'input glyphs_preview;'
+    end
+
     File.open(File.join(@settings.out_dir, 'font.mf'), "w:utf-8") do |file|
       file.write(content)
     end
@@ -159,8 +163,18 @@ class FontParameters
     nil
   end
 
-  def original_file
-    "mf/metaflop-font-#{@settings.fontface.downcase}/font.mf"
+  def original_dir
+    "mf/metaflop-font-#{@settings.fontface.downcase}"
   end
 
+  def original_file
+    File.join(original_dir, 'font.mf')
+  end
+
+  # the preview file generates a reduced glyph set that are needed
+  # for the preview. this way we don't waste time generating
+  # glyphs we won't need.
+  def has_preview_file?
+    File.exists? File.join(original_dir, 'glyphs_preview.mf')
+  end
 end

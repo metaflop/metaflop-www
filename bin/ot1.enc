@@ -1,0 +1,139 @@
+% @psencodingfile{
+%   filename = "ot1.enc",
+%   license = "public domain",
+%   date = "2014/03/02",
+%   author = "Linus Romer",
+%   docstring = "This is the OT1 encoding. Details are described in
+%   ftp://ctan.tug.org/tex-archive/macros/latex/doc/encguide.pdf.
+% }
+%
+/OT1Encoding [   % now 128 chars follow
+/Gamma           % 0x00 U+0393
+/Delta           % 0x01 U+0394
+/Theta           % 0x02 U+0398
+/Lambda          % 0x03 U+039B
+/Xi              % 0x04 U+039E
+/Pi              % 0x05 U+03A0
+/Sigma           % 0x06 U+03A3
+/Upsilon         % 0x07 U+03A5
+/Phi             % 0x08 U+03A6
+/Psi             % 0x09 U+03A8
+/Omega           % 0x0A U+03A9
+/ff              % 0x0B U+FB00
+/fi              % 0x0C U+FB01
+/fl              % 0x0D U+FB02
+/ffi             % 0x0E U+FB03
+/ffl             % 0x0F U+FB04
+/dotlessi        % 0x10 U+0131
+/dotlessj        % 0x11 U+0237
+/grave           % 0x12 U+0060
+/acute           % 0x13 U+00B4
+/caron           % 0x14 U+02C7
+/breve           % 0x15 U+02D8
+/macron          % 0x16 U+00AF
+/ring            % 0x17 U+02DA
+/cedilla         % 0x18 U+00B8
+/germandbls      % 0x19 U+00DF
+/ae              % 0x1A U+00E6
+/oe              % 0x1B U+0153
+/oslash          % 0x1C U+00F8
+/AE              % 0x1D U+00C6
+/OE              % 0x1E U+0152
+/Oslash          % 0x1F U+00D8
+/polishstroke    % 0x20 U+0335
+/exclam          % 0x21 U+0021
+/quotedblright   % 0x22 U+201D
+/numbersign      % 0x23 U+0023
+/dollar          % 0x24 U+0024
+/percent         % 0x25 U+0025
+/ampersand       % 0x26 U+0026
+/quoteright      % 0x27 U+2019
+/parenleft       % 0x28 U+0028
+/parenright      % 0x29 U+0029
+/asterisk        % 0x2A U+002A
+/plus            % 0x2B U+002B
+/comma           % 0x2C U+002C
+/hyphen          % 0x2D U+002D
+/period          % 0x2E U+002E
+/slash           % 0x2F U+002F
+/zero            % 0x30
+/one             % 0x31
+/two             % 0x32
+/three           % 0x33
+/four            % 0x34
+/five            % 0x35
+/six             % 0x36
+/seven           % 0x37
+/eight           % 0x38
+/nine            % 0x39
+/colon           % 0x3A U+003A
+/semicolon       % 0x3B U+003B
+/exclamdown      % 0x3C U+003C
+/equal           % 0x3D U+003D
+/questiondown    % 0x3E U+003E
+/question        % 0x3F U+003F
+/at              % 0x40 U+0040
+/A               % 0x41
+/B               % 0x42
+/C               % 0x43
+/D               % 0x44
+/E               % 0x45
+/F               % 0x46
+/G               % 0x47
+/H               % 0x48
+/I               % 0x49
+/J               % 0x4A
+/K               % 0x4B
+/L               % 0x4C
+/M               % 0x4D
+/N               % 0x4E
+/O               % 0x4F
+/P               % 0x50
+/Q               % 0x51
+/R               % 0x52
+/S               % 0x53
+/T               % 0x54
+/U               % 0x55
+/V               % 0x56
+/W               % 0x57
+/X               % 0x58
+/Y               % 0x59
+/Z               % 0x5A
+/bracketleft     % 0x5B U+005B
+/quotedblleft    % 0x5C U+201C
+/bracketright    % 0x5D U+005D
+/circumflex      % 0x5E U+005E
+/dotaccent       % 0x5F U+0307
+/quoteleft       % 0x60 U+2018
+/a               % 0x61
+/b               % 0x62
+/c               % 0x63
+/d               % 0x64
+/e               % 0x65
+/f               % 0x66
+/g               % 0x67
+/h               % 0x68
+/i               % 0x69
+/j               % 0x6A
+/k               % 0x6B
+/l               % 0x6C
+/m               % 0x6D
+/n               % 0x6E
+/o               % 0x6F
+/p               % 0x70
+/q               % 0x71
+/r               % 0x72
+/s               % 0x73
+/t               % 0x74
+/u               % 0x75
+/v               % 0x76
+/w               % 0x77
+/x               % 0x78
+/y               % 0x79
+/z               % 0x7A
+/endash          % 0x7B U+2013
+/emdash          % 0x7C U+2014
+/quotedbl        % 0x7D U+0022
+/tilde           % 0x7E U+02DC
+/dieresis        % 0x7F U+00A8
+] def

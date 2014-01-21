@@ -1,0 +1,437 @@
+#!/usr/bin/env python
+
+#mf2outline version 20140404
+
+#This program has been written by Linus Romer for the 
+#Metaflop project by Marco Mueller and Alexis Reigel.
+
+#Some ideas are due to the build.py script from the Punk Nova
+#project by Khaled Hosny. Some parts of the source code are
+#copied/inspired from tfm.py by Han-Wen Nienhuys
+#and Jan Nieuwenhuizen
+
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#Copyright 2014 by Linus Romer
+
+import os
+import sys
+import fontforge
+import psMat # this is from python-fontforge
+import glob
+import subprocess
+import tempfile
+import shutil
+import argparse
+import math
+
+def split_list(a):
+	lst = [] 
+	for s in a:
+		lst += s.split (",")
+	return lst
+	
+# convert an array of bytes b to an integer n
+# int.from_bytes() could replace this (python 3.2)
+def bytes_to_int(b): 
+	shift = (len(b)-1)*8
+	n = 0L
+	for i in b:
+		n = n  + (long (ord (i)) << shift)
+		shift = shift - 8
+	return n
+
+class Tfmetric:
+	# read the documentation of the tftopl program to understand
+	# this class better.
+	
+	# read a number n consisting of m bytes from the array of bytes
+	def read_number(self,m):
+		n = bytes_to_int(self.tail[0:m])
+		self.tail = self.tail[m:]
+		return n
+	
+	# fixword is a 4-byte representation of a binary fraction 
+	def read_fixword(self):
+		return (self.read_number(4)/16.0) / (1<<16);
+	
+	# read m fixwords and return them in an array
+	def read_fixwords(self,m):
+		fixwords = [0.0]*m
+		for i in range (0,m):
+			fixwords[i] = self.read_fixword()
+		return fixwords
+	
+	# read m charinfo (consisting each of 4 bytes) that will be 
+	# put into 6 fields (containing only indices of an array that
+	# will be read later)
+	def read_charinfo(self): 
+		nc = self.ec - self.bc + 1 # number of codes/characters
+		charinfo = [[0 for i in range(6)] for j in range(nc)]
+		for i in range (0,nc):
+			charinfo[i][0] = self.read_number(1) # width_index 
+			temp = self.read_number(1) # height_index and depth_index 
+			charinfo[i][1] = (temp & 0xf0) >> 4 # height_index (times 4)
+			charinfo[i][2] = (temp & 0x0f) # depth_index 
+			temp = self.read_number(1) # italic_index and tag
+			charinfo[i][3] = (temp & 0xfc) >> 6 # italic index (times 4), 6 bits
+			charinfo[i][4] = (temp & 0x3) # tag
+			charinfo[i][5] = self.read_number(1) # remainder
+		return charinfo
+		
+	def __init__ (self,f): # f is the filename of the tfm file
+		self.orig = (open(f).read())
+		self.tail = self.orig
+		# file header:
+		self.lf = self.read_number(2) # length of the entire file
+		self.lh = self.read_number(2) # length of the header data
+		self.bc = self.read_number(2) # smallest character code in the font 
+		self.ec = self.read_number(2) # largest character code in the font 
+		self.nw = self.read_number(2) # number of words in the width table 
+		self.nh = self.read_number(2) # number of words in the height table 
+		self.nd = self.read_number(2) # number of words in the depth table 
+		self.ni = self.read_number(2) # number of words in the italic correction table 
+		self.nl = self.read_number(2) # number of words in the lig/kern table 
+		self.nk = self.read_number(2) # number of words in the kern table 
+		self.ne = self.read_number(2) # number of words in the extensible character table 
+		self.np = self.read_number(2) # number of font parameter words 
+		# file body:
+		# header array:
+		self.checksum = self.read_number(4) # 32-bit check sum
+		self.designsize = self.read_fixword() # design size of the font in TeX points
+		# jump to the char_info array
+		self.tail = self.orig[4*(6+self.lh):]
+		self.charinfo = self.read_charinfo()
+		# width array
+		self.width = self.read_fixwords(self.nw)
+		# height array
+		self.height = self.read_fixwords(self.nh)
+		# depth array
+		self.depth = self.read_fixwords(self.nd)
+		# italic array
+		self.italic = self.read_fixwords(self.ni)
+		# jump (at the moment) directly to the end of orig:
+		# (remember that a word has 4 bytes)
+		self.tail = self.orig[4*(6+self.lh+(self.ec-self.bc+1)+self.nw+self.nh+self.nd+self.ni+self.nl+self.nk+self.ne):]
+		# param array
+		self.slant = self.read_fixword()
+		self.space = self.read_fixword()
+		self.space_stretch = self.read_fixword()
+		self.space_shrink = self.read_fixword()
+		self.x_height = self.read_fixword()
+		self.quad = self.read_fixword()
+		self.extra_space = self.read_fixword()
+		# remove the rest (which should be empty)
+		del self.tail
+	
+	# return the width of the char with code c
+	def get_charwidth(self,c):
+		return self.width[self.charinfo[c-self.bc][0]]*self.designsize
+		
+	# return the height of the char with code c
+	def get_charheight(self,c):
+		return self.height[self.charinfo[c-self.bc][1]]*self.designsize
+		
+	# return the depth of the char with code c
+	def get_chardepth(self,c):
+		return self.depth[self.charinfo[c-self.bc][2]]*self.designsize
+		
+	# return the italic correction of the char with code c
+	def get_charitalic(self,c):
+		return self.italic[self.charinfo[c-self.bc][3]]*self.designsize
+	
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description="Generate outline fonts from Metafont sources.")
+	parser.add_argument("mfsource", help="The file name of the Metafont source file")
+	parser.add_argument("-v", "--verbose",
+		action='store_true',
+		default=False,
+		help="explain what is being done")
+	parser.add_argument("-vv", "--veryverbose",
+		action='store_true',
+		default=False,
+		help="explain very detailed what is being done")
+	parser.add_argument("--designsize", 
+		dest="designsize",
+		metavar="SIZE",
+		type=float,
+		default=10.0,
+		help="The first guess of the design size will be SIZE (default: 10.0)")	
+	parser.add_argument("--magnification", 
+		dest="magnification",
+		metavar="MAG",
+		type=float,
+		default=1.0,
+		help="Set magnification for MF to MAG - larger is more exact but slower (default: 1.0)")
+	parser.add_argument("--raw",
+		action="store_true",
+		dest="raw",
+		default=False,
+		help="Do not remove overlaps, round to int, add extrema, add hints...")
+	parser.add_argument("--double",
+		action="store_true",
+		dest="double",
+		default=False,
+		help="Use 64 bit floating point arithmetic (needs Metapost 1.800 or higher)")
+	parser.add_argument("--errorstopmode",
+		action="store_true",
+		dest="errorstopmode",
+		default=False,
+		help="Stop on all errors")
+	parser.add_argument("-f", "--formats",
+		action="append",
+		dest="formats",
+		default=[],
+		help="Which formats to generate (choices: sfd, afm, pfa, pfb, otf, ttf, eoff, svg, tfm)")
+	parser.add_argument("--encoding", 
+		dest="encoding",
+		metavar="ENC",
+		type=str,
+		default="t1",
+		help="The font encoding of the Metafont source (default: t1)")	
+	parser.add_argument("--fullname", 
+		dest="fullname",
+		metavar="FULL",
+		type=str,
+		default="Unknown",
+		help="The full name of the font with modifiers and possible spaces")	
+	parser.add_argument("--fontname", 
+		dest="fontname",
+		metavar="NAME",
+		type=str,
+		default="Unknown",
+		help="The full name of the font with modifiers and without spaces")	
+	parser.add_argument("--familyname", 
+		dest="familyname",
+		metavar="FAM",
+		type=str,
+		default="Unknown",
+		help="The name of the font family")		
+	parser.add_argument("--fullname-as-filename",
+		action="store_true",
+		dest="fullnameasfilename",
+		default=False,
+		help="Use the fullname for the name of the output file")
+	parser.add_argument("--fontversion", 
+		dest="version",
+		metavar="VERS",
+		type=str,
+		default="001.001",
+		help="The version of the font (default: 001.001)")	
+	parser.add_argument("--copyright", 
+		dest="copyright",
+		metavar="COPY",
+		type=str,
+		default="",
+		help="The copyright notice of the font")		
+	parser.add_argument("--vendor", 
+		dest="vendor",
+		metavar="VEND",
+		type=str,
+		default="",
+		help="The vendor of the font (limited to 4 characters)")	
+	parser.add_argument("--weight", 
+		dest="weight",
+		metavar="WGT",
+		type=int,
+		default=500,
+		help="The OS/2 weight of the font (default: 500)")		
+	parser.add_argument("--width", 
+		dest="width",
+		metavar="WDT",
+		type=int,
+		default=5,
+		help="The OS/2 width of the font (default: 5)")		
+	args = parser.parse_args()
+	
+	args.formats = split_list(args.formats)
+	if args.formats == []:
+		args.formats = ["otf"] # make "otf" default format
+		
+	if args.veryverbose:
+		args.verbose=True
+
+	if not (os.path.isfile(args.mfsource) or os.path.isfile(args.mfsource+".mf")):
+		print "Cannot find your specified source file '%s'" % args.mfsource
+		exit(1)
+		
+	if args.verbose:
+		print "Creating font file..." 
+	font = fontforge.font()
+	
+	if args.verbose:
+		print "Setting general font information..." 
+	if args.encoding == "t1":
+		fontforge.loadEncodingFile("t1.enc")
+		font.encoding="T1Encoding"
+	elif args.encoding == "ot1":
+		fontforge.loadEncodingFile("ot1.enc")
+		font.encoding="OT1Encoding"
+	else:
+		print "I do not know this encoding but will continue with t1" 
+		fontforge.loadEncodingFile("t1.enc")
+		font.encoding="T1Encoding"
+	font.fullname = args.fullname
+	font.fontname = args.fontname
+	font.familyname = args.familyname
+	font.version = args.version
+	font.copyright = args.copyright
+	font.os2_vendor = args.vendor
+	font.os2_weight = args.weight
+	if font.os2_weight == 100:
+		font.weight = "Thin"
+	elif font.os2_weight == 200:
+		font.weight = "Extra-Light"
+	elif font.os2_weight == 300:
+		font.weight = "Light"
+	elif font.os2_weight == 400:
+		font.weight = "Book"
+	elif font.os2_weight == 500:
+		font.weight = "Medium"
+	elif font.os2_weight == 600:
+		font.weight = "Demi-Bold"
+	elif font.os2_weight == 700:
+		font.weight = "Bold"
+	elif font.os2_weight == 800:
+		font.weight = "Heavy"
+	elif font.os2_weight == 900:
+		font.weight = "Black"
+	else:
+		print "I do not understand your specified weight but will continue with 500..."
+		font.os2_weight = 500
+		font.weight = "Medium"
+		
+	if args.verbose:
+		print "Running METAPOST for tfm and glyphs definition..." 
+	mfsource = os.path.abspath("%s" % args.mfsource)
+	tempdir = tempfile.mkdtemp()
+	mpargs = ['mpost',
+	'&mfplain',
+	'\mode=localfont;',
+	'mag:=%s;' % (1003.75/args.designsize*args.magnification), 
+	'errorstopmode;' if args.errorstopmode else 'nonstopmode;',
+	'outputtemplate:="%c.eps";',
+	'input %s;' % mfsource,
+	'bye']
+	if args.double:
+		mpargs.insert(1,'--numbersystem="double"')
+	subprocess.call(
+		mpargs,
+		stdout = subprocess.PIPE, 
+		stderr = subprocess.PIPE,
+		cwd = tempdir
+		)
+	
+	generalname = os.path.splitext(os.path.basename(args.mfsource))[0]	
+	if args.fullnameasfilename:
+		outputname = font.fullname
+	else:
+		outputname = generalname
+	if args.verbose:
+		print "Reading the tfm file..."
+	metric = Tfmetric("%s/%s.tfm" % (tempdir, generalname)) 
+	if metric.designsize != args.designsize:
+		args.designsize = metric.designsize 
+		if args.verbose:
+			print "Running METAPOST again..."
+			subprocess.call(
+				mpargs,
+				stdout = subprocess.PIPE, 
+				stderr = subprocess.PIPE,
+				cwd = tempdir
+				)
+	font.design_size = args.designsize
+	font.italicangle = -math.atan(metric.slant)/math.pi*180
+			
+	if args.verbose:
+		print "Importing glyphs..."
+	transformation = psMat.scale(1.0/args.magnification) # redo the magnification
+	eps_files = glob.glob(os.path.join(tempdir, "*.eps"))
+	for file in eps_files:
+		code  = int(os.path.splitext(os.path.basename(file))[0])
+		if args.veryverbose:
+			print "Importing the glyph with code number %s" % code
+		if not (args.encoding == "t1" and code == 23): #do not yet care about the cwm 
+			glyph = font.createMappedChar(code)
+			glyph.importOutlines(file, ("toobigwarn", "correctdir"))
+			glyph.transform(transformation)
+		
+	if args.verbose:
+		print "Adding glyph metrics..."
+	for glyph in font.glyphs():
+		glyph.width = int (round (metric.get_charwidth(glyph.encoding) / args.designsize * 1000)) 
+	font.mergeFeature("%s/%s.tfm" % (tempdir, generalname))
+	#font.texparameters[1]=metric.slant
+	if args.encoding == "t1":
+		font.createMappedChar(23) #add empty cwm
+		font[23].width = 0
+		font.encoding = "unicode" #add space for non-TeX
+		font.createChar(32)
+		font[32].width = int (round (metric.space * 1000))  
+		font.encoding = "T1Encoding"
+		font.encoding = "compacted"
+	
+	if not args.raw:
+		if args.verbose:
+			print "Simplifying and finetuning..."
+		font.selection.all()
+		font.simplify()
+		font.removeOverlap()
+		font.correctDirection()
+		font.addExtrema()
+		font.simplify()
+		font.round()
+		font.simplify()
+		font.round()
+		font.autoHint()
+	
+	if ("sfd" in args.formats):
+		if args.verbose:
+			print "Saving '%s.sfd' ..." % outputname
+		font.save("%s.sfd" % outputname)
+	if ("otf" in args.formats):
+		if args.verbose:
+			print "Generating '%s.otf' ..." % outputname
+		font.generate("%s.otf" % outputname)
+	if ("pfa" in args.formats):
+		if args.verbose:
+			print "Generating '%s.pfa' and '%s.afm' ..." % (outputname,outputname)
+		font.generate("%s.pfa" % outputname)
+	if ("pfb" in args.formats):
+		if args.verbose:
+			print "Generating '%s.pfb' and '%s.afm' ..." % (outputname,outputname)
+		font.generate("%s.pfb" % outputname)
+	if ("afm" in args.formats):
+		if args.verbose:
+			print "Generating '%s.afm' ..." % outputname
+		font.generate("%s.afm" % outputname)
+	if ("ttf" in args.formats):
+		if args.verbose:
+			print "Generating '%s.ttf' ..." % outputname
+		font.generate("%s.ttf" % outputname)
+	if ("eoff" in args.formats):
+		if args.verbose:
+			print "Generating '%s.eoff' ..." % outputname
+		font.generate("%s.eoff" % outputname)
+	if ("svg" in args.formats):
+		if args.verbose:
+			print "Generating '%s.svg' ..." % outputname
+		font.generate("%s.svg" % outputname)
+	if ("tfm" in args.formats):
+		if args.verbose:
+			print "Saving '%s.tfm' ..." % outputname
+		shutil.copyfile("%s/%s.tfm" % (tempdir, generalname), "%s.tfm" % outputname) 
+	
+	shutil.rmtree(tempdir)
+	exit(0)

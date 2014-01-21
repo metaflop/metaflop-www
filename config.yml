@@ -1,6 +1,5 @@
 metaflop:
-  font_otf: 'perl mf2pt1.pl --encoding=t1 --comment="Copyright (c) %{year}, Metaflop (http://www.metaflop.com),
-Simon Egli, Marco Mueller, Alexis Reigel, with Reserved Font Name %{fontface}. Dual licensed under the GPL v3 (http://www.gnu.org/copyleft/gpl.html) and the OFL v1.1 (http://scripts.sil.org/OFL_web)." --family=%{fontface} --nofixedpitch --fullname="%{fontface} %{font_hash}" --name="%{fontface}-%{font_hash}" --weight=%{font_hash} font.mf'
+  font_otf: './mf2outline --encoding=t1 --copyright="Copyright (c) %{year}, Metaflop (http://www.metaflop.com), Simon Egli, Marco Mueller, Alexis Reigel, with Reserved Font Name %{fontface}. Dual licensed under the GPL v3 (http://www.gnu.org/copyleft/gpl.html) and the OFL v1.1 (http://scripts.sil.org/OFL_web)." --family=%{fontface} --fullname="%{fontface} %{font_hash}" --fontname="%{fontface}-%{font_hash}" --vendor=flop --formats=otf,ttf,svg font.mf'
 
   font_web: sfnt2woff font.otf && ttf2eot font.ttf > font.eot
 

@@ -24,6 +24,8 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * [sfnt2woff](http://people.mozilla.com/~jkew/woff/)
 * [ttf2eot](https://github.com/metaflop/ttf2eot)
 * t1utils
+* python
+* python libs: fontforge, argparse
 
 ## License
 

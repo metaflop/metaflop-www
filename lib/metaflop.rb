@@ -43,7 +43,7 @@ class Metaflop
     # regenerate from the latest parameters with the sidebearings turned off
     @font_parameters.sidebearing.value = '0'
     font_parameters "#{@font_settings.out_dir}/font.mf"
-    generate_mf
+    @font_parameters.to_file
 
     command = settings[:font_otf] % @font_settings.to_hash
 
@@ -69,14 +69,4 @@ class Metaflop
     { :name => "#{font.font_name}_webfont.zip",
       :data => font.zip }
   end
-
-  # returns true if the mf was successfully generated
-  def generate_mf
-    @font_parameters.to_file
-    system(
-      %Q{cd #{@font_settings.out_dir} &&
-         mf -halt-on-error -jobname=font font.mf > /dev/null}
-    )
-  end
-
 end

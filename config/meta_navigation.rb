@@ -5,7 +5,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :facebook, '<i class="icon-facebook"></i>',
       'http://www.facebook.com/metaflop', :link => { :target => '_blank' }
     primary.item :github, '<i class="icon-github"></i>',
-      'https://github.com/greyfont', :link => { :target => '_blank' }
+      'https://github.com/metaflop', :link => { :target => '_blank' }
     primary.item :terms, 'Terms', '/terms'
     primary.item :faq, 'FAQ', '/faq'
 

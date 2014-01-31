@@ -1,3 +1,6 @@
-[submodule "mf"]
-	path = mf
-	url = git@github.com:greyfont/metaflop-font.git
+[submodule "mf/metaflop-font-bespoke"]
+	path = mf/metaflop-font-bespoke
+	url = git@github.com:greyfont/metaflop-font-bespoke.git
+[submodule "mf/metaflop-font-adjuster"]
+	path = mf/metaflop-font-adjuster
+	url = git@github.com:greyfont/metaflop-font-adjuster.git

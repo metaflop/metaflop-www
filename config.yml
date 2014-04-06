@@ -45,16 +45,40 @@ metafonts:
         - Pen Razor transformation from 0 to 45 degree and vice versa.
     subimages:
       -
-        - adjuster-derivations-01.png?v=1
+        - adjuster-derivations-01.png?v=2
+        - 4pY8SPVUeO
+      -
+        - adjuster-derivations-02.png?v=2
+        - GfXF00-goL
+      -
+        - adjuster-derivations-03.png?v=2
+        - pQkUOJOPk8
+      -
+        - adjuster-derivations-04.png?v=2
         - WitXxEC_wq
       -
-        - adjuster-derivations-02.png?v=1
+        - adjuster-derivations-05.png?v=2
+        - 19mOboz6Sq
+      -
+        - adjuster-derivations-06.png?v=2
         - B_DF7u3XWz
       -
-        - adjuster-derivations-03.png?v=1
+        - adjuster-derivations-07.png?v=2
+        - JgRFUo8ZJV
+      -
+        - adjuster-derivations-08.png?v=2
         - BL4uWv2Vdt
       -
-        - adjuster-derivations-04.png?v=1
+        - adjuster-derivations-09.png?v=2
+        - xo_LzNRVdV
+      -
+        - adjuster-derivations-10.png?v=2
+        - poimn57bWc
+      -
+        - adjuster-derivations-11.png?v=2
+        - N-SDv-KkDl
+      -
+        - adjuster-derivations-12.png?v=2
         - IVhW3c2vuS
   bespoke:
     description: <a href="/modulator?fontface=Bespoke">MF Bespoke</a> is geared to simply constructed sans serif fonts. This metafont consists of 14 adjustable parameters grouped in classes of dimension, proportion and shape. By using this range of parameters a high variety of derivates can be achieved. The standard font and font-box has the size of 10 unit points.

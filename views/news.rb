@@ -5,6 +5,7 @@
 #
 # licensed under gpl v3
 #
+require './views/layout'
 require './lib/slideshow_page'
 
 class App
@@ -15,11 +16,15 @@ class App
       # randomly create a sequence of 12 images,
       # varying by language, keeping the order
       def images
-        random = Random.new
-        (1..12).map do |i|
-          random_lang = %w{de en fr it}[random.rand(0..3)]
-          "img/helloworld/bespoke-helloworld-%02d-%s.png" % [i, random_lang]
-        end
+        files = Dir['public/img/helloworld/*'].map { |x| x.sub 'public', '' }
+
+        %w(adjuster bespoke).map do |font_family|
+          (1..12).map do |i|
+            files.select do |x|
+              x =~ /#{"%s-helloworld-%02d-" % [font_family, i]}/
+            end.sample
+          end
+        end.flatten
       end
     end
   end

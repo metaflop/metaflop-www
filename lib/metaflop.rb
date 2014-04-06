@@ -38,12 +38,12 @@ class Metaflop
     @font_settings
   end
 
-  def font_otf
+  def font_otf(preview = false)
     @font_settings.cleanup_tmp_dir
     # regenerate from the latest parameters with the sidebearings turned off
     @font_parameters.sidebearing.value = '0'
     font_parameters "#{@font_settings.out_dir}/font.mf"
-    @font_parameters.to_file
+    @font_parameters.to_file(preview)
 
     command = settings[:font_otf] % @font_settings.to_hash
 
@@ -58,7 +58,7 @@ class Metaflop
   #  returns base64 encoded otf for embedding as css fontface
   def font_preview
     @font_settings.font_hash = 'preview'
-    Base64.strict_encode64 font_otf[:data]
+    Base64.strict_encode64 font_otf(true)[:data]
   end
 
   def font_web

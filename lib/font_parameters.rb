@@ -123,7 +123,7 @@ class FontParameters
   end
 
   # write the params to the the output dir (see @settings.out_dir)
-  def to_file
+  def to_file(use_preview_file = false)
     content = File.open(original_file, 'r:utf-8'){ |f| f.read }
     # replace the original values
     MF_MAPPINGS.each do |mapping|
@@ -133,7 +133,7 @@ class FontParameters
       end
     end
 
-    if has_preview_file?
+    if use_preview_file && has_preview_file?
       content.sub! 'input glyphs;', 'input glyphs_preview;'
     end
 

@@ -16,12 +16,15 @@ require 'capistrano/ext/multistage'
 set :stages, %w(production staging)
 set :default_stage, "staging"
 
-default_run_options[:pty] = true # password prompt from git
-ssh_options[:forward_agent] = true # use local ssh key
+set :default_run_options, { pty: true } # password prompt from git
+set :ssh_options, { forward_agent: true} # use local ssh key
 
 set :application, "metaflop"
-set :branch, "master"
+set :scm, :git
+set :repository, "git@github.com:metaflop/metaflop-www.git"
 set :git_enable_submodules, 1
+set :deploy_to, "/home/rails/app"
+set :deploy_via, :remote_cache # don't clone repo each time
 
 set :user, "rails"
 

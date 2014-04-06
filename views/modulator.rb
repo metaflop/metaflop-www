@@ -84,7 +84,7 @@ class App
       end
 
       def fontfaces
-        %w(Bespoke Adjuster).map do |x|
+        %w(Adjuster Bespoke).map do |x|
           { :name => x, :active => @active_fontface == x }
         end
       end

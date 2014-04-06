@@ -4,7 +4,59 @@ metaflop:
   font_web: sfnt2woff font.otf && ttf2eot font.ttf > font.eot
 
 metafonts:
-  bespoke: 
+  adjuster:
+    description: '<a href="/modulator?fontface=Adjuster">MF Adjuster</a> is a Metafont with a basic form, highly functional, almost crystalline. It follows a strict grid and a simple no-curves policy and it comes along with a reduced set of parameters. The font''s sophistication derives from the angle and pen parameter (circle, square or razor). The standard font and font-box has the size of 10 unit points and is divided into 9 horizontal sections.'
+    images:
+      -
+        - adjuster1-01.png
+        - Construction of MF Adjuster using base points and geometrical relations.
+      -
+        - adjuster1-02.png
+        - Construction of MF Adjuster using base points and geometrical relations.
+      -
+        - adjuster1-03.png
+        - Construction of MF Adjuster using base points and geometrical relations.
+      -
+        - adjuster1-04.png
+        -
+      -
+        - adjuster1-05.png
+        -
+      -
+        - adjuster1-06.png
+        -
+      -
+        - adjuster1-07.png
+        - Transformation of the Angle parameter.
+      -
+        - adjuster2-01.png
+        - Angle transformation from 90 to 15 degree and vice versa.
+      -
+        - adjuster2-02.png
+        - Pen Width transformation from 2.0 to 0.05 points and vice versa.
+      -
+        - adjuster2-03.png
+        - Unit width transformation from 0.2 to 5.0 points.
+      -
+        - adjuster2-04.png
+        - Unit width transformation from 5.0 to 0.2 points.
+      -
+        - adjuster2-05.png
+        - Pen Razor transformation from 0 to 45 degree and vice versa.
+    subimages:
+      -
+        - adjuster-derivations-01.png?v=1
+        - WitXxEC_wq
+      -
+        - adjuster-derivations-02.png?v=1
+        - B_DF7u3XWz
+      -
+        - adjuster-derivations-03.png?v=1
+        - BL4uWv2Vdt
+      -
+        - adjuster-derivations-04.png?v=1
+        - IVhW3c2vuS
+  bespoke:
     description: <a href="/modulator?fontface=Bespoke">MF Bespoke</a> is geared to simply constructed sans serif fonts. This metafont consists of 14 adjustable parameters grouped in classes of dimension, proportion and shape. By using this range of parameters a high variety of derivates can be achieved. The standard font and font-box has the size of 10 unit points.
     images:
       -
@@ -83,57 +135,4 @@ metafonts:
       -
         - bespoke-derivations-12.png?v=1
         - UcH5rxsNVi
-
-  adjuster: 
-    description: '<a href="/modulator?fontface=Adjuster">MF Adjuster</a> is a Metafont with a basic form, highly functional, almost crystalline. It follows a strict grid and a simple no-curves policy and it comes along with a reduced set of parameters. The font''s sophistication derives from the angle and pen parameter (circle, square or razor). The standard font and font-box has the size of 10 unit points and is divided into 9 horizontal sections.'
-    images:
-      -
-        - adjuster1-01.png
-        - Construction of MF Adjuster using base points and geometrical relations.
-      -
-        - adjuster1-02.png
-        - Construction of MF Adjuster using base points and geometrical relations.
-      -
-        - adjuster1-03.png
-        - Construction of MF Adjuster using base points and geometrical relations.
-      -
-        - adjuster1-04.png
-        -
-      -
-        - adjuster1-05.png
-        -
-      -
-        - adjuster1-06.png
-        -
-      -
-        - adjuster1-07.png
-        - Transformation of the Angle parameter.
-      -
-        - adjuster2-01.png
-        - Angle transformation from 90 to 15 degree and vice versa.
-      -
-        - adjuster2-02.png
-        - Pen Width transformation from 2.0 to 0.05 points and vice versa.
-      -
-        - adjuster2-03.png
-        - Unit width transformation from 0.2 to 5.0 points.
-      -
-        - adjuster2-04.png
-        - Unit width transformation from 5.0 to 0.2 points.
-      -
-        - adjuster2-05.png
-        - Pen Razor transformation from 0 to 45 degree and vice versa.
-    subimages:
-      -
-        - adjuster-derivations-01.png?v=1
-        - WitXxEC_wq
-      -
-        - adjuster-derivations-02.png?v=1
-        - B_DF7u3XWz
-      -
-        - adjuster-derivations-03.png?v=1
-        - BL4uWv2Vdt
-      -
-        - adjuster-derivations-04.png?v=1
-        - IVhW3c2vuS
 

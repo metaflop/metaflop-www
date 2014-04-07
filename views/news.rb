@@ -24,7 +24,7 @@ class App
               x =~ /#{"%s-helloworld-%02d-" % [font_family, i]}/
             end.sample
           end
-        end.flatten
+        end.flatten.shuffle
       end
     end
   end

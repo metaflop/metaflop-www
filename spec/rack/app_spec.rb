@@ -22,19 +22,6 @@ describe 'metaflop app' do
   it 'news' do
     get '/'
     last_response.should be_ok
-    last_response.body.should include 'News'
-  end
-
-  it 'valid project returns the json data' do
-    get '/projects/lovehate.json'
-    last_response.should be_ok
-    json = JSON.parse last_response.body
-    json['description'].should_not be_nil
-    json['images'].length.should > 0
-  end
-
-  it 'invalid project returns 404' do
-    get '/projects/asdf.json'
-    last_response.status.should == 404
+    last_response.body.should include 'hello world'
   end
 end

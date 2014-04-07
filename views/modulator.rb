@@ -44,7 +44,10 @@ class App
             { :title => 'superness', :key => :superness },
             { :title => 'corner', :key => :corner },
             { :title => 'pen angle', :key => :pen_angle },
-            { :title => 'pen shape', :key => :pen_shape, :html => '<select id="pen-shape"><option value="1">Circle</option><option value="2">Square</option><option value="3">Razor</option><select>'}
+            { :title => 'pen shape', :key => :pen_shape, :options =>
+              [ { :value => '1', :text => 'Circle' },
+                { :value => '2', :text => 'Square' },
+                { :value => '3', :text => 'Razor' } ] }
           ]
         }]
 
@@ -60,6 +63,16 @@ class App
             x[:hidden] = param.hidden
             x[:name] = x[:title].gsub(' ', '-') # (css class compliant)
             x[:tabindex] = i
+
+            # special case for dropdowns
+            if x[:options]
+              x[:dropdown] = true
+              selected = x[:options].select { |option| option[:value] == param.value }.first
+              if selected
+                selected[:selected] = true
+              end
+            end
+
             i = i + 1
           end
           .keep_if { |x| x[:default] && !x[:hidden] } # remove non-mapped params

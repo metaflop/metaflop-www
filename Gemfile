@@ -16,4 +16,5 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-rbenv'
   gem 'rspec'
+  gem 'nyan-cat-formatter'
 end

@@ -1,20 +1,20 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'sinatra-contrib'
-gem 'sass'
-gem 'slim'
+gem 'activesupport'
+gem 'bourbon'
 gem 'data_mapper'
 gem 'dm-mysql-adapter'
-gem 'sinatra-simple-navigation'
-gem 'bourbon'
 gem 'rubyzip'
-gem 'activesupport'
+gem 'sass'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'sinatra-simple-navigation'
+gem 'slim'
 gem 'unicorn'
 
 group :development do
   gem 'capistrano'
   gem 'capistrano-rbenv'
-  gem 'rspec'
   gem 'nyan-cat-formatter'
+  gem 'rspec'
 end

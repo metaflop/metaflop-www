@@ -1,3 +1,7 @@
+@import 'bourbon/bourbon';
+@import 'variables';
+@import 'mixins';
+
 @mixin page-style($bg_color) {
     h2 span {
         background: $bg_color;

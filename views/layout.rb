@@ -9,6 +9,8 @@
 class App
   module Views
     class Layout
+      include Sprockets::Helpers
+
       def self.template(template = nil)
         @template ||= template
       end
@@ -25,20 +27,12 @@ class App
         page_title.downcase
       end
 
-      def css
-        []
+      def application_stylesheet_path
+        stylesheet_path 'app'
       end
 
-      def js
-        []
-      end
-
-      def main_navigation
-        @main_navigation 
-      end
-
-      def meta_navigation
-        @meta_navigation 
+      def application_javascript_path
+        javascript_path 'app'
       end
     end
   end

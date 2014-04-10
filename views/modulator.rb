@@ -11,10 +11,6 @@ class App
     class Modulator < Layout
       include LogicLessSlim
 
-      def js
-        ['/js/modernizr.js', '/js/modulator.js?version=1']
-      end
-
       def parameters
         groups = [{
           :title => "Dimension",
@@ -108,6 +104,10 @@ class App
 
       def parameter_panel
         slim :parameter_panel, :layout => false
+      end
+
+      def typoglossary_image_url
+        image_path('typoglossary.png')
       end
     end
   end

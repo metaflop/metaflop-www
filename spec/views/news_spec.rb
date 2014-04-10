@@ -6,6 +6,8 @@
 # licensed under gpl v3
 #
 
+# needed as we include the sprockets helper
+require './app'
 require './views/news'
 
 describe App::Views::News do
@@ -23,22 +25,22 @@ describe App::Views::News do
     end
 
     it 'returns the correct file path' do
-      images.first.should =~ %r(^/img/helloworld)
+      images.first.should =~ %r(^/assets/helloworld)
     end
 
     it 'returns one of each sequence number' do
-      images.count { |x| x =~ /01/ }.should == 2
-      images.count { |x| x =~ /02/ }.should == 2
-      images.count { |x| x =~ /03/ }.should == 2
-      images.count { |x| x =~ /04/ }.should == 2
-      images.count { |x| x =~ /05/ }.should == 2
-      images.count { |x| x =~ /06/ }.should == 2
-      images.count { |x| x =~ /07/ }.should == 2
-      images.count { |x| x =~ /08/ }.should == 2
-      images.count { |x| x =~ /09/ }.should == 2
-      images.count { |x| x =~ /10/ }.should == 2
-      images.count { |x| x =~ /11/ }.should == 2
-      images.count { |x| x =~ /12/ }.should == 2
+      images.count { |x| x =~ /-01-/ }.should == 2
+      images.count { |x| x =~ /-02-/ }.should == 2
+      images.count { |x| x =~ /-03-/ }.should == 2
+      images.count { |x| x =~ /-04-/ }.should == 2
+      images.count { |x| x =~ /-05-/ }.should == 2
+      images.count { |x| x =~ /-06-/ }.should == 2
+      images.count { |x| x =~ /-07-/ }.should == 2
+      images.count { |x| x =~ /-08-/ }.should == 2
+      images.count { |x| x =~ /-09-/ }.should == 2
+      images.count { |x| x =~ /-10-/ }.should == 2
+      images.count { |x| x =~ /-11-/ }.should == 2
+      images.count { |x| x =~ /-12-/ }.should == 2
     end
   end
 end

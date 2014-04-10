@@ -7,14 +7,11 @@
 #
 
 require_relative 'showoff_page'
-require './lib/slideshow_page'
 
 class App
   module Views
     class Metafonts < ShowoffPage
       template :showoff_page
-
-      include ::SlideshowPage
     end
   end
 end

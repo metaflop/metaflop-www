@@ -34,6 +34,11 @@ module Configuration
 
       register Sinatra::Namespace
 
+      set :assets_css_compressor, :sass
+      set :assets_js_compressor, :uglifier
+      set :assets_precompile, %w(app.js app.css *.png *.jpg *.svg *.eot *.ttf *.woff *.cur)
+      register Sinatra::AssetPipeline
+
       # setup the tmp dir where the generated fonts go
       tmp_dir = "/tmp/metaflop"
       FileUtils.rm_rf(tmp_dir)

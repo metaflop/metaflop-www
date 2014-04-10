@@ -1,6 +1,6 @@
-@import 'scss/bourbon/bourbon';
-@import 'scss/variables';
-@import 'scss/mixins';
+@import 'bourbon/bourbon';
+@import 'variables';
+@import 'mixins';
 
 html, body {
     height: 100%;
@@ -161,7 +161,7 @@ a {
 }
 
 a.action-icon {
-    background: url(/img/share-icons.png) no-repeat top left;
+    background: image-url('share-icons.png') no-repeat top left;
     margin-right: 9px;
 
     &.share-facebook {
@@ -370,7 +370,7 @@ embed {
             width: 19px;
             height: $input_height;
             position: absolute;
-            background-image: url(/img/plusminus.png);
+            background-image: image-url('plusminus.png');
             background-repeat: no-repeat;
             background-color: #eee;
             top: 4px;
@@ -456,7 +456,7 @@ embed {
             right: -1px;
             width: 15px;
             height: 15px;
-            background-image: url(/img/icons.png);
+            background-image: image-url('icons.png');
             background-color: #fff;
             background-repeat: no-repeat;
             background-position: -64px -113px;
@@ -626,12 +626,12 @@ a.char-chooser {
 
     &.left {
         left: 2px;
-        background: url(/img/arrows.png) no-repeat scroll 0 -189px transparent;
+        background: image-url('arrows.png') no-repeat scroll 0 -189px transparent;
     }
 
     &.right {
         right: 2px;
-        background: url(/img/arrows.png) no-repeat scroll 0 -64px transparent;
+        background: image-url('arrows.png') no-repeat scroll 0 -64px transparent;
     }
 }
 
@@ -639,7 +639,7 @@ a.char-chooser {
     cursor: pointer;
     font-size: $font_size;
     line-height: 24px;
-    background: url(/img/arrows.png) no-repeat right -120px transparent;
+    background: image-url('arrows.png') no-repeat right -120px transparent;
 
     &.active {
         background-position: right 5px;
@@ -738,9 +738,3 @@ p.bjqs-caption {
     padding: $box_spacing_y;
     border-top: 1px solid #fff;
 }
-
-@import 'scss/slider.scss';
-
-@import 'scss/tipsy.scss';
-
-@import 'scss/pages.scss';

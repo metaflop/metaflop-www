@@ -6,25 +6,24 @@
 # licensed under gpl v3
 #
 require './views/layout'
-require './lib/slideshow_page'
 
 class App
   module Views
     class News < Layout
-      include ::SlideshowPage
-
       # randomly create a sequence of 12 images,
       # varying by language, keeping the order
       def images
-        files = Dir['public/img/helloworld/*'].map { |x| x.sub 'public', '' }
+        files = Dir['assets/images/helloworld/*']
 
         %w(adjuster bespoke).map do |font_family|
           (1..12).map do |i|
-            files.select do |x|
+            files.select { |x|
               x =~ /#{"%s-helloworld-%02d-" % [font_family, i]}/
-            end.sample
+            }.sample
           end
-        end.flatten.shuffle
+        end.flatten.map { |image|
+          image_path(image.sub(/assets\/images\//, ''))
+        }.shuffle
       end
     end
   end

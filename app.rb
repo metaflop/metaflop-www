@@ -12,6 +12,7 @@ require 'sinatra/reloader'
 require 'sinatra/config_file'
 require 'sinatra/simple-navigation'
 require 'sinatra/namespace'
+require 'sinatra/asset_pipeline'
 require 'sass'
 require 'time'
 require 'active_support'
@@ -87,12 +88,6 @@ class App < Sinatra::Application
     redirect to "/modulator/font/#{url}"
   end
 
-  get '/assets/css/:name.scss' do |name|
-    require './views/scss/bourbon/lib/bourbon.rb'
-    content_type :css
-    scss name.to_sym, :layout => false
-  end
-
   get '/:page/partial' do |page|
     mf = mf_instance_from_request
     @font_parameters = mf.font_parameters
@@ -101,7 +96,7 @@ class App < Sinatra::Application
     slim page.to_sym, :layout => false
   end
 
-  get '/:page/?:subpage?' do |page, subpage|
+  get %r{/(\w+)/?(\w+)?} do |page, subpage|
     if settings.respond_to? page
       @settings = settings.method(page).call
     end

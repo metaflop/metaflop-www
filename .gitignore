@@ -6,3 +6,4 @@ db.yml
 .DS_Store
 *.swp
 vendor/cache
+tags

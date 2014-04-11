@@ -7,6 +7,9 @@
  */
 
 $(function () {
+    if (!$('#main').hasClass('modulator')) {
+        return;
+    }
 
     // create a namespace for later use
     $.fn.metaflop = {

@@ -160,39 +160,6 @@ a {
     white-space: nowrap;
 }
 
-a.action-icon {
-    background: image-url('share-icons.png') no-repeat top left;
-    margin-right: 9px;
-
-    &.share-facebook {
-        background-position: 0 0;
-
-        &:hover {
-            background-position: 0 -70px;
-        }
-     }
-    &.share-email {
-        background-position: 0 -280px;
-
-        &:hover {
-            background-position: 0 -350px;
-        }
-    }
-    &.share-twitter {
-        background-position: 0 -140px;
-
-        &:hover {
-            background-position: 0 -210px;
-        }
-    }
-
-
-    img {
-        width: 20px;
-        height: 20px;
-    }
-}
-
 object,
 embed {
     vertical-align: top;

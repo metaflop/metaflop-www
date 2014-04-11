@@ -36,7 +36,7 @@ set :rbenv_install_dependencies, false
 # unicorn wrapper restart
 namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "RAILS_ENV=#{rails_env} $HOME/bin/unicorn_wrapper restart"
+    run "RACK_ENV=#{rails_env} $HOME/bin/unicorn_wrapper restart"
   end
 
   namespace :assets do

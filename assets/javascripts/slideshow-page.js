@@ -8,6 +8,12 @@
 
 $(function () {
     var box = $('.box-slideshow');
+
+    // only applicable for slideshow pages
+    if (box.length == 0) {
+        return;
+    }
+
     var slideshow = box.find('.box-content');
     var progress = box.find('h2 span');
     var initSlideshow = function() {

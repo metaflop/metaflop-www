@@ -38,6 +38,13 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "RAILS_ENV=#{rails_env} $HOME/bin/unicorn_wrapper restart"
   end
+
+  namespace :assets do
+    desc 'Compile assets'
+    task :precompile do
+      run "(cd #{latest_release} && bundle exec rake assets:precompile RACK_ENV=#{rails_env})"
+    end
+  end
 end
 
 namespace :config do
@@ -47,3 +54,4 @@ namespace :config do
 end
 
 before "deploy:restart", "config:db"
+after 'config:db', 'deploy:assets:precompile'

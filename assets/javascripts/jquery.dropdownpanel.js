@@ -1,9 +1,15 @@
 /*
- * metaflop - web interface
- * © 2012 by alexis reigel
- * www.metaflop.com
+ * JQuery Dropdown Panel plugin (v 0.1.0)
  *
- * licensed under gpl v3
+ * Replaces an html select element with a
+ * simple, animated dropdown.
+ *
+ * https://github.com/metaflop/jquery-dropdownpanel
+ *
+ * © 2012 by Alexis Reigel
+ *
+ * Licensed under the GPL v3
+ *
  */
 
 (function ($) {
@@ -11,43 +17,49 @@
     var defaults = {
         panelToggleDuration: 500,
         panelToggleEasing: 'easeInOutExpo',
+        wrapperCssClass: 'dropdown-value',
+        listCssClass: 'dropdown-list',
         onClicked: function() {}
     };
 
     $.fn.dropdownpanel = function(options) {
-        return this.each(function() {
-            var $this = $(this);
+        return $.each(this, function(index, select) {
+            var select = $(select);
 
             // settings
             var settings = $.extend({}, defaults, options);
 
-            $this.hide();
+            select.hide();
 
             // current value -> display
-            var selectedOption = $this.find('option:selected');
-            var $div = $('<div class="static-value dropdown-value">' + selectedOption.html() + '</div>');
-            var ul = '<ul class="dropdown-list">';
+            var selectedOption = select.find('option:selected');
+            var wrapper = $('<div class="' + settings.wrapperCssClass + '">' + selectedOption.html() + '</div>');
+            var ul = '<ul class="' + settings.listCssClass + '">';
 
             // list of all available options
-            $this.find('option').each(function() {
-                ul += '<li id="'
-                     + $(this).val() + '-' + $this[0].id
-                     + '"><a href="#">' + $(this).html() + '</a></li>';
+            $.each(select.find('option'), function(index, option) {
+                option = $(option);
+                ul += '<li id="' + option.val() + '-' + select[0].id + '">' +
+                      '<a href="#">' + option.html() + '</a>' +
+                      '</li>';
             });
 
             ul += '</ul>';
-            var $ul = $(ul);
-            var lis = $ul.find('li');
+            ul = $(ul);
+
+            var lis = ul.find('li');
             // mark the currently selected option
-            lis.filter(function() { return $(this).find('a').html() == selectedOption.html() }).addClass('active');
+            $($.grep(lis, function(li) {
+              return $(li).find('a').html() == selectedOption.html()
+            })).addClass('active');
 
             lis.click(function(e) {
                 e.preventDefault();
 
-                var selectEl = $this;
+                var selectEl = select;
                 var listItems = lis;
                 var li = $(this);
-                var displayEl = $div;
+                var displayEl = wrapper;
 
                 listItems.removeClass('active');
                 li.addClass('active');
@@ -61,18 +73,22 @@
                 // hide
                 displayEl.click();
 
+                // callback
                 settings.onClicked();
             });
 
-            $this.after($ul);
-            $this.after($div);
+            select.after(ul);
+            select.after(wrapper);
 
             // toggle panel
-            $div.click(function() {
+            wrapper.click(function() {
                 var parent = $(this).parent();
-                parent.find('.dropdown-value').toggleClass('active');
-                parent.find('.dropdown-list')
-                    .animate({ height: 'toggle' }, settings.panelToggleDuration, settings.panelToggleEasing);
+                parent.find('.' + settings.wrapperCssClass).toggleClass('active');
+                parent.find('.' + settings.listCssClass).animate(
+                    { height: 'toggle' },
+                    settings.panelToggleDuration,
+                    settings.panelToggleEasing
+                );
             });
         });
     };

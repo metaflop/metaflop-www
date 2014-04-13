@@ -9,6 +9,9 @@
 class App
   module Views
     class Terms < Layout
+      def current_year
+        Time.new.year
+      end
     end
   end
 end

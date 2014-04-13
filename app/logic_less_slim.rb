@@ -18,7 +18,7 @@ module LogicLessSlim
   attr_reader :view_model
 
   # set the corresponding view model class to the slim view
-  def slim(template, options = {})
+  def slim(template, layout: true, http_caching: true)
     require "./views/#{template}"
 
     @view_model = "App::Views::#{template.to_s.camelize}".constantize.new
@@ -33,10 +33,19 @@ module LogicLessSlim
       @view_model.instance_variable_set(name, instance_variable_get(name))
     end
 
-    options.merge!(:dictionary => 'self.view_model')
+    options = { :layout => layout, :dictionary => 'self.view_model' }
 
     if respond_to? :render, true
-      render :slim, template, options
+      content = render :slim, template, options
+
+      if http_caching
+        require 'digest/sha1'
+
+        cache_control :public, :must_revalidate, :max_age => 60 * 60
+        etag Digest::SHA1.hexdigest(content)
+      end
+
+      content
     else
       require 'slim'
       require 'tilt'

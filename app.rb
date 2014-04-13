@@ -32,7 +32,7 @@ class App < Sinatra::Application
   end
 
   get '/' do
-    slim :news
+    slim :news, http_caching: false
   end
 
   namespace '/modulator' do
@@ -93,7 +93,7 @@ class App < Sinatra::Application
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
-    slim page.to_sym, :layout => false
+    slim page.to_sym, :layout => false, :http_caching => false
   end
 
   get %r{/(\w+)/?(\w+)?} do |page, subpage|

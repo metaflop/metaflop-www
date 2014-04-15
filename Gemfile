@@ -15,6 +15,7 @@ gem 'uglifier'
 gem 'unicorn'
 
 group :development do
+  gem 'better_errors'
   gem 'capistrano'
   gem 'capistrano-rbenv'
   gem 'nyan-cat-formatter'

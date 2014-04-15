@@ -74,6 +74,12 @@ module Configuration
       register Sinatra::Reloader
       also_reload '**/*.rb'
       dont_reload '**/*spec.rb'
+
+      require 'better_errors'
+      use BetterErrors::Middleware
+      # set the application root in order to abbreviate filenames
+      # within the application
+      BetterErrors.application_root = self.root
     end
   end
 

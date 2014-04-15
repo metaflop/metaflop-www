@@ -29,17 +29,24 @@ $(function () {
     };
 
     var showProgress = function(message) {
-        $.fn.metaflop.messagePanel.text(message);
-        $.fn.metaflop.progressPanel.spin('tiny');
+        showMessage(message);
+        $.fn.metaflop.progressPanel.html('&nbsp;').spin('tiny');
     }
 
     var hideProgress = function() {
-        $.fn.metaflop.messagePanel.text('');
+        showMessage('');
         $.fn.metaflop.progressPanel.spin(false);
     }
 
     var showMessage = function(message) {
+        $.fn.metaflop.messagePanel.removeClass('error');
         $.fn.metaflop.messagePanel.text(message);
+    }
+
+    var showErrorMessage = function(message) {
+        showMessage(message);
+        $.fn.metaflop.messagePanel.addClass('error');
+        $.fn.metaflop.progressPanel.html('<i class="icon-warning-sign error"></i>');
     }
 
     // set background to corresponding inputs
@@ -161,7 +168,6 @@ $(function () {
         $.ajax({
             url: '/modulator/preview' + createQueryString(),
             complete: function() {
-                hideProgress();
                 content.find('textarea').hide();
 
                 $.fn.metaflop.preloadImageInProgress = false;
@@ -174,6 +180,7 @@ $(function () {
                 }
             },
             success: function(data) {
+                hideProgress();
                 content.fadeTo(0, 1);
 
                 // TODO only find once initially
@@ -194,7 +201,8 @@ $(function () {
                 }
             },
             error: function() {
-                showMessage('The entered value is out of a valid range. Please correct your parameters.');
+                hideProgress();
+                showErrorMessage('The entered value is out of a valid range. Please correct your parameters.');
             }
         });
     }

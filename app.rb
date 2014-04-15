@@ -65,7 +65,11 @@ class App < Sinatra::Application
 
     get '/preview' do
       mf = mf_instance_from_request
-      mf.font_preview
+      begin
+        mf.font_preview
+      rescue Metaflop::MetafontError
+        status 404
+      end
     end
 
     get '/export/font/:type/:face/:hash' do |type, face, hash|

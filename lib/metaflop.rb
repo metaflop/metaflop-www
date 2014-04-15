@@ -16,6 +16,8 @@ require './lib/web_font'
 
 class Metaflop
 
+  class MetafontError < StandardError; end
+
   include RackLogger
   include RackSettings
 
@@ -51,6 +53,12 @@ class Metaflop
 
     @font_parameters.sidebearing.value = nil
 
+    # if something went wrong (e.g. the timeout got triggered) the
+    # output file does not exist
+    unless File.exist?("#{@font_settings.out_dir}/font.otf")
+      raise MetafontError.new
+    end
+
     { :name => "#{@font_settings.font_name}.otf",
       :data => File.read("#{@font_settings.out_dir}/font.otf") }
   end
@@ -58,7 +66,8 @@ class Metaflop
   #  returns base64 encoded otf for embedding as css fontface
   def font_preview
     @font_settings.font_hash = 'preview'
-    Base64.strict_encode64 font_otf(true)[:data]
+    data = font_otf(true)[:data]
+    Base64.strict_encode64(data)
   end
 
   def font_web

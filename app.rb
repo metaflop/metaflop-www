@@ -8,13 +8,11 @@
 
 # encoding: UTF-8
 require 'sinatra'
-require 'sinatra/reloader'
 require 'sinatra/config_file'
 require 'sinatra/simple-navigation'
 require 'sinatra/namespace'
 require 'sinatra/asset_pipeline'
 require 'sass'
-require 'time'
 require 'active_support'
 require 'data_mapper' # metagem, requires common plugins too.
 require './app/logic_less_slim'

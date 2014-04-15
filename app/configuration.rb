@@ -71,6 +71,7 @@ module Configuration
 
   def self.development
     configure :development do
+      require 'sinatra/reloader'
       register Sinatra::Reloader
       also_reload '**/*.rb'
       dont_reload '**/*spec.rb'
@@ -86,6 +87,7 @@ module Configuration
   def self.production
     configure :production do
       # logging
+      require 'time'
       log_dir = "log/rack/"
       Dir.mkdir(log_dir) unless Dir.exist? log_dir
       logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')

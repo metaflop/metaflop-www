@@ -44,6 +44,7 @@ $(function () {
     }
 
     var showErrorMessage = function(message) {
+        hideProgress();
         showMessage(message);
         $.fn.metaflop.messagePanel.addClass('error');
         $.fn.metaflop.progressPanel.html('<i class="icon-warning-sign error"></i>');
@@ -113,8 +114,8 @@ $(function () {
     // don't create new url each time for unchanged setting
     // makes an ajax request with async:false! as this is
     // deprecated as of 1.8, find a new solution! TODO
-    var callWithFontHash = function(success) {
-        complete = function() {
+    var callWithFontHash = function(success, complete) {
+        complete = complete || function() {
             hideProgress();
         };
         success = success || function(){};
@@ -200,9 +201,8 @@ $(function () {
                     }
                 }
             },
-            error: function() {
-                hideProgress();
-                showErrorMessage('The entered value is out of a valid range. Please correct your parameters.');
+            error: function(jqXHR) {
+                showErrorMessage(jqXHR.responseText);
             }
         });
     }
@@ -395,8 +395,22 @@ $(function () {
         showProgress('Exporting the font...');
 
         callWithFontHash(function(data) {
-            window.location = "/modulator/export/font/" + $this.attr('data-type') + "/" + $('#param-fontface').val() + "/" + data;
-        });
+            var url = "/modulator/export/font/" + $this.attr('data-type') + "/" + $('#param-fontface').val() + "/" + data;
+
+            // make an ajax request first, only after that redirect to force the download, because:
+            // 1. we can show a spinner while the export gets generated
+            // 2. we can handle errors and display a message
+            $.ajax({
+                url: url,
+                success: function(data) {
+                    hideProgress();
+                    window.location = url;
+                },
+                error: function(jqXHR) {
+                    showErrorMessage(jqXHR.responseText);
+                }
+            });
+        }, function() {}); // don't call "hideProgress"
     });
 
     // toggle the +/- buttons for the inputs

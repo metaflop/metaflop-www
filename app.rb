@@ -66,19 +66,25 @@ class App < Sinatra::Application
       begin
         mf.font_preview
       rescue Metaflop::MetafontError
-        status 404
+        metafont_error
       end
     end
 
     get '/export/font/:type/:face/:hash' do |type, face, hash|
+      set_http_cache(hash)
+
       mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
       mf.settings = settings.metaflop
       mf.logger = logger
       method = "font_#{type}"
       if mf.respond_to? method
-        file = mf.method(method).call
-        attachment file[:name]
-        file[:data]
+        begin
+          file = mf.method(method).call
+          attachment file[:name]
+          file[:data]
+        rescue Metaflop::MetafontError
+          metafont_error
+        end
       else
         not_found "The font type is not supported"
       end
@@ -108,6 +114,19 @@ class App < Sinatra::Application
     end
 
     slim page.to_sym
+  end
+
+  helpers do
+    def metafont_error
+      not_found 'The entered value is out of a valid range. Please correct your parameters.'
+    end
+
+    def set_http_cache(content)
+      require 'digest/sha1'
+
+      cache_control :public, :must_revalidate, :max_age => 60 * 60
+      etag Digest::SHA1.hexdigest(content)
+    end
   end
 
   def out_dir

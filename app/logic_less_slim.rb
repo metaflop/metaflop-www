@@ -39,10 +39,7 @@ module LogicLessSlim
       content = render :slim, template, options
 
       if http_caching
-        require 'digest/sha1'
-
-        cache_control :public, :must_revalidate, :max_age => 60 * 60
-        etag Digest::SHA1.hexdigest(content)
+        set_http_cache(content)
       end
 
       content

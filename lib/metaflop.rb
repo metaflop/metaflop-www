@@ -47,20 +47,21 @@ class Metaflop
     font_parameters "#{@font_settings.out_dir}/font.mf"
     @font_parameters.to_file(preview)
 
+    out_file = "#{@font_settings.out_dir}/font.otf"
     command = settings[:font_otf] % @font_settings.to_hash
 
-    `cd #{@font_settings.out_dir} && #{command}`
+    `cd #{@font_settings.out_dir} && rm -f #{out_file} && #{command}`
 
     @font_parameters.sidebearing.value = nil
 
     # if something went wrong (e.g. the timeout got triggered) the
     # output file does not exist
-    unless File.exist?("#{@font_settings.out_dir}/font.otf")
+    unless File.exist?(out_file)
       raise MetafontError.new
     end
 
     { :name => "#{@font_settings.font_name}.otf",
-      :data => File.read("#{@font_settings.out_dir}/font.otf") }
+      :data => File.read(out_file) }
   end
 
   #  returns base64 encoded otf for embedding as css fontface

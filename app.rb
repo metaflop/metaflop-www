@@ -19,6 +19,7 @@ require './app/logic_less_slim'
 require './app/configuration'
 require './lib/metaflop'
 require './lib/url'
+require './lib/error'
 
 class App < Sinatra::Application
   include LogicLessSlim
@@ -114,6 +115,20 @@ class App < Sinatra::Application
     end
 
     slim page.to_sym
+  end
+
+  not_found do
+    # don't render the whole page if we want to show a specific
+    # error message. this is used for ajax call responses.
+    if response.body.empty?
+      slim :error_404
+    else
+      response.body
+    end
+  end
+
+  error do
+    slim :error_500
   end
 
   helpers do

@@ -113,7 +113,7 @@ class FontParameters
 
       if (splits.length == 2)
         # replace the value from the file if we have a value set for the parameter
-        value_from_file = splits[1].to_f
+        value_from_file = splits[1].to_r.to_f
         mapping = MF_MAPPINGS[splits[0]]
         param = mapping ? send(mapping) : nil
         value = if param && param.value && !param.value.to_s.empty?

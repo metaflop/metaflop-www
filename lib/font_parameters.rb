@@ -143,7 +143,7 @@ class FontParameters
     # replace the original values
     MF_MAPPINGS.each do |mapping|
       param = instance_param mapping[1]
-      unless param.value.nil?
+      if !param.hidden && param.value
         content.gsub! /(#{mapping[0]}:=)[\d\/\.]+/, "\\1#{param.value}"
       end
     end

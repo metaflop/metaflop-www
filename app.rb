@@ -66,7 +66,7 @@ class App < Sinatra::Application
       mf = mf_instance_from_request
       begin
         mf.font_preview
-      rescue Metaflop::MetafontError
+      rescue Metaflop::Error::Metafont
         metafont_error
       end
     end
@@ -83,7 +83,7 @@ class App < Sinatra::Application
           file = mf.method(method).call
           attachment file[:name]
           file[:data]
-        rescue Metaflop::MetafontError
+        rescue Metaflop::Error::Metafont
           metafont_error
         end
       else
@@ -114,7 +114,11 @@ class App < Sinatra::Application
       @subpage = subpage
     end
 
-    slim page.to_sym
+    begin
+      slim page.to_sym
+    rescue
+      not_found
+    end
   end
 
   not_found do

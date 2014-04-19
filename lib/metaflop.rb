@@ -15,9 +15,6 @@ require './lib/font_settings'
 require './lib/web_font'
 
 class Metaflop
-
-  class MetafontError < StandardError; end
-
   include RackLogger
   include RackSettings
 
@@ -57,7 +54,7 @@ class Metaflop
     # if something went wrong (e.g. the timeout got triggered) the
     # output file does not exist
     unless File.exist?(out_file)
-      raise MetafontError.new
+      raise Error::Metafont.new
     end
 
     { :name => "#{@font_settings.font_name}.otf",

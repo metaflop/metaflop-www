@@ -19,7 +19,11 @@ module LogicLessSlim
 
   # set the corresponding view model class to the slim view
   def slim(template, layout: true, http_caching: true)
-    require "./views/#{template}"
+    begin
+      require "./views/#{template}"
+    rescue LoadError
+      raise Error::TemplateNotFound.new
+    end
 
     @view_model = "App::Views::#{template.to_s.camelize}".constantize.new
 

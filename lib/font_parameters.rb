@@ -34,7 +34,13 @@ class FontParameters
     :sidebearing,
     :glyph_angle,
     :pen_angle,
-    :pen_shape
+    :pen_shape,
+
+    :x_height,
+    :accent_height,
+    :comma_depth,
+    :slant,
+    :craziness
   ]
 
   # the mapping between the defined params in the mf file and this class' properties
@@ -59,7 +65,16 @@ class FontParameters
     'sidebearing' => :sidebearing,
     'ang' => :glyph_angle,
     'penang' => :pen_angle,
-    'penshape' => :pen_shape
+    'penshape' => :pen_shape,
+
+    # fetamont additions
+    'x_ht#' => :x_height,
+    'acc_ht#' => :accent_height,
+    'barheight#' => :bar_height,
+    'comma_depth#' => :comma_depth,
+    'prot' => :pen_angle,
+    'slant' => :slant,
+    'craziness' => :craziness
   }
 
   attr_accessor *VALID_PARAMETERS_KEYS

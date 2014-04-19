@@ -4,3 +4,6 @@
 [submodule "mf/metaflop-font-adjuster"]
 	path = mf/metaflop-font-adjuster
 	url = git@github.com:greyfont/metaflop-font-adjuster.git
+[submodule "mf/metaflop-font-fetamont"]
+	path = mf/metaflop-font-fetamont
+	url = git@github.com:metaflop/metaflop-font-fetamont.git

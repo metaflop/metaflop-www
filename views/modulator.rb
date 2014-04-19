@@ -28,7 +28,10 @@ class App
             { :title => 'bar height', :key => :bar_height },
             { :title => 'ascender height', :key => :ascender_height },
             { :title => 'descender height', :key => :descender_height },
-            { :title => 'glyph angle', :key => :glyph_angle }
+            { :title => 'glyph angle', :key => :glyph_angle },
+            { :title => 'chars x-height', :key => :x_height },
+            { :title => 'accents height', :key => :accent_height },
+            { :title => 'depth of comma', :key => :comma_depth },
           ]
         }, {
           :title => "Shape",
@@ -43,7 +46,9 @@ class App
             { :title => 'pen shape', :key => :pen_shape, :options =>
               [ { :value => '1', :text => 'Circle' },
                 { :value => '2', :text => 'Square' },
-                { :value => '3', :text => 'Razor' } ] }
+                { :value => '3', :text => 'Razor' } ] },
+            { :title => 'slanting amount', :key => :slant },
+            { :title => 'haphazard variation', :key => :craziness }
           ]
         }]
 
@@ -93,7 +98,7 @@ class App
       end
 
       def fontfaces
-        %w(Adjuster Bespoke).map do |x|
+        %w(Adjuster Bespoke Fetamont).map do |x|
           { :name => x, :active => @active_fontface == x }
         end
       end

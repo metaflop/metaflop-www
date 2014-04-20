@@ -81,6 +81,9 @@ module Configuration
       # set the application root in order to abbreviate filenames
       # within the application
       BetterErrors.application_root = self.root
+
+      # get rid of rack security warning (only for dev)
+      set :session_secret, 'pknrgX12iULq0CocY2GBpw'
     end
   end
 

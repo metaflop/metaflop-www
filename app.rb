@@ -30,6 +30,14 @@ class App < Sinatra::Application
     @meta_navigation = render_navigation :context => :meta
   end
 
+  # redirect trailing slash urls
+  get %r{(/.+)/$} do
+    url = request.fullpath.
+      sub(/\/$/, ''). # trailing slash
+      sub(/\/\?/, '?') # slash before query params
+    redirect to(url), 301
+  end
+
   get '/' do
     slim :news, http_caching: false
   end

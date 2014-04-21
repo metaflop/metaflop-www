@@ -6,11 +6,11 @@
 # licensed under gpl v3
 #
 
-require './views/modulator.rb'
+require './app/views/error'
 
 class App
   module Views
-    class CharChooser < Modulator
+    class Error500 < Error
     end
   end
 end

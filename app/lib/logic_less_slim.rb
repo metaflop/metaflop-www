@@ -20,7 +20,7 @@ module LogicLessSlim
   # set the corresponding view model class to the slim view
   def slim(template, layout: true, http_caching: true)
     begin
-      require "./views/#{template}"
+      require "./app/views/#{template}"
     rescue LoadError
       raise Error::TemplateNotFound.new
     end
@@ -50,7 +50,7 @@ module LogicLessSlim
     else
       require 'slim'
       require 'tilt'
-      Tilt.new("./views/#{template}.slim", options).render(self)
+      Tilt.new("./app/views/#{template}.slim", options).render(self)
     end
   end
 end

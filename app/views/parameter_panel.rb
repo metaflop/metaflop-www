@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-require './views/modulator.rb'
+require './app/views/modulator.rb'
 
 class App
   module Views

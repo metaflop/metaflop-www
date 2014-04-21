@@ -5,7 +5,8 @@
 #
 # licensed under gpl v3
 #
-require './views/layout'
+
+require './app/views/layout'
 
 class App
   module Views

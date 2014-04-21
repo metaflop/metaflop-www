@@ -5,11 +5,12 @@
 #
 # licensed under gpl v3
 #
-require './views/error'
+
+require './app/views/error'
 
 class App
   module Views
-    class Error500 < Error
+    class Error404 < Error
     end
   end
 end

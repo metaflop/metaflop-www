@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-require './app.rb'
+require './app'
 require 'rack/test'
 require 'json'
 

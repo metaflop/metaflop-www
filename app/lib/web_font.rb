@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-require './lib/font_settings'
+require './app/lib/font_settings'
 require 'zip/zip'
 require 'slim'
 require 'tilt'

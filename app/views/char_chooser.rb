@@ -5,11 +5,12 @@
 #
 # licensed under gpl v3
 #
-require './views/error'
+
+require './app/views/modulator.rb'
 
 class App
   module Views
-    class Error404 < Error
+    class CharChooser < Modulator
     end
   end
 end

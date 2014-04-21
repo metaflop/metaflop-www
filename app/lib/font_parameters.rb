@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-require './lib/font_settings.rb'
+require './app/lib/font_settings.rb'
 
 FontParameter = Struct.new(:value, :default, :unit, :range, :hidden)
 

@@ -8,7 +8,7 @@
 
 # needed as we include the sprockets helper
 require './app'
-require './views/news'
+require './app/views/news'
 
 describe App::Views::News do
   subject { App::Views::News.new }

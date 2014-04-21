@@ -49,7 +49,7 @@ end
 
 namespace :config do
   task :db do
-    upload('db.yml', "#{deploy_to}/current/db.yml")
+    upload('config/db.yml', "#{latest_release}/config/db.yml")
   end
 end
 

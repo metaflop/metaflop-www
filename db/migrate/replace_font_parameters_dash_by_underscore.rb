@@ -1,5 +1,5 @@
 require './app'
-require './views/modulator'
+require './app/views/modulator'
 
 modulator = App::Views::Modulator.new
 font_settings = FontSettings.new({})

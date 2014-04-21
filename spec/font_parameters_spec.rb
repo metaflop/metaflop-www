@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-require './lib/font_parameters'
+require './app/lib/font_parameters'
 
 describe FontParameters do
   context '#initialize' do

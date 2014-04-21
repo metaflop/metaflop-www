@@ -28,7 +28,7 @@ module Configuration
   def self.global
     configure do
       register Sinatra::ConfigFile
-      config_file ['./config.yml', './db.yml']
+      config_file ['./config/config.yml', './config/db.yml']
 
       register Sinatra::SimpleNavigation
 
@@ -47,7 +47,9 @@ module Configuration
       FileUtils.rm_rf(tmp_dir)
       Dir.mkdir(tmp_dir)
 
-      require './views/layout'
+      # views
+      set :views, self.root + '/app/views'
+      require './app/views/layout'
 
       Slim::Engine.set_default_options :pretty => true
 

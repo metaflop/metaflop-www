@@ -15,11 +15,11 @@ require 'sinatra/asset_pipeline'
 require 'sass'
 require 'active_support'
 require 'data_mapper' # metagem, requires common plugins too.
-require './app/logic_less_slim'
-require './app/configuration'
-require './lib/metaflop'
-require './lib/url'
-require './lib/error'
+require './app/lib/logic_less_slim'
+require './app/lib/configuration'
+require './app/lib/metaflop'
+require './app/models/url'
+require './app/lib/error'
 
 class App < Sinatra::Application
   include LogicLessSlim

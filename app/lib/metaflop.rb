@@ -8,11 +8,11 @@
 # licensed under gpl v3
 #
 
-require './lib/rack_logger'
-require './lib/rack_settings'
-require './lib/font_parameters'
-require './lib/font_settings'
-require './lib/web_font'
+require './app/lib/rack_logger'
+require './app/lib/rack_settings'
+require './app/lib/font_parameters'
+require './app/lib/font_settings'
+require './app/lib/web_font'
 
 class Metaflop
   include RackLogger

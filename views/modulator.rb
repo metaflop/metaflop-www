@@ -62,7 +62,7 @@ class App
             x[:range_from] = param.range.nil? ? nil : param.range[:from]
             x[:range_to] = param.range.nil? ? nil : param.range[:to]
             x[:hidden] = param.hidden
-            x[:name] = x[:title].gsub(' ', '-') # (css class compliant)
+            x[:name] = x[:key]
             x[:tabindex] = i
 
             # special case for dropdowns

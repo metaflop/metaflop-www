@@ -15,13 +15,4 @@ class Url
 
   property :short, String, :length => 10, :default => lambda { |r, p| SecureRandom.urlsafe_base64[0, 10] }
   property :params, Yaml
-
-  def params=(params)
-    params = YAML.dump(params)
-    super
-  end
-
-  def params
-    params = YAML.load(super)
-  end
 end

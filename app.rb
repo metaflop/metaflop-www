@@ -6,7 +6,6 @@
 # licensed under gpl v3
 #
 
-# encoding: UTF-8
 require 'sinatra'
 require 'sinatra/config_file'
 require 'sinatra/simple-navigation'

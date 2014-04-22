@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 #
 # metaflop - web interface
 # © 2012 by alexis reigel

@@ -24,7 +24,6 @@ class App
           :title => "Proportion",
           :items => [
             { :title => 'cap height', :key => :cap_height },
-            { :title => 'mean height', :key => :mean_height },
             { :title => 'bar height', :key => :bar_height },
             { :title => 'ascender height', :key => :ascender_height },
             { :title => 'descender height', :key => :descender_height },

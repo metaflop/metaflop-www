@@ -29,7 +29,7 @@ class App
             { :title => 'ascender height', :key => :ascender_height },
             { :title => 'descender height', :key => :descender_height },
             { :title => 'glyph angle', :key => :glyph_angle },
-            { :title => 'chars x-height', :key => :x_height },
+            { :title => 'x-height', :key => :x_height },
             { :title => 'accents height', :key => :accent_height },
             { :title => 'depth of comma', :key => :comma_depth },
           ]
@@ -47,8 +47,8 @@ class App
               [ { :value => '1', :text => 'Circle' },
                 { :value => '2', :text => 'Square' },
                 { :value => '3', :text => 'Razor' } ] },
-            { :title => 'slanting amount', :key => :slant },
-            { :title => 'haphazard variation', :key => :craziness }
+            { :title => 'slanting', :key => :slant },
+            { :title => 'randomness', :key => :craziness }
           ]
         }]
 

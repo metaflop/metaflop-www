@@ -123,7 +123,7 @@ class FontParameters
                 end
 
         # range
-        range = x.gsub(/\s+/, '').scan(/\$([\d\.]+)\w*\/([\d\.]+)\w*$/).flatten!
+        range = x.gsub(/\s+/, '').scan(/\$([-\d\.]+)\w*\/([-\d\.]+)\w*$/).flatten!
         range = [0, 1] if range.nil?
 
         instance_variable_set "@#{mapping}".to_sym, FontParameter.new(

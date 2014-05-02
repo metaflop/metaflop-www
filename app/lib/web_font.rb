@@ -7,7 +7,7 @@
 #
 
 require './app/lib/font_settings'
-require 'zip/zip'
+require 'zip'
 require 'slim'
 require 'tilt'
 
@@ -31,7 +31,7 @@ class WebFont
     zipfile_name = File.join(@dir, "font.zip")
     FileUtils.rm(zipfile_name, :force => true)
 
-    Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
+    Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
       %w(eot woff ttf svg).map do |x|
         zipfile.add("#{@font_name}.#{x}", File.join(@dir, "font.#{x}"))
       end

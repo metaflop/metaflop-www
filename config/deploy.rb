@@ -30,7 +30,7 @@ set :user, "rails"
 
 set :use_sudo, false
 
-set :rbenv_ruby_version, '2.0.0-p247'
+set :rbenv_ruby_version, File.read('.ruby-version').strip
 set :rbenv_install_dependencies, false
 
 # unicorn wrapper restart

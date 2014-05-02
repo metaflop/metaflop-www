@@ -16,8 +16,8 @@ gem 'unicorn'
 
 group :development do
   gem 'better_errors'
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
+  gem 'capistrano', '~> 2'
+  gem 'capistrano-rbenv', '~> 1'
   gem 'nyan-cat-formatter'
   gem 'rspec'
 end

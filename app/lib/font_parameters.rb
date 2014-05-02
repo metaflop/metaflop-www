@@ -114,24 +114,26 @@ class FontParameters
         # replace the value from the file if we have a value set for the parameter
         value_from_file = splits[1].to_r.to_f
         mapping = MF_MAPPINGS[splits[0]]
-        param = mapping ? send(mapping) : nil
-        value = if param && param.value && !param.value.to_s.empty?
-                  param.value
-                else
-                  value_from_file
-                end
+        if mapping
+          param = send(mapping)
+          value = if param.value && !param.value.to_s.empty?
+                    param.value
+                  else
+                    value_from_file
+                  end
 
-        # range
-        range = x.gsub(/\s+/, '').scan(/\$([-\d\.]+)\w*\/([-\d\.]+)\w*$/).flatten!
-        range = [0, 1] if range.nil?
+          # range
+          range = x.gsub(/\s+/, '').scan(/\$([-\d\.]+)\w*\/([-\d\.]+)\w*$/).flatten!
+          range = [0, 1] if range.nil?
 
-        instance_variable_set "@#{mapping}".to_sym, FontParameter.new(
-          value, # value
-          value_from_file, # default
-          splits[1][/[^\d;\.]+/], # unit
-          { :from => range[0], :to => range[1] }, # range
-          (x.include? '@hidden') # hidden
-        )
+          instance_variable_set "@#{mapping}".to_sym, FontParameter.new(
+            value, # value
+            value_from_file, # default
+            splits[1][/[^\d;\.]+/], # unit
+            { :from => range[0], :to => range[1] }, # range
+            (x.include? '@hidden') # hidden
+          )
+        end
       end
     end
   end

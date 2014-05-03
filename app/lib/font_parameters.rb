@@ -151,6 +151,8 @@ class FontParameters
 
     if use_preview_file && has_preview_file?
       content.sub! 'input glyphs;', 'input glyphs_preview;'
+    else
+      content.sub! 'input glyphs_preview;', 'input glyphs;'
     end
 
     File.open(File.join(@settings.out_dir, 'font.mf'), "w:utf-8") do |file|

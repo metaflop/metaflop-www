@@ -52,7 +52,7 @@ class App < Sinatra::Application
 
     # creates a shortened url for the current params (i.e. font setting)
     get '/font/create' do
-      Url.create(:params => params)[:short]
+      Url.first_or_create(:params => params)[:short]
     end
 
     get '/font/:url' do |url|

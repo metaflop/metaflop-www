@@ -3,55 +3,40 @@
 // gradients, or for stringing multiple gradients together.
 //************************************************************************//
 
-@mixin background-image(
-  $image-1       , $image-2: false,
-  $image-3: false, $image-4: false,
-  $image-5: false, $image-6: false,
-  $image-7: false, $image-8: false,
-  $image-9: false, $image-10: false
-) {
-  $images: compact($image-1, $image-2,
-           $image-3, $image-4,
-           $image-5, $image-6,
-           $image-7, $image-8,
-           $image-9, $image-10);
+@mixin background-image($images...) {
+  $webkit-images: ();
+  $spec-images: ();
 
-  background-image: add-prefix($images, webkit);
-  background-image: add-prefix($images, moz);
-  background-image: add-prefix($images, ms);
-  background-image: add-prefix($images, o);
-  background-image: add-prefix($images);
-}
+  @each $image in $images {
+    $webkit-image: ();
+    $spec-image: ();
 
+    @if (type-of($image) == string) {
+      $url-str:       str-slice($image, 0, 3);
+      $gradient-type: str-slice($image, 0, 6);
 
-@function add-prefix($images, $vendor: false) {
-  $images-prefixed: ();
+      @if $url-str == "url" {
+        $webkit-image: $image;
+          $spec-image: $image;
+      }
 
-  @for $i from 1 through length($images) {
-    $type: type-of(nth($images, $i)); // Get type of variable - List or String
+      @else if $gradient-type == "linear" {
+        $gradients: _linear-gradient-parser($image);
+        $webkit-image:  map-get($gradients, webkit-image);
+        $spec-image:    map-get($gradients, spec-image);
+      }
 
-    // If variable is a list - Gradient
-    @if $type == list {
-      $gradient-type: nth(nth($images, $i), 1); // Get type of gradient (linear || radial)
-      $gradient-args: nth(nth($images, $i), 2); // Get actual gradient (red, blue)
-
-      $gradient: render-gradients($gradient-args, $gradient-type, $vendor);
-      $images-prefixed: append($images-prefixed, $gradient, comma);
+      @else if $gradient-type == "radial" {
+        $gradients: _radial-gradient-parser($image);
+        $webkit-image: map-get($gradients, webkit-image);
+        $spec-image:   map-get($gradients, spec-image);
+      }
     }
 
-    // If variable is a string - Image
-    @else if $type == string {
-      $images-prefixed: join($images-prefixed, nth($images, $i), comma);
-    }
+    $webkit-images: append($webkit-images, $webkit-image, comma);
+    $spec-images:   append($spec-images,   $spec-image,   comma);
   }
-  @return $images-prefixed;
+
+  background-image: $webkit-images;
+  background-image: $spec-images;
 }
-
-
-
-//Examples:
-  //@include background-image(linear-gradient(top, orange, red));
-  //@include background-image(radial-gradient(50% 50%, cover circle, orange, red));
-  //@include background-image(url("/images/a.png"), linear-gradient(orange, red));
-  //@include background-image(url("image.png"), linear-gradient(orange, red), url("image.png"));
-  //@include background-image(linear-gradient(hsla(0, 100%, 100%, 0.25) 0%, hsla(0, 100%, 100%, 0.08) 50%, transparent 50%), linear-gradient(orange, red);

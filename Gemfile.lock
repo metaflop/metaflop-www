@@ -15,7 +15,7 @@ GEM
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
-    bourbon (4.0.1)
+    bourbon (4.0.2)
       sass (~> 3.3)
       thor
     capistrano (2.15.5)
@@ -125,7 +125,7 @@ GEM
       rspec-support (= 3.0.0.beta2)
     rspec-support (3.0.0.beta2)
     rubyzip (1.1.3)
-    sass (3.3.6)
+    sass (3.3.9)
     simple-navigation (3.13.0)
       activesupport (>= 2.3.2)
     sinatra (1.4.5)

@@ -6,6 +6,7 @@
 # licensed under gpl v3
 #
 
+require 'spec_helper'
 # needed as we include the sprockets helper
 require './app'
 require './app/views/news'

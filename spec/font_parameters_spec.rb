@@ -6,6 +6,7 @@
 # licensed under gpl v3
 #
 
+require 'spec_helper'
 require './app/lib/font_parameters'
 
 describe FontParameters do

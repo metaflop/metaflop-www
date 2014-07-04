@@ -27,6 +27,9 @@ module Configuration
 
   def self.global
     configure do
+      require 'dotenv'
+      Dotenv.load
+
       register Sinatra::ConfigFile
       config_file ['./config/config.yml', './config/db.yml']
 

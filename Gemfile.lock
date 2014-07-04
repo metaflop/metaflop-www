@@ -83,6 +83,9 @@ GEM
       dm-core (~> 1.2.0)
     do_mysql (0.10.14)
       data_objects (= 0.10.14)
+    dotenv (0.11.1)
+      dotenv-deployment (~> 0.0.2)
+    dotenv-deployment (0.0.2)
     erubis (2.7.0)
     execjs (2.2.1)
     faraday (0.9.0)
@@ -202,6 +205,8 @@ DEPENDENCIES
   capistrano-rbenv (~> 1)
   data_mapper
   dm-mysql-adapter
+  dotenv
+  dotenv-deployment
   nyan-cat-formatter
   party_foul
   rspec

@@ -27,6 +27,14 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * python
 * python libs: fontforge, argparse
 
+## Deployment
+
+Create a file *.env* with the content
+
+    PARTY_FOUL_OAUTH_TOKEN=<github repo oauth token>
+
+in */path/to/shared* on your server.
+
 ## License
 
 The sourcecode of this project is licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html).

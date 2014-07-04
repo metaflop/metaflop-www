@@ -11,6 +11,7 @@
 # if your local username is the same as the ssh-user you might not need this
 require 'bundler/capistrano'
 require 'capistrano-rbenv'
+require 'dotenv/deployment/capistrano'
 
 require 'capistrano/ext/multistage'
 set :stages, %w(production staging)

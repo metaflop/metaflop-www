@@ -139,6 +139,7 @@ class App < Sinatra::Application
   end
 
   error do
+    PartyFoul::RacklessExceptionHandler.handle(env['sinatra.error'], env)
     slim :error_500
   end
 

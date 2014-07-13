@@ -43,7 +43,9 @@ class Metaflop
     @font_parameters.to_file(preview)
 
     out_file = "#{@font_settings.out_dir}/font.otf"
-    command = settings[:font_otf] % @font_settings.to_hash
+    settings_parameters = @font_settings.to_hash
+    settings_parameters[:timeout] = preview ? 5 : 15
+    command = settings[:font_otf] % settings_parameters
 
     `cd #{@font_settings.out_dir} && rm -f #{out_file} && #{command}`
 

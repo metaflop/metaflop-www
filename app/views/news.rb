@@ -16,7 +16,7 @@ class App
       def images
         files = Dir['assets/images/helloworld/*']
 
-        %w(adjuster bespoke).map do |font_family|
+        %w(adjuster bespoke fetamont).map do |font_family|
           (1..12).map do |i|
             files.select { |x|
               x =~ /#{"%s-helloworld-%02d-" % [font_family, i]}/

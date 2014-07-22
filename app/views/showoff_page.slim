@@ -11,13 +11,21 @@ div#col1
       - current
         == description
         p.box-caption
-          | Type Designer: #{type_designer}
+          | Type Designer:&nbsp;
+          - type_designer
+            a href="#{url}" target="_blank" #{name}
+            -! last
+              |,&nbsp;
           br
           | Year: #{year}
           br
           | Encoding: #{encoding}
           br
-          | Source code: #{{source_code}}
+          | Source code:&nbsp;
+          - source_code
+            a href="#{url}" target="_blank" #{title}
+            -! last
+              |,&nbsp;
 
 div#col2
   div.box-doublewidth.box-slideshow

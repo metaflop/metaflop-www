@@ -18,10 +18,10 @@ class App
           {
             :title => x[0],
             :description => x[1]["description"],
-            :type_designer => x[1]["type_designer"],
+            :type_designer => with_last_identifier(x[1]["type_designer"]),
             :year => x[1]["year"],
             :encoding => x[1]["encoding"],
-            :source_code => x[1]["source_code"],
+            :source_code => with_last_identifier(x[1]["source_code"]),
             :images => x[1]["images"].map do |img|
             {
               :url => image_path("#{page_name}/#{img[0]}"),
@@ -48,6 +48,14 @@ class App
           pages.find { |x| x[:title] == @subpage }
         else
           pages[0]
+        end
+      end
+
+      private
+      def with_last_identifier(collection)
+        collection.map do |item|
+          item[:last] = item == collection.last
+          item
         end
       end
     end

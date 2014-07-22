@@ -11,10 +11,19 @@ metafonts:
       The font''s sophistication derives from the angle and pen parameter (circle, square or razor).
       The font encoding of MF Adjuster covers 256 characters supporting many european languages
       with latin writing.
-    type_designer: Marco Müller, Simon Egli
+    type_designer:
+      -
+        name: Marco Müller
+        url: http://www.marco-mueller.com/
+      -
+        name: Simon Egli
+        url: http://www.simonegli.com/
     year: 2012
     encoding: T1
-    source_code: <a href="https://github.com/metaflop/metaflop-font-adjuster">Github</a>
+    source_code:
+      -
+        title: Github
+        url: https://github.com/metaflop/metaflop-font-adjuster
     images:
       -
         - adjuster1-01.png
@@ -92,10 +101,19 @@ metafonts:
       in classes of dimension, proportion and shape.
       By using this range of parameters a high variety of derivates can be achieved.
       The standard font and font-box has the size of 10 unit points.
-    type_designer: Marco Müller, Simon Egli
+    type_designer:
+      -
+        name: Marco Müller
+        url: http://www.marco-mueller.com/
+      -
+        name: Simon Egli
+        url: http://www.simonegli.com/
     year: 2012
     encoding: '-'
-    source_code: <a href="https://github.com/metaflop/metaflop-font-bespoke">Github</a>
+    source_code:
+      -
+        title: Github
+        url: https://github.com/metaflop/metaflop-font-bespoke"
     images:
       -
         - bespoke1-01.png
@@ -180,11 +198,19 @@ metafonts:
       The 11 parameters, including superness, slanting and randomness,
       enlarge the logo font to a complete typeface with a high variety of derivates.
       The font encoding covers 256 characters supporting many european languages with latin writing.
-    type_designer: Linus Romer
+    type_designer:
+      -
+        name: Linus Romer
+        url: http://www.ctan.org/author/romer
     year: 2014
     encoding: T1
-    source_code: <a href="https://github.com/metaflop/metaflop-font-fetamont">Github</a>,
-        <a href="http://www.ctan.org/tex-archive/fonts/fetamont">CTAN</a>
+    source_code:
+      -
+        title: Github
+        url: https://github.com/metaflop/metaflop-font-fetamont
+      -
+        title: CTAN
+        url: http://www.ctan.org/tex-archive/fonts/fetamont
     images:
       -
         - fetamont-01.png

@@ -18,6 +18,10 @@ class App
           {
             :title => x[0],
             :description => x[1]["description"],
+            :type_designer => x[1]["type_designer"],
+            :year => x[1]["year"],
+            :encoding => x[1]["encoding"],
+            :source_code => x[1]["source_code"],
             :images => x[1]["images"].map do |img|
             {
               :url => image_path("#{page_name}/#{img[0]}"),

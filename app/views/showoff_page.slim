@@ -10,6 +10,14 @@ div#col1
     div.box-content
       - current
         == description
+        p.box-caption
+          | Type Designer: #{type_designer}
+          br
+          | Year: #{year}
+          br
+          | Encoding: #{encoding}
+          br
+          | Source code: #{{source_code}}
 
 div#col2
   div.box-doublewidth.box-slideshow

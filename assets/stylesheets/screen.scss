@@ -395,6 +395,16 @@ embed {
     .inputblock:hover {
         background: #eee;
     }
+
+    // metafonts description column, caption
+    .box-content p.box-caption {
+        @include box-caption;
+        position: relative;
+        margin: 10px -7px 0;
+        padding: 9px 7px;
+        width: 106%;
+        line-height: 1.3;
+    }
 }
 
 .box {
@@ -704,10 +714,5 @@ a.char-chooser {
 
 /* basic jquery slider */
 p.bjqs-caption {
-    width: 100%;
-    font-size: $font-size - 2px;
-    text-align: left;
-    color: $link_color;
-    padding: $box_spacing_y;
-    border-top: 1px solid #fff;
+    @include box-caption;
 }

@@ -7,3 +7,12 @@
     float: left;
     margin-top: $box_spacing_x + $font_size + $box_spacing_x;
 }
+
+@mixin box-caption {
+    width: 100%;
+    font-size: $font-size - 2px;
+    text-align: left;
+    color: $link_color;
+    padding: $box_spacing_y;
+    border-top: 1px solid #fff;
+}

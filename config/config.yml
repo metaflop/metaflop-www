@@ -156,4 +156,88 @@ metafonts:
       -
         - bespoke-derivations-12.png
         - UcH5rxsNVi
-
+  fetamont:
+    description: "<a href=\"/modulator?fontface=Fetamont\">MF Fetamont</a> is an extended version of
+      Knuth's rounded elliptical logo font.
+      Fetamont is designed to fit all existing or future projects relating to Metafont.
+      The 11 parameters, including superness, slanting and randomness,
+      enlarge the logo font to a complete typeface with a high variety of derivates.
+      The font encoding covers 256 characters supporting many european languages with latin writing.
+      <p class=\"box-caption\">
+        Type Designer: Linus Romer<br/>
+        Year: 2014<br/>
+        Encoding: T1<br/>
+        Source code: <a href=\"https://github.com/metaflop/metaflop-font-fetamont\">Github</a>,
+        <a href=\"http://www.ctan.org/tex-archive/fonts/fetamont\">CTAN</a><br/>
+      </p>"
+    images:
+      -
+        - fetamont-01.png
+        -
+      -
+        - fetamont-02.png
+        - The 256 characters of T1 font encoding.
+      -
+        - fetamont-03.png
+        -
+      -
+        - fetamont-04.png
+        - MF Fetamont supporting many european languages with latin writing.
+    subimages:
+      -
+        - fetamont-derivations-01.png
+        - GkBrVZN_iX
+      -
+        - fetamont-derivations-02.png
+        - MfkdNdMDDn
+      -
+        - fetamont-derivations-03.png
+        - dl7Ht74V5u
+      -
+        - fetamont-derivations-04.png
+        - LkeR_2xby-
+      -
+        - fetamont-derivations-05.png
+        - PP_OiCwdeP
+      -
+        - fetamont-derivations-06.png
+        - 27bdRg9sxs
+      -
+        - fetamont-derivations-07.png
+        - 9ExkzVmc3w
+      -
+        - fetamont-derivations-08.png
+        - -VD4YZ2DoE
+      -
+        - fetamont-derivations-09.png
+        - hCBJISerqx
+      -
+        - fetamont-derivations-10.png
+        - Lib0ZSdIQq
+      -
+        - fetamont-derivations-11.png
+        - lIyb2HtLTh
+      -
+        - fetamont-derivations-12.png
+        - e93KUT9DBj
+      -
+        - fetamont-derivations-13.png
+        - 6vxhO7I2He
+      -
+        - fetamont-derivations-14.png
+        - aqgUyrHqrz
+      -
+        - fetamont-derivations-15.png
+        - -G_AJAvhEX
+      -
+        - fetamont-derivations-16.png
+        - dFcZJbTYmO
+      -
+        - fetamont-derivations-17.png
+        - MelgMG3dUD
+      -
+        - fetamont-derivations-18.png
+        - ei9rUTPryF
+      -
+        - fetamont-derivations-19.png
+        - dJCvFHU3OR

@@ -1,4 +1,4 @@
 set :branch, 'master'
 
-role :web, 'metaflop-production.panter.ch'
-role :app, 'metaflop-production.panter.ch'
+role :web, 'metaflop-production.panter.biz'
+role :app, 'metaflop-production.panter.biz'

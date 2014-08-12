@@ -24,10 +24,10 @@ set :application, 'metaflop'
 set :scm, :git
 set :repository, 'git@github.com:metaflop/metaflop-www.git'
 set :git_enable_submodules, 1
-set :deploy_to, '/home/rails/app'
+set :deploy_to, '/home/app/app'
 set :deploy_via, :remote_cache # don't clone repo each time
 
-set :user, 'rails'
+set :user, 'app'
 
 set :use_sudo, false
 

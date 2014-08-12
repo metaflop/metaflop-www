@@ -194,10 +194,10 @@ metafonts:
   fetamont:
     description: <a href="/modulator?fontface=Fetamont">MF Fetamont</a> is an extended version of
       Knuth's rounded elliptical logo font.
-      Fetamont is designed to fit all existing or future projects relating to Metafont.
       The 11 parameters, including superness, slanting and randomness,
       enlarge the logo font to a complete typeface with a high variety of derivates.
-      The font encoding covers 256 characters supporting many european languages with latin writing.
+      The font covers capital letters and small caps with a T1 encoding of 256
+      characters supporting many european languages with latin writing.
     type_designer:
       -
         name: Linus Romer

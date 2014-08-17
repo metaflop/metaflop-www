@@ -8,8 +8,4 @@
 
 module RackSettings
   attr_accessor :settings
-
-  def settings
-    @settings
-  end
 end

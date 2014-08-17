@@ -165,7 +165,6 @@ class App < Sinatra::Application
     # map all query params
     args = { :out_dir => out_dir }
     (FontParameters::VALID_PARAMETERS_KEYS + FontSettings::VALID_OPTIONS_KEYS).each do |key|
-      # query params come in with dashes -> replace by underscores to match properties
       value = params[key.to_s]
 
       if value && !value.empty?

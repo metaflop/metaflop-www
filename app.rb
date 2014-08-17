@@ -43,7 +43,7 @@ class App < Sinatra::Application
 
   namespace '/modulator' do
     get do
-      mf = mf_instance_from_request
+      mf = metaflop_create
       @font_parameters = mf.font_parameters
       @active_fontface = mf.font_settings.fontface
 
@@ -62,7 +62,7 @@ class App < Sinatra::Application
         redirect '/'
       end
 
-      mf = mf_instance_from_request url[:params]
+      mf = metaflop_create url[:params]
       @font_parameters = mf.font_parameters
       @active_fontface = mf.font_settings.fontface
 
@@ -70,7 +70,7 @@ class App < Sinatra::Application
     end
 
     get '/preview' do
-      mf = mf_instance_from_request
+      mf = metaflop_create
       begin
         mf.font_preview
       rescue Metaflop::Error::Metafont
@@ -105,7 +105,7 @@ class App < Sinatra::Application
   end
 
   get '/:page/partial' do |page|
-    mf = mf_instance_from_request
+    mf = metaflop_create
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
@@ -161,21 +161,7 @@ class App < Sinatra::Application
     "/tmp/metaflop/#{session[:id]}"
   end
 
-  def mf_instance_from_request(params = params)
-    # map all query params
-    args = { :out_dir => out_dir }
-    (FontParameters::VALID_PARAMETERS_KEYS + FontSettings::VALID_OPTIONS_KEYS).each do |key|
-      value = params[key.to_s]
-
-      if value && !value.empty?
-        args[key] = value
-      end
-    end
-
-    mf = Metaflop.new(args)
-    mf.settings = settings.metaflop
-    mf.logger = logger
-
-    mf
+  def metaflop_create(params = params)
+    Metaflop.create(params.merge({ :out_dir => out_dir }), settings.metaflop, logger)
   end
 end

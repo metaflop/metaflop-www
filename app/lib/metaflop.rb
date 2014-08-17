@@ -76,4 +76,22 @@ class Metaflop
     { :name => "#{font.font_name}_webfont.zip",
       :data => font.zip }
   end
+
+  def self.create(params, settings, logger)
+    # map all query params and other options
+    args = {}
+    (FontParameters::VALID_PARAMETERS_KEYS + FontSettings::VALID_OPTIONS_KEYS).each do |key|
+      value = params[key.to_s]
+
+      if value && !value.empty?
+        args[key] = value
+      end
+    end
+
+    mf = Metaflop.new(args)
+    mf.settings = settings
+    mf.logger = logger
+
+    mf
+  end
 end

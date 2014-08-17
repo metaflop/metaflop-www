@@ -49,7 +49,7 @@ class App < Sinatra::Application
         redirect '/'
       end
 
-      mf = metaflop_create url[:params]
+      mf = metaflop_create(url[:params])
       @font_parameters = mf.font_parameters
       @active_fontface = mf.font_settings.fontface
 
@@ -68,9 +68,7 @@ class App < Sinatra::Application
     get '/export/font/:type/:face/:hash' do |type, face, hash|
       set_http_cache(hash)
 
-      mf = Metaflop.new({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
-      mf.settings = settings.metaflop
-      mf.logger = logger
+      mf = metaflop_create({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
       method = "font_#{type}"
       if mf.respond_to? method
         begin

@@ -6,6 +6,8 @@
 # licensed under gpl v3
 #
 
+require 'data_mapper' # metagem, requires common plugins too.
+
 # url shortener model
 class Url
   include DataMapper::Resource

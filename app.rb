@@ -7,27 +7,14 @@
 #
 
 require 'sinatra'
-require 'sinatra/config_file'
-require 'sinatra/simple-navigation'
-require 'sinatra/namespace'
-require 'sinatra/asset_pipeline'
-require 'sass'
 require 'active_support'
-require 'data_mapper' # metagem, requires common plugins too.
-require './app/lib/logic_less_slim'
 require './app/lib/configuration'
 require './app/lib/metaflop'
 require './app/models/url'
 require './app/lib/error'
 
 class App < Sinatra::Application
-  include LogicLessSlim
   include Configuration
-
-  before do
-    @main_navigation = render_navigation :context => :main
-    @meta_navigation = render_navigation :context => :meta
-  end
 
   # redirect trailing slash urls
   get %r{(/.+)/$} do

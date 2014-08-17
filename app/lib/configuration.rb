@@ -8,59 +8,107 @@
 
 # configuration for the sinatra app
 module Configuration
-  # delegate to the base class (the one that includes this module)
-  # which is a sinatra application class and defines all the used
-  # methods as 'configure', 'register' etc.
-  # this way, we can define the configure blocks as if we were
-  # inside a sinatra class
-  def self.method_missing(method, *args, &block)
-    @base.send(method, *args, &block)
-  end
+  class << self
+    # delegate to the base class (the one that includes this module)
+    # which is a sinatra application class and defines all the used
+    # methods as 'configure', 'register' etc.
+    # this way, we can define the configure blocks as if we were
+    # inside a sinatra class
+    def method_missing(method, *args, &block)
+      @base.send(method, *args, &block)
+    end
 
-  def self.included(base)
-    @base = base
+    def included(base)
+      @base = base
 
-    global
-    development
-    production
-  end
+      configure do
+        sinatra_namespace
+        # gzip compression
+        use Rack::Deflater
+        enable :sessions
 
-  def self.global
-    configure do
+        dot_env
+        config
+        navigation
+        asset_pipeline
+        tmp_dir
+        views
+        database
+      end
+
+      configure :development do
+        sinatra_reloader
+        better_errors
+
+        # get rid of rack security warning (only for dev)
+        set :session_secret, 'pknrgX12iULq0CocY2GBpw'
+      end
+
+      configure :production do
+        logging
+        error_reporting
+      end
+    end
+
+    def sinatra_namespace
+      require 'sinatra/namespace'
+      register Sinatra::Namespace
+    end
+
+    def dot_env
       require 'dotenv'
       Dotenv.load
+    end
 
+    def config
+      require 'sinatra/config_file'
       register Sinatra::ConfigFile
       config_file ['./config/config.yml', './config/db.yml']
+    end
 
+    def navigation
+      require 'sinatra/simple-navigation'
       register Sinatra::SimpleNavigation
 
-      register Sinatra::Namespace
+      before do
+        @main_navigation = render_navigation :context => :main
+        @meta_navigation = render_navigation :context => :meta
+      end
+    end
+
+    def asset_pipeline
+      require 'sinatra/asset_pipeline'
 
       set :assets_css_compressor, :sass
       set :assets_js_compressor, :uglifier
       set :assets_precompile, %w(app.js app.css *.png *.jpg *.svg *.eot *.ttf *.woff *.cur)
       register Sinatra::AssetPipeline
+    end
 
-      # gzip compression
-      use Rack::Deflater
+    def views
+      require 'sass'
 
-      # setup the tmp dir where the generated fonts go
-      tmp_dir = "/tmp/metaflop"
-      FileUtils.rm_rf(tmp_dir)
-      Dir.mkdir(tmp_dir)
-
-      # views
-      set :views, self.root + '/app/views'
+      set :views, './app/views'
       require './app/views/layout'
 
       Slim::Engine.set_default_options :pretty => true
 
       mime_type :otf, 'font/opentype'
 
-      enable :sessions
+      require './app/lib/logic_less_slim'
+      @base.include LogicLessSlim
+    end
 
-      # db
+    def tmp_dir
+      # setup the tmp dir where the generated fonts go
+      tmp_dir = "/tmp/metaflop"
+      FileUtils.rm_rf(tmp_dir)
+      Dir.mkdir(tmp_dir)
+    end
+
+    def database
+      require 'data_mapper' # metagem, requires common plugins too.
+
       DataMapper.setup(:default, {
         :adapter  => settings.db[:adapter],
         :host     => settings.db[:host],
@@ -72,37 +120,24 @@ module Configuration
       DataMapper.finalize
       Url.auto_upgrade!
     end
-  end
 
-  def self.development
-    configure :development do
+
+    def sinatra_reloader
       require 'sinatra/reloader'
       register Sinatra::Reloader
       also_reload '**/*.rb'
       dont_reload '**/*spec.rb'
+    end
 
+    def better_errors
       require 'better_errors'
       use BetterErrors::Middleware
       # set the application root in order to abbreviate filenames
       # within the application
       BetterErrors.application_root = self.root
-
-      # get rid of rack security warning (only for dev)
-      set :session_secret, 'pknrgX12iULq0CocY2GBpw'
     end
-  end
 
-  def self.production
-    configure :production do
-      # logging
-      require 'time'
-      log_dir = "log/rack/"
-      Dir.mkdir(log_dir) unless Dir.exist? log_dir
-      logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')
-      $stderr.reopen(logger)
-      $stdout.reopen(logger)
-
-      # error reporting
+    def error_reporting
       require 'party_foul'
       PartyFoul.configure do |config|
         config.oauth_token = ENV['PARTY_FOUL_OAUTH_TOKEN']
@@ -118,6 +153,15 @@ module Configuration
         end
       end
       use PartyFoul::Middleware
+    end
+
+    def logging
+      require 'time'
+      log_dir = "log/rack/"
+      Dir.mkdir(log_dir) unless Dir.exist? log_dir
+      logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')
+      $stderr.reopen(logger)
+      $stdout.reopen(logger)
     end
   end
 end

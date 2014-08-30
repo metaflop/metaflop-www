@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#mf2outline version 20140404
+#mf2outline version 20140414
 
 #This program has been written by Linus Romer for the 
 #Metaflop project by Marco Mueller and Alexis Reigel.
@@ -36,15 +36,16 @@ import shutil
 import argparse
 import math
 
-def split_list(a):
+# splitList will split a comma-separated string to a list of words
+def splitList(a):
 	lst = [] 
 	for s in a:
 		lst += s.split (",")
 	return lst
 	
-# convert an array of bytes b to an integer n
+# bytesToInt converts an array of bytes b to an integer n
 # int.from_bytes() could replace this (python 3.2)
-def bytes_to_int(b): 
+def bytesToInt(b): 
 	shift = (len(b)-1)*8
 	n = 0L
 	for i in b:
@@ -52,103 +53,277 @@ def bytes_to_int(b):
 		shift = shift - 8
 	return n
 
+# findWord will return -1, if the word does not appear in wordlist, else it returns the index of the word
+def findWord(word,wordlist):
+	i = 0
+	while i < len(wordlist):
+		if word == wordlist[i]:
+			return i
+		i += 1
+	return -1
+						
+# importEps will import the eps-file named "eps" into the glyph "glyph"
+def importEps(glyph,eps): 
+	with open(eps, "r") as epsfile:
+		futurefore = fontforge.layer()  # this will be the future foreground
+		isWhite = False # is the current drawing/filling color white?
+		linewidth = 0; # linewidth in postscript (in MF/MP this is the pen width)
+		for line in epsfile:
+			if not line[0] == "%": # omit comments
+				words = line.split()
+				# search the lines for several key words and process 
+				# them in the right priority order
+				
+				# search for "setrgbcolor"
+				index = findWord("setrgbcolor",words)
+				if index >= 0: # word appears 
+					if (words[index-1] == "0" 
+					and words[index-2] == "0"
+					and words[index-3] == "0"):
+						isWhite = False
+					elif (words[index-1] == "1" 
+					and words[index-2] == "1"
+					and words[index-3] == "1"):
+						isWhite = True
+					else:
+						print "I do not understand this color"
+						
+				# search for "setlinewidth"
+				index = findWord("setlinewidth",words)
+				if index >= 0: # word appears 
+					if (words[index-3] == "dtransform"
+					and words[index-2] == "truncate"
+					and words[index-1] == "idtransform"):
+						linewidth = float(words[index-4])
+					elif (words[index-6] == "dtransform"   
+					and words[index-5] == "exch"
+					and words[index-4] == "truncate"
+					and words[index-3] == "exch"
+					and words[index-2] == "idtransform"
+					and words[index-1] == "pop"): # widths are exchanged
+						if index-8 < 0: # value is on the last line
+							linewidth = float(lastwords[len(lastwords)-1])
+						else:
+							linewidth = float(words[index-8])
+					else:
+						print "I do not understand this linewidth"
+				
+				# search for "newpath"
+				index = findWord("newpath",words)
+				if index >= 0: # word appears 
+					contour = fontforge.contour()
+					
+				# search for "moveto"
+				index = findWord("moveto",words)
+				if index >= 0: # word appears 
+					contour.moveTo(float(words[index-2]),float(words[index-1]))
+				
+				# search for "lineto"
+				index = findWord("lineto",words)
+				if index >= 0: # word appears 
+					contour.lineTo(float(words[index-2]),float(words[index-1]))
+					
+				# search for "curveto"
+				index = findWord("curveto",words)
+				if index >= 0: # word appears 
+					contour.cubicTo(
+						(float(words[index-6]),float(words[index-5])),
+						(float(words[index-4]),float(words[index-3])),
+						(float(words[index-2]),float(words[index-1])))
+				
+				# search for "closepath"
+				if "closepath" in words: 
+					contour.closed = True
+					# correct the direction
+					if contour.isClockwise() == -1:
+						contour.transform(psMat.scale(10)) # dirty trick
+						if (isWhite and contour.isClockwise()) or (not isWhite and not contour.isClockwise()): # dirty trick
+							contour.reverseDirection() # dirty trick
+						contour.transform(psMat.scale(.1)) # dirty trick
+					else:
+						if (isWhite and contour.isClockwise()) or (not isWhite and not contour.isClockwise()):
+							contour.reverseDirection()
+
+				# search for "fill and stroke"
+				if ("fill" in words) or ("stroke" in words): 
+					if ("stroke" in words) and (linewidth != 0):
+						templayer = fontforge.layer()
+						templayer += contour
+						if "fill" in words:
+							if templayer.selfIntersects(): # this will seldom happen; the Q of cmr is an exception
+								templayer.removeOverlap()
+								templayer.correctDirection()
+								templayer.stroke("circular",linewidth,"round","round","removeinternal") 
+								templayer.removeOverlap()
+							else:
+								templayer.stroke("circular",linewidth,"round","round","removeinternal") 
+						else:
+							templayer.stroke("circular",linewidth)
+						templayer.round(2) # we have set the epsilon to the tenth of one unit 
+						futurefore += templayer
+						futurefore.removeOverlap()
+
+					else: # only "fill" in words or linewidth zero
+						contour.round(2)
+						if isWhite:
+							# ceck additionally for intersections:
+							# that will avoid negative contours
+							# on the white paper
+							
+							# there are now two ways: the "exclude" way and the "intersect" way
+							# we will check first, if the white area is a subset of the black area:
+							whitelayer = fontforge.layer()
+							whitelayer += contour
+							blacklayer = futurefore.dup() 
+							blacklayer.exclude(whitelayer) # exclude blacklayer from whitelayer and store it as blacklayer
+							if blacklayer.isEmpty(): # now do it the "intersect" way
+								contour.reverseDirection() # make it black
+								templayer = futurefore.dup() 
+								templayer += contour
+								templayer.intersect() # now this may be black or white but should be white!
+								for i in range(0,len(templayer)):
+									if templayer[i].isClockwise() == -1:
+										templayer[i].transform(psMat.scale(10)) # dirty trick
+										if templayer[i].isClockwise(): # dirty trick
+											templayer[i].reverseDirection() # dirty trick
+											
+										templayer[i].transform(psMat.scale(.1)) # dirty trick
+									else:
+										if templayer[i].isClockwise(): 
+											templayer[i].reverseDirection() 
+								futurefore += templayer
+								futurefore.removeOverlap()
+							else: # do it the intersection way
+								contour.reverseDirection() # make it black
+								whitelayer = fontforge.layer()
+								whitelayer += contour
+								blacklayer = futurefore.dup() 
+								whitelayer.exclude(blacklayer) # exclude the whitelayer from the blacklayer and store the rests in whitelayer
+								futurefore = whitelayer.dup()
+								futurefore.correctDirection()
+						else:
+							futurefore += contour
+							futurefore.removeOverlap()
+				
+				# search for "showpage"
+				if "showpage" in words: 	
+					print "-------- Letter %s finished ---------" % code
+					
+				lastwords = words # keep the last line in mind
+		glyph.foreground = futurefore
+
+# defragment will remove contours with tiny area from glyph
+def defragment(font):
+	for glyph in font.glyphs():	
+		futurefore = fontforge.layer()
+		for i in range(0,len(glyph.foreground)):
+			contourlayer = fontforge.layer()
+			contourlayer += glyph.foreground[i]
+			if not contourlayer[0].isClockwise:
+				contourlayer[0].reverseDirection()
+			contourlayer.stroke("circular",1,"round","round","removeexternal") 
+			if not contourlayer.isEmpty():
+				futurefore += glyph.foreground[i]
+		glyph.foreground = futurefore
+
+# this class will help to manage tfm-files (TeX font metrics)
 class Tfmetric:
 	# read the documentation of the tftopl program to understand
 	# this class better.
 	
 	# read a number n consisting of m bytes from the array of bytes
-	def read_number(self,m):
-		n = bytes_to_int(self.tail[0:m])
+	def readNumber(self,m):
+		n = bytesToInt(self.tail[0:m])
 		self.tail = self.tail[m:]
 		return n
 	
 	# fixword is a 4-byte representation of a binary fraction 
-	def read_fixword(self):
-		return (self.read_number(4)/16.0) / (1<<16);
+	def readFixword(self):
+		return (self.readNumber(4)/16.0) / (1<<16);
 	
 	# read m fixwords and return them in an array
-	def read_fixwords(self,m):
+	def readFixwords(self,m):
 		fixwords = [0.0]*m
 		for i in range (0,m):
-			fixwords[i] = self.read_fixword()
+			fixwords[i] = self.readFixword()
 		return fixwords
 	
 	# read m charinfo (consisting each of 4 bytes) that will be 
 	# put into 6 fields (containing only indices of an array that
 	# will be read later)
-	def read_charinfo(self): 
+	def readCharinfo(self): 
 		nc = self.ec - self.bc + 1 # number of codes/characters
 		charinfo = [[0 for i in range(6)] for j in range(nc)]
 		for i in range (0,nc):
-			charinfo[i][0] = self.read_number(1) # width_index 
-			temp = self.read_number(1) # height_index and depth_index 
+			charinfo[i][0] = self.readNumber(1) # width_index 
+			temp = self.readNumber(1) # height_index and depth_index 
 			charinfo[i][1] = (temp & 0xf0) >> 4 # height_index (times 4)
 			charinfo[i][2] = (temp & 0x0f) # depth_index 
-			temp = self.read_number(1) # italic_index and tag
+			temp = self.readNumber(1) # italic_index and tag
 			charinfo[i][3] = (temp & 0xfc) >> 6 # italic index (times 4), 6 bits
 			charinfo[i][4] = (temp & 0x3) # tag
-			charinfo[i][5] = self.read_number(1) # remainder
+			charinfo[i][5] = self.readNumber(1) # remainder
 		return charinfo
 		
 	def __init__ (self,f): # f is the filename of the tfm file
 		self.orig = (open(f).read())
 		self.tail = self.orig
 		# file header:
-		self.lf = self.read_number(2) # length of the entire file
-		self.lh = self.read_number(2) # length of the header data
-		self.bc = self.read_number(2) # smallest character code in the font 
-		self.ec = self.read_number(2) # largest character code in the font 
-		self.nw = self.read_number(2) # number of words in the width table 
-		self.nh = self.read_number(2) # number of words in the height table 
-		self.nd = self.read_number(2) # number of words in the depth table 
-		self.ni = self.read_number(2) # number of words in the italic correction table 
-		self.nl = self.read_number(2) # number of words in the lig/kern table 
-		self.nk = self.read_number(2) # number of words in the kern table 
-		self.ne = self.read_number(2) # number of words in the extensible character table 
-		self.np = self.read_number(2) # number of font parameter words 
+		self.lf = self.readNumber(2) # length of the entire file
+		self.lh = self.readNumber(2) # length of the header data
+		self.bc = self.readNumber(2) # smallest character code in the font 
+		self.ec = self.readNumber(2) # largest character code in the font 
+		self.nw = self.readNumber(2) # number of words in the width table 
+		self.nh = self.readNumber(2) # number of words in the height table 
+		self.nd = self.readNumber(2) # number of words in the depth table 
+		self.ni = self.readNumber(2) # number of words in the italic correction table 
+		self.nl = self.readNumber(2) # number of words in the lig/kern table 
+		self.nk = self.readNumber(2) # number of words in the kern table 
+		self.ne = self.readNumber(2) # number of words in the extensible character table 
+		self.np = self.readNumber(2) # number of font parameter words 
 		# file body:
 		# header array:
-		self.checksum = self.read_number(4) # 32-bit check sum
-		self.designsize = self.read_fixword() # design size of the font in TeX points
+		self.checksum = self.readNumber(4) # 32-bit check sum
+		self.designsize = self.readFixword() # design size of the font in TeX points
 		# jump to the char_info array
 		self.tail = self.orig[4*(6+self.lh):]
-		self.charinfo = self.read_charinfo()
+		self.charinfo = self.readCharinfo()
 		# width array
-		self.width = self.read_fixwords(self.nw)
+		self.width = self.readFixwords(self.nw)
 		# height array
-		self.height = self.read_fixwords(self.nh)
+		self.height = self.readFixwords(self.nh)
 		# depth array
-		self.depth = self.read_fixwords(self.nd)
+		self.depth = self.readFixwords(self.nd)
 		# italic array
-		self.italic = self.read_fixwords(self.ni)
+		self.italic = self.readFixwords(self.ni)
 		# jump (at the moment) directly to the end of orig:
 		# (remember that a word has 4 bytes)
 		self.tail = self.orig[4*(6+self.lh+(self.ec-self.bc+1)+self.nw+self.nh+self.nd+self.ni+self.nl+self.nk+self.ne):]
 		# param array
-		self.slant = self.read_fixword()
-		self.space = self.read_fixword()
-		self.space_stretch = self.read_fixword()
-		self.space_shrink = self.read_fixword()
-		self.x_height = self.read_fixword()
-		self.quad = self.read_fixword()
-		self.extra_space = self.read_fixword()
+		self.slant = self.readFixword()
+		self.space = self.readFixword()
+		self.space_stretch = self.readFixword()
+		self.space_shrink = self.readFixword()
+		self.x_height = self.readFixword()
+		self.quad = self.readFixword()
+		self.extra_space = self.readFixword()
 		# remove the rest (which should be empty)
 		del self.tail
 	
 	# return the width of the char with code c
-	def get_charwidth(self,c):
+	def getCharwidth(self,c):
 		return self.width[self.charinfo[c-self.bc][0]]*self.designsize
 		
 	# return the height of the char with code c
-	def get_charheight(self,c):
+	def getCharheight(self,c):
 		return self.height[self.charinfo[c-self.bc][1]]*self.designsize
 		
 	# return the depth of the char with code c
-	def get_chardepth(self,c):
+	def getChardepth(self,c):
 		return self.depth[self.charinfo[c-self.bc][2]]*self.designsize
 		
 	# return the italic correction of the char with code c
-	def get_charitalic(self,c):
+	def getCharitalic(self,c):
 		return self.italic[self.charinfo[c-self.bc][3]]*self.designsize
 	
 if __name__ == "__main__":
@@ -179,11 +354,21 @@ if __name__ == "__main__":
 		dest="raw",
 		default=False,
 		help="Do not remove overlaps, round to int, add extrema, add hints...")
-	parser.add_argument("--double",
+	parser.add_argument("--polygoncircle",
 		action="store_true",
-		dest="double",
+		dest="polygoncircle",
 		default=False,
-		help="Use 64 bit floating point arithmetic (needs Metapost 1.800 or higher)")
+		help="Use polygon pens instead of circle/elliptic pens")
+	parser.add_argument("--cmspecials",
+		action="store_true",
+		dest="cmspecials",
+		default=False,
+		help="Use special methods to import Computer Modern; this may override other options")
+	parser.add_argument("--defragment",
+		action="store_true",
+		dest="defragment",
+		default=False,
+		help="Remove contours with tiny areas - you probably do not need it")
 	parser.add_argument("--errorstopmode",
 		action="store_true",
 		dest="errorstopmode",
@@ -255,7 +440,7 @@ if __name__ == "__main__":
 		help="The OS/2 width of the font (default: 5)")		
 	args = parser.parse_args()
 	
-	args.formats = split_list(args.formats)
+	args.formats = splitList(args.formats)
 	if args.formats == []:
 		args.formats = ["otf"] # make "otf" default format
 		
@@ -317,15 +502,17 @@ if __name__ == "__main__":
 	mfsource = os.path.abspath("%s" % args.mfsource)
 	tempdir = tempfile.mkdtemp()
 	mpargs = ['mpost',
-	'&mfplain',
+	'&%s/mfpolygoncircle' % os.path.split(os.path.abspath(sys.argv[0]))[0] 
+	if args.polygoncircle 
+	else '&%s/epsilon' % os.path.split(os.path.abspath(sys.argv[0]))[0] 
+	if args.cmspecials 
+	else '&mfplain',
 	'\mode=localfont;',
 	'mag:=%s;' % (1003.75/args.designsize*args.magnification), 
 	'errorstopmode;' if args.errorstopmode else 'nonstopmode;',
 	'outputtemplate:="%c.eps";',
 	'input %s;' % mfsource,
 	'bye']
-	if args.double:
-		mpargs.insert(1,'--numbersystem="double"')
 	subprocess.call(
 		mpargs,
 		stdout = subprocess.PIPE, 
@@ -344,13 +531,14 @@ if __name__ == "__main__":
 	if metric.designsize != args.designsize:
 		args.designsize = metric.designsize 
 		if args.verbose:
-			print "Running METAPOST again..."
-			subprocess.call(
-				mpargs,
-				stdout = subprocess.PIPE, 
-				stderr = subprocess.PIPE,
-				cwd = tempdir
-				)
+			print "The correct designsize is %s, hence I have to run METAPOST again..." % metric.designsize 
+		mpargs[3] = 'mag:=%s;' % (1003.75/args.designsize*args.magnification)
+		subprocess.call(
+			mpargs,
+			stdout = subprocess.PIPE, 
+			stderr = subprocess.PIPE,
+			cwd = tempdir
+			)
 	font.design_size = args.designsize
 	font.italicangle = -math.atan(metric.slant)/math.pi*180
 			
@@ -364,13 +552,16 @@ if __name__ == "__main__":
 			print "Importing the glyph with code number %s" % code
 		if not (args.encoding == "t1" and code == 23): #do not yet care about the cwm 
 			glyph = font.createMappedChar(code)
-			glyph.importOutlines(file, ("toobigwarn", "correctdir"))
+			if args.cmspecials:
+				importEps(glyph,file)
+			else:
+				glyph.importOutlines(file, ("toobigwarn", "correctdir"))
 			glyph.transform(transformation)
 		
 	if args.verbose:
 		print "Adding glyph metrics..."
 	for glyph in font.glyphs():
-		glyph.width = int (round (metric.get_charwidth(glyph.encoding) / args.designsize * 1000)) 
+		glyph.width = int (round (metric.getCharwidth(glyph.encoding) / args.designsize * 1000)) 
 	font.mergeFeature("%s/%s.tfm" % (tempdir, generalname))
 	#font.texparameters[1]=metric.slant
 	if args.encoding == "t1":
@@ -384,16 +575,41 @@ if __name__ == "__main__":
 	
 	if not args.raw:
 		if args.verbose:
-			print "Simplifying and finetuning..."
+			print "General finetuning in fontforge..."
 		font.selection.all()
+		if args.defragment:
+			if args.veryverbose:
+				print "Removing tiny fragments"
+			defragment(font)
+		if args.veryverbose:
+			print "Simplifying"
 		font.simplify()
+		if args.veryverbose:
+			print "Rounding"
+		font.round()
+		if args.veryverbose:
+			print "Removing overlaps"
 		font.removeOverlap()
+		if args.veryverbose:
+			print "Correcting directions"
 		font.correctDirection()
+		if args.veryverbose:
+			print "Adding extrema"
 		font.addExtrema()
+		if args.veryverbose:
+			print "Simplifying"
 		font.simplify()
+		if args.veryverbose:
+			print "Rounding"
 		font.round()
+		if args.veryverbose:
+			print "Simplifying"
 		font.simplify()
+		if args.veryverbose:
+			print "Rounding"
 		font.round()
+		if args.veryverbose:
+			print "Hinting"
 		font.autoHint()
 	
 	if ("sfd" in args.formats):

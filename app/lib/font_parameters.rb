@@ -139,8 +139,12 @@ class FontParameters
 
   # @param key [String] / [Symbol] either the metafont param name or the instance variable name
   def instance_param(key)
-    return instance_variable_get("@#{key.to_sym}") if VALID_PARAMETERS_KEYS.include?(key.to_sym)
-    return instance_variable_get("@#{MF_MAPPINGS[key.to_s]}") unless MF_MAPPINGS[key.to_s].nil?
-    nil
+    if VALID_PARAMETERS_KEYS.include?(key.to_sym)
+      instance_variable_get("@#{key.to_sym}")
+    elsif MF_MAPPINGS.has_key?(key.to_s)
+      instance_variable_get("@#{MF_MAPPINGS[key.to_s]}")
+    else
+      nil
+    end
   end
 end

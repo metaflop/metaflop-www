@@ -52,9 +52,8 @@ class FontSettings
   end
 
   def to_hash
-    instance_variables.inject({}) do |hash,var|
-      hash[var.to_s.delete("@").to_sym] = instance_variable_get(var)
-      hash
-    end
+    VALID_OPTIONS_KEYS.map do |key|
+      [key, instance_variable_get("@#{key}")]
+    end.to_h
   end
 end

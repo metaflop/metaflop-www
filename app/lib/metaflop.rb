@@ -37,7 +37,7 @@ class Metaflop
     @font_settings
   end
 
-  def font_otf(preview)
+  def font_otf(preview = false)
     @font_generator.otf(preview)
   end
 

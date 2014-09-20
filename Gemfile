@@ -23,6 +23,7 @@ group :development do
   gem 'capistrano-rbenv', '~> 1'
   gem 'nyan-cat-formatter'
   gem 'rspec'
+  gem 'pry'
 end
 
 group :production do

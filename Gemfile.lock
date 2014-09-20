@@ -99,6 +99,7 @@ GEM
     json_pure (1.8.1)
     kgio (2.9.2)
     libv8 (3.16.14.7)
+    method_source (0.8.2)
     minitest (5.4.3)
     multi_json (1.10.1)
     multipart-post (2.0.0)
@@ -115,6 +116,10 @@ GEM
       sawyer (~> 0.5.3)
     party_foul (1.5.5)
       octokit (~> 3.1)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -166,6 +171,7 @@ GEM
     slim (2.1.0)
       temple (~> 0.6.9)
       tilt (>= 1.3.3, < 2.1)
+    slop (3.6.0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -210,6 +216,7 @@ DEPENDENCIES
   dotenv-deployment
   nyan-cat-formatter
   party_foul
+  pry
   rspec
   rubyzip
   sass

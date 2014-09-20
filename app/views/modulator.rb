@@ -102,8 +102,8 @@ class App
       end
 
       def fontfaces
-        %w(Adjuster Bespoke Fetamont).map do |x|
-          { :name => x, :active => @active_fontface == x }
+        @settings.metafonts.keys.map(&:titleize).map do |fontface|
+          { :name => fontface, :active => @active_fontface == fontface }
         end
       end
 

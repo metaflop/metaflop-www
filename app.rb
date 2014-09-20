@@ -33,6 +33,7 @@ class App < Sinatra::Application
       mf = metaflop_create
       @font_parameters = mf.font_parameters
       @active_fontface = mf.font_settings.fontface
+      @settings = settings
 
       slim :modulator
     end
@@ -52,6 +53,7 @@ class App < Sinatra::Application
       mf = metaflop_create(url[:params])
       @font_parameters = mf.font_parameters
       @active_fontface = mf.font_settings.fontface
+      @settings = settings
 
       slim :modulator
     end

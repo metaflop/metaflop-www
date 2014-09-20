@@ -57,7 +57,7 @@ describe FontParameters do
   context '#to_file' do
     it 'no passed in value, the original and new file are the same' do
       params = FontParameters.new({}, FontSettings.new(:out_dir => '/tmp/metaflop/spec'))
-      params.to_file
+      params.to_file(true)
       File.read('/tmp/metaflop/spec/bespoke/font.mf').should ==
         File.read('mf/metaflop-font-bespoke/font.mf')
     end

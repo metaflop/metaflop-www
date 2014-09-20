@@ -7,6 +7,7 @@
 #
 
 require './app/lib/font_settings.rb'
+require './app/lib/font_parameters_file.rb'
 
 FontParameter = Struct.new(:value, :default, :unit, :range, :hidden)
 
@@ -99,67 +100,27 @@ class FontParameters
   #
   # @param file [String] :file defaults to the original file containing the default parameters
   def from_file(file = nil)
-    file = original_file if file.nil?
-    lines = File.open(file, 'r:utf-8'){ |f| f.readlines }
-    # in case the file is a one-liner already, split each statement onto a line
-    lines = lines[0].split(';').map{ |x| "#{x};" } if lines.length == 1
+    FontParametersFile.new(file: file, font_settings: @settings).each_line do |key, file_font_parameter|
+      font_parameter = send(key)
 
-    lines.delete_if do |x|            # remove comment and empty lines
-      stripped = x.strip
-      stripped == '' || stripped[0] == '%'
-    end
-    .each do |x|                  # remove comments at the end of the line
-      pair = x[/([^%]+)/, 0].strip
-      splits = pair.split(':=')
-
-      if (splits.length == 2)
-        # replace the value from the file if we have a value set for the parameter
-        value_from_file = splits[1].to_r.to_f
-        mapping = MF_MAPPINGS[splits[0]]
-        if mapping
-          param = send(mapping)
-          value = if param.value && !param.value.to_s.empty?
-                    param.value
-                  else
-                    value_from_file
-                  end
-
-          # range
-          range = x.gsub(/\s+/, '').scan(/\$([-\d\.]+)\w*\/([-\d\.]+)\w*$/).flatten!
-          range = [0, 1] if range.nil?
-
-          instance_variable_set "@#{mapping}".to_sym, FontParameter.new(
-            value, # value
-            value_from_file, # default
-            splits[1][/[^\d;\.]+/], # unit
-            { :from => range[0], :to => range[1] }, # range
-            (x.include? '@hidden') # hidden
-          )
-        end
+      if font_parameter.value.to_s.empty?
+        font_parameter.value = file_font_parameter.value
       end
+
+      font_parameter.range = file_font_parameter.range
+      font_parameter.unit = file_font_parameter.unit
+      font_parameter.default = file_font_parameter.default
+      font_parameter.hidden = file_font_parameter.hidden
     end
   end
 
   # write the params to the the output dir (see @settings.out_dir)
   def to_file(use_preview_file = false)
-    content = File.open(original_file, 'r:utf-8'){ |f| f.read }
-    # replace the original values
-    MF_MAPPINGS.each do |mapping|
-      param = instance_param mapping[1]
-      if !param.hidden && param.value
-        content.gsub! /(#{mapping[0]}:=)[\d\/\.]+/, "\\1#{param.value}"
-      end
-    end
+    font_parameters = MF_MAPPINGS.map do |mapping|
+      [mapping[0], instance_param(mapping[1])]
+    end.to_h
 
-    if use_preview_file && has_preview_file?
-      content.sub! 'input glyphs;', 'input glyphs_preview;'
-    else
-      content.sub! 'input glyphs_preview;', 'input glyphs;'
-    end
-
-    File.open(File.join(@settings.out_dir, 'font.mf'), "w:utf-8") do |file|
-      file.write(content)
-    end
+    FontParametersFile.new(font_settings: @settings).save(font_parameters, use_preview_file)
   end
 
   # the absolute value calculated to the unit of the 'box_height' (ht#) param
@@ -181,20 +142,5 @@ class FontParameters
     return instance_variable_get("@#{key.to_sym}") if VALID_PARAMETERS_KEYS.include?(key.to_sym)
     return instance_variable_get("@#{MF_MAPPINGS[key.to_s]}") unless MF_MAPPINGS[key.to_s].nil?
     nil
-  end
-
-  def original_dir
-    "mf/metaflop-font-#{@settings.fontface.downcase}"
-  end
-
-  def original_file
-    File.join(original_dir, 'font.mf')
-  end
-
-  # the preview file generates a reduced glyph set that are needed
-  # for the preview. this way we don't waste time generating
-  # glyphs we won't need.
-  def has_preview_file?
-    File.exists? File.join(original_dir, 'glyphs_preview.mf')
   end
 end

@@ -38,7 +38,7 @@ describe FontParameters do
     it 'no param values passed initializes with default values' do
       params = FontParameters.new
       params.from_file
-      params.unit_width.should_not be_nil
+      params.unit_width.value.should_not be_nil
     end
 
     it 'param value passed initializes with passed value' do
@@ -50,6 +50,7 @@ describe FontParameters do
     it 'param value passed default value is different than passed in value' do
       params = FontParameters.new :unit_width => '19.0'
       params.from_file
+      params.unit_width.default.should_not be_nil
       params.unit_width.default.should_not == '19.0'
     end
   end

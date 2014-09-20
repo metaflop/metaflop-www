@@ -102,9 +102,7 @@ class App < Sinatra::Application
       @settings = settings.method(page).call
     end
 
-    unless subpage.nil?
-      @subpage = subpage
-    end
+    @subpage = subpage
 
     begin
       slim page.to_sym

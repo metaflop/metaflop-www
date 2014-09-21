@@ -53,7 +53,7 @@ class Metaflop
     # map all query params and other options
     args = {}
     (FontParameters::VALID_PARAMETERS_KEYS + FontSettings::VALID_OPTIONS_KEYS).each do |key|
-      value = params[key.to_s]
+      value = params[key] || params[key.to_s]
 
       if value && !value.empty?
         args[key] = value

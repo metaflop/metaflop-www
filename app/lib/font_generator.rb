@@ -30,7 +30,7 @@ class FontGenerator
     # if something went wrong (e.g. the timeout got triggered) the
     # output file does not exist
     unless File.exist?(out_file)
-      raise Error::Metafont.new
+      raise Metaflop::Error::Metafont.new
     end
 
     { :name => "#{@metaflop.font_settings.font_name}.otf",

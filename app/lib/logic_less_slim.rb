@@ -22,7 +22,7 @@ module LogicLessSlim
     begin
       require "./app/views/#{template}"
     rescue LoadError
-      raise Error::TemplateNotFound.new
+      raise Metaflop::Error::TemplateNotFound.new
     end
 
     @view_model = "App::Views::#{template.to_s.camelize}".constantize.new

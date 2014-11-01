@@ -13,9 +13,10 @@ class FontGenerator
 
   def otf(preview = false)
     @metaflop.font_settings.cleanup_tmp_dir
+
     # regenerate from the latest parameters with the sidebearings turned off
     @metaflop.font_parameters.sidebearing.value = '0'
-    @metaflop.font_parameters "#{@metaflop.font_settings.out_dir}/font.mf"
+
     @metaflop.font_parameters.to_file(preview)
 
     out_file = "#{@metaflop.font_settings.out_dir}/font.otf"

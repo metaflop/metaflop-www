@@ -70,7 +70,14 @@ class App < Sinatra::Application
     get '/export/font/:type/:face/:hash' do |type, face, hash|
       set_http_cache(hash)
 
-      mf = metaflop_create({ :out_dir => out_dir, :font_hash => hash, :fontface => face })
+      url = Url.first(:short => hash)
+
+      unless url
+        invalid_font_hash_error
+      end
+
+      mf = metaflop_create(url[:params].merge(:fontface => face, :font_hash => hash))
+
       method = "font_#{type}"
       if mf.respond_to? method
         begin
@@ -117,20 +124,24 @@ class App < Sinatra::Application
     # don't render the whole page if we want to show a specific
     # error message. this is used for ajax call responses.
     if response.body.empty?
-      slim :error_404
+      halt slim :error_404
     else
-      response.body
+      halt response.body
     end
   end
 
   error do
     PartyFoul::RacklessExceptionHandler.handle(env['sinatra.error'], env)
-    slim :error_500
+    halt slim :error_500
   end
 
   helpers do
     def metafont_error
       not_found 'The entered value is out of a valid range. Please correct your parameters.'
+    end
+
+    def invalid_font_hash_error
+      not_found 'The provided font hash could not be found.'
     end
 
     def set_http_cache(content)

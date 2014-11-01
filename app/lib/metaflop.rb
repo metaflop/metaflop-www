@@ -17,24 +17,14 @@ class Metaflop
   include RackLogger
   include RackSettings
 
+  attr_reader :font_parameters, :font_settings
+
   # args: see FontParameters / FontSettings
   def initialize(args = {})
     @font_settings = FontSettings.new(args)
     @font_parameters = FontParameters.new(args, @font_settings)
+    @font_parameters.from_file
     @font_generator = FontGenerator.new(self)
-  end
-
-  def font_parameters(file = nil)
-    unless @font_parameters_initialized
-      @font_parameters.from_file(file)
-      @font_parameters_initialized = true
-    end
-
-    @font_parameters
-  end
-
-  def font_settings
-    @font_settings
   end
 
   def font_otf(preview = false)

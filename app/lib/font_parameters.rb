@@ -100,7 +100,11 @@ class FontParameters
   #
   # @param file [String] :file defaults to the original file containing the default parameters
   def from_file(file = nil)
-    FontParametersFile.new(file: file, font_settings: @settings).each_line do |key, file_font_parameter|
+    FontParametersFile.new(file: file, font_settings: @settings).each_line do |name, file_font_parameter|
+      key = MF_MAPPINGS[name]
+
+      next unless key
+
       font_parameter = send(key)
 
       if font_parameter.value.to_s.empty?

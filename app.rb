@@ -71,24 +71,19 @@ class App < Sinatra::Application
       set_http_cache(hash)
 
       url = Url.first(:short => hash)
-
-      unless url
-        invalid_font_hash_error
-      end
+      invalid_font_hash_error unless url
 
       mf = metaflop_create(url[:params].merge(:fontface => face, :font_hash => hash))
 
       method = "font_#{type}"
-      if mf.respond_to? method
-        begin
-          file = mf.method(method).call
-          attachment file[:name]
-          file[:data]
-        rescue Metaflop::Error::Metafont
-          metafont_error
-        end
-      else
-        not_found "The font type is not supported"
+      unsupported_font_type_error unless mf.respond_to?(method)
+
+      begin
+        file = mf.method(method).call
+        attachment file[:name]
+        file[:data]
+      rescue Metaflop::Error::Metafont
+        metafont_error
       end
     end
   end
@@ -142,6 +137,10 @@ class App < Sinatra::Application
 
     def invalid_font_hash_error
       not_found 'The provided font hash could not be found.'
+    end
+
+    def unsupported_font_type_error
+      not_found "The font type is not supported"
     end
 
     def set_http_cache(content)

@@ -48,26 +48,22 @@ class FontParametersFile
     # remove comments at the end of the line
     line_without_comment = line[/([^%]+)/, 0].strip
     pair = line_without_comment.split(':=')
+    key = FontParameters::MF_MAPPINGS[pair[0]]
 
-    if pair.length == 2
-      key = FontParameters::MF_MAPPINGS[pair[0]]
+    return :invalid_font_parameter unless pair.length == 2 && key
 
-      if key
-        value = pair[1].to_r.to_f
-        unit = pair[1][/[^\d;\.]+/]
-        range = line.gsub(/\s+/, '').scan(/\$([-\d\.]+)\w*\/([-\d\.]+)\w*$/).flatten || [0, 1]
+    value = pair[1].to_r.to_f
+    unit = pair[1][/[^\d;\.]+/]
+    range = line.gsub(/\s+/, '').scan(/\$([-\d\.]+)\w*\/([-\d\.]+)\w*$/).flatten || [0, 1]
 
-        font_parameter = FontParameter.new(value,
-                                           value,
-                                           unit,
-                                           { :from => range[0], :to => range[1] },
-                                           line.include?('@hidden'))
+    font_parameter = FontParameter.new(
+      value,
+      value,
+      unit,
+      { :from => range[0], :to => range[1] },
+      line.include?('@hidden'))
 
-        return [key, font_parameter]
-      end
-    end
-
-    :invalid_font_parameter
+    [key, font_parameter]
   end
 
   def lines

@@ -26,6 +26,16 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * t1utils
 * python
 * python libs: fontforge, argparse
+* mysql
+* mysql development files (see [Getting started with DataMapper](http://datamapper.org/getting-started.html))
+
+## Getting started
+
+1. Install the prerequisites above
+2. Create a mysql database named *metaflop*
+3. Copy the file *config/db.yml.sample* to *config/db.yml* and update the mysql username and password
+4. `$ rackup`
+5. Go to [localhost:9292](http://localhost:9292)
 
 ## Deployment
 

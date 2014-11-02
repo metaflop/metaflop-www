@@ -90,7 +90,7 @@ class App < Sinatra::Application
 
   # redirect for legacy short urls
   get '/font/:url' do |url|
-    redirect to "/modulator/font/#{url}"
+    redirect to("/modulator/font/#{url}"), 301
   end
 
   get '/:page/partial' do |page|

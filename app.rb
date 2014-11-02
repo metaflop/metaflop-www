@@ -98,7 +98,7 @@ class App < Sinatra::Application
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
-    slim page.to_sym, :layout => false, :http_caching => false
+    slim page, :layout => false, :http_caching => false
   end
 
   get %r{/(\w+)/?(\w+)?} do |page, subpage|
@@ -109,7 +109,7 @@ class App < Sinatra::Application
     @subpage = subpage
 
     begin
-      slim page.to_sym
+      slim page
     rescue
       not_found
     end

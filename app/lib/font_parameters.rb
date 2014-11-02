@@ -89,9 +89,9 @@ class FontParameters
 
     VALID_PARAMETERS_KEYS.each do |key|
       instance_key = (key == :pen_size ? :pen_width : key);  # handle legacy param
-      instance_value = instance_param(instance_key.to_sym)
+      instance_value = instance_param(instance_key)
       if instance_value.nil? || instance_value.value.nil? # don't overwrite if already set
-        instance_variable_set("@#{instance_key}".to_sym, FontParameter.new(args[key]))
+        instance_variable_set("@#{instance_key}", FontParameter.new(args[key]))
       end
     end
   end
@@ -133,7 +133,7 @@ class FontParameters
   def absolute_value(key, value = instance_param(key).value.to_f)
     param = instance_param(key)
     if !param.nil? && !param.unit.nil? && param.unit != @box_height.unit
-      key = param.unit.to_sym
+      key = param.unit
       value = instance_param(key).value.to_f * value
       absolute_value(key, value)
     else
@@ -144,7 +144,7 @@ class FontParameters
   # @param key [String] / [Symbol] either the metafont param name or the instance variable name
   def instance_param(key)
     if VALID_PARAMETERS_KEYS.include?(key.to_sym)
-      instance_variable_get("@#{key.to_sym}")
+      instance_variable_get("@#{key}")
     elsif MF_MAPPINGS.has_key?(key.to_s)
       instance_variable_get("@#{MF_MAPPINGS[key.to_s]}")
     else

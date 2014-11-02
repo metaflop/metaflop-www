@@ -21,7 +21,7 @@ class FontSettings
 
   def initialize(args = {})
     VALID_OPTIONS_KEYS.each do |key|
-      instance_variable_set("@#{key}".to_sym, args[key])
+      instance_variable_set("@#{key}", args[key])
     end
 
     # defaults

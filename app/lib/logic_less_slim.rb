@@ -40,7 +40,10 @@ module LogicLessSlim
     options = { :layout => layout, :dictionary => 'self.view_model' }
 
     if respond_to? :render, true
-      content = render :slim, template, options
+      # `render` needs a symbol, but it's safe here
+      # as above the check returns if an invalid template
+      # name is provided
+      content = render :slim, template.to_sym, options
 
       if http_caching
         set_http_cache(content)

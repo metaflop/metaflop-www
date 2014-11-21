@@ -34,6 +34,7 @@ class FontParameters
     :glyph_angle,
     :pen_angle,
     :pen_shape,
+    :taper,
 
     :x_height,
     :accent_height,
@@ -65,6 +66,7 @@ class FontParameters
     'ang' => :glyph_angle,
     'penang' => :pen_angle,
     'penshape' => :pen_shape,
+    'taper' => :taper,
 
     # fetamont additions
     'x_ht#' => :x_height,

@@ -16,7 +16,6 @@ class App
           :title => "Dimension",
           :items => [
             { :title => 'unit width', :key => :unit_width },
-            { :title => 'overshoot', :key => :overshoot },
             { :title => 'pen width', :key => :pen_width },
             { :title => 'pen height', :key => :pen_height }
           ]
@@ -48,6 +47,12 @@ class App
                 { :value => '3', :text => 'Razor' } ] },
             { :title => 'slanting', :key => :slant },
             { :title => 'randomness', :key => :craziness }
+          ]
+        }, {
+          :title => "Optical corrections",
+          :items => [
+            { :title => 'overshoot', :key => :overshoot },
+            { :title => 'taper', :key => :taper },
           ]
         }]
 

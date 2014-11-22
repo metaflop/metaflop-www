@@ -36,10 +36,8 @@ class App
           :items => [
             { :title => 'horizontal increase', :key => :horizontal_increase },
             { :title => 'vertical increase', :key => :vertical_increase },
-            { :title => 'apperture', :key => :apperture },
             { :title => 'contrast', :key => :contrast },
             { :title => 'superness', :key => :superness },
-            { :title => 'corner', :key => :corner },
             { :title => 'pen angle', :key => :pen_angle },
             { :title => 'pen shape', :key => :pen_shape, :options =>
               [ { :value => '1', :text => 'Circle' },
@@ -51,6 +49,8 @@ class App
         }, {
           :title => "Optical corrections",
           :items => [
+            { :title => 'apperture', :key => :apperture },
+            { :title => 'corner', :key => :corner },
             { :title => 'overshoot', :key => :overshoot },
             { :title => 'taper', :key => :taper },
           ]

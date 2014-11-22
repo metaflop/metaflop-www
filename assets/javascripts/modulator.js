@@ -112,8 +112,9 @@ $(function () {
     }
 
     // don't create new url each time for unchanged setting
-    // makes an ajax request with async:false! as this is
-    // deprecated as of 1.8, find a new solution! TODO
+    // makes an ajax request with async:false, as with the copy
+    // clipboard callback from the flahs clippy async doesn't work.
+    // TODO: as this is deprecated as of 1.8, find a new solution
     var callWithFontHash = function(success, complete) {
         complete = complete || function() {
             hideProgress();

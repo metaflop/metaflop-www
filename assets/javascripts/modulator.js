@@ -18,9 +18,9 @@ $(function () {
             panelToggleDuration: 500,
             panelToggleEasing: 'easeInOutExpo',
             shareUrls: {
-                twitter: 'http://twitter.com/home?status=',
-                facebook: 'http://www.facebook.com/sharer.php?u=',
-                email: 'mailto:?subject=metaflop font&body=',
+                twitter: 'http://twitter.com/home?status=%{title} %{url}',
+                facebook: 'https://www.facebook.com/sharer/sharer.php?u=%{url}',
+                email: 'mailto:?subject=metaflop font&body=%{title} %{url}',
             }
         },
         parameterPanel: $('#parameter-panel'),
@@ -370,10 +370,12 @@ $(function () {
 
         var success = function(data) {
             var url = getFontUrl(data);
-            var text = 'I created a nice metaflop font! ' + url;
+            var title = 'I created a nice metaflop font!';
             var type = $this.attr('data-type');
 
-            var link = $.fn.metaflop.settings.shareUrls[type] + text;
+            var link = $.fn.metaflop.settings.shareUrls[type]
+              .replace('%{title}', title)
+              .replace('%{url}', url);
 
             if (type == 'email') {
                 window.location = link;

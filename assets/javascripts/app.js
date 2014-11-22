@@ -1,2 +1,2 @@
-//= require jquery.min
+//= require jquery
 //= require_tree .

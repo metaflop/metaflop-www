@@ -23,12 +23,12 @@
     }
 
     .fd-slider-handle {
+        cursor: default;
         width: 7px;
         height: 15px;
         background: #eee;
         border: 1px solid $input_color;
         top: 4px;
-        z-index: 2;
     }
 
     .fd-slider-bar {
@@ -36,14 +36,20 @@
         width: 100%;
         background: #aaa;
         top: 50%;
+        border: none;
     }
 
     .fd-slider-range {
         height: 1px;
         top: 50%;
+        left: 0;
         background: #333;
-        z-index: 1;
     }
 }
 
-
+body.fd-slider-drag-horizontal,
+body.fd-slider-drag-horizontal *,
+body.fd-slider-drag-horizontal,
+body.fd-slider-drag-horizontal * {
+    cursor: default !important;
+}

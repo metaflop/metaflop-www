@@ -24,12 +24,7 @@ class FontSettings
       instance_variable_set("@#{key}", args[key])
     end
 
-    # defaults
-    @fontface ||= 'Bespoke'
-    @out_dir ||= '/tmp/metaflop/'
-    # one tmp dir per fontface
-    @out_dir = File.join(@out_dir, @fontface.downcase)
-    @year = Time.new.year
+    defaults!
 
     setup_tmp_dir
   end
@@ -55,5 +50,13 @@ class FontSettings
     VALID_OPTIONS_KEYS.map do |key|
       [key, instance_variable_get("@#{key}")]
     end.to_h
+  end
+
+  def defaults!
+    @fontface ||= 'Bespoke'
+    @out_dir ||= '/tmp/metaflop/'
+    # one tmp dir per fontface
+    @out_dir = File.join(@out_dir, @fontface.downcase)
+    @year = Time.new.year
   end
 end

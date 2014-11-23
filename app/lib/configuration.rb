@@ -71,8 +71,8 @@ module Configuration
       register Sinatra::SimpleNavigation
 
       before do
-        @main_navigation = render_navigation :context => :main
-        @meta_navigation = render_navigation :context => :meta
+        @main_navigation = render_navigation context: :main
+        @meta_navigation = render_navigation context: :meta
       end
     end
 
@@ -91,7 +91,7 @@ module Configuration
       set :views, './app/views'
       require './app/views/layout'
 
-      Slim::Engine.set_default_options :pretty => true
+      Slim::Engine.set_default_options pretty: true
 
       mime_type :otf, 'font/opentype'
 
@@ -110,11 +110,11 @@ module Configuration
       require 'data_mapper' # metagem, requires common plugins too.
 
       DataMapper.setup(:default, {
-        :adapter  => settings.db[:adapter],
-        :host     => settings.db[:host],
-        :username => settings.db[:username],
-        :password => settings.db[:password],
-        :database => settings.db[:database]
+        adapter:  settings.db[:adapter],
+        host:     settings.db[:host],
+        username: settings.db[:username],
+        password: settings.db[:password],
+        database: settings.db[:database]
       })
 
       DataMapper.finalize

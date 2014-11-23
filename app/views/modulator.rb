@@ -18,12 +18,12 @@ class App
       end
 
       # single preview char chooser
-      # [{ :items => [] }, { :items => [] } ]
+      # [{ items: [] }, { items: [] } ]
       def char_sets
         ['A'..'Z', 'a'..'z', 0..9].map do |set|
           {
-            :items => set.map do |item|
-              { :char => item, :css_class => item == 'A' ? 'active' : '' }
+            items: set.map do |item|
+              { char: item, css_class: item == 'A' ? 'active' : '' }
             end
           }
         end
@@ -31,16 +31,16 @@ class App
 
       def fontfaces
         @settings.metafonts.keys.map(&:titleize).map do |fontface|
-          { :name => fontface, :active => @active_fontface == fontface }
+          { name: fontface, active: @active_fontface == fontface }
         end
       end
 
       def char_chooser
-        slim :char_chooser, :layout => false
+        slim :char_chooser, layout: false
       end
 
       def parameter_panel
-        slim :parameter_panel, :layout => false
+        slim :parameter_panel, layout: false
       end
 
       def typoglossary_image_url

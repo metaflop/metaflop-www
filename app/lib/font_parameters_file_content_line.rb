@@ -27,7 +27,7 @@ class FontParametersFileContentLine
       value,
       value,
       unit,
-      { :from => range[0], :to => range[1] },
+      { from: range[0], to: range[1] },
       hidden)]
   end
 

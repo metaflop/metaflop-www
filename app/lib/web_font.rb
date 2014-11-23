@@ -29,7 +29,7 @@ class WebFont
 
   def zip
     zipfile_name = File.join(@dir, "font.zip")
-    FileUtils.rm(zipfile_name, :force => true)
+    FileUtils.rm(zipfile_name, force: true)
 
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
       %w(eot woff ttf svg).map do |x|
@@ -40,7 +40,7 @@ class WebFont
       html_sample_filename = "#{@font_name}_sample.html"
       html_sample_file = File.join(@dir, html_sample_filename)
       File.open(html_sample_file, 'w') do |outfile|
-        outfile.write(Tilt.new('bin/webfont_sample.slim', :pretty => true).render(self))
+        outfile.write(Tilt.new('bin/webfont_sample.slim', pretty: true).render(self))
       end
       zipfile.add(html_sample_filename, html_sample_file)
 

@@ -34,8 +34,8 @@ class FontGenerator
       raise Metaflop::Error::Metafont.new
     end
 
-    { :name => "#{@metaflop.font_settings.font_name}.otf",
-      :data => File.read(out_file) }
+    { name: "#{@metaflop.font_settings.font_name}.otf",
+      data: File.read(out_file) }
   end
 
   #  returns base64 encoded otf for embedding as css fontface
@@ -50,7 +50,7 @@ class FontGenerator
     `cd #{@metaflop.font_settings.out_dir} && #{@metaflop.settings[:font_web]}`
 
     font = WebFont.new(@metaflop.font_settings)
-    { :name => "#{font.font_name}_webfont.zip",
-      :data => font.zip }
+    { name: "#{font.font_name}_webfont.zip",
+      data: font.zip }
   end
 end

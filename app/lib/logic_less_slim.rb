@@ -37,7 +37,7 @@ module LogicLessSlim
       @view_model.instance_variable_set(name, instance_variable_get(name))
     end
 
-    options = { :layout => layout, :dictionary => 'self.view_model' }
+    options = { layout: layout, dictionary: 'self.view_model' }
 
     if respond_to? :render, true
       # `render` needs a symbol, but it's safe here

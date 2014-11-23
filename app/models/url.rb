@@ -15,7 +15,7 @@ class Url
   property :id, Serial
   property :created_at, DateTime
 
-  property :short, String, :length => 10, :default => lambda { |r, p| SecureRandom.urlsafe_base64[0, 10] }
+  property :short, String, length: 10, default: lambda { |r, p| SecureRandom.urlsafe_base64[0, 10] }
   property :params, Yaml
 
   # we need to manually convert the params property to yaml

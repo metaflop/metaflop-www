@@ -16,20 +16,20 @@ describe FontParameters do
     end
 
     it 'param value passed initializes with passed value' do
-      FontParameters.new(:unit_width => '1.0').unit_width.should == FontParameter.new('1.0')
+      FontParameters.new(unit_width: '1.0').unit_width.should == FontParameter.new('1.0')
     end
 
     context 'with legacy params' do
       it 'pen_size is stored in pen_width' do
-        FontParameters.new(:pen_size => '3.2').pen_width.should == FontParameter.new('3.2')
+        FontParameters.new(pen_size: '3.2').pen_width.should == FontParameter.new('3.2')
       end
 
       it 'pen_width is stored in pen_width' do
-        FontParameters.new(:pen_width => '3.2').pen_width.should == FontParameter.new('3.2')
+        FontParameters.new(pen_width: '3.2').pen_width.should == FontParameter.new('3.2')
       end
 
       it 'non legacy param unit_width is stored in unit_width' do
-        FontParameters.new(:unit_width => '3.2').unit_width.should == FontParameter.new('3.2')
+        FontParameters.new(unit_width: '3.2').unit_width.should == FontParameter.new('3.2')
       end
     end
   end
@@ -42,13 +42,13 @@ describe FontParameters do
     end
 
     it 'param value passed initializes with passed value' do
-      params = FontParameters.new :unit_width => '1.0'
+      params = FontParameters.new unit_width: '1.0'
       params.from_file
       params.unit_width.value.should == '1.0'
     end
 
     it 'param value passed default value is different than passed in value' do
-      params = FontParameters.new :unit_width => '19.0'
+      params = FontParameters.new unit_width: '19.0'
       params.from_file
       params.unit_width.default.should_not be_nil
       params.unit_width.default.should_not == '19.0'
@@ -57,14 +57,14 @@ describe FontParameters do
 
   context '#to_file' do
     it 'no passed in value, the original and new file are the same' do
-      params = FontParameters.new({}, FontSettings.new(:out_dir => '/tmp/metaflop/spec'))
+      params = FontParameters.new({}, FontSettings.new(out_dir: '/tmp/metaflop/spec'))
       params.to_file
       File.read('/tmp/metaflop/spec/bespoke/font.mf').should ==
         File.read('mf/metaflop-font-bespoke/font.mf')
     end
 
     it 'passed in value is in file' do
-      params = FontParameters.new({ :unit_width => '1.0' }, FontSettings.new(:out_dir => '/tmp/metaflop/spec'))
+      params = FontParameters.new({ unit_width: '1.0' }, FontSettings.new(out_dir: '/tmp/metaflop/spec'))
       params.to_file
       File.read('/tmp/metaflop/spec/bespoke/font.mf').should include 'u#:=1.0pt#;'
     end
@@ -72,22 +72,22 @@ describe FontParameters do
 
   context '#instance_param' do
     it 'param key is instance variable name as symbol' do
-      params = FontParameters.new(:unit_width => '1.0')
+      params = FontParameters.new(unit_width: '1.0')
       params.instance_param(:unit_width).should == FontParameter.new('1.0')
     end
 
     it 'param key is instance variable name as string' do
-      params = FontParameters.new(:unit_width => '1.0')
+      params = FontParameters.new(unit_width: '1.0')
       params.instance_param('unit_width').should == FontParameter.new('1.0')
     end
 
     it 'param key is metafont variable name as symbol' do
-      params = FontParameters.new(:unit_width => '1.0')
+      params = FontParameters.new(unit_width: '1.0')
       params.instance_param('u#'.to_sym).should == FontParameter.new('1.0')
     end
 
     it 'param key is metafont variable name as string' do
-      params = FontParameters.new(:unit_width => '1.0')
+      params = FontParameters.new(unit_width: '1.0')
       params.instance_param('u#').should == FontParameter.new('1.0')
     end
   end

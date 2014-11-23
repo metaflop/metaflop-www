@@ -40,11 +40,11 @@ class App < Sinatra::Application
 
     # creates a shortened url for the current params (i.e. font setting)
     get '/font/create' do
-      Url.first_or_create(:params => params)[:short]
+      Url.first_or_create(params: params)[:short]
     end
 
     get '/font/:url' do |url|
-      url = Url.first(:short => url)
+      url = Url.first(short: url)
 
       if url.nil?
         redirect '/'
@@ -70,10 +70,10 @@ class App < Sinatra::Application
     get '/export/font/:type/:face/:hash' do |type, face, hash|
       set_http_cache(hash)
 
-      url = Url.first(:short => hash)
+      url = Url.first(short: hash)
       invalid_font_hash_error unless url
 
-      mf = metaflop_create(url[:params].merge(:fontface => face, :font_hash => hash))
+      mf = metaflop_create(url[:params].merge(fontface: face, font_hash: hash))
 
       method = "font_#{type}"
       unsupported_font_type_error unless mf.respond_to?(method)
@@ -98,7 +98,7 @@ class App < Sinatra::Application
     @font_parameters = mf.font_parameters
     @active_fontface = mf.font_settings.fontface
 
-    slim page, :layout => false, :http_caching => false
+    slim page, layout: false, http_caching: false
   end
 
   get %r{/(\w+)/?(\w+)?} do |page, subpage|
@@ -146,7 +146,7 @@ class App < Sinatra::Application
     def set_http_cache(content)
       require 'digest/sha1'
 
-      cache_control :public, :must_revalidate, :max_age => 60 * 60
+      cache_control :public, :must_revalidate, max_age: 60 * 60
       etag Digest::SHA1.hexdigest(content)
     end
   end
@@ -157,6 +157,6 @@ class App < Sinatra::Application
   end
 
   def metaflop_create(params = params)
-    Metaflop.create(params.merge({ :out_dir => out_dir }), settings.metaflop, logger)
+    Metaflop.create(params.merge({ out_dir: out_dir }), settings.metaflop, logger)
   end
 end

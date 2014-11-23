@@ -43,14 +43,14 @@ form autocomplete="off"
               a href="#" data-type="facebook": i.icon-facebook
               a href="#" data-type="email": i.icon-envelope
               object#clippy.clippy width="14" height="20" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" title="copy to clipboard"
-                param value="/flash/clippy.swf" name="movie"
+                param value="#{clippy_url}" name="movie"
                 param value="always" name="allowScriptAccess"
                 param value="high" name="quality"
                 param value="noscale" name="scale"
                 param value="text=" name="FlashVars"
                 param value="#FFFFFF" name="bgcolor"
                 param value="opaque" name="wmode"
-                embed width="14" height="20" wmode="opaque" bgcolor="#FFFFFF" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="/flash/clippy.swf"
+                embed width="14" height="20" wmode="opaque" bgcolor="#FFFFFF" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="#{clippy_url}"
 
           div.clearfix.inputblock
             label download

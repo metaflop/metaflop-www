@@ -81,7 +81,7 @@ module Configuration
 
       set :assets_css_compressor, :sass
       set :assets_js_compressor, :uglifier
-      set :assets_precompile, %w(app.js app.css *.png *.jpg *.svg *.eot *.ttf *.woff *.cur)
+      set :assets_precompile, %w(app.js app.css *.png *.jpg *.svg *.eot *.ttf *.woff *.cur *.swf)
       register Sinatra::AssetPipeline
     end
 

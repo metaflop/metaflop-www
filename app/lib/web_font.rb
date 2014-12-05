@@ -32,24 +32,36 @@ class WebFont
     FileUtils.rm(zipfile_name, force: true)
 
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
-      %w(eot woff ttf svg).map do |x|
-        zipfile.add("#{@font_name}.#{x}", File.join(@dir, "font.#{x}"))
-      end
-
-      # html sample
-      html_sample_filename = "#{@font_name}_sample.html"
-      html_sample_file = File.join(@dir, html_sample_filename)
-      File.open(html_sample_file, 'w') do |outfile|
-        outfile.write(Tilt.new('bin/webfont_sample.slim', pretty: true).render(self))
-      end
-      zipfile.add(html_sample_filename, html_sample_file)
-
-      # misc files
-      ['bin/license.gpl', 'bin/license.ofl'].each do |x|
-        zipfile.add(File.basename(x), x)
-      end
+      add_font_files(zipfile)
+      add_html_sample_file(zipfile)
+      add_license_files(zipfile)
     end
 
     File.read(zipfile_name)
+  end
+
+  private
+
+  def add_font_files(zipfile)
+    %w(eot woff ttf svg).map do |file|
+      zipfile.add("#{@font_name}.#{file}", File.join(@dir, "font.#{file}"))
+    end
+  end
+
+  def add_html_sample_file(zipfile)
+    html_sample_filename = "#{@font_name}_sample.html"
+    html_sample_file = File.join(@dir, html_sample_filename)
+
+    File.open(html_sample_file, 'w') do |outfile|
+      outfile.write(Tilt.new('bin/webfont_sample.slim', pretty: true).render(self))
+    end
+
+    zipfile.add(html_sample_filename, html_sample_file)
+  end
+
+  def add_license_files(zipfile)
+    ['bin/license.gpl', 'bin/license.ofl'].each do |file|
+      zipfile.add(File.basename(file), file)
+    end
   end
 end

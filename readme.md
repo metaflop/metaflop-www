@@ -1,3 +1,6 @@
+[![Code Climate](https://codeclimate.com/github/metaflop/metaflop-www/badges/gpa.svg)](https://codeclimate.com/github/metaflop/metaflop-www)
+[![security](https://hakiri.io/github/metaflop/metaflop-www/dev.svg)](https://hakiri.io/github/metaflop/metaflop-www/dev)
+
 # Metaflop
 
 Metaflop is a web application aimed at the generation of experimental fonts. It generates custom and flexible digital fonts by the programming language [Metafont](http://en.wikipedia.org/wiki/Metafont). For the first time users are able to transform a Metafont online simply by adjusting typographically relevant parameters. The user doesn't have to deal with the complexity of the language and the geometrical construction of all the single characters anymore and can focus on the creative and typographic decisions.

@@ -9,43 +9,54 @@
 # configuration for the sinatra app
 module Configuration
   def self.included(base)
-    base.extend(ClassMethods)
+    base.extend(BaseMethods)
+    base.extend(ConfigurationMethods)
+  end
 
-    base.configure do
-      base.application_root
+  module BaseMethods
+    def configure_all
+      configure do
+        application_root
 
-      base.sinatra_namespace
+        sinatra_namespace
 
-      # gzip compression
-      base.use Rack::Deflater
+        # gzip compression
+        use Rack::Deflater
 
-      base.enable :sessions
-      base.enable :logging
+        enable :sessions
+        enable :logging
 
-      base.dot_env
-      base.config
-      base.navigation
-      base.asset_pipeline
-      base.tmp_dir
-      base.views
-      base.database
+        dot_env
+        config
+        navigation
+        tmp_dir
+        views
+        database
+      end
+
+      configure :development do
+        sinatra_reloader
+        better_errors
+
+        # get rid of rack security warning (only for dev)
+        set :session_secret, 'pknrgX12iULq0CocY2GBpw'
+      end
+
+      configure :production do
+        file_logging
+        error_reporting
+      end
     end
 
-    base.configure :development do
-      base.sinatra_reloader
-      base.better_errors
-
-      # get rid of rack security warning (only for dev)
-      base.set :session_secret, 'pknrgX12iULq0CocY2GBpw'
-    end
-
-    base.configure :production do
-      base.file_logging
-      base.error_reporting
+    def configure_asset_pipeline
+      configure do
+        application_root
+        asset_pipeline
+      end
     end
   end
 
-  module ClassMethods
+  module ConfigurationMethods
     def application_root
       set :root, File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
     end

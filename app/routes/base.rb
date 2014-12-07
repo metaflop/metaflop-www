@@ -12,6 +12,7 @@ require './app/lib/error'
 module Routes
   class Base < Sinatra::Base
     include Configuration
+    configure_all
 
     not_found do
       # don't render the whole page if we want to show a specific

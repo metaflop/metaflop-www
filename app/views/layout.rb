@@ -9,6 +9,7 @@
 class App < Sinatra::Base
   module Views
     class Layout
+      require 'sinatra/asset_pipeline'
       include Sprockets::Helpers
 
       def self.template(template = nil)

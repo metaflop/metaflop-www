@@ -12,6 +12,9 @@ require 'active_support'
 Dir['./app/routes/*.rb'].each { |route| require route }
 
 class App < Sinatra::Base
+  include Configuration
+  configure_asset_pipeline
+
   use Routes::Redirects
   use Routes::Home
   use Routes::Modulator

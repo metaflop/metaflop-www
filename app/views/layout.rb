@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-class App
+class App < Sinatra::Base
   module Views
     class Layout
       include Sprockets::Helpers

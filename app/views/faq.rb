@@ -6,7 +6,7 @@
 # licensed under gpl v3
 #
 
-class App
+class App < Sinatra::Base
   module Views
     class Faq < Layout
     end

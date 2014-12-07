@@ -8,7 +8,7 @@
 
 require './app/views/error'
 
-class App
+class App < Sinatra::Base
   module Views
     class Error404 < Error
     end

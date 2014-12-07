@@ -8,7 +8,7 @@
 
 require './app/lib/modulator_parameters'
 
-class App
+class App < Sinatra::Base
   module Views
     class Modulator < Layout
       include LogicLessSlim

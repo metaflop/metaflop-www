@@ -8,7 +8,7 @@
 
 require './app/views/layout'
 
-class App
+class App < Sinatra::Base
   module Views
     class News < Layout
       # randomly create a sequence of 12 images,

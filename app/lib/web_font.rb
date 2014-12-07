@@ -8,7 +8,7 @@
 
 require './app/lib/font_settings'
 require 'zip'
-require 'slim'
+require 'slim/logic_less'
 require 'tilt'
 
 class WebFont

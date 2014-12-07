@@ -8,7 +8,7 @@
 
 require './app/views/modulator.rb'
 
-class App
+class App < Sinatra::Base
   module Views
     class ParameterPanel < Modulator
     end

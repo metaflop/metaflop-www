@@ -277,11 +277,11 @@ $(function () {
         var activeNerdMode = $('.parameter-panel-mode-toggle.active.adjusters');
 
         $.ajax({
-            url: '/char_chooser/partial' + createQueryString(),
+            url: '/modulator/char_chooser/partial' + createQueryString(),
             success: function(data) {
                 $('#preview-single').find('div.char-chooser').html(data);
                 $.ajax({
-                    url: '/parameter_panel/partial' + createQueryString(),
+                    url: '/modulator/parameter_panel/partial' + createQueryString(),
                     success: function(data) {
                         $('#parameter-panel').html(data);
                         initSliders();

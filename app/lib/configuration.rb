@@ -8,46 +8,46 @@
 
 # configuration for the sinatra app
 module Configuration
-  class << self
-    # delegate to the base class (the one that includes this module)
-    # which is a sinatra application class and defines all the used
-    # methods as 'configure', 'register' etc.
-    # this way, we can define the configure blocks as if we were
-    # inside a sinatra class
-    def method_missing(method, *args, &block)
-      @base.send(method, *args, &block)
+  def self.included(base)
+    base.extend(ClassMethods)
+
+    base.configure do
+      base.application_root
+
+      base.sinatra_namespace
+
+      # gzip compression
+      base.use Rack::Deflater
+
+      base.enable :sessions
+      base.enable :logging
+
+      base.dot_env
+      base.config
+      base.navigation
+      base.asset_pipeline
+      base.tmp_dir
+      base.views
+      base.database
     end
 
-    def included(base)
-      @base = base
+    base.configure :development do
+      base.sinatra_reloader
+      base.better_errors
 
-      configure do
-        sinatra_namespace
-        # gzip compression
-        use Rack::Deflater
-        enable :sessions
+      # get rid of rack security warning (only for dev)
+      base.set :session_secret, 'pknrgX12iULq0CocY2GBpw'
+    end
 
-        dot_env
-        config
-        navigation
-        asset_pipeline
-        tmp_dir
-        views
-        database
-      end
+    base.configure :production do
+      base.file_logging
+      base.error_reporting
+    end
+  end
 
-      configure :development do
-        sinatra_reloader
-        better_errors
-
-        # get rid of rack security warning (only for dev)
-        set :session_secret, 'pknrgX12iULq0CocY2GBpw'
-      end
-
-      configure :production do
-        logging
-        error_reporting
-      end
+  module ClassMethods
+    def application_root
+      set :root, File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
     end
 
     def sinatra_namespace
@@ -87,6 +87,7 @@ module Configuration
 
     def views
       require 'sass'
+      require 'slim/logic_less'
 
       set :views, './app/views'
       require './app/views/layout'
@@ -96,11 +97,12 @@ module Configuration
       mime_type :otf, 'font/opentype'
 
       require './app/lib/logic_less_slim'
-      @base.include LogicLessSlim
+      include LogicLessSlim
     end
 
     def tmp_dir
       # setup the tmp dir where the generated fonts go
+      require 'fileutils'
       tmp_dir = "/tmp/metaflop"
       FileUtils.rm_rf(tmp_dir)
       Dir.mkdir(tmp_dir)
@@ -108,6 +110,7 @@ module Configuration
 
     def database
       require 'data_mapper' # metagem, requires common plugins too.
+      require './app/models/url'
 
       DataMapper.setup(:default, {
         adapter:  settings.db[:adapter],
@@ -134,7 +137,7 @@ module Configuration
       use BetterErrors::Middleware
       # set the application root in order to abbreviate filenames
       # within the application
-      BetterErrors.application_root = self.root
+      BetterErrors.application_root = settings.root
     end
 
     def error_reporting
@@ -155,10 +158,12 @@ module Configuration
       use PartyFoul::Middleware
     end
 
-    def logging
+    def file_logging
+      require 'fileutils'
       require 'time'
-      log_dir = "log/rack/"
-      Dir.mkdir(log_dir) unless Dir.exist? log_dir
+
+      log_dir = File.join(settings.root, 'log/rack/')
+      FileUtils.mkdir_p(log_dir) unless Dir.exist? log_dir
       logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')
       $stderr.reopen(logger)
       $stdout.reopen(logger)

@@ -6,11 +6,12 @@
 # licensed under gpl v3
 #
 
-require './app/views/error'
+require './app/routes/base'
 
-class App < Sinatra::Base
-  module Views
-    class Error500 < Error
+module Routes
+  class Home < Base
+    get '/' do
+      slim :news, http_caching: false
     end
   end
 end

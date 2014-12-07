@@ -8,7 +8,7 @@
 
 require_relative 'showoff_page'
 
-class App
+class App < Sinatra::Base
   module Views
     class Metafonts < ShowoffPage
       template :showoff_page

@@ -30,6 +30,7 @@ module Configuration
         config
         navigation
         tmp_dir
+        asset_pipeline
         views
         database
       end

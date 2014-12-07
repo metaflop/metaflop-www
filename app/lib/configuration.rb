@@ -104,7 +104,7 @@ module Configuration
       set :views, './app/views'
       require './app/views/layout'
 
-      Slim::Engine.set_default_options pretty: true
+      Slim::Engine.set_options pretty: true
 
       mime_type :otf, 'font/opentype'
 

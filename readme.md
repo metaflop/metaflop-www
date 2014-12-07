@@ -1,5 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/metaflop/metaflop-www/badges/gpa.svg)](https://codeclimate.com/github/metaflop/metaflop-www)
 [![security](https://hakiri.io/github/metaflop/metaflop-www/dev.svg)](https://hakiri.io/github/metaflop/metaflop-www/dev)
+[![Dependency Status](https://gemnasium.com/metaflop/metaflop-www.svg)](https://gemnasium.com/metaflop/metaflop-www)
 
 # Metaflop
 

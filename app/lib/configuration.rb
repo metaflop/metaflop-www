@@ -33,6 +33,8 @@ module Configuration
       end
 
       configure :development do
+        require 'pry'
+
         sinatra_reloader
         better_errors
 

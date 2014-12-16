@@ -20,9 +20,6 @@ module Configuration
 
         sinatra_namespace
 
-        # gzip compression
-        use Rack::Deflater
-
         enable :sessions
         enable :logging
 
@@ -49,10 +46,13 @@ module Configuration
       end
     end
 
-    def configure_asset_pipeline
+    def configure_root_application
       configure do
         application_root
         asset_pipeline
+
+        # gzip compression
+        use Rack::Deflater
       end
     end
   end

@@ -13,7 +13,7 @@ Dir['./app/routes/*.rb'].each { |route| require route }
 
 class App < Sinatra::Base
   include Configuration
-  configure_asset_pipeline
+  configure_root_application
 
   use Routes::Redirects
   use Routes::Home

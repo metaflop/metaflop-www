@@ -18,12 +18,13 @@ gem 'uglifier'
 gem 'unicorn'
 
 group :development do
+  gem 'benchmark-ips'
   gem 'better_errors'
   gem 'capistrano', '~> 2'
   gem 'capistrano-rbenv', '~> 1'
   gem 'nyan-cat-formatter'
-  gem 'rspec'
   gem 'pry'
+  gem 'rspec'
 end
 
 group :production do

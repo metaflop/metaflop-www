@@ -24,13 +24,11 @@ class FontGenerator
     settings_parameters[:timeout] = preview ? 5 : 15
     command = @metaflop.settings[:font_otf] % settings_parameters
 
-    `cd #{@metaflop.font_settings.out_dir} && rm -f #{out_file} && #{command}`
+    success = system("cd #{@metaflop.font_settings.out_dir} && rm -f #{out_file} && #{command}")
 
     @metaflop.font_parameters.sidebearing.value = nil
 
-    # if something went wrong (e.g. the timeout got triggered) the
-    # output file does not exist
-    unless File.exist?(out_file)
+    unless success
       raise Metaflop::Error::Metafont.new
     end
 

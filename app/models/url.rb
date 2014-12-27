@@ -6,29 +6,23 @@
 # licensed under gpl v3
 #
 
-require 'data_mapper' # metagem, requires common plugins too.
-
 # url shortener model
-class Url
-  include DataMapper::Resource
+class Url < Sequel::Model
+  plugin :serialization, :yaml, :params
 
-  property :id, Serial
-  property :created_at, DateTime
-
-  property :short, String, length: 10, default: lambda { |r, p| SecureRandom.urlsafe_base64[0, 10] }
-  property :params, Yaml
+  def before_create
+    self.short = SecureRandom.urlsafe_base64[0, 10]
+  end
 
   # we need to manually convert the params property to yaml
   # in order for the finder to work
   class << self
-    alias_method :super_first_or_create, :first_or_create
-
-    def first_or_create(properties)
+    def find_or_create(properties)
       if properties[:params]
         properties[:params] = YAML.dump(properties[:params])
       end
 
-      super_first_or_create(properties)
+      super(properties)
     end
   end
 end

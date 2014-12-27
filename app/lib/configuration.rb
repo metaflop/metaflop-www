@@ -123,21 +123,15 @@ module Configuration
     end
 
     def database
-      require 'data_mapper' # metagem, requires common plugins too.
-      require './app/models/url'
-
-      DataMapper.setup(:default, {
+      require 'sequel'
+      Sequel.connect(
         adapter:  settings.db[:adapter],
         host:     settings.db[:host],
-        username: settings.db[:username],
-        password: settings.db[:password],
-        database: settings.db[:database]
-      })
-
-      DataMapper.finalize
-      Url.auto_upgrade!
+        database: settings.db[:database],
+        user:     settings.db[:username],
+        password: settings.db[:password]
+      )
     end
-
 
     def sinatra_reloader
       require 'sinatra/reloader'

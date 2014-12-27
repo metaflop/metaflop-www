@@ -23,7 +23,7 @@ module Routes
 
       # creates a shortened url for the current params (i.e. font setting)
       get '/font/create' do
-        Url.first_or_create(params: params)[:short]
+        Url.find_or_create(params: params).short
       end
 
       get '/font/:url' do |url|
@@ -33,7 +33,7 @@ module Routes
           redirect '/'
         end
 
-        mf = metaflop_create(url[:params])
+        mf = metaflop_create(url.params)
         @font_parameters = mf.font_parameters
         @active_fontface = mf.font_settings.fontface
         @settings = settings
@@ -56,7 +56,7 @@ module Routes
         url = Url.first(short: hash)
         invalid_font_hash_error unless url
 
-        mf = metaflop_create(url[:params].merge(fontface: face, font_hash: hash))
+        mf = metaflop_create(url.params.merge(fontface: face, font_hash: hash))
 
         method = "font_#{type}"
         unsupported_font_type_error unless mf.respond_to?(method)
@@ -98,8 +98,8 @@ module Routes
       "/tmp/metaflop/#{session[:id]}"
     end
 
-    def metaflop_create(params = params)
-      Metaflop.create(params.merge({ out_dir: out_dir }), settings.metaflop, logger)
+    def metaflop_create(args = params)
+      Metaflop.create(args.merge({ out_dir: out_dir }), settings.metaflop, logger)
     end
   end
 end

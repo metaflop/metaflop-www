@@ -4,10 +4,10 @@ db:
     host: localhost
     username: user
     password: pw
-    database: metaflop
+    database: metaflop_development
   production:
     adapter: mysql
     host: localhost
     username: user
     password: pw
-    database: metaflop
+    database: metaflop_production

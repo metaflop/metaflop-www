@@ -52,6 +52,7 @@ module Configuration
       configure do
         application_root
         asset_pipeline
+        config
 
         # gzip compression
         use Rack::Deflater
@@ -124,7 +125,7 @@ module Configuration
 
     def database
       require 'sequel'
-      Sequel.connect(
+      @connection ||= Sequel.connect(
         adapter:  settings.db[:adapter],
         host:     settings.db[:host],
         database: settings.db[:database],

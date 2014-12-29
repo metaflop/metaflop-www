@@ -8,6 +8,7 @@
 
 require './app/routes/base'
 require './app/lib/metaflop'
+require './app/models/url'
 
 module Routes
   class Modulator < Base

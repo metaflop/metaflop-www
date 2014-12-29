@@ -9,6 +9,7 @@
 # url shortener model
 class Url < Sequel::Model
   plugin :serialization, :yaml, :params
+  plugin :timestamps
 
   def before_create
     self.short = SecureRandom.urlsafe_base64[0, 10]

@@ -16,13 +16,15 @@ class Url < Sequel::Model
 
   # we need to manually convert the params property to yaml
   # in order for the finder to work
-  class << self
-    def find_or_create(properties)
-      if properties[:params]
-        properties[:params] = YAML.dump(properties[:params])
-      end
+  def self.find(properties)
+    # we only want to modify the hash values for `find`,
+    # not for a potential `create` afterwards.
+    find_properties = properties.dup
 
-      super(properties)
+    if find_properties[:params]
+      find_properties[:params] = YAML.dump(find_properties[:params])
     end
+
+    super(find_properties)
   end
 end

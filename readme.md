@@ -31,7 +31,6 @@ The output is a downloadable [opentype font](http://en.wikipedia.org/wiki/OpenTy
 * python
 * python libs: fontforge, argparse
 * mysql
-* mysql development files (see [Getting started with DataMapper](http://datamapper.org/getting-started.html))
 
 ## Getting started
 

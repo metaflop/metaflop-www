@@ -15,6 +15,10 @@ module Routes
       redirect to("/modulator/font/#{url}"), 301
     end
 
+    get '/metafonts' do
+      redirect to("/metafonts/adjuster"), 301
+    end
+
     # redirect trailing slash urls
     get %r{(/.+)/$} do
       url = request.fullpath.

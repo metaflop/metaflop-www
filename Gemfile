@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'activesupport'
+gem 'backports'
 gem 'bourbon'
 gem 'dotenv'
 gem 'dotenv-deployment'

@@ -153,7 +153,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
+  backports
   benchmark-ips
   better_errors
   bourbon

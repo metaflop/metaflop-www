@@ -8,7 +8,7 @@
 
 # sinatra/base won't work because of simple navigation
 require 'sinatra'
-require 'active_support'
+require 'backports/rails'
 Dir['./app/routes/*.rb'].each { |route| require route }
 
 class App < Sinatra::Base

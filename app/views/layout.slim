@@ -2,18 +2,17 @@ doctype html
 html
   head
     meta charset="utf-8"
-    title = title
+    title = page_tag_title
 
     link rel="stylesheet" href="#{application_stylesheet_path}"
 
     script src="#{application_javascript_path}" type="text/javascript"
 
   body
-    div#main class="#{page_name}"
+    div#main class="#{page_slug}"
       div#navigation
         h1
-          a href="/"
-            = title
+          a href="/" = application_name
 
         == main_navigation
 

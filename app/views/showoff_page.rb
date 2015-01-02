@@ -24,13 +24,13 @@ class App < Sinatra::Base
             source_code: with_last_identifier(x[1]["source_code"]),
             images: x[1]["images"].map do |img|
             {
-              url: image_path("#{page_name}/#{img[0]}"),
+              url: image_path("#{page_slug}/#{img[0]}"),
               title: img[1]
             }
             end,
               subimages: (x[1]["subimages"] || []).map.with_index do |img, i|
               {
-                url: image_path("#{page_name}/#{img[0]}"),
+                url: image_path("#{page_slug}/#{img[0]}"),
                 short: img[1],
                   first: i == 0
               }
@@ -40,6 +40,10 @@ class App < Sinatra::Base
 
         current(pages)['css_class'] = 'active'
         pages
+      end
+
+      def page_subtitle
+        current[:title]
       end
 
       def current(pages = nil)

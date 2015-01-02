@@ -11,6 +11,10 @@ require './app/views/layout'
 class App < Sinatra::Base
   module Views
     class News < Layout
+      def page_title
+        'Hello World'
+      end
+
       # randomly create a sequence of 12 images,
       # varying by language, keeping the order
       def images

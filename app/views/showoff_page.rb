@@ -9,10 +9,6 @@
 class App < Sinatra::Base
   module Views
     class ShowoffPage < Layout
-      def single(name)
-        all.find { |x| x[:title] == name }
-      end
-
       def all
         pages = @settings.to_a.map do |x|
           {

@@ -14,15 +14,16 @@
 
 (function ($) {
 
-    var defaults = {
-        panelToggleDuration: 500,
-        panelToggleEasing: 'easeInOutExpo',
-        wrapperCssClass: 'dropdown-value',
-        listCssClass: 'dropdown-list',
-        onClicked: function() {}
-    };
-
     $.fn.dropdownpanel = function(options) {
+
+        var defaults = {
+            panelToggleDuration: 500,
+            panelToggleEasing: 'easeInOutExpo',
+            wrapperCssClass: 'dropdown-value',
+            listCssClass: 'dropdown-list',
+            onClicked: function() {}
+        };
+
         return $.each(this, function(index, select) {
             var select = $(select);
 
@@ -50,9 +51,10 @@
             var lis = ul.find('li');
             // mark the currently selected option
             $($.grep(lis, function(li) {
-              return $(li).find('a').html() == selectedOption.html()
+              return $(li).find('a').html() == selectedOption.html();
             })).addClass('active');
 
+            // listen for clicks on our custom dropdown
             lis.click(function(e) {
                 e.preventDefault();
 
@@ -75,6 +77,21 @@
 
                 // callback
                 settings.onClicked();
+            });
+
+            // listen for changes on the original select
+            select.change(function(e) {
+                var selectEl = select;
+                var listItems = lis;
+                var displayEl = wrapper;
+
+                var value = $(this).val();
+                var activeLi = $(lis.filter('[id^="' + value + '"]'));
+
+                listItems.removeClass('active');
+                activeLi.addClass('active');
+
+                displayEl.html(activeLi.find('a').text());
             });
 
             select.after(ul);

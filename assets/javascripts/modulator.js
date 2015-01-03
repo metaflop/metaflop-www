@@ -325,7 +325,8 @@ $(function () {
     $('#action-randomize-values').click(function(e) {
         e.preventDefault();
 
-        $('.adjuster input.param').each(function() {
+        // randomize the slider inputs
+        $('#parameter-panel input.param').each(function() {
             var $this = $(this);
 
             var sliderInput = getTwinInput($this);
@@ -337,6 +338,17 @@ $(function () {
             var value = Number.random(from * 100, to * 100) / 100;
 
             setValue($this, value);
+        });
+
+        // randomize the dropdowns
+        $('#parameter-panel select').each(function() {
+            $this = $(this);
+
+            options = $this.find('option');
+            var optionsIndex = Number.random(0, options.length - 1);
+
+            var value = $(options[optionsIndex]).val();
+            $this.val(value).trigger('change');
         });
 
         return false;

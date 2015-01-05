@@ -25,6 +25,7 @@ group :development do
   gem 'nyan-cat-formatter'
   gem 'pry'
   gem 'rspec'
+  gem 'rubocop', require: false
 end
 
 group :production do

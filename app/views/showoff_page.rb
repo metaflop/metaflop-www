@@ -13,18 +13,18 @@ class App < Sinatra::Base
         pages = @settings.to_a.map do |x|
           {
             title: x[0],
-            description: x[1]["description"],
-            type_designer: with_last_identifier(x[1]["type_designer"]),
-            year: x[1]["year"],
-            encoding: x[1]["encoding"],
-            source_code: with_last_identifier(x[1]["source_code"]),
-            images: x[1]["images"].map do |img|
+            description: x[1]['description'],
+            type_designer: with_last_identifier(x[1]['type_designer']),
+            year: x[1]['year'],
+            encoding: x[1]['encoding'],
+            source_code: with_last_identifier(x[1]['source_code']),
+            images: x[1]['images'].map do |img|
             {
               url: image_path("#{page_slug}/#{img[0]}"),
               title: img[1]
             }
             end,
-              subimages: (x[1]["subimages"] || []).map.with_index do |img, i|
+              subimages: (x[1]['subimages'] || []).map.with_index do |img, i|
               {
                 url: image_path("#{page_slug}/#{img[0]}"),
                 short: img[1],

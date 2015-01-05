@@ -15,19 +15,19 @@ require 'dotenv/deployment/capistrano'
 
 require 'capistrano/ext/multistage'
 set :stages, %w(production staging)
-set :default_stage, "staging"
+set :default_stage, 'staging'
 
 set :default_run_options, { pty: true } # password prompt from git
 set :ssh_options, { forward_agent: true} # use local ssh key
 
-set :application, "metaflop"
+set :application, 'metaflop'
 set :scm, :git
-set :repository, "git@github.com:metaflop/metaflop-www.git"
+set :repository, 'git@github.com:metaflop/metaflop-www.git'
 set :git_enable_submodules, 1
-set :deploy_to, "/home/rails/app"
+set :deploy_to, '/home/rails/app'
 set :deploy_via, :remote_cache # don't clone repo each time
 
-set :user, "rails"
+set :user, 'rails'
 
 set :use_sudo, false
 
@@ -54,5 +54,5 @@ namespace :config do
   end
 end
 
-before "deploy:restart", "config:db"
+before 'deploy:restart', 'config:db'
 after 'config:db', 'deploy:assets:precompile'

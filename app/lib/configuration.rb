@@ -118,7 +118,7 @@ module Configuration
     def tmp_dir
       # setup the tmp dir where the generated fonts go
       require 'fileutils'
-      tmp_dir = "/tmp/metaflop"
+      tmp_dir = '/tmp/metaflop'
       FileUtils.rm_rf(tmp_dir)
       Dir.mkdir(tmp_dir)
     end

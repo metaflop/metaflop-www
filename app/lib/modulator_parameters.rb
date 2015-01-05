@@ -13,14 +13,14 @@ class ModulatorParameters
 
   def default_parameters
     [{
-      title: "Dimension",
+      title: 'Dimension',
       items: [
         { title: 'unit width', key: :unit_width },
         { title: 'pen width', key: :pen_width },
         { title: 'pen height', key: :pen_height }
       ]
     }, {
-      title: "Proportion",
+      title: 'Proportion',
       items: [
         { title: 'cap height', key: :cap_height },
         { title: 'bar height', key: :bar_height },
@@ -32,7 +32,7 @@ class ModulatorParameters
         { title: 'depth of comma', key: :comma_depth },
       ]
     }, {
-      title: "Shape",
+      title: 'Shape',
       items: [
         { title: 'horizontal increase', key: :horizontal_increase },
         { title: 'vertical increase', key: :vertical_increase },
@@ -47,7 +47,7 @@ class ModulatorParameters
         { title: 'randomness', key: :craziness }
       ]
     }, {
-      title: "Optical corrections",
+      title: 'Optical corrections',
       items: [
         { title: 'apperture', key: :apperture },
         { title: 'corner', key: :corner },

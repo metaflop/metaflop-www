@@ -90,7 +90,7 @@ module Routes
       end
 
       def unsupported_font_type_error
-        not_found "The font type is not supported"
+        not_found 'The font type is not supported'
       end
     end
 

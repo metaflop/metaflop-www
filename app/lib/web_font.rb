@@ -28,7 +28,7 @@ class WebFont
               :year
 
   def zip
-    zipfile_name = File.join(@dir, "font.zip")
+    zipfile_name = File.join(@dir, 'font.zip')
     FileUtils.rm(zipfile_name, force: true)
 
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|

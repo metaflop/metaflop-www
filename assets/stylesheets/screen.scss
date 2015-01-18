@@ -3,514 +3,514 @@
 @import 'mixins';
 
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    text-transform: lowercase;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-transform: lowercase;
 }
 
 body {
-    font-family: helvetica, sans-serif;
-    font-size: $font_size;
-    line-height: $line_height;
+  font-family: helvetica, sans-serif;
+  font-size: $font_size;
+  line-height: $line_height;
 }
 
 image {
-    border: 0;
+  border: 0;
 }
 
 p {
-    margin: 0 0 ($box_spacing_x / 2) 0;
+  margin: 0 0 ($box_spacing_x / 2) 0;
 
-    &.minor-para {
-        margin: 0 0 ($box_spacing_x / 4) 0;
-    }
+  &.minor-para {
+    margin: 0 0 ($box_spacing_x / 4) 0;
+  }
 }
 
 input {
-    border: 1px solid $input_color;
-    font-family: helvetica, sans-serif;
-    font-size: 12px;
-    height: $input_height;
-    width: 37px;
-    padding: 0;
-    margin: 4px 0 0 0;
+  border: 1px solid $input_color;
+  font-family: helvetica, sans-serif;
+  font-size: 12px;
+  height: $input_height;
+  width: 37px;
+  padding: 0;
+  margin: 4px 0 0 0;
 }
 
 select {
-    height: $input_height;
-    padding: 0;
-    margin: 3px 0 0 0;
-    border: none;
-    background: #fff;
+  height: $input_height;
+  padding: 0;
+  margin: 3px 0 0 0;
+  border: none;
+  background: #fff;
 }
 
 option {
-    height: $input_height;
-    line-height: $input_height;
-    padding: 0;
-    margin: 0;
+  height: $input_height;
+  line-height: $input_height;
+  padding: 0;
+  margin: 0;
 }
 
 textarea {
-    display: none;
-    vertical-align: top;
-    border: 1px solid $bg_color_modulator;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    padding: ($box_spacing_x / 2) $box_spacing_y 0 $box_spacing_y;
+  display: none;
+  vertical-align: top;
+  border: 1px solid $bg_color_modulator;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  padding: ($box_spacing_x / 2) $box_spacing_y 0 $box_spacing_y;
 }
 
 h1 {
-    font-size: $font_size;
-    margin: 0 5px 0 0;
-    padding: 0;
-    float: left;
+  font-size: $font_size;
+  margin: 0 5px 0 0;
+  padding: 0;
+  float: left;
 }
 
 h2 {
-    font-size: $font_size;
-    line-height: $font_size;
-    margin: 0;
-    padding: 0 10px 0 0; // margin -> visible dropshadow of inner span
+  font-size: $font_size;
+  line-height: $font_size;
+  margin: 0;
+  padding: 0 10px 0 0; // margin -> visible dropshadow of inner span
 
-    span {
-        display: block;
-        background: $bg_color_base;
-        padding: $box_heading_padding;
-    }
+  span {
+    display: block;
+    background: $bg_color_base;
+    padding: $box_heading_padding;
+  }
 
-    overflow: hidden;
-    font-weight: bold;
-    float: left;
+  overflow: hidden;
+  font-weight: bold;
+  float: left;
 }
 
 h3 {
-    margin: 0;
-    font-size: $font_size;
-    line-height: $line_height;
+  margin: 0;
+  font-size: $font_size;
+  line-height: $line_height;
 }
 
 fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 legend {
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid #000;
-    width: 100%;
-    line-height: 24px;
-    font-weight: bold;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #000;
+  width: 100%;
+  line-height: 24px;
+  font-weight: bold;
+  overflow: hidden;
 
-    ul {
-        font-weight: normal;
-    }
+  ul {
+    font-weight: normal;
+  }
 }
 
 label {
-    float: left;
-    width: 55%;
+  float: left;
+  width: 55%;
 }
 
 ul {
-    margin: 0 0 ($box_spacing_x / 4) 0;
-    padding: 0 0 0 ($box_spacing_x / 2);
-    list-style: disc outside none;
+  margin: 0 0 ($box_spacing_x / 4) 0;
+  padding: 0 0 0 ($box_spacing_x / 2);
+  list-style: disc outside none;
 
-    li {
-        overflow: visible;
-        line-height: $line_height;
-    }
+  li {
+    overflow: visible;
+    line-height: $line_height;
+  }
 }
 
 a {
-    text-decoration: none;
-    color: $link_color;
+  text-decoration: none;
+  color: $link_color;
+
+  &:hover {
+    color: $link_color_hover;
+  }
+
+  &.active {
+    color: #000;
+    cursor: default;
 
     &:hover {
-        color: $link_color_hover;
+      color: #000;
     }
-
-    &.active {
-        color: #000;
-        cursor: default;
-
-        &:hover {
-            color: #000;
-        }
-    }
+  }
 }
 
 #progress-panel {
-    position: absolute;
-    left: $left_column_width + $box_spacing_x;
-    width: 15px;
+  position: absolute;
+  left: $left_column_width + $box_spacing_x;
+  width: 15px;
 }
 
 #message-panel {
-    position: absolute;
-    left: $left_column_width + $box_spacing_x + 15px + $box_spacing_y;
-    width: auto;
-    white-space: nowrap;
+  position: absolute;
+  left: $left_column_width + $box_spacing_x + 15px + $box_spacing_y;
+  width: auto;
+  white-space: nowrap;
 }
 
 object,
 embed {
-    vertical-align: top;
-    background: $bg_color_modulator;
+  vertical-align: top;
+  background: $bg_color_modulator;
 }
 
 .share-clipboard {
-    margin-left: -5px;
+  margin-left: -5px;
 }
 
 .clearfix {
-    overflow: hidden;
+  overflow: hidden;
 
-    &:after {
-        content: ".";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-        position: absolute;
-        left: -9999px;
-    }
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+  }
 }
 
 .error {
-    color: $error_color;
+  color: $error_color;
 }
 
 #main {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto ($footer_height * -1) auto;
-    position: relative;
-    width: $content_width;
-    overflow: hidden;
-    padding: 0 10px 0 10px;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto ($footer_height * -1) auto;
+  position: relative;
+  width: $content_width;
+  overflow: hidden;
+  padding: 0 10px 0 10px;
 }
 
 #navigation {
-    padding: ($box_spacing_x / 2) $box_spacing_y ($box_spacing_x / 2);
-    font-size: $font_size;
-    position: fixed;
-    overflow: hidden;
-    width: $content_width - (2 * $box_spacing_y);
-    background: #fff;
-    z-index: 99;
+  padding: ($box_spacing_x / 2) $box_spacing_y ($box_spacing_x / 2);
+  font-size: $font_size;
+  position: fixed;
+  overflow: hidden;
+  width: $content_width - (2 * $box_spacing_y);
+  background: #fff;
+  z-index: 99;
 
-    ul {
-        float: left;
+  ul {
+    float: left;
 
-        &.main {
-            margin: 0 0 0 20px;
+    &.main {
+      margin: 0 0 0 20px;
 
-            li {
-                padding-right: 10px;
-            }
-        }
-        &.meta {
-            float: right;
-            text-align: right;
-
-            li {
-                padding-left: 10px;
-            }
-        }
+      li {
+        padding-right: 10px;
+      }
     }
-    
-    li {
-        display: inline;
+    &.meta {
+      float: right;
+      text-align: right;
 
+      li {
+        padding-left: 10px;
+      }
     }
-    a {
+  }
+
+  li {
+    display: inline;
+
+  }
+  a {
+    color: #000;
+
+    &.selected { 
+      font-weight: bold;
+      cursor: default;
+
+      &:hover {
         color: #000;
-
-        &.selected { 
-            font-weight: bold;
-            cursor: default;
-
-            &:hover {
-                color: #000;
-            }
-        }
-
-        &:hover {
-            color: $link_color_hover;
-        }
+      }
     }
+
+    &:hover {
+      color: $link_color_hover;
+    }
+  }
 }
 
 .arrow-up {
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-bottom: 5px solid $input_color;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 5px solid $input_color;
 }
 
 .arrow-down {
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid $input_color;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid $input_color;
 }
 
 .vertical-line {
-    width: 1px;
-    background: $input_color;
+  width: 1px;
+  background: $input_color;
 }
 
 #col1 {
-    @include content-col;
-    width: $left_column_width;
-    margin-right: $box_spacing_x;
+  @include content-col;
+  width: $left_column_width;
+  margin-right: $box_spacing_x;
 }
 
 #col2 {
-    @include content-col;
-    margin-top: $box_spacing_x + $font_size + $box_spacing_x;
+  @include content-col;
+  margin-top: $box_spacing_x + $font_size + $box_spacing_x;
 
-    width: 710px;
+  width: 710px;
 }
 
 #menu {
-    @extend .box-text;
+  @extend .box-text;
 
-    margin-bottom: $box_spacing_y;
+  margin-bottom: $box_spacing_y;
 
-    a {
-        margin-right: $box_spacing_y;
-        position: relative;
+  a {
+    margin-right: $box_spacing_y;
+    position: relative;
 
-        &.export-font {
-            display: block; // -> for proper spinner positioning
-        }
+    &.export-font {
+      display: block; // -> for proper spinner positioning
     }
+  }
 
-    .spinner {
-        position: absolute;
-        right: -4px;
-        overflow: hidden;
-        width: 20px;
-    }
+  .spinner {
+    position: absolute;
+    right: -4px;
+    overflow: hidden;
+    width: 20px;
+  }
 }
 
 #info-panel {
-    margin: 23px 0 $box_spacing_y 0;
-    height: 192px;
-    display: none;
+  margin: 23px 0 $box_spacing_y 0;
+  height: 192px;
+  display: none;
 }
 
 #parameter-panel {
-    @extend .box-text;
+  @extend .box-text;
 
-    margin-bottom: $box_spacing_y;
+  margin-bottom: $box_spacing_y;
+  position: relative;
+
+  .slider {
+    float: right;
+    width: 45%;
+    height: 24px;
+  }
+
+  .adjuster {
+    float: right;
+    width: 74px;
+    height: 24px;
+    margin-right: 18px;
+    text-align: center;
     position: relative;
 
-    .slider {
-        float: right;
-        width: 45%;
-        height: 24px;
-    }
+    display: none;
 
-    .adjuster {
-        float: right;
-        width: 74px;
-        height: 24px;
-        margin-right: 18px;
-        text-align: center;
-        position: relative;
+    a {
+      display: none;
+      text-decoration: none;
+      color: transparent;
+      width: 19px;
+      height: $input_height;
+      position: absolute;
+      background-image: image-url('plusminus.png');
+      background-repeat: no-repeat;
+      background-color: #eee;
+      top: 4px;
+      z-index: 3;
 
-        display: none;
-
-        a {
-            display: none;
-            text-decoration: none;
-            color: transparent;
-            width: 19px;
-            height: $input_height;
-            position: absolute;
-            background-image: image-url('plusminus.png');
-            background-repeat: no-repeat;
-            background-color: #eee;
-            top: 4px;
-            z-index: 3;
-
-            &.add1 {
-                right: 0;
-                background-position: -21px -2px;
-                border-top: 1px solid $input-color;
-                border-bottom: 1px solid $input-color;
-                &:hover {
-                    background-position: -21px -20px;
-                }
-            }
-
-            &.add10 {
-                right: -20px;
-                background-position: -1px -2px;
-                border-top: 1px solid $input-color;
-                border-bottom: 1px solid $input-color;
-                border-right: 1px solid $input-color;
-                &:hover {
-                    background-position: -1px -20px;
-                }
-            }
-
-            &.sub1 {
-                left: -1px;
-                background-position: -38px -2px;
-                border-top: 1px solid $input-color;
-                border-bottom: 1px solid $input-color;
-                &:hover {
-                    background-position: -38px -20px;
-                }
-            }
-
-            &.sub10 {
-                left: -21px;
-                background-position: -56px -2px;
-                border-top: 1px solid $input-color;
-                border-bottom: 1px solid $input-color;
-                border-left: 1px solid $input-color;
-                z-index: 4;
-                &:hover {
-                    background-position: -56px -20px;
-                }
-            }
+      &.add1 {
+        right: 0;
+        background-position: -21px -2px;
+        border-top: 1px solid $input-color;
+        border-bottom: 1px solid $input-color;
+        &:hover {
+          background-position: -21px -20px;
         }
-    }
+      }
 
-    .inputblock:hover {
-        background: #eee;
-    }
+      &.add10 {
+        right: -20px;
+        background-position: -1px -2px;
+        border-top: 1px solid $input-color;
+        border-bottom: 1px solid $input-color;
+        border-right: 1px solid $input-color;
+        &:hover {
+          background-position: -1px -20px;
+        }
+      }
 
-    // metafonts description column, caption
-    .box-content p.box-caption {
-        @include box-caption;
-        position: relative;
-        margin: 10px -7px 0;
-        padding: 9px 7px;
-        width: 106%;
-        line-height: 1.3;
+      &.sub1 {
+        left: -1px;
+        background-position: -38px -2px;
+        border-top: 1px solid $input-color;
+        border-bottom: 1px solid $input-color;
+        &:hover {
+          background-position: -38px -20px;
+        }
+      }
+
+      &.sub10 {
+        left: -21px;
+        background-position: -56px -2px;
+        border-top: 1px solid $input-color;
+        border-bottom: 1px solid $input-color;
+        border-left: 1px solid $input-color;
+        z-index: 4;
+        &:hover {
+          background-position: -56px -20px;
+        }
+      }
     }
+  }
+
+  .inputblock:hover {
+    background: #eee;
+  }
+
+  // metafonts description column, caption
+  .box-content p.box-caption {
+    @include box-caption;
+    position: relative;
+    margin: 10px -7px 0;
+    padding: 9px 7px;
+    width: 106%;
+    line-height: 1.3;
+  }
 }
 
 .box {
-    float: left;
+  float: left;
+  width: $preview_box_width;
+  margin: 0 0 $box_spacing_y 0;
+
+  .box-content {
+    @include box;
+
     width: $preview_box_width;
-    margin: 0 0 $box_spacing_y 0;
+    height: $preview_box_height;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    font-size: 9px;
 
-    .box-content {
-        @include box;
-
-        width: $preview_box_width;
-        height: $preview_box_height;
-        overflow: hidden;
-        text-align: center;
-        position: relative;
-        font-size: 9px;
-
-        &.showoff-derivations {
-            min-height: 0;
-            line-height: 1;
-        }
-
-        .toggle-mode {
-            position: absolute;
-            top: -1px;
-            right: -1px;
-            width: 15px;
-            height: 15px;
-            background-image: image-url('icons.png');
-            background-color: #fff;
-            background-repeat: no-repeat;
-            background-position: -64px -113px;
-
-            &.edit-mode {
-                background-position: -64px -145px;
-            }
-        }
+    &.showoff-derivations {
+      min-height: 0;
+      line-height: 1;
     }
+
+    .toggle-mode {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 15px;
+      height: 15px;
+      background-image: image-url('icons.png');
+      background-color: #fff;
+      background-repeat: no-repeat;
+      background-position: -64px -113px;
+
+      &.edit-mode {
+        background-position: -64px -145px;
+      }
+    }
+  }
 }
 
 .box-doublewidth {
-    @extend .box;
+  @extend .box;
 
+  width: $preview_box_width_full;
+
+  .box-content {
     width: $preview_box_width_full;
-
-    .box-content {
-        width: $preview_box_width_full;
-        height: auto;
-        min-height: 200px;
-    }
+    height: auto;
+    min-height: 200px;
+  }
 }
 
 .box-fullwidth {
-    @extend .box;
+  @extend .box;
 
+  width: $content_width;
+
+  &.box-text .box-content {
+    // because of the padding, decrease the width
+    // see .box-text .box-content definition
+    width: $content_width_box_fullwidth;
+  }
+
+  .box-content {
     width: $content_width;
-
-    &.box-text .box-content {
-        // because of the padding, decrease the width
-        // see .box-text .box-content definition
-        width: $content_width_box_fullwidth;
-    }
-
-    .box-content {
-        width: $content_width;
-    }
+  }
 }
 
 .box-slideshow {
-    h2 {
-        font-weight: normal;
-    }
+  h2 {
+    font-weight: normal;
+  }
 
-    .box-content {
-        padding: 0;
-    }
+  .box-content {
+    padding: 0;
+  }
 
 }
 
 .box-text {
-    .box-content {
-        @include box;
+  .box-content {
+    @include box;
 
-        padding: 2px $box_spacing_y;
+    padding: 2px $box_spacing_y;
 
-        .static-value {
-            float: right;
-            width: 45%;
-        }
-
-        text-align: left;
-        font-size: inherit;
-        height: auto;
-        padding-top: 5px;
-
-        p {
-            @extend .minor-para;
-            line-height: $line_height;
-        }
+    .static-value {
+      float: right;
+      width: 45%;
     }
+
+    text-align: left;
+    font-size: inherit;
+    height: auto;
+    padding-top: 5px;
+
+    p {
+      @extend .minor-para;
+      line-height: $line_height;
+    }
+  }
 }
 
 .box-error-page {
-    .box-content {
-        height: auto;
-    }
+  .box-content {
+    height: auto;
+  }
 }
 
 #preview-panel {
@@ -518,201 +518,201 @@ embed {
 }
 
 .preview-text {
-    font-family:'preview', helvetica, sans-serif;
+  font-family:'preview', helvetica, sans-serif;
 }
 
 #preview-single {
-    .preview-text {
-        font-size: $preview_box_height / 2.5;
-        line-height: $preview_box_height;
-        margin-top: 20px;
-    }
+  .preview-text {
+    font-size: $preview_box_height / 2.5;
+    line-height: $preview_box_height;
+    margin-top: 20px;
+  }
 }
 
 #preview-typewriter {
-    .preview-text {
-        font-size: 32px;
-        text-align: left;
-        line-height: 2;
-        padding: $box_spacing_y * 3;
-        width: $preview_box_width_full - $box_spacing_y * 6;
-    }
+  .preview-text {
+    font-size: 32px;
+    text-align: left;
+    line-height: 2;
+    padding: $box_spacing_y * 3;
+    width: $preview_box_width_full - $box_spacing_y * 6;
+  }
 }
 
 #preview-chart {
-    margin-left: $box_spacing_x;
+  margin-left: $box_spacing_x;
 
-    .preview-text {
-        padding: $box_spacing_y * 2;
-        width: $preview_box_width;
-        height: 102%;
-        font-size: 16px;
+  .preview-text {
+    padding: $box_spacing_y * 2;
+    width: $preview_box_width;
+    height: 102%;
+    font-size: 16px;
 
-        td {
-            width: $preview_box_width / 7;
-            line-height: 1;
-        }
-
-        tr.divider {
-          height: $box_spacing_y;
-          font-size: $box_spacing_y * 2;
-        }
+    td {
+      width: $preview_box_width / 7;
+      line-height: 1;
     }
+
+    tr.divider {
+      height: $box_spacing_y;
+      font-size: $box_spacing_y * 2;
+    }
+  }
 }
 
 .adjuster input.active {
-    background-color: $modulator_active_color;
+  background-color: $modulator_active_color;
 }
 
 .inputblock {
-    position: relative;
+  position: relative;
 }
 
 div.char-chooser {
-    position: absolute;
-    bottom: $box_spacing_y;
-    left: 0;
+  position: absolute;
+  bottom: $box_spacing_y;
+  left: 0;
+  width: $preview_box_width;
+  height: 16px;
+  line-height: $font_size;
+  overflow: hidden;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 2000px;
+  }
+
+  li {
+    float: left;
     width: $preview_box_width;
-    height: 16px;
-    line-height: $font_size;
-    overflow: hidden;
 
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 2000px;
+    a {
+      font-size: 11px;
+      padding: 0 0.5px;
+
+      &.active {
+        font-weight: bold;
+      }
     }
-
-    li {
-        float: left;
-        width: $preview_box_width;
-
-        a {
-            font-size: 11px;
-            padding: 0 0.5px;
-
-            &.active {
-                font-weight: bold;
-            }
-        }
-    }
+  }
 }
 
 a.char-chooser {
-    position: absolute;
-    bottom: 3px;
-    z-index: 1;
-    width: 14px;
-    color: transparent;
-    line-height: $font_size;
+  position: absolute;
+  bottom: 3px;
+  z-index: 1;
+  width: 14px;
+  color: transparent;
+  line-height: $font_size;
 
-    &.left {
-        left: 2px;
-        background: image-url('arrows.png') no-repeat scroll 0 -189px transparent;
-    }
+  &.left {
+    left: 2px;
+    background: image-url('arrows.png') no-repeat scroll 0 -189px transparent;
+  }
 
-    &.right {
-        right: 2px;
-        background: image-url('arrows.png') no-repeat scroll 0 -64px transparent;
-    }
+  &.right {
+    right: 2px;
+    background: image-url('arrows.png') no-repeat scroll 0 -64px transparent;
+  }
 }
 
 .dropdown-value {
-    cursor: pointer;
-    font-size: $font_size;
-    line-height: 24px;
-    background: image-url('arrows.png') no-repeat right -120px transparent;
+  cursor: pointer;
+  font-size: $font_size;
+  line-height: 24px;
+  background: image-url('arrows.png') no-repeat right -120px transparent;
 
-    &.active {
-        background-position: right 5px;
-    }
+  &.active {
+    background-position: right 5px;
+  }
 }
 
 .dropdown-list {
+  display: none;
+  clear: both;
+  margin: 0 0 0 55%;
+  padding: 0;
+
+  list-style: none;
+
+  &.collapsible-list {
     display: none;
     clear: both;
-    margin: 0 0 0 55%;
-    padding: 0;
 
-    list-style: none;
+    &.share {
+      margin-left: 55%;
+    }
+  }
 
-    &.collapsible-list {
-        display: none;
-        clear: both;
+  li {
+    overflow: hidden;
 
-        &.share {
-            margin-left: 55%;
-        }
+    &.collapsible-list-item {
+      padding-top: 2px;
     }
 
-    li {
-        overflow: hidden;
-
-        &.collapsible-list-item {
-            padding-top: 2px;
-        }
-
-        &.active {
-            display: none;
-        }
+    &.active {
+      display: none;
     }
+  }
 
-    span {
-        color: lighten(#000, 80%);
-    }
+  span {
+    color: lighten(#000, 80%);
+  }
 }
 
 .text-col {
-    float: left;
-    width: ($content_width_box_fullwidth - $box_spacing_y) / 4 - ($box_spacing_y * 2);
-    margin: 0 ($box_spacing_y * 2) 0 0;
+  float: left;
+  width: ($content_width_box_fullwidth - $box_spacing_y) / 4 - ($box_spacing_y * 2);
+  margin: 0 ($box_spacing_y * 2) 0 0;
 
-    &.last {
-        margin: 0;
-    }
+  &.last {
+    margin: 0;
+  }
 
-    &.no-heading{
-        margin-top: $line_height;
-    }
+  &.no-heading{
+    margin-top: $line_height;
+  }
 
-    &.no-heading-double {
-        margin-top: $line_height * 2;
-    }
+  &.no-heading-double {
+    margin-top: $line_height * 2;
+  }
 }
 
 #modulator-unsupported {
-    position:absolute;
-    margin-top: 77px;
-    padding: 15.5px 7px;
-    width: 986px;
-    background-color: #fff;
-    z-index: 4;
-    font-weight: bold;
-    text-align: center;
+  position:absolute;
+  margin-top: 77px;
+  padding: 15.5px 7px;
+  width: 986px;
+  background-color: #fff;
+  z-index: 4;
+  font-weight: bold;
+  text-align: center;
 
-    p {
-      margin-top: $box_spacing_x * 2;
-    }
+  p {
+    margin-top: $box_spacing_x * 2;
+  }
 }
 
 #feedback {
-    @include transform(rotate(-90deg));
-    @include transform-origin(center right);
-    position: fixed;
-    top: 45%;
-    right: $font_size;
+  @include transform(rotate(-90deg));
+  @include transform-origin(center right);
+  position: fixed;
+  top: 45%;
+  right: $font_size;
 
-    a {
-        color: #000;
+  a {
+    color: #000;
 
-        &:hover {
-            color: $link_color_hover;
-        }
+    &:hover {
+      color: $link_color_hover;
     }
+  }
 }
 
 /* basic jquery slider */
 p.bjqs-caption {
-    @include box-caption;
+  @include box-caption;
 }

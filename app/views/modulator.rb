@@ -35,6 +35,16 @@ class App < Sinatra::Base
         end
       end
 
+      def typewriter_font_sizes
+        [18, 24, 32, 36, 48].map do |size|
+          {
+            value: size,
+            text: "#{size}px",
+            active: size == 32
+          }
+        end
+      end
+
       def char_chooser
         slim :char_chooser, layout: false
       end

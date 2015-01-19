@@ -532,6 +532,16 @@ embed {
       outline: none;
     }
   }
+
+  .font-size {
+    width: 80px;
+    float: right;
+
+    .dropdown-list {
+      font-size: $font-size;
+      margin: 0;
+    }
+  }
 }
 
 #preview-chart {

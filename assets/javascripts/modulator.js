@@ -562,7 +562,17 @@ $(function () {
     });
 
     // autogrow textarea
-    $('#preview-typewriter').find('textarea').autogrow();
+    var typeWriterTextArea = $('#preview-typewriter').find('textarea');
+    typeWriterTextArea.autogrow();
+
+    var typeWriterFontSizeDropdown= $('#typewriter-font-size');
+    typeWriterFontSizeDropdown.dropdownpanel({
+      onClicked: function() {
+        typeWriterTextArea.css('font-size', typeWriterFontSizeDropdown.val() + 'px');
+        // force autoload to redraw
+        typeWriterTextArea.autogrow();
+      }
+    });
 
     // insertRule is not supported by IE < 9, which also don't
     // support otf font faces

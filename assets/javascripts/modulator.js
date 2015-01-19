@@ -170,8 +170,6 @@ $(function () {
         $.ajax({
             url: '/modulator/preview' + createQueryString(),
             complete: function() {
-                content.find('textarea').hide();
-
                 $.fn.metaflop.preloadImageInProgress = false;
 
                 if (!$.fn.metaflop.ready) {
@@ -520,32 +518,6 @@ $(function () {
         return false;
     });
 
-    // edit/view mode for typewriter preview (textarea on/off)
-    $('#preview-typewriter').find('.toggle-mode').click(function(e) {
-        e.preventDefault();
-
-        var $this = $(this);
-        var textarea = $this.siblings('textarea');
-        var previewText = $this.siblings('.preview-text');
-
-        if ($this.hasClass('edit-mode')) {
-            previewText.text(textarea.val());
-            textarea.hide();
-            $this.attr('title', 'enter edit mode');
-        }
-        else {
-            textarea.show(0, function(){
-                previewText.text('');
-                $(this).css('display', 'block'); // set to block instead of inline
-            });
-            $this.attr('title', 'exit edit mode');
-        }
-
-        $this.toggleClass('edit-mode');
-
-        return false;
-    });
-
     var togglePanelMode = function(element) {
         var parameterPanel = $('#parameter-panel');
         var adjusters = parameterPanel.find('.adjuster');
@@ -590,7 +562,10 @@ $(function () {
     });
 
     // autogrow textarea
-    $('#preview-typewriter').find('textarea').autogrow().hide();
+    $('#preview-typewriter').find('textarea')
+      .on('focus', function() { $(this).addClass('edit'); })
+      .on('blur', function() { $(this).removeClass('edit'); })
+      .autogrow();
 
     // insertRule is not supported by IE < 9, which also don't
     // support otf font faces

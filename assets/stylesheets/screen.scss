@@ -52,17 +52,6 @@ option {
   margin: 0;
 }
 
-textarea {
-  display: none;
-  vertical-align: top;
-  border: 1px solid $bg_color_modulator;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  padding: ($box_spacing_x / 2) $box_spacing_y 0 $box_spacing_y;
-}
-
 h1 {
   font-size: $font_size;
   margin: 0 5px 0 0;
@@ -437,10 +426,6 @@ embed {
       background-color: #fff;
       background-repeat: no-repeat;
       background-position: -64px -113px;
-
-      &.edit-mode {
-        background-position: -64px -145px;
-      }
     }
   }
 }
@@ -533,9 +518,19 @@ embed {
   .preview-text {
     font-size: 32px;
     text-align: left;
-    line-height: 2;
-    padding: $box_spacing_y * 3;
+    margin: $box_spacing_y * 2;
+    padding: $box_spacing_y;
     width: $preview_box_width_full - $box_spacing_y * 6;
+    line-height: 1.5;
+    background-color: $bg_color_modulator;
+    border: 0;
+    resize: none;
+    min-height: 200px;
+
+    &.edit {
+      background-color: #fff;
+      outline: none;
+    }
   }
 }
 
@@ -562,6 +557,7 @@ embed {
 
 .adjuster input.active {
   background-color: $modulator_active_color;
+  outline: none;
 }
 
 .inputblock {

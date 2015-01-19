@@ -527,7 +527,7 @@ embed {
     resize: none;
     min-height: 200px;
 
-    &.edit {
+    &:focus {
       background-color: #fff;
       outline: none;
     }

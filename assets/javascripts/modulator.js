@@ -562,10 +562,7 @@ $(function () {
     });
 
     // autogrow textarea
-    $('#preview-typewriter').find('textarea')
-      .on('focus', function() { $(this).addClass('edit'); })
-      .on('blur', function() { $(this).removeClass('edit'); })
-      .autogrow();
+    $('#preview-typewriter').find('textarea').autogrow();
 
     // insertRule is not supported by IE < 9, which also don't
     // support otf font faces

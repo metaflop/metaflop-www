@@ -64,6 +64,6 @@ class FontParametersFile
   # for the preview. this way we don't waste time generating
   # glyphs we won't need.
   def has_preview_file?
-    File.exists? File.join(original_dir, 'glyphs_preview.mf')
+    File.exist? File.join(original_dir, 'glyphs_preview.mf')
   end
 end

@@ -145,7 +145,7 @@ class FontParameters
   def instance_param(key)
     if VALID_PARAMETERS_KEYS.include?(key.to_sym)
       instance_variable_get("@#{key}")
-    elsif MF_MAPPINGS.has_key?(key.to_s)
+    elsif MF_MAPPINGS.key?(key.to_s)
       instance_variable_get("@#{MF_MAPPINGS[key.to_s]}")
     else
       nil

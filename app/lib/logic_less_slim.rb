@@ -32,11 +32,9 @@ module LogicLessSlim
   private
 
   def load_template(template)
-    begin
-      require "./app/views/#{template}"
-    rescue LoadError
-      raise Metaflop::Error::TemplateNotFound.new
-    end
+    require "./app/views/#{template}"
+  rescue LoadError
+    raise Metaflop::Error::TemplateNotFound.new
   end
 
   def set_view_model(template)

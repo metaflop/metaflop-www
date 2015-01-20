@@ -29,7 +29,7 @@ class ModulatorParameters
         { title: 'glyph angle', key: :glyph_angle },
         { title: 'x-height', key: :x_height },
         { title: 'accents height', key: :accent_height },
-        { title: 'depth of comma', key: :comma_depth },
+        { title: 'depth of comma', key: :comma_depth }
       ]
     }, {
       title: 'Shape',
@@ -52,7 +52,7 @@ class ModulatorParameters
         { title: 'apperture', key: :apperture },
         { title: 'corner', key: :corner },
         { title: 'overshoot', key: :overshoot },
-        { title: 'taper', key: :taper },
+        { title: 'taper', key: :taper }
       ]
     }]
   end

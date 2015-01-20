@@ -568,7 +568,16 @@ $(function () {
     var typeWriterFontSizeDropdown= $('#typewriter-font-size');
     typeWriterFontSizeDropdown.dropdownpanel({
       onClicked: function() {
+        // grey out the typewriter
+        $('#preview-typewriter').fadeTo(0, 0.5);
+        // wait for the dropdown
+        // to have finished its animation.
+        setTimeout(function() {
+          $('#preview-typewriter').fadeTo(0, 1);
+        }, 500);
+
         typeWriterTextArea.css('font-size', typeWriterFontSizeDropdown.val() + 'px');
+
         // force autoload to redraw
         typeWriterTextArea.autogrow();
       }

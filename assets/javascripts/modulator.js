@@ -15,7 +15,7 @@ $(function () {
     $.fn.metaflop = {
         ready: false, // is set to true when the initial preview has been generated (i.e. the UI is ready)
         settings: {
-            panelToggleDuration: 500,
+            panelToggleDuration: 200,
             panelToggleEasing: 'easeInOutExpo',
             shareUrls: {
                 twitter: 'http://twitter.com/home?status=%{title} %{url}',
@@ -263,12 +263,17 @@ $(function () {
 
     // parameter list dropdown menus
     var initParameterDropdowns = function() {
-        $.fn.metaflop.parameterPanel.find('select:visible').dropdownpanel({ onClicked: generatePreview });
+        $.fn.metaflop.parameterPanel.find('select:visible').dropdownpanel({
+          panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
+          onClicked: generatePreview
+        });
     };
     initParameterDropdowns();
 
     // select typeface
-    $('#menu').find('select:visible').dropdownpanel({ onClicked: function() {
+    $('#menu').find('select:visible').dropdownpanel({
+      panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
+      onClicked: function() {
         showProgress('Loading parameter panel...');
         $.fn.metaflop.parameterPanel.fadeTo(0, 0.5);
 
@@ -567,6 +572,7 @@ $(function () {
 
     var typeWriterFontSizeDropdown= $('#typewriter-font-size');
     typeWriterFontSizeDropdown.dropdownpanel({
+      panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
       onClicked: function() {
         // grey out the typewriter
         $('#preview-typewriter').fadeTo(0, 0.5);
@@ -574,7 +580,7 @@ $(function () {
         // to have finished its animation.
         setTimeout(function() {
           $('#preview-typewriter').fadeTo(0, 1);
-        }, 500);
+        }, $.fn.metaflop.settings.panelToggleDuration);
 
         typeWriterTextArea.css('font-size', typeWriterFontSizeDropdown.val() + 'px');
 

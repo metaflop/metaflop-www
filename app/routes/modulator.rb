@@ -100,7 +100,7 @@ module Routes
     end
 
     def metaflop_create(args = params)
-      Metaflop.create(args.merge({ out_dir: out_dir }), settings.metaflop, logger)
+      Metaflop.create(args.merge(out_dir: out_dir), settings.metaflop, logger)
     end
   end
 end

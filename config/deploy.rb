@@ -17,8 +17,8 @@ require 'capistrano/ext/multistage'
 set :stages, %w(production staging)
 set :default_stage, 'staging'
 
-set :default_run_options, { pty: true } # password prompt from git
-set :ssh_options, { forward_agent: true} # use local ssh key
+set :default_run_options, pty: true # password prompt from git
+set :ssh_options, forward_agent: true # use local ssh key
 
 set :application, 'metaflop'
 set :scm, :git

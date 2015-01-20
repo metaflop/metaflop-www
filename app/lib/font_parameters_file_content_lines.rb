@@ -24,7 +24,7 @@ class FontParametersFileContentLines
   # in case the file is a one-liner already, split each statement onto a line
   def split_one_liner
     if @lines.length == 1
-      @lines = @lines[0].split(';').map{ |x| "#{x};" }
+      @lines = @lines[0].split(';').map { |x| "#{x};" }
     end
   end
 end

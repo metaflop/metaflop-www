@@ -40,9 +40,9 @@ class ModulatorParameters
         { title: 'superness', key: :superness },
         { title: 'pen angle', key: :pen_angle },
         { title: 'pen shape', key: :pen_shape, options:
-          [ { value: '1', text: 'Circle' },
-            { value: '2', text: 'Square' },
-            { value: '3', text: 'Razor' } ] },
+          [{ value: '1', text: 'Circle' },
+           { value: '2', text: 'Square' },
+           { value: '3', text: 'Razor' }] },
         { title: 'slanting', key: :slant },
         { title: 'randomness', key: :craziness }
       ]
@@ -103,4 +103,3 @@ class ModulatorParameters
     groups
   end
 end
-

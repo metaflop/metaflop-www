@@ -52,6 +52,7 @@ class App < Sinatra::Base
       end
 
       private
+
       def with_last_identifier(collection)
         collection.map do |item|
           item[:last] = item == collection.last

@@ -28,7 +28,7 @@ class FontParametersFile
   end
 
   def save(font_parameters, use_preview_file)
-    file_content = File.open(@file, "r:#{FILE_ENCODING}"){ |f| f.read }
+    file_content = File.open(@file, "r:#{FILE_ENCODING}") { |f| f.read }
 
     content = FontParametersFileContent.new(file_content)
 
@@ -47,7 +47,7 @@ class FontParametersFile
   end
 
   def lines
-    lines = File.open(@file, 'r:utf-8'){ |f| f.readlines }
+    lines = File.open(@file, 'r:utf-8') { |f| f.readlines }
 
     FontParametersFileContentLines.new(lines).clean
   end

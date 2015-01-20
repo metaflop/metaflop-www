@@ -12,7 +12,6 @@ require './app/lib/font_parameters_file.rb'
 FontParameter = Struct.new(:value, :default, :unit, :range, :hidden)
 
 class FontParameters
-
   # mf parameters
   VALID_PARAMETERS_KEYS = [
     :box_height,

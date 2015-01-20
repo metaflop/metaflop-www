@@ -9,7 +9,6 @@
 require 'fileutils'
 
 class FontSettings
-
   VALID_OPTIONS_KEYS = [
     :out_dir,
     :font_hash,

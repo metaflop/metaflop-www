@@ -16,7 +16,7 @@ module Routes
     end
 
     get '/metafonts' do
-      redirect to("/metafonts/adjuster"), 301
+      redirect to('/metafonts/adjuster'), 301
     end
 
     # redirect trailing slash urls

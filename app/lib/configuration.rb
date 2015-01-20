@@ -157,7 +157,7 @@ module Configuration
         config.repo = 'metaflop-www'
         config.title_prefix = environment
         config.additional_labels = -> (exception, env) do
-          if env["HTTP_HOST"] =~ /^test\./
+          if env['HTTP_HOST'] =~ /^test\./
             ['staging']
           else
             ['production']

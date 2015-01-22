@@ -437,8 +437,6 @@ embed {
 
   .box-content {
     width: $preview_box_width_full;
-    height: auto;
-    min-height: 200px;
   }
 }
 
@@ -515,6 +513,10 @@ embed {
 }
 
 #preview-typewriter {
+  .box-content {
+    height: auto;
+  }
+
   .preview-text {
     font-size: 32px;
     text-align: left;
@@ -525,7 +527,7 @@ embed {
     background-color: $bg_color_modulator;
     border: 0;
     resize: none;
-    min-height: 200px;
+    min-height: $preview_box_height / 2;
 
     &:focus {
       background-color: #fff;

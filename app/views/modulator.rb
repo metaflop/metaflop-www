@@ -40,7 +40,7 @@ class App < Sinatra::Base
           {
             value: size,
             text: "#{size}px",
-            active: size == 32
+            selected: size == 32
           }
         end
       end

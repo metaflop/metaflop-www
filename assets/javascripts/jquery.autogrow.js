@@ -1,8 +1,8 @@
 /*
- * Auto Expanding Text Area (1.2.4)
+ * Auto Expanding Text Area (1.2.5)
  * by Chrys Bader (www.chrysbader.com)
  * chrysb@gmail.com
- * starting with version 1.2.3 by Alexis Reigel (wwww.koffeinfrei.org)
+ * starting with version 1.2.3 by Alexis Reigel (www.koffeinfrei.org)
  *
  * Special thanks to:
  * Jake Chapa - jake@hybridstudio.com
@@ -56,7 +56,7 @@
   };
 
   jQuery.autogrow.fn = jQuery.autogrow.prototype = {
-    autogrow: '1.2.4'
+    autogrow: '1.2.5'
   };
 
   jQuery.autogrow.fn.extend = jQuery.autogrow.extend = jQuery.extend;
@@ -115,13 +115,13 @@
       if (this.dummy.html() != html) {
         this.dummy.html(html);
 
-        if (this.max_height > 0 && (this.dummy.height() + this.line_height > this.max_height)) {
+        if (this.max_height > 0 && this.dummy.height() > this.max_height) {
           this.textarea.css('overflow-y', 'auto');
         }
         else {
           this.textarea.css('overflow-y', 'hidden');
-          if (this.textarea.height() < this.dummy.height() + this.line_height || (this.dummy.height() < this.textarea.height())) {
-            this.textarea.animate({height: (this.dummy.height() + this.line_height) + 'px'}, 100);
+          if (this.textarea.height() < this.dummy.height() || (this.dummy.height() < this.textarea.height())) {
+            this.textarea.animate({height: (this.dummy.height()) + 'px'}, 100);
           }
         }
       }

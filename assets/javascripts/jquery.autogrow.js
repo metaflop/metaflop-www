@@ -1,5 +1,5 @@
 /*
- * Auto Expanding Text Area (1.2.5)
+ * Auto Expanding Text Area (1.2.6)
  * by Chrys Bader (www.chrysbader.com)
  * chrysb@gmail.com
  * starting with version 1.2.3 by Alexis Reigel (www.koffeinfrei.org)
@@ -56,7 +56,7 @@
   };
 
   jQuery.autogrow.fn = jQuery.autogrow.prototype = {
-    autogrow: '1.2.5'
+    autogrow: '1.2.6'
   };
 
   jQuery.autogrow.fn.extend = jQuery.autogrow.extend = jQuery.extend;
@@ -93,6 +93,7 @@
           'padding-right'  : this.textarea.css('padding-right'),
           'padding-bottom' : this.textarea.css('padding-bottom'),
           'padding-left'   : this.textarea.css('padding-left'),
+          'text-transform' : this.textarea.css('text-transform'),
           'line-height'    : this.line_height + 'px',
           'overflow-x'     : 'hidden',
           'position'       : 'absolute',

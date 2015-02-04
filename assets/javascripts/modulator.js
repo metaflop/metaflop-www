@@ -25,7 +25,8 @@ $(function () {
         },
         parameterPanel: $('#parameter-panel'),
         messagePanel: $('#message-panel'),
-        progressPanel: $('#progress-panel')
+        progressPanel: $('#progress-panel'),
+        typeWriterTextArea: $('#preview-typewriter').find('textarea')
     };
 
     var showProgress = function(message) {
@@ -178,6 +179,10 @@ $(function () {
                   $('.fd-slider-handle').tipsy({ title: 'aria-valuetext', gravity: 's' });
                   $.fn.metaflop.ready = true;
                 }
+
+                // autogrow textarea (do this in any case, as on initial load
+                // we need to do this at least once)
+                $.fn.metaflop.typeWriterTextArea.autogrow();
             },
             success: function(data) {
                 hideProgress();
@@ -566,10 +571,7 @@ $(function () {
         $this.blur();
     });
 
-    // autogrow textarea
-    var typeWriterTextArea = $('#preview-typewriter').find('textarea');
-    typeWriterTextArea.autogrow();
-
+    // change type writer font size
     var typeWriterFontSizeDropdown= $('#typewriter-font-size');
     typeWriterFontSizeDropdown.dropdownpanel({
       panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
@@ -582,10 +584,10 @@ $(function () {
           $('#preview-typewriter').fadeTo(0, 1);
         }, $.fn.metaflop.settings.panelToggleDuration);
 
-        typeWriterTextArea.css('font-size', typeWriterFontSizeDropdown.val() + 'px');
+        $.fn.metaflop.typeWriterTextArea.css('font-size', typeWriterFontSizeDropdown.val() + 'px');
 
         // force autoload to redraw
-        typeWriterTextArea.autogrow();
+        $.fn.metaflop.typeWriterTextArea.autogrow();
       }
     });
 

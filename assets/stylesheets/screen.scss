@@ -471,17 +471,15 @@ embed {
   .box-content {
     @include box;
 
-    padding: 2px $box_spacing_y;
+    padding: ($box_spacing_y - 2px) $box_spacing_y 2px $box_spacing_y;
+    text-align: left;
+    font-size: inherit;
+    height: auto;
 
     .static-value {
       float: right;
       width: 45%;
     }
-
-    text-align: left;
-    font-size: inherit;
-    height: auto;
-    padding-top: 5px;
 
     p {
       @extend .minor-para;

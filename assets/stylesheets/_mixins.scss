@@ -1,18 +1,18 @@
 @mixin box {
-    clear: both; // clear h2 float
-    background: $bg_color_base;
+  clear: both; // clear h2 float
+  background: $bg_color_base;
 }
 
 @mixin content-col {
-    float: left;
-    margin-top: $box_spacing_x + $font_size + $box_spacing_x;
+  float: left;
+  margin-top: $box_spacing_x + $font_size + $box_spacing_x;
 }
 
 @mixin box-caption {
-    width: 100%;
-    font-size: $font-size - 2px;
-    text-align: left;
-    color: $link_color;
-    padding: $box_spacing_y;
-    border-top: 1px solid #fff;
+  width: 100%;
+  font-size: $font-size - 2px;
+  text-align: left;
+  color: $link_color;
+  padding: $box_spacing_y;
+  border-top: 1px solid #fff;
 }

@@ -152,7 +152,7 @@ $(function () {
     }
 
     var generatePreviewCall = function() {
-        var content = $('.box');
+        var content = $('.box:visible');
 
         // clear cached shortend url
         $.fn.metaflop.shortenendUrl = null;

@@ -19,10 +19,10 @@ form autocomplete="off"
                   option(value=name selected=active) = name
 
           div.clearfix.inputblock
-            label anatomy
+            label glyph / chart
             div.static-value
-              a.toggle-info-panel href="#" on
-              a.toggle-info-panel.active href="#" off
+              a.toggle-glyph-chart-preview.active href="#" on
+              a.toggle-glyph-chart-preview href="#" off
 
           div.clearfix.inputblock
             label mode
@@ -62,9 +62,6 @@ form autocomplete="off"
       == parameter_panel
 
   div#col2
-
-    div#info-panel
-      img src="#{typoglossary_image_url}"
 
     div#preview-panel
       div#preview-single.box

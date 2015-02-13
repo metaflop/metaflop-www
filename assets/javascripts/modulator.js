@@ -558,14 +558,16 @@ $(function () {
     });
 
     // toggle the information header
-    var informationToggle = $('#menu').find('.toggle-info-panel');
-    informationToggle.click(function(e) {
+    var glyphChartPreviewToggle = $('#menu').find('.toggle-glyph-chart-preview');
+    glyphChartPreviewToggle.click(function(e) {
         e.preventDefault();
 
         var $this = $(this);
         if (!$this.is('.active')) {
-            informationToggle.toggleClass('active');
-            $('#info-panel').toggle($.fn.metaflop.settings.panelToggleDuration, $.fn.metaflop.settings.panelToggleEasing);
+            glyphChartPreviewToggle.toggleClass('active');
+            $('#preview-single, #preview-chart').slideToggle(
+                $.fn.metaflop.settings.panelToggleDuration,
+                $.fn.metaflop.settings.panelToggleEasing);
         }
 
         $this.blur();

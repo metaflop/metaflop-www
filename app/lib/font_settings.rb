@@ -32,11 +32,22 @@ class FontSettings
     "#{@fontface}-#{@font_hash}"
   end
 
+  def font_source_dir
+    File.expand_path("mf/metaflop-font-#{@fontface.downcase}")
+  end
+
   def setup_tmp_dir
     if @out_dir && !File.directory?(@out_dir)
       FileUtils.mkdir_p(@out_dir)
-      # copy everything we need to generate the fonts to the tmp dir
-      FileUtils.cp_r(Dir["{mf/metaflop-font-#{@fontface.downcase}/*,bin/*}"], "#{@out_dir}")
+      # only copy font.mf to the output dir (it's the only file
+      # that is modified per request)
+      font_file = File.join(font_source_dir, 'font.mf')
+      FileUtils.cp(font_file, @out_dir)
+      # symlink the rest (mf2outline / fontforge don't properly handle
+      # config and other referenced files outside of the pwd)
+      (Dir["{#{font_source_dir}/*,bin/*}"] - [font_file]).each do |file|
+        FileUtils.ln_s(File.expand_path(file), @out_dir)
+      end
     end
   end
 

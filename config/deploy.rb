@@ -17,6 +17,10 @@ require 'capistrano/ext/multistage'
 set :stages, %w(production staging)
 set :default_stage, 'staging'
 
+set :whenever_command, 'bundle exec whenever'
+set :whenever_environment, defer { stage }
+require 'whenever/capistrano'
+
 set :default_run_options, pty: true # password prompt from git
 set :ssh_options, forward_agent: true # use local ssh key
 

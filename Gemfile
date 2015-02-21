@@ -16,6 +16,7 @@ gem 'sinatra-simple-navigation'
 gem 'slim'
 gem 'uglifier'
 gem 'unicorn'
+gem 'whenever', require: false
 
 group :development do
   gem 'benchmark-ips'

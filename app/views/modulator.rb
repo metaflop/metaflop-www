@@ -45,6 +45,26 @@ class App < Sinatra::Base
         end
       end
 
+      def typewriter_font_texts
+        [
+          {
+            text: 'Font design is in fact…',
+            value: 'Font design is in fact lots of fun, especially when you make mistakes.',
+            selected: true
+          },
+          {
+            text: 'A top-notch designer…',
+            value: "«A top-notch designer of typefaces needs to have an unusually good eye and a highly developed sensitivity to the nuances of shapes. A top-notch user of computer languages needs to have an unusual talent for abstract reasoning and a highly developed ability to express intuitive ideas in formal terms. Very few people have both of these unusual combinations of skills; hence the best products of METAFONT will probably be collaborative efforts between two people who complement each other’s abilities. Indeed, this situation isn’t very different from the way types have been created for many generations, except that the rôle of “punch-cutter” is now being played by skilled computer specialists instead of by skilled metal-workers.»\n\nThe METAFONT book, D.E.Knuth, 1986, p.v",
+            selected: false
+          },
+          {
+            text: 'ABC abc 0123',
+            value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0123456789\n.,:;«»-+/()!?&",
+            selected: false
+          }
+        ]
+      end
+
       def char_chooser
         slim :char_chooser, layout: false
       end

@@ -180,4 +180,13 @@ form autocomplete="off"
                   option value="#{value}" selected="selected" = text
                 -! selected
                   option value="#{value}" = text
+
+          div.font-text
+            select#typewriter-font-text
+              - typewriter_font_texts
+                - selected
+                  option value="#{value}" selected="selected" = text
+                -! selected
+                  option value="#{value}" = text
+
           textarea#param-text.preview-text Font design is in fact lots of fun, especially when you make mistakes.

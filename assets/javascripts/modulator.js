@@ -607,6 +607,26 @@ $(function () {
       }
     });
 
+    // change typewriter text
+    var typeWriterFontTextDropdown = $('#typewriter-font-text');
+    typeWriterFontTextDropdown.dropdownpanel({
+      panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
+      onClicked: function() {
+        // grey out the typewriter
+        $('#preview-typewriter').fadeTo(0, 0.5);
+        // wait for the dropdown
+        // to have finished its animation.
+        setTimeout(function() {
+          $('#preview-typewriter').fadeTo(0, 1);
+        }, $.fn.metaflop.settings.panelToggleDuration);
+
+        $.fn.metaflop.typeWriterTextArea.val(typeWriterFontTextDropdown.val());
+
+        // force autoload to redraw
+        $.fn.metaflop.typeWriterTextArea.autogrow();
+      }
+    });
+
     // insertRule is not supported by IE < 9, which also don't
     // support otf font faces
     if (Modernizr.fontface && document.styleSheets[0].insertRule) {

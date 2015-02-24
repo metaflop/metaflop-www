@@ -534,14 +534,23 @@ embed {
     }
   }
 
-  .font-size {
-    width: 80px;
+  .font-size, .font-text {
     float: right;
+    text-align: left;
+    margin: $box_spacing_y 2 * $box_spacing_y $box_spacing_y $box_spacing_y;
 
     .dropdown-list {
       font-size: $font-size;
       margin: 0;
     }
+  }
+
+  .font-size {
+    width: 55px;
+  }
+
+  .font-text {
+    width: 170px;
   }
 }
 

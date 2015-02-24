@@ -1,5 +1,5 @@
 /*
- * JQuery Dropdown Panel plugin (v 0.1.0)
+ * JQuery Dropdown Panel plugin (v 0.2.0)
  *
  * Replaces an html select element with a
  * simple, animated dropdown.
@@ -40,7 +40,7 @@
             // list of all available options
             $.each(select.find('option'), function(index, option) {
                 option = $(option);
-                ul += '<li id="' + option.val() + '-' + select[0].id + '">' +
+                ul += '<li data-value="' + option.val() + '">' +
                       '<a href="#">' + option.html() + '</a>' +
                       '</li>';
             });
@@ -67,7 +67,7 @@
                 li.addClass('active');
 
                 // set select value
-                selectEl.val(this.id.split('-')[0]);
+                selectEl.val(li.data('value'));
 
                 // set display value
                 displayEl.html(li.find('a').text());
@@ -86,7 +86,7 @@
                 var displayEl = wrapper;
 
                 var value = $(this).val();
-                var activeLi = $(lis.filter('[id^="' + value + '"]'));
+                var activeLi = $(lis.filter('[data-value="' + value + '"]'));
 
                 listItems.removeClass('active');
                 activeLi.addClass('active');

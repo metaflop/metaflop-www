@@ -142,8 +142,13 @@ $(function () {
     }
 
     var createQueryString = function() {
+        var inputFields = $('#parameter-panel, #menu')
+            .find('input:text,select')
+            // exclude the slider's inputs
+            .not('[id^=slider-]');
+
         $.fn.metaflop.queryString = '?' +
-            $.makeArray($('input:text,textarea,select').not('[id^=slider-]')).map(function(element){
+            $.makeArray(inputFields).map(function(element){
                 return element.id.remove('param-') + '=' + $(element).val()
             })
             .join("&");

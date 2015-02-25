@@ -53,6 +53,10 @@ class App < Sinatra::Base
         slim :parameter_panel, layout: false
       end
 
+      def typoglossary_image_url
+        image_path('typoglossary.png')
+      end
+
       def clippy_url
         asset_path('flash/clippy.swf')
       end

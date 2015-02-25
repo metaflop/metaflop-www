@@ -295,6 +295,12 @@ embed {
   }
 }
 
+#info-panel {
+  margin: 23px 0 $box_spacing_y 0;
+  height: 192px;
+  display: none;
+}
+
 #parameter-panel {
   @extend .box-text;
 

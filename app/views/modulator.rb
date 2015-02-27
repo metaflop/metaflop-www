@@ -65,6 +65,10 @@ class App < Sinatra::Base
         ]
       end
 
+      def default_typewriter_font_text_value
+        typewriter_font_texts.first[:value]
+      end
+
       def char_chooser
         slim :char_chooser, layout: false
       end

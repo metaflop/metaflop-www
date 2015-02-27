@@ -182,11 +182,11 @@ form autocomplete="off"
                   option value="#{value}" = text
 
           div.font-text
-            select#typewriter-font-text
-              - typewriter_font_texts
+            select#typewriter-text
+              - typewriter_texts
                 - selected
                   option value="#{value}" selected="selected" = text
                 -! selected
                   option value="#{value}" = text
 
-          textarea#param-text.preview-text = default_typewriter_font_text_value
+          textarea#param-text.preview-text = default_typewriter_text

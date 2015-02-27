@@ -45,7 +45,7 @@ class App < Sinatra::Base
         end
       end
 
-      def typewriter_font_texts
+      def typewriter_texts
         [
           {
             text: 'Font design is in fact…',
@@ -65,8 +65,8 @@ class App < Sinatra::Base
         ]
       end
 
-      def default_typewriter_font_text_value
-        typewriter_font_texts.first[:value]
+      def default_typewriter_text
+        typewriter_texts.first[:value]
       end
 
       def char_chooser

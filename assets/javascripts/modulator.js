@@ -613,7 +613,7 @@ $(function () {
     });
 
     // change typewriter text
-    var typeWriterFontTextDropdown = $('#typewriter-font-text');
+    var typeWriterFontTextDropdown = $('#typewriter-text');
     typeWriterFontTextDropdown.dropdownpanel({
       panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
       onClicked: function() {

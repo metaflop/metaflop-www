@@ -2,5 +2,4 @@
 # `cap staging deploy -s branch=my_branch`
 set :branch, fetch(:branch, 'dev')
 
-role :web, 'metaflop-staging.panter.biz'
-role :app, 'metaflop-staging.panter.biz'
+server 'metaflop-staging.panter.biz', :app, :web, :db, primary: true

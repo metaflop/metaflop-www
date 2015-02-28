@@ -1,4 +1,3 @@
 set :branch, 'master'
 
-role :web, 'metaflop-production.panter.biz'
-role :app, 'metaflop-production.panter.biz'
+server 'metaflop-production.panter.biz', :app, :web, :db, primary: true

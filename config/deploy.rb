@@ -34,6 +34,9 @@ set :use_sudo, false
 set :rbenv_ruby_version, File.read('.ruby-version').strip
 set :rbenv_install_dependencies, false
 
+set :maintenance_template_path, File.join(File.dirname(__FILE__), '../public/maintenance.html')
+set :maintenance_target_path, -> { "#{fetch(:shared_path)}/system/maintenance.html" }
+
 # unicorn wrapper restart
 namespace :deploy do
   task :restart, roles: :app, except: { no_release: true } do
@@ -44,6 +47,18 @@ namespace :deploy do
     desc 'Compile assets'
     task :precompile do
       run "(cd #{latest_release} && bundle exec rake assets:precompile RACK_ENV=#{rails_env})"
+    end
+  end
+
+  # custom maintenance page
+  namespace :web do
+    task :disable do
+      on_rollback { run "rm -f #{fetch(:maintenance_target_path).shellescape}" }
+      put File.read(fetch(:maintenance_template_path)), fetch(:maintenance_target_path)
+    end
+
+    task :enable do
+      run "rm -f #{fetch(:maintenance_target_path).shellescape}"
     end
   end
 end

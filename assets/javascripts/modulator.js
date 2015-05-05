@@ -570,7 +570,7 @@ $(function () {
         var $this = $(this);
         if (!$this.is('.active')) {
             informationToggle.toggleClass('active');
-            $('#info-panel').toggle(
+            $('#info-panel').slideToggle(
                 $.fn.metaflop.settings.panelToggleDuration,
                 $.fn.metaflop.settings.panelToggleEasing);
         }

@@ -293,8 +293,6 @@ embed {
 }
 
 #info-panel {
-  margin: 23px 0 $box_spacing_y 0;
-  height: 192px;
   display: none;
 }
 
@@ -407,6 +405,10 @@ embed {
     text-align: center;
     position: relative;
     font-size: 9px;
+
+    &.auto-height {
+      height: auto;
+    }
 
     &.showoff-derivations {
       min-height: 0;

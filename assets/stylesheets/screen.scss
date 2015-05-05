@@ -179,12 +179,9 @@ embed {
 
 #main {
   min-height: 100%;
-  height: auto !important;
-  height: 100%;
   margin: 0 auto ($footer_height * -1) auto;
   position: relative;
   width: $content_width;
-  overflow: hidden;
   padding: 0 10px 0 10px;
 }
 

@@ -71,7 +71,8 @@ form autocomplete="off"
     div#info-panel.box-doublewidth
       h2: span Anatomy
       .box-content.auto-height
-        img src="#{typoglossary_image_url}"
+        - anatomy_images
+          img src=url class=css_class data-fontface=name
 
     div#preview-panel
       div#preview-single.box

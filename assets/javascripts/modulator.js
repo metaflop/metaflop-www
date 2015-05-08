@@ -280,6 +280,12 @@ $(function () {
     };
     initParameterDropdowns();
 
+    var updateAnatomy = function() {
+        fontface = $('#param-fontface').val();
+        $('#info-panel img').removeClass('active');
+        $('#info-panel img[data-fontface="' + fontface + '"]').addClass('active');
+    };
+
     // select typeface
     $('#menu').find('select:visible').dropdownpanel({
       panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
@@ -303,6 +309,7 @@ $(function () {
                         if (activeNerdMode.length > 0) togglePanelMode(activeNerdMode);
                         $.fn.metaflop.parameterPanel.fadeTo(0, 1);
                         generatePreview();
+                        updateAnatomy();
                     },
                     error: function() {
                         hideProgress();

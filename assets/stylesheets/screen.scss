@@ -294,6 +294,14 @@ embed {
 
 #info-panel {
   display: none;
+
+  img {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
 }
 
 #parameter-panel {

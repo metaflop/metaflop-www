@@ -12,6 +12,10 @@ SimpleNavigation::Configuration.run do |navigation|
       'https://github.com/metaflop', link_html: {
         target: '_blank', class: 'tooltip', title: 'get the source code on github'
       }
+    primary.item :'donate-paypal', '<i class="fa fa-dollar"></i>',
+      '#', link_html: {
+        class: 'tooltip', title: 'donate by paypal'
+      }
     primary.item :terms, 'Terms', '/terms'
     primary.item :faq, 'FAQ', '/faq'
 

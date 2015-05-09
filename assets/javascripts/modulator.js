@@ -48,7 +48,7 @@ $(function () {
         hideProgress();
         showMessage(message);
         $.fn.metaflop.messagePanel.addClass('error');
-        $.fn.metaflop.progressPanel.html('<i class="icon-warning-sign error"></i>');
+        $.fn.metaflop.progressPanel.html('<i class="fa fa-warning error"></i>');
     }
 
     // set background to corresponding inputs

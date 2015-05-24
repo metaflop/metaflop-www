@@ -11,11 +11,6 @@
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/metafonts</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>http://www.metaflop.com/metafonts/adjuster</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>

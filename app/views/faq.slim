@@ -12,25 +12,25 @@ div#col2
       div.text-col
         h3 What is Metafont?
         p
-          | <a href="http://en.wikipedia.org/wiki/Metafont" target="_blank">Metafont</a> is a high-level, mathematically oriented language for producing fonts. It is also the name of the interpreter that executes Metafont code, generating the bitmap fonts that can be embedded into e.g. PostScript. Metafont was devised by <a href="http://www-cs-faculty.stanford.edu/~uno/" target="_blank">Donald Knuth</a> as counterpart to his TeX typesetting system. One of the characteristics of Metafont is that all of the shapes of the glyphs are defined with geometrical equations.
+          | <a href="http://en.wikipedia.org/wiki/Metafont" target="_blank">Metafont</a> is a high-level, mathematically oriented language for producing fonts. It is also the name of the interpreter that executes Metafont code, generating the bitmap fonts that can be embedded into e.g. PostScript. Metafont was devised by <a href="http://www-cs-faculty.stanford.edu/~uno/" target="_blank">Donald Knuth</a> as counterpart to his TeX typesetting system. One of the characteristics of Metafont is that all of the shapes of the glyphs are defined with geometrical equations. With these equations it is possible to describe multiple fonts and the interpolation between them. Metafont is also the name of the interpreter that executes Metafont code, generating the bitmap fonts that can be embedded into e.g. PostScript.
 
       div.text-col
         h3 What is your improvement over bare metafont?
         p.minor-para
-          | metafont has been already used by some very specialized groups for over twenty years. while it could be a very powerful tool, it never came to a broader use. why? mainly because:
+          | Metafont has already been used by some very specialized groups for over 30 years. While it still is a very powerful tool, it never became widely spread. The lack of prelevancy is mainly due to the following reasons:
 
         ul
-          li font creators are mostly designers, not engineers. so metafont is rather complicated to use, you need to learn programming.
-          li it has no gui (graphical user interface).
-          li the native export is to bitmap fonts which is a severe limitation compared to outline fonts.
+          li Font creators are mostly designers, not engineers. For them Metafont is rather complicated to use, because it requires some basic understanding of of programming.
+          li It has no gui (graphical user interface).
+          li The native export is to bitmap fonts which is a severe limitation compared to outline fonts.
 
       div.text-col.no-heading-double.last
         p
-          | our contribution to metafont is to address these issues.
-            we are aware that it is difficult to produce subtle and refined typographical fonts (in the classical meaning). nevertheless we believe there is a undeniable quality in parametric font design and we try to bring it closer to the world of the designers.
+          | Our contribution to metafont is to address these issues.
+            We are aware that it is difficult to produce subtle and refined typographical fonts in the classical meaning. Nevertheless we believe that there is a undeniable quality in parametric font design and we try to bring it closer to the world of the designers.
 
   div.box-fullwidth.box-text
-    h2: span modulator
+    h2: span Modulator
     div.box-content
       div.text-col
         h3 Why is the response of the preview sometimes slow?
@@ -40,9 +40,22 @@ div#col2
       div.text-col
         h3 Why don't i see any change in the preview?
         p
-          | The webfont based preview is <a href="http://caniuse.com/ttf">not supported in older browsers</a>. If you have any issues with the displaying of the previews try to upgrade to a contemporary browser.
+          | The webfont based preview is <a href="http://caniuse.com/ttf" target="_blank">not supported in older browsers</a>. If you have any issues with the displaying of the previews try to upgrade to a contemporary browser.
 
-      div.text-col
         h3 Can I download the font for free?
         p
-          | Yes! Please read our <a href="/terms">terms</a> before downloading the font.
+          | Yes! All outline-based fonts (webfonts or OTF) that are generated with Metaflop are licensed under the SIL Open Font License v1.1 (OFL). Please read the <a href="http://scripts.sil.org/cms/scripts/page.php?item_id=OFL-FAQ_web" target="_blank">FAQ on the SIL website</a> and the OFL terms after downloading the font.
+
+      div.text-col
+        h3 I don't understand all these typographical parameters, what do they mean?
+        p
+          | Enable the “anatomy” preview in the left box of the <a href="/modulator">modulator</a>. It gives you a quick overview of specific font parameters.
+
+        h3 What can I do once I am satisfied with my result?
+        p
+          | You can choose to download the result as a webfont package or an OpenType PostScript font. At the moment we don’t support a Metafont file download, but you can <a href="https://github.com/metaflop/?query=-font-" target="_blank">get the source code of our Metafonts on GitHub</a>.
+
+      div.text-col
+        h3 Can I save my drafts online?
+        p
+          | At the moment we don't support this. Here's what you can do instead: Under “share” copy the url to your clipboard. This link can be saved and later pasted again into your browser. This way you can restore your draft. Alternatively, if you downloaded a font, you can paste the 10 digits long short URL at the end of the fontname (e.g. Bespoke-short_url.otf) in your browser. The general address looks like this: www.metaflop.com/modulator/font/short_url.

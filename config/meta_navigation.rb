@@ -16,7 +16,7 @@ SimpleNavigation::Configuration.run do |navigation|
       '#', link_html: {
         class: 'tooltip', title: 'donate by paypal'
       }
-    primary.item :terms, 'Terms', '/terms'
+    primary.item :about, 'About', '/about'
     primary.item :faq, 'FAQ', '/faq'
 
     primary.dom_class = 'meta'

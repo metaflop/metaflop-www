@@ -8,7 +8,7 @@
 
 class App < Sinatra::Base
   module Views
-    class Terms < Layout
+    class About < Layout
       def current_year
         Time.new.year
       end

@@ -23,7 +23,7 @@ class FontParameters
     :overshoot,
     :horizontal_increase,
     :vertical_increase,
-    :apperture,
+    :aperture,
     :superness,
     :pen_size, # legacy for pen_width
     :pen_width,
@@ -56,7 +56,7 @@ class FontParameters
     'o#' => :overshoot,
     'incx' => :horizontal_increase,
     'incy' => :vertical_increase,
-    'appert' => :apperture,
+    'apert' => :aperture,
     'superness' => :superness,
     'px#' => :pen_width,
     'py#' => :pen_height,

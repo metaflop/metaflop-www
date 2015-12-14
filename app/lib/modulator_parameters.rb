@@ -49,7 +49,7 @@ class ModulatorParameters
     }, {
       title: 'Optical corrections',
       items: [
-        { title: 'apperture', key: :apperture },
+        { title: 'aperture', key: :aperture },
         { title: 'corner', key: :corner },
         { title: 'overshoot', key: :overshoot },
         { title: 'taper', key: :taper }

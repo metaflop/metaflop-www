@@ -1,0 +1,13 @@
+#!/bin/bash
+mpost "&mfplain \mode:=proof; outputtemplate:=\"%j.%c\"; input font"
+echo "\documentclass[a5paper]{article}\usepackage{graphicx}\usepackage[margin=1cm]{geometry}\pagestyle{empty}\begin{document}\begin{center}" > font.tex
+for i in *.[[:digit:]]*
+do 
+	echo "\includegraphics{$i}\newpage" >> font.tex
+done
+echo "\end{center}\end{document}" >> font.tex
+latex font.tex
+dvips font.dvi
+ps2pdf font.ps
+rm *.log font.tex font.dvi font.ps *.[[:digit:]]*
+exit 0

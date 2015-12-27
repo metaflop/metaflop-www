@@ -32,31 +32,31 @@ $(function () {
     var showProgress = function(message) {
         showMessage(message);
         $.fn.metaflop.progressPanel.html('&nbsp;').spin('tiny');
-    }
+    };
 
     var hideProgress = function() {
         showMessage('');
         $.fn.metaflop.progressPanel.spin(false);
-    }
+    };
 
     var showMessage = function(message) {
         $.fn.metaflop.messagePanel.removeClass('error');
         $.fn.metaflop.messagePanel.text(message);
-    }
+    };
 
     var showErrorMessage = function(message) {
         hideProgress();
         showMessage(message);
         $.fn.metaflop.messagePanel.addClass('error');
         $.fn.metaflop.progressPanel.html('<i class="fa fa-warning error"></i>');
-    }
+    };
 
     // set background to corresponding inputs
     var setActiveInputs = function(inputField) {
         var suffix = (inputField.id || inputField[0].id).remove(/^\w+-/);
         $('.adjuster input').removeClass('active');
         $('input[id$=' + suffix + ']').addClass('active');
-    }
+    };
 
     // increase/decrease the inputField's value
     var changeValue = function(inputField, cssClass){
@@ -69,7 +69,7 @@ $(function () {
         else if (method == 'sub') value = value - number;
 
         setValue(inputField, value);
-    }
+    };
 
     var setValue = function(inputField, value) {
         if (!value && value !== 0){
@@ -90,7 +90,7 @@ $(function () {
         }
 
         generatePreview();
-    }
+    };
 
     // finds the corresponding counterpart input field
     // for a "param-" the corresponding "slider-" and vice versa
@@ -101,7 +101,7 @@ $(function () {
                  ? element.id.replace('slider-', 'param-')
                  : element.id.replace('param-', 'slider-');
         return $('#' + id);
-    }
+    };
 
     var stopRequest = function() {
         if (window.stop !== undefined) {
@@ -110,7 +110,7 @@ $(function () {
         else if (document.execCommand !== undefined) {
             document.execCommand("Stop", false);
         }
-    }
+    };
 
     // don't create new url each time for unchanged setting
     // makes an ajax request with async:false, as with the copy
@@ -139,7 +139,7 @@ $(function () {
                 }
             });
         }
-    }
+    };
 
     var createQueryString = function() {
         var inputFields = $('#parameter-panel, #menu')
@@ -149,12 +149,12 @@ $(function () {
 
         $.fn.metaflop.queryString = '?' +
             $.makeArray(inputFields).map(function(element){
-                return element.id.remove('param-') + '=' + $(element).val()
+                return element.id.remove('param-') + '=' + $(element).val();
             })
             .join("&");
 
         return $.fn.metaflop.queryString;
-    }
+    };
 
     var generatePreviewCall = function() {
         var content = $('.box:visible');
@@ -214,22 +214,22 @@ $(function () {
                 showErrorMessage(jqXHR.responseText);
             }
         });
-    }
+    };
 
     var timeout;
     var generatePreview = function(){
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(generatePreviewCall, 300);
-    }
+    };
 
     var isAllowedTrailingCharacter = function(keyCode) {
         return [190, 188].some(keyCode);
-    }
+    };
 
     var isAllowedMetaKey = function(keyCode) {
         return [16, 17, 18].some(keyCode) || // meta
                [46, 9, 35, 36, 37, 39].some(keyCode); // backspace, delete, tab, cursors
-    }
+    };
 
     $.fn.metaflop.parameterPanel.on('focus', '.adjuster input.param', function() {
             var $this = $(this);
@@ -331,7 +331,7 @@ $(function () {
 
             setValue($this, sliderInput.attr('data-default'));
         });
-    }
+    };
 
     $('#action-reset-values').click(function(e) {
         e.preventDefault();
@@ -488,7 +488,7 @@ $(function () {
             // update the tooltip
             $(cbObj.elem).siblings().find('.fd-slider-handle').tipsy('show');
         }
-    }
+    };
     var initSliders = function() {
         $.fn.metaflop.parameterPanel.find('.slider input').each(function() {
             fdSlider.createSlider({
@@ -504,7 +504,7 @@ $(function () {
                 }
             });
         });
-    }
+    };
     initSliders();
 
     // character chooser for single preview
@@ -556,7 +556,7 @@ $(function () {
             adjusters.show();
             sliders.hide();
         }
-    }
+    };
 
     // switch basic/pro mode for parameter panel
     $('.parameter-panel-mode-toggle').click(function(e) {

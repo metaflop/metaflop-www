@@ -51,6 +51,66 @@ $(function () {
         $.fn.metaflop.progressPanel.html('<i class="fa fa-warning error"></i>');
     };
 
+    // session storage
+    var setSessionStorage = function(key, value) {
+        sessionStorage.setItem('history', JSON.stringify(value));
+    };
+
+    var getSessionStorage = function(key) {
+        return JSON.parse(sessionStorage.getItem(key)) || [];
+    };
+
+    var popUndoStep = function() {
+        var history = getSessionStorage('history');
+        // drop the current setting, while leaving at least one item
+        if (history.length > 1) {
+          history.pop();
+        }
+        var previousStep = history[history.length - 1];
+        setSessionStorage('history', history);
+        return previousStep;
+    };
+
+    var pushUndoStep = function(step) {
+        var history = getSessionStorage('history');
+        var lastStep = history[history.length - 1];
+        // don't add the same setting again
+        if (!Object.equal(step, lastStep)) {
+            history.push(step);
+        }
+        setSessionStorage('history', history);
+    };
+
+    var addUndo = function() {
+        var inputFields = getInputFields();
+        var currentSetting = {};
+        inputFields.each(function() {
+          currentSetting[this.id] = $(this).val();
+        });
+
+        pushUndoStep(currentSetting);
+    };
+
+    var applyUndo = function() {
+        var undoSetting = popUndoStep();
+        if (undoSetting) {
+            // set all values
+            Object.keys(undoSetting).each(function(key) {
+              var value = undoSetting[key];
+              $('#' + key).val(value);
+            });
+            // trigger the preview
+            generatePreview(false);
+        }
+    };
+
+    var getInputFields = function() {
+        return $('#parameter-panel, #menu')
+            .find('input:text,select')
+            // exclude the slider's inputs
+            .not('[id^=slider-]');
+    };
+
     // set background to corresponding inputs
     var setActiveInputs = function(inputField) {
         var suffix = (inputField.id || inputField[0].id).remove(/^\w+-/);
@@ -142,10 +202,7 @@ $(function () {
     };
 
     var createQueryString = function() {
-        var inputFields = $('#parameter-panel, #menu')
-            .find('input:text,select')
-            // exclude the slider's inputs
-            .not('[id^=slider-]');
+        var inputFields = getInputFields();
 
         $.fn.metaflop.queryString = '?' +
             $.makeArray(inputFields).map(function(element){
@@ -156,7 +213,8 @@ $(function () {
         return $.fn.metaflop.queryString;
     };
 
-    var generatePreviewCall = function() {
+    var generatePreviewCall = function(addUndoStep) {
+        addUndoStep = addUndoStep === undefined ? true : addUndoStep;
         var content = $('.box:visible');
 
         // clear cached shortend url
@@ -190,6 +248,9 @@ $(function () {
                 $.fn.metaflop.typeWriterTextArea.autogrow();
             },
             success: function(data) {
+                if (addUndoStep) {
+                    addUndo();
+                }
                 hideProgress();
                 content.fadeTo(0, 1);
 
@@ -217,9 +278,9 @@ $(function () {
     };
 
     var timeout;
-    var generatePreview = function(){
+    var generatePreview = function(addUndoStep){
         if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(generatePreviewCall, 300);
+        timeout = setTimeout(function() { generatePreviewCall(addUndoStep); }, 300);
     };
 
     var isAllowedTrailingCharacter = function(keyCode) {

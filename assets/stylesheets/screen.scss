@@ -183,7 +183,8 @@ a.has-active-toggle {
 
 object,
 embed {
-  vertical-align: top;
+  position: absolute;
+  bottom: 1px;
   background: $bg_color_modulator;
 }
 

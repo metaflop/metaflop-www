@@ -21,13 +21,15 @@ form autocomplete="off"
           div.clearfix.inputblock
             label anatomy
             div.static-value
-              a.toggle-info-panel href="#" on
-              a.toggle-info-panel.active href="#" off
+              a.toggle-info-panel.has-active-toggle href="#"
+                i.fa.fa-toggle-on.visible-when-active
+                i.fa.fa-toggle-off.hidden-when-active
 
             label glyph / chart
             div.static-value
-              a.toggle-glyph-chart-preview.active href="#" on
-              a.toggle-glyph-chart-preview href="#" off
+              a.toggle-glyph-chart-preview.has-active-toggle.active-toggled href="#"
+                i.fa.fa-toggle-on.visible-when-active
+                i.fa.fa-toggle-off.hidden-when-active
 
           div.clearfix.inputblock
             label mode

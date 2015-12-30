@@ -136,6 +136,26 @@ a {
   }
 }
 
+a.has-active-toggle {
+  .visible-when-active {
+    display: none;
+  }
+
+  .hidden-when-active {
+    display: initial;
+  }
+
+  &.active-toggled {
+    .visible-when-active {
+      display: initial;
+    }
+
+    .hidden-when-active {
+      display: none;
+    }
+  }
+}
+
 #progress-panel {
   position: absolute;
   left: $left_column_width + $box_spacing_x;

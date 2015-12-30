@@ -15,7 +15,7 @@ $(function () {
     $.fn.metaflop = {
         ready: false, // is set to true when the initial preview has been generated (i.e. the UI is ready)
         settings: {
-            panelToggleDuration: 200,
+            panelToggleDuration: 100,
             panelToggleEasing: 'easeInOutExpo',
             shareUrls: {
                 twitter: 'http://twitter.com/home?status=%{title} %{url}',

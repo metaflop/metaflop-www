@@ -149,9 +149,16 @@ a {
   white-space: nowrap;
 }
 
-// social share icons
-#action-share-url {
+// actions with icons
+.icon-action {
   font-size: 13px;
+}
+
+#action-undo {
+  &.disabled {
+    color: $link_color_disabled;
+    cursor: default;
+  }
 }
 
 object,
@@ -314,6 +321,10 @@ embed {
 
   margin-bottom: $box_spacing_y;
   position: relative;
+
+  a {
+    margin-right: $box_spacing_y * 1.5;
+  }
 
   .slider {
     float: right;

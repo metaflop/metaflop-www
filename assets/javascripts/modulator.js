@@ -26,7 +26,8 @@ $(function () {
         parameterPanel: $('#parameter-panel'),
         messagePanel: $('#message-panel'),
         progressPanel: $('#progress-panel'),
-        typeWriterTextArea: $('#preview-typewriter').find('textarea')
+        typeWriterTextArea: $('#preview-typewriter').find('textarea'),
+        undoAction: $('#action-undo')
     };
 
     var showProgress = function(message) {
@@ -60,6 +61,7 @@ $(function () {
         return JSON.parse(sessionStorage.getItem(key)) || [];
     };
 
+    // undo
     var popUndoStep = function() {
         var history = getSessionStorage('history');
         // drop the current setting, while leaving at least one item
@@ -81,6 +83,10 @@ $(function () {
         setSessionStorage('history', history);
     };
 
+    var getHistoryLength = function() {
+      return getSessionStorage('history').length;
+    };
+
     var addUndo = function() {
         var inputFields = getInputFields();
         var currentSetting = {};
@@ -89,6 +95,7 @@ $(function () {
         });
 
         pushUndoStep(currentSetting);
+        toggleUndoActionDisabled();
     };
 
     var applyUndo = function() {
@@ -101,8 +108,26 @@ $(function () {
             });
             // trigger the preview
             generatePreview(false);
+            toggleUndoActionDisabled();
         }
     };
+
+    var toggleUndoActionDisabled = function() {
+      if (getHistoryLength() == 1) {
+        $.fn.metaflop.undoAction.addClass('disabled');
+      }
+      else {
+        $.fn.metaflop.undoAction.removeClass('disabled');
+      }
+    };
+
+    $.fn.metaflop.undoAction.click(function(e) {
+        e.preventDefault();
+
+        if (!$.fn.metaflop.undoAction.hasClass('disabled')) {
+          applyUndo();
+        }
+    });
 
     var getInputFields = function() {
         return $('#parameter-panel, #menu')

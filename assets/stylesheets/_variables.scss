@@ -2,6 +2,7 @@ $font_size: 15px;
 $input_height: 14px;
 $input_color: #ccc9bc;
 $link_color: #666;
+$link_color_disabled: lighten($link_color, 30%);
 $link_color_hover: #ff0000;
 $bg_color_base: #f2f2f2;
 $bg_color_modulator: #e6ffd7;

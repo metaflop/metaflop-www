@@ -344,6 +344,10 @@ embed {
 
   a {
     margin-right: $box_spacing_y * 1.5;
+
+    &.parameter-panel-mode-toggle {
+      margin-right: $box_spacing_y;
+    }
   }
 
   .slider {

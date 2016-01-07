@@ -8,7 +8,7 @@
 
 ## Wiki
 
-Visit our wiki to find more [general informations] (https://github.com/metaflop/metaflop-www/wiki/About) about the project, how to contribute as a [developer] (https://github.com/metaflop/metaflop-www/wiki/Developer-Guide), how to install and work with METAFONT as a designer and what licenses for the source code and fonts are used.
+Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) to find more [general informations] (https://github.com/metaflop/metaflop-www/wiki/About) about the project, how to contribute as a [developer] (https://github.com/metaflop/metaflop-www/wiki/Developer-Guide), how to install and work with METAFONT as a designer and what licenses for the source code and fonts are used.
 
 ## License
 

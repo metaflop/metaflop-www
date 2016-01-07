@@ -4,7 +4,7 @@
 
 # Metaflop
 
-[Metaflop](http://www.metaflop.com) is an easy to use open source web application for modulating your own experimental fonts. Metaflop uses [METAFONT](https://en.wikipedia.org/wiki/Metafont), which allows you to easily customize a font within the given parameters and generate a large range of font families with very little effort.
+[Metaflop](http://www.metaflop.com) is an easy to use open source web application for modulating your own fonts. Metaflop uses [METAFONT](https://en.wikipedia.org/wiki/Metafont), which allows you to easily customize a font within the given parameters and generate a large range of font families with very little effort.
 
 With the [Modulator](http://www.metaflop.com/modulator) it is possible to use METAFONT without dealing with the programming language and coding by yourself, but simply by changing sliders or numeric values of the font parameter set. This enables you to focus on the visual output – adjusting the parameters of the typeface to your own taste. All the repetitive tasks are automated in the background.
 The unique results can be downloaded as a [webfont](https://en.wikipedia.org/wiki/Web_typography#Web_fonts) package for embedding on your homepage or an [opentype postscript font (.otf)](https://en.wikipedia.org/wiki/OpenType) which can be used on any system in any application supporting otf.

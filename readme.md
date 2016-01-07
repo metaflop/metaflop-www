@@ -8,5 +8,6 @@ Metaflop is a web application aimed at the generation of experimental fonts. It 
 
 ## License
 
-The sourcecode of this project is licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html).
-All generated fonts of this project are dual licensed under the [GPL v3](http://www.gnu.org/copyleft/gpl.html) and the [OFL](http://scripts.sil.org/OFL).
+The source code of this project and the METAFONTs are licensed under the [GNU General Public License v3.0 (GPL)](http://www.gnu.org/copyleft/gpl.html). This means you can use and extend the source code, as long as you distribute the source code freely under the same license. This license also allows for commercial use.
+
+All outline-based fonts (webfonts or otf) that are generated with this project are licensed under the [SIL Open Font License v1.1 (OFL)](http://scripts.sil.org/OFL). This means that you can freely use and extend the fonts and also use them commercially. Any derivative work has to be made freely available under the same license.

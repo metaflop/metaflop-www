@@ -8,7 +8,7 @@
 
 ## Wiki
 
-Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) to find more: 
+Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) to find more: <br>
 – [general informations] (https://github.com/metaflop/metaflop-www/wiki/About) about the project
 – how to contribute as a [developer] (https://github.com/metaflop/metaflop-www/wiki/Developer-Guide)
 – how to install and work with METAFONT as a [designer] (https://github.com/metaflop/metaflop-www/wiki/METAFONT-for-Designers)

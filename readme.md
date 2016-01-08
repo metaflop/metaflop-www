@@ -8,8 +8,8 @@
 
 ## Wiki
 
-Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) to find more: <br>
-– [general informations] (https://github.com/metaflop/metaflop-www/wiki/About) about the project <br>
+Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) for: <br>
+– more [general informations] (https://github.com/metaflop/metaflop-www/wiki/About) about the project <br>
 – how to contribute as a [developer] (https://github.com/metaflop/metaflop-www/wiki/Developer-Guide) <br>
 – how to install and work with METAFONT as a [designer] (https://github.com/metaflop/metaflop-www/wiki/METAFONT-for-Designers) <br>
 – how to contribute [your METAFONT] (https://github.com/metaflop/metaflop-www/wiki/Contribute-a-MF-to-Metaflop) to Metaflop <br>

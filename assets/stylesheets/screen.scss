@@ -161,10 +161,6 @@ a {
   }
 }
 
-#action-randomize-values {
-  float: right;
-}
-
 object,
 embed {
   position: absolute;
@@ -328,7 +324,7 @@ embed {
   position: relative;
 
   a {
-    margin-right: $box_spacing_y * 1.5;
+    margin-right: $box_spacing_y;
 
     &.parameter-panel-mode-toggle {
       margin-right: $box_spacing_y;

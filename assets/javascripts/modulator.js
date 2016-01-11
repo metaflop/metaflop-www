@@ -660,12 +660,16 @@ $(function() {
   informationToggle.click(function(e) {
     e.preventDefault();
 
-    informationToggle.toggleClass('active-toggled');
-    $('#info-panel').slideToggle(
-        $.fn.metaflop.settings.panelToggleDuration,
-        $.fn.metaflop.settings.panelToggleEasing);
+    var $this = $(this);
 
-    $(this).blur();
+    if (!$this.is('.active')) {
+      informationToggle.toggleClass('active');
+      $('#info-panel').slideToggle(
+          $.fn.metaflop.settings.panelToggleDuration,
+          $.fn.metaflop.settings.panelToggleEasing);
+    }
+
+    $this.blur();
   });
 
   // toggle the glyph/chart preview
@@ -673,12 +677,15 @@ $(function() {
   glyphChartPreviewToggle.click(function(e) {
     e.preventDefault();
 
-    glyphChartPreviewToggle.toggleClass('active-toggled');
-    $('#preview-single, #preview-chart').slideToggle(
-        $.fn.metaflop.settings.panelToggleDuration,
-        $.fn.metaflop.settings.panelToggleEasing);
+    var $this = $(this);
+    if (!$this.is('.active')) {
+      glyphChartPreviewToggle.toggleClass('active');
+      $('#preview-single, #preview-chart').slideToggle(
+          $.fn.metaflop.settings.panelToggleDuration,
+          $.fn.metaflop.settings.panelToggleEasing);
+    }
 
-    $(this).blur();
+    $this.blur();
   });
 
   // change type writer font size

@@ -4,13 +4,13 @@
 
 # Metaflop
 
-[Metaflop](http://www.metaflop.com) is an easy to use open source web application for modulating your own fonts. Metaflop uses [METAFONT](https://en.wikipedia.org/wiki/Metafont), which allows you to easily customize a font within the given parameters and generate a large range of font families with very little effort.
+[Metaflop](http://www.metaflop.com) is an easy to use free and open source web application for modulating your own fonts. Metaflop uses [METAFONT](https://en.wikipedia.org/wiki/Metafont), which allows you to easily customize a font within the given parameters and generate a large range of font families with very little effort.
 
 ## Wiki
 
 Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) for:
 
-- more [general informations] (https://github.com/metaflop/metaflop-www/wiki/About) about the project
+- more [general information] (https://github.com/metaflop/metaflop-www/wiki/About) about the project
 - how to contribute as a [developer] (https://github.com/metaflop/metaflop-www/wiki/Developer-Guide)
 - how to install and work with METAFONT as a [designer] (https://github.com/metaflop/metaflop-www/wiki/METAFONT-for-Designers)
 - how to contribute [your METAFONT] (https://github.com/metaflop/metaflop-www/wiki/Contribute-a-MF-to-Metaflop) to Metaflop

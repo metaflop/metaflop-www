@@ -1,17 +1,17 @@
 h2: span Parameters
-div.box-content
-  div.clearfix
-    label setting
-    div.static-value
+.box-content
+  .clearfix
+    label settings
+    .static-value
       a#action-reset-values.action href="#" reset
       a#action-randomize-values.action href="#" flop it!
 
-    div.static-value
+    .static-value
       a#action-undo.action href="#" title="undo" undo
 
-  div.clearfix
+  .clearfix
     label mode
-    div.static-value
+    .static-value
       a.parameter-panel-mode-toggle.sliders.active href="#" dummy
       a.parameter-panel-mode-toggle.adjusters href="#" nerd
 
@@ -19,7 +19,7 @@ div.box-content
     fieldset
       legend class="#{css_class}" = title
       - items
-        div.clearfix.inputblock class="#{css_class}"
+        .clearfix.inputblock class="#{css_class}"
           label for="param-#{name}" = title
           - dropdown
             select id="param-#{name}"
@@ -29,12 +29,12 @@ div.box-content
                 -! selected
                   option value="#{value}" = text
           -! dropdown
-            div class="adjuster param-#{name}"
+            .adjuster class="param-#{name}"
               a.sub10 href="#" title="decrease by 0.1" --
               a.sub1 href="#" title="decrease by 0.01" -
               input type="text" name="param-#{name}" id="param-#{name}" tabindex="#{tabindex}" value="#{value}" class="param init"
               a.add1 href="#" title="increase by 0.01" +
               a.add10 href="#" title="increase by 0.1" ++
-            div class="slider"
+            .slider
               input(id="slider-#{name}" type="text" maxlength="6" name="inputTest" value="#{value}"
                 data-range-from="#{range_from}" data-range-to="#{range_to}" data-default="#{default}")

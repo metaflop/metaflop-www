@@ -1,13 +1,13 @@
-div#col1
-  div#menu
+#col1
+  #menu
     h2: span = page_title
-    div.box-content
+    .box-content
       - all
-        div.clearfix.inputblock
+        .clearfix.inputblock
           label: a href="/#{page_slug}/#{title}" class="exclusive #{css_class}" = title
-  div#parameter-panel
+  #parameter-panel
     h2: span Info
-    div.box-content
+    .box-content
       - current
         == description
         p.box-caption
@@ -27,10 +27,10 @@ div#col1
             -! last
               |,&nbsp;
 
-div#col2
-  div.box-doublewidth.box-slideshow
+#col2
+  .box-doublewidth.box-slideshow
     h2: span &nbsp;
-    div.box-content
+    .box-content
       ul.bjqs
         - current
           - images
@@ -38,8 +38,8 @@ div#col2
 
   - current
     - subimages
-      div.box.box-doublewidth
+      .box.box-doublewidth
         - first
           h2: span derivations
-        div.box-content.showoff-derivations
+        .box-content.showoff-derivations
           a href="/modulator/font/#{short}": img src="#{url}"

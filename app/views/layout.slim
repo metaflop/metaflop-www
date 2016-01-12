@@ -9,15 +9,15 @@ html
     script src="#{application_javascript_path}" type="text/javascript"
 
   body
-    div#main class="#{page_slug}"
-      div#navigation
+    #main class="#{page_slug}"
+      #navigation
         h1
           a href="/" = application_name
 
         == main_navigation
 
-        div#progress-panel &nbsp;
-        div#message-panel
+        #progress-panel &nbsp;
+        #message-panel
 
         == meta_navigation
 

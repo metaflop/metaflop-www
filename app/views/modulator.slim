@@ -5,34 +5,34 @@ style type="text/css" id="font-face-css"
     }
 
 form autocomplete="off"
-  div#col1
+  #col1
 
-    div#menu
+    #menu
       h2: span = page_title
-      div.box-content
+      .box-content
         fieldset
           legend.first
-            div.clearfix
+            .clearfix
               label Font
               select#param-fontface
                 - fontfaces
                   option(value=name selected=active) = name
 
-          div.clearfix.inputblock
+          .clearfix.inputblock
             label anatomy
-            div.static-value
+            .static-value
               a.toggle-info-panel href="#" on
               a.toggle-info-panel.active href="#" off
 
 
             label glyph / chart
-            div.static-value
+            .static-value
               a.toggle-glyph-chart-preview.active href="#" on
               a.toggle-glyph-chart-preview href="#" off
 
-          div.clearfix.inputblock
+          .clearfix.inputblock
             label share
-            div#action-share-url.static-value
+            #action-share-url.static-value
               a.icon-action href="#" data-type="twitter": i.fa.fa-twitter
               a.icon-action href="#" data-type="facebook": i.fa.fa-facebook
               a.icon-action href="#" data-type="email": i.fa.fa-envelope-o
@@ -46,38 +46,38 @@ form autocomplete="off"
                 param value="opaque" name="wmode"
                 embed width="14" height="20" wmode="opaque" bgcolor="#FFFFFF" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" name="clippy" src="#{clippy_url}"
 
-          div.clearfix.inputblock
+          .clearfix.inputblock
             label download
-            div.static-value
+            .static-value
               a.export-font href="#" data-type="otf" open type font
               a.export-font href="#" data-type="web" webfont
           
-    div#parameter-panel
+    #parameter-panel
       == parameter_panel
 
-  div#col2
+  #col2
 
-    div#info-panel.box-doublewidth
+    #info-panel.box-doublewidth
       h2: span Anatomy
       .box-content.auto-height
         - anatomy_images
           img src=url class=css_class data-fontface=name
 
-    div#preview-panel
-      div#preview-single.box
+    #preview-panel
+      #preview-single.box
         h2: span Glyph
 
-        div.box-content
-          div.preview-text A
+        .box-content
+          .preview-text A
           a.char-chooser.left href="#" &lt;
-          div.char-chooser
+          .char-chooser
             == char_chooser
           a.char-chooser.right href="#" &gt;
 
-      div#preview-chart.box
+      #preview-chart.box
         h2: span Chart
 
-        div.box-content
+        .box-content
           table.preview-text cellpadding="0" cellspacing="0"
             tr
               td A
@@ -161,11 +161,11 @@ form autocomplete="off"
               td 8
               td 9
 
-      div#preview-typewriter.box.box-doublewidth
+      #preview-typewriter.box.box-doublewidth
         h2: span Typewriter
 
-        div.box-content
-          div.font-size
+        .box-content
+          .font-size
             select#typewriter-font-size
               - typewriter_font_sizes
                 - selected
@@ -173,7 +173,7 @@ form autocomplete="off"
                 -! selected
                   option value="#{value}" = text
 
-          div.font-text
+          .font-text
             select#typewriter-text
               - typewriter_texts
                 - selected

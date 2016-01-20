@@ -627,9 +627,8 @@ $(function() {
   });
 
   var togglePanelMode = function(element) {
-    var parameterPanel = $('#parameter-panel');
-    var adjusters = parameterPanel.find('.adjuster');
-    var sliders = parameterPanel.find('.slider');
+    var adjusters = $.fn.metaflop.parameterPanel.find('.adjuster');
+    var sliders = $.fn.metaflop.parameterPanel.find('.slider');
 
     $('.parameter-panel-mode-toggle').removeClass('active');
     element.addClass('active');
@@ -645,7 +644,7 @@ $(function() {
   };
 
   // switch basic/pro mode for parameter panel
-  $('.parameter-panel-mode-toggle').click(function(e) {
+  $.fn.metaflop.parameterPanel.on('click', '.parameter-panel-mode-toggle',function(e) {
     e.preventDefault();
 
     var $this = $(this);

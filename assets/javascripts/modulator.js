@@ -26,8 +26,7 @@ $(function() {
     parameterPanel: $('#parameter-panel'),
     messagePanel: $('#message-panel'),
     progressPanel: $('#progress-panel'),
-    typeWriterTextArea: $('#preview-typewriter').find('textarea'),
-    undoAction: $('#action-undo')
+    typeWriterTextArea: $('#preview-typewriter').find('textarea')
   };
 
   var showProgress = function(message) {
@@ -113,18 +112,22 @@ $(function() {
   };
 
   var toggleUndoActionDisabled = function() {
+    var undoAction = $('#undo-action');
+
     if (getHistoryLength() == 1) {
-      $.fn.metaflop.undoAction.addClass('disabled');
+      undoAction.addClass('disabled');
     }
     else {
-      $.fn.metaflop.undoAction.removeClass('disabled');
+      undoAction.removeClass('disabled');
     }
   };
 
-  $.fn.metaflop.undoAction.click(function(e) {
+  $.fn.metaflop.parameterPanel.on('click', '#action-undo',function(e) {
     e.preventDefault();
 
-    if (!$.fn.metaflop.undoAction.hasClass('disabled')) {
+    var undoAction = $(e.target);
+
+    if (!undoAction.hasClass('disabled')) {
       applyUndo();
     }
   });

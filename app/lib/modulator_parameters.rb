@@ -24,8 +24,8 @@ class ModulatorParameters
       items: [
         { title: 'cap height', key: :cap_height },
         { title: 'bar height', key: :bar_height },
-        { title: 'ascender height', key: :ascender_height },
-        { title: 'descender height', key: :descender_height },
+        { title: 'asc. height', key: :ascender_height },
+        { title: 'desc. height', key: :descender_height },
         { title: 'glyph angle', key: :glyph_angle },
         { title: 'x-height', key: :x_height },
         { title: 'accents height', key: :accent_height },
@@ -34,8 +34,8 @@ class ModulatorParameters
     }, {
       title: 'Shape',
       items: [
-        { title: 'horizontal increase', key: :horizontal_increase },
-        { title: 'vertical increase', key: :vertical_increase },
+        { title: 'horiz. increase', key: :horizontal_increase },
+        { title: 'vert. increase', key: :vertical_increase },
         { title: 'contrast', key: :contrast },
         { title: 'superness', key: :superness },
         { title: 'pen angle', key: :pen_angle },

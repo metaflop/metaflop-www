@@ -116,7 +116,7 @@ $(function() {
   };
 
   var toggleUndoActionDisabled = function() {
-    var undoAction = $('#undo-action');
+    var undoAction = $('#action-undo');
 
     if (getHistoryLength() == 1) {
       undoAction.addClass('disabled');

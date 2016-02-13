@@ -82,6 +82,10 @@ $(function() {
     setSessionStorage('history', history);
   };
 
+  var clearHistory = function() {
+    setSessionStorage('history', []);
+  };
+
   var getHistoryLength = function() {
     return getSessionStorage('history').length;
   };
@@ -380,6 +384,8 @@ $(function() {
     onClicked: function() {
       showProgress('Loading parameter panel...');
       $.fn.metaflop.parameterPanel.fadeTo(0, 0.5);
+
+      clearHistory();
 
       var activeNerdMode = $('.parameter-panel-mode-toggle.active.adjusters');
 
@@ -733,6 +739,7 @@ $(function() {
   // insertRule is not supported by IE < 9, which also don't
   // support otf font faces
   if (Modernizr.fontface && document.styleSheets[0].insertRule) {
+    clearHistory();
     // load the first image
     generatePreview();
   }

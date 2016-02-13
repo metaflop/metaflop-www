@@ -126,7 +126,7 @@ $(function() {
     }
   };
 
-  $.fn.metaflop.parameterPanel.on('click', '#action-undo',function(e) {
+  $.fn.metaflop.parameterPanel.on('click', '#action-undo', function(e) {
     e.preventDefault();
 
     var undoAction = $(e.target);
@@ -428,7 +428,7 @@ $(function() {
     });
   };
 
-  $('#action-reset-values').click(function(e) {
+  $.fn.metaflop.parameterPanel.on('click', '#action-reset-values', function(e) {
     e.preventDefault();
 
     resetParameters();
@@ -437,7 +437,7 @@ $(function() {
   });
 
   // randomize
-  $('#action-randomize-values').click(function(e) {
+  $.fn.metaflop.parameterPanel.on('click', '#action-randomize-values', function(e) {
     e.preventDefault();
 
     // randomize the slider inputs

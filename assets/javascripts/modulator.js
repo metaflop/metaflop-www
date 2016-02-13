@@ -160,7 +160,7 @@ $(function() {
     if (method == 'add') value = value + number;
     else if (method == 'sub') value = value - number;
 
-    setValue(inputField, value);
+    setValue(inputField, value.round(2));
   };
 
   var setValue = function(inputField, value) {

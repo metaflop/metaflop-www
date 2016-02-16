@@ -646,6 +646,7 @@ $(function() {
 
     if (element.hasClass('sliders')) {
       sliders.show();
+      fdSlider.redrawAll();
       adjusters.hide();
     }
     else {

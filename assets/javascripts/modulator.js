@@ -106,8 +106,10 @@ $(function() {
     if (undoSetting) {
       // set all values
       Object.keys(undoSetting).each(function(key) {
-        var value = undoSetting[key];
-        $('#' + key).val(value);
+        if (key !== 'param-fontface') {
+          var value = undoSetting[key];
+          setValue($('#' + key), value);
+        }
       });
       // trigger the preview
       generatePreview(false);

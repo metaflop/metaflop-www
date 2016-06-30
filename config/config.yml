@@ -18,7 +18,7 @@ metafonts:
       -
         name: Simon Egli
         url: http://www.simonegli.com/
-    year: 2012
+    year: 2012–2014
     encoding: T1
     source_code:
       -
@@ -108,8 +108,8 @@ metafonts:
       -
         name: Simon Egli
         url: http://www.simonegli.com/
-    year: 2012
-    encoding: '-'
+    year: 2012–2016
+    encoding: 't1'
     source_code:
       -
         title: Github

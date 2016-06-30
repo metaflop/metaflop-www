@@ -317,19 +317,12 @@ embed {
   }
 }
 
-#parameter-panel {
+#parameter-panel,
+#showoff-info-panel {
   @extend .box-text;
 
   margin-bottom: $box_spacing_y;
   position: relative;
-
-  a {
-    margin-right: $box_spacing_y;
-
-    &.parameter-panel-mode-toggle {
-      margin-right: $box_spacing_y;
-    }
-  }
 
   .slider {
     float: right;
@@ -412,6 +405,7 @@ embed {
   // metafonts description column, caption
   .box-content p.box-caption {
     @include box-caption;
+    color: #000;
     position: relative;
     margin: 10px -7px 0;
     padding: 9px 7px;
@@ -421,6 +415,16 @@ embed {
 
   .parameter-panel-options {
     margin-bottom: $box_spacing_y;
+  }
+}
+
+#parameter-panel {
+  a {
+    margin-right: $box_spacing_y;
+
+    &.parameter-panel-mode-toggle {
+      margin-right: $box_spacing_y;
+    }
   }
 }
 

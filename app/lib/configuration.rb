@@ -78,7 +78,11 @@ module Configuration
     def config
       require 'sinatra/config_file'
       register Sinatra::ConfigFile
-      config_file ['./config/config.yml', './config/db.yml']
+      config_file [
+        './config/config.yml',
+        './config/metafonts.yml',
+        './config/db.yml'
+      ]
     end
 
     def navigation

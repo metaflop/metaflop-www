@@ -10,19 +10,18 @@ require_relative 'showoff_page'
 
 class App < Sinatra::Base
   module Views
-    class Metafonts < ShowoffPage
-      template :showoff_page
+    class Showcases < ShowoffPage
+      template :showcases
 
       def all
         pages = @settings.to_a.map do |x|
           {
             identifier: x[0],
-            title: x[0],
+            title: x[1]['title'],
             description: x[1]['description'],
-            type_designer: with_last_identifier(x[1]['type_designer']),
+            agency: x[1]['agency'],
             year: x[1]['year'],
-            encoding: x[1]['encoding'],
-            source_code: with_last_identifier(x[1]['source_code']),
+            font: x[1]['font'],
             images: x[1]['images'].map do |img|
             {
               url: image_path("#{page_slug}/#{img[0]}"),

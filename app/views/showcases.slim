@@ -11,21 +11,11 @@
       - current
         == description
         p.box-caption
-          | Type Designer:&nbsp;
-          - type_designer
-            a href="#{url}" target="_blank" #{name}
-            -! last
-              |,&nbsp;
+          | Agency: #{{agency}}
           br
           | Year: #{year}
           br
-          | Encoding: #{encoding}
-          br
-          | Source code:&nbsp;
-          - source_code
-            a href="#{url}" target="_blank" #{title}
-            -! last
-              |,&nbsp;
+          | Font: #{{font}}
 
 #col2
   .box-doublewidth.box-slideshow

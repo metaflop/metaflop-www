@@ -81,6 +81,7 @@ module Configuration
       config_file [
         './config/config.yml',
         './config/metafonts.yml',
+        './config/showcases.yml',
         './config/db.yml'
       ]
     end

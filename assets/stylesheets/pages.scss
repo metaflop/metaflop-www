@@ -30,8 +30,8 @@
     @include page-style($bg_color_metafonts);
   }
 
-  &.projects {
-    @include page-style($bg_color_projects);
+  &.showcases {
+    @include page-style($bg_color_showcases);
   }
 
   &.media {

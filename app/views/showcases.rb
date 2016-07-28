@@ -19,22 +19,15 @@ class App < Sinatra::Base
             identifier: x[0],
             title: x[1]['title'],
             description: x[1]['description'],
-            agency: x[1]['agency'],
+            design: x[1]['design'],
+            publisher: x[1]['publisher'],
             year: x[1]['year'],
             font: x[1]['font'],
             images: x[1]['images'].map do |img|
             {
-              url: image_path("#{page_slug}/#{img[0]}"),
-              title: img[1]
+              url: image_path("#{page_slug}/#{img}"),
             }
-            end,
-              subimages: (x[1]['subimages'] || []).map.with_index do |img, i|
-              {
-                url: image_path("#{page_slug}/#{img[0]}"),
-                short: img[1],
-                  first: i == 0
-              }
-              end
+            end
           }
         end
 

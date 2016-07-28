@@ -4,15 +4,20 @@
     .box-content
       - all
         .clearfix.inputblock
-          label: a href="/#{page_slug}/#{identifier}" class="exclusive #{css_class}" = title
+          label.full
+            a href="/#{page_slug}/#{identifier}" class="exclusive #{css_class}" = title
   #showoff-info-panel
     h2: span Info
     .box-content
       - current
         == description
         p.box-caption
-          | Agency: #{{agency}}
-          br
+          - design
+            | Design: #{{design}}
+            br
+          - publisher
+            | Publisher: #{{publisher}}
+            br
           | Year: #{year}
           br
           | Font: #{{font}}
@@ -24,12 +29,4 @@
       ul.bjqs
         - current
           - images
-            li: img src="#{url}" title="#{title}"
-
-  - current
-    - subimages
-      .box.box-doublewidth
-        - first
-          h2: span derivations
-        .box-content.showoff-derivations
-          a href="/modulator/font/#{short}": img src="#{url}"
+            li: img src="#{url}"

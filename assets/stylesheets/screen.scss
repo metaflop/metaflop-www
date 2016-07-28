@@ -105,6 +105,10 @@ legend {
 label {
   float: left;
   width: 45%;
+
+  &.full {
+    width: 100%;
+  }
 }
 
 ul {

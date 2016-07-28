@@ -1,44 +1,158 @@
 showcases:
+  electronic_superhighway:
+    title: Electronic Superhighway
+    description: <p><a
+      href="http://www.whitechapelgallery.org/about/blog/top-10-electronic-superhighway/"
+      target="_blank">Electronic Superhighway</a> features over 100 works of
+      art that show the impact of computer and internet technologies on artists
+      from the mid-1960s to the present day.</p>
+
+      <p>The London based <a href="http://www.julia.uk.com/"
+      target="_blank>design studio Julia</a> created the catalogue for the <a
+      href="http://www.whitechapelgallery.org/" target="_blank">Whitechapel
+      Gallery</a>’s exhibition, taking its central theme of the online and
+      digital worlds and translating it into designs that are based around MF
+      Bespoke, by mixing different font variations into a same text block to
+      reference the way code is written by programmers, with lines indented by
+      increasing amounts.</p>
+    design: <a href="http://www.julia.uk.com/" target="_blank">Julia</a>
+    year: 2016
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - Julia-Electronic_Superhighway-01.jpg
+      - Julia-Electronic_Superhighway-02.jpg
+      - Julia-Electronic_Superhighway-03.jpg
+      - Julia-Electronic_Superhighway-04.jpg
+      - Julia-Electronic_Superhighway-05.jpg
+      - Julia-Electronic_Superhighway-06.jpg
+      - Julia-Electronic_Superhighway-07.jpg
+      - Julia-Electronic_Superhighway-08.jpg
+      - Julia-Electronic_Superhighway-09.jpg
+      - Julia-Electronic_Superhighway-10.jpg
+      - Julia-Electronic_Superhighway-11.jpg
+      - Julia-Electronic_Superhighway-12.jpg
+      - Julia-Electronic_Superhighway-13.jpg
+      - Julia-Electronic_Superhighway-14.jpg
+      - Julia-Electronic_Superhighway-15.jpg
+      - Julia-Electronic_Superhighway-16.jpg
+      - Julia-Electronic_Superhighway-17.jpg
+      - Julia-Electronic_Superhighway-18.jpg
+      - Julia-Electronic_Superhighway-19.jpg
+      - Julia-Electronic_Superhighway-20.jpg
+      - Julia-Electronic_Superhighway-21.jpg
+
   off_grid:
     title: Off Grid
-    description: <p>The Glasgow based Warriors Studio used MF Bespoke for the
-      visual identity, poster and printed catalogue design for an
-      interdisciplinary artists and graphic designers exhibition in their home
-      town.</p>
-      <p>The exhibition was originally shown at South Block Glasgow as part of <a
-      href="http://graphicdesignfestivalscotland.com" target="_blank">Graphic
-      Design Festival Scotland</a> 2015 before being invited to Nancy, France,
-      where it was shown at <a href="http://mymonkey.fr"
-      target="_blank">Galerie My Monkey</a> – a highly commended graphic design
-      gallery, which has hosted exhibitions over the past 12 years.</p>
-    agency: <a href="http://warriorsstudio.com" target="_blank">Warriors Studio</a>
+    description: <p>Off Grid features interdisciplinary artists and graphic
+      designers in an exhibition that was originally shown at South Block
+      Glasgow as part of <a href="http://graphicdesignfestivalscotland.com"
+      target="_blank">Graphic Design Festival Scotland</a> 2015 before being
+      invited to Nancy, France, where it was shown at <a
+      href="http://mymonkey.fr" target="_blank">Galerie My Monkey</a>.</p>
+
+      <p>The Glasgow based <a href="http://warriorsstudio.com/"
+      target="_blank">Warriors Studio</a> created a clear and reduced visual
+      identity, using a medium weight of MF Bespoke for the exhibition leaflet
+      and displays.</p>
+
+    design: <a href="http://warriorsstudio.com" target="_blank">Warriors Studio</a>
     year: 2015
     font: <a href="/metafonts/bespoke">MF Bespoke</a>
     images:
-      -
-        - warriors-studio-off-grid_01.jpg
-        -
-      -
-        - warriors-studio-off-grid_02.jpg
-        -
-      -
-        - warriors-studio-off-grid_03.jpg
-        -
-      -
-        - warriors-studio-off-grid_04.jpg
-        -
-      -
-        - warriors-studio-off-grid_05.jpg
-        -
-      -
-        - warriors-studio-off-grid_06.jpg
-        -
-      -
-        - warriors-studio-off-grid_07.jpg
-        -
-      -
-        - warriors-studio-off-grid_08.jpg
-        -
-      -
-        - warriors-studio-off-grid_09.jpg
-        -
+      - warriors-studio-off-grid_01.jpg
+      - warriors-studio-off-grid_02.jpg
+      - warriors-studio-off-grid_03.jpg
+      - warriors-studio-off-grid_04.jpg
+      - warriors-studio-off-grid_05.jpg
+      - warriors-studio-off-grid_06.jpg
+      - warriors-studio-off-grid_07.jpg
+      - warriors-studio-off-grid_08.jpg
+      - warriors-studio-off-grid_09.jpg
+
+  staging_disorder:
+    title: Staging Disorder
+    description: <p><a href="http://www.arts.ac.uk/lcc/" target="_blank">London
+      College of Communication</a>’s exhibition of <a
+      href="http://www.designweek.co.uk/issues/26-january-1-february-2015/staging-disorder-at-lcc/"
+      target="_blank">Staging Disorder</a> examines the work of seven
+      photographers each interested in the environments used to simulate and
+      prepare for modern warfare.</p>
+
+      <p>The idea of a constructed reality has been reflected in the exhibition
+      design, which includes unfinished paint edges surrounding the
+      photographs, a paper-and-tape-effect design used to present the artists’
+      credits. A version with reduced superness for MF Bespoke resulting in a
+      font with distorted curves for all texts and headlines.</p>
+    design: Studio Hato (http://www.studiohato.com/)
+    year: 2015
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - Hato_Staging-disorder-01.jpg
+      - Hato_Staging-disorder-02.jpg
+      - Hato_Staging-disorder-03.jpg
+      - Hato_Staging-disorder-04.jpg
+      - Hato_Staging-disorder-05.jpg
+      - Hato_Staging-disorder-06.jpg
+      - Hato_Staging-disorder-07.jpg
+      - Hato_Staging-disorder-08.jpg
+      - Hato_Staging-disorder-09.jpg
+
+  yearbook_of_type_i:
+    title: Yearbook of Type I
+    description: <p><a
+      href="http://www.niggli.ch/en/yearbook-of-type-i-417.html"
+      target="_blank">The Yearbook of Type I</a> offers a selection of numerous
+      digital typefaces in the form of a printed compendium. Several chapters
+      presenting type designers, foundries and background knowledge on
+      typography as well as essays providing additional information around the
+      field of up to date type design.</p>
+    publisher: <a href="http://www.niggli.ch/en/" target="_blank"Niggli</a>
+    year: 2013
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - slanted_yearbookoftype1_01.jpg
+      - slanted_yearbookoftype1_02.jpg
+
+  dont_shoot_the_messenger:
+    title: Don’t Shoot the Messenger
+    description: <p>Visual identity for an exhibition about contemporary graphic
+      design in Finland at the <a href="http://www.designmuseum.fi/en/"
+      target="_blank">Design Museum Helsinki</a>.</p>
+
+      <p><a href="http://www.tsto.org/" target="_blank">Studio Tsto</a> created
+      the exhibition design and brochure, following a set of self defined design
+      rules. An early version of MF Bespoke underlined their strict design
+      approach.</p>
+    design: <a href="http://www.tsto.org/" target="_blank">Studio Tsto</a>
+    year: 2013
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - Tsto-DontShootTheMessenger_01.jpg
+      - Tsto-DontShootTheMessenger_02.jpg
+      - Tsto-DontShootTheMessenger_03.jpg
+      - Tsto-DontShootTheMessenger_04.jpg
+      - Tsto-DontShootTheMessenger_05.jpg
+      - Tsto-DontShootTheMessenger_06.jpg
+      - Tsto-DontShootTheMessenger_07.jpg
+      - Tsto-DontShootTheMessenger_08.jpg
+
+  intreccio_mirage:
+    title: Intreccio Mirage
+    description: <p>A solo exhibition by artist <a
+      href="http://www.43inverness-street.com/exhibitions/milly-thompson/"
+      target="_blank">Milly Thompson, Intreccio Mirage</a>, at the 43 Inverness
+      Street gallery in London.
+
+      <p>The London based <a href="http://pleasedonotbend.co.uk/"
+      target="_blank">Fraser Muggeridge</a> created the exhibition catalogue,
+      poster and invitation card for the exhibition, supported by an early
+      distorted version of MF Bespoke.</p>
+
+    design: <a href="http://pleasedonotbend.co.uk/" target="_blank">Fraser Muggeridge</a>
+    year: 2013
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - Fraser-Muggeridge_Milly_Thompson_01.jpg
+      - Fraser-Muggeridge_Milly_Thompson_02.jpg
+      - Fraser-Muggeridge_Milly_Thompson_03.jpg
+      - Fraser-Muggeridge_Milly_Thompson_04.jpg

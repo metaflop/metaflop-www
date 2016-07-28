@@ -136,15 +136,18 @@ a {
   }
 }
 
+// the main menu gets in the way...
+$progress-panel-additional-left-spacing: 90px;
+
 #progress-panel {
   position: absolute;
-  left: $left_column_width + $box_spacing_x;
+  left: $left_column_width + $box_spacing_x + $progress-panel-additional-left-spacing;
   width: 15px;
 }
 
 #message-panel {
   position: absolute;
-  left: $left_column_width + $box_spacing_x + 15px + $box_spacing_y;
+  left: $left_column_width + $box_spacing_x + $progress-panel-additional-left-spacing + 15px + $box_spacing_y;
   width: auto;
   white-space: nowrap;
 }

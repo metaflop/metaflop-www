@@ -95,7 +95,8 @@ metafonts:
       constructed sans serif fonts. This metafont consists of 14 adjustable parameters grouped
       in classes of dimension, proportion and shape.
       By using this range of parameters a high variety of derivates can be achieved.
-      The standard font and font-box has the size of 10 unit points.
+      The T1 encoding of MF Bespoke covers 256 characters supporting many
+      european languages with latin writing.
     type_designer:
       -
         name: Marco Müller

@@ -23,6 +23,8 @@ group :development do
   gem 'better_errors'
   gem 'capistrano', '~> 2'
   gem 'capistrano-rbenv', '~> 1'
+  gem 'image_optim'
+  gem 'image_optim_pack'
   gem 'nyan-cat-formatter'
   gem 'pry'
   gem 'rspec'

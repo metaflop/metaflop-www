@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#mf2outline version 20160415
+#mf2outline version 20160803
 
 #This program has been written by Linus Romer for the 
 #Metaflop project by Marco Mueller and Alexis Reigel.
@@ -739,17 +739,17 @@ if __name__ == "__main__":
 	
 	if args.verbose:
 		print "Setting other general font information..."
-	if font.fullname == "Unknown":
+	if args.fullname:
 		font.fullname = args.fullname
-	if font.fontname == "Unknown":
+	if args.fontname:
 		font.fontname = args.fontname
-	if font.familyname == "Unknown":
+	if args.familyname:
 		font.familyname = args.familyname
-	if font.version == "001.001":
+	if args.version:
 		font.version = args.version
-	if font.copyright == "":
+	if args.copyright:
 		font.copyright = args.copyright
-	if font.os2_vendor == "":
+	if args.vendor:
 		font.os2_vendor = args.vendor
 	# setting the weight
 	if args.weight == None:

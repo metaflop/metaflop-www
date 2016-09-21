@@ -157,3 +157,54 @@ showcases:
       - Fraser-Muggeridge_Milly_Thompson_02.jpg
       - Fraser-Muggeridge_Milly_Thompson_03.jpg
       - Fraser-Muggeridge_Milly_Thompson_04.jpg
+
+  je_peux_le_faire:
+    title: Je peux le faire
+    description: <p><a href="http://www.lieuxpublics.org/">Je peux le
+      faire!</a> is an online project that gathers instructions for
+      performative public art, their participants and artists.</p>
+
+      <p>The Bordeaux based design duo <a
+      href="http://www.tabaramounien.com/je-peux-le-faire/">Tabaramounien</a>
+      created the website, stickers and leaflet, combining a slanted MF Bespoke
+      with a late 19th century classicist serif type face.</p>
+    design: <a href="http://www.tabaramounien.com/">Tabaramounien</a>
+    year: 2016
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - je-peux-le-faire_01.jpg
+      - je-peux-le-faire_02.jpg
+      - je-peux-le-faire_03.jpg
+      - je-peux-le-faire_04.jpg
+      - je-peux-le-faire_06.jpg
+      - je-peux-le-faire_07.jpg
+      - je-peux-le-faire_08.jpg
+
+  die_dada:
+    title: Die Dada
+    description: <p>The book <a href="http://www.scheidegger-spiess.ch/index.php?page=books&view=co&booktype=order_1_releasedate&subject=1&artist=all&author=all&pd=ss&book=607&lang=de">Die
+      Dada – Wie Frauen Dada prägten</a> presents for the first time a
+      comprehensive overview about the most important She Dada painters,
+      writers, dancers, musicians, publishers and patrons of this avant-garde
+      art movement.</p>
+
+      <p>Edited by <a href="http://www.inaboesch.ch/de/buecher/die-dada.html">
+      Ina Boesch</a> and designed by Marco Müller, with contributions from Ina
+      Boesch, Ralf Burmeister, Irene Gammel, Ruth Hemus, Sabine T. Kriebel and
+      Walburga Krupp. Published by <a
+      href="http://www.scheidegger-spiess.ch/index.php?pd=ss&page=home&view=co&lang=en">Scheidegger
+      & Spiess</a> Zurich.</p>
+
+      <p>164 pages, 11 color and 46 greyscale plates, 17 x 24 cm</p>
+    design: <a href="http://marco-mueller.com/">Marco Müller</a>
+    year: 2015
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - MM_PROJECT_01_001.jpg
+      - MM_PROJECT_01_006.jpg
+      - MM_PROJECT_01_007.jpg
+      - MM_PROJECT_01_009.jpg
+      - MM_PROJECT_01_018.jpg
+      - MM_PROJECT_01_021.jpg
+      - MM_PROJECT_01_024.jpg
+      - MM_PROJECT_01_027.jpg

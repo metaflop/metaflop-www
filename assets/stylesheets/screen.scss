@@ -516,6 +516,7 @@ embed {
     p {
       @extend .minor-para;
       line-height: $line_height;
+      word-break: break-word;
     }
   }
 }

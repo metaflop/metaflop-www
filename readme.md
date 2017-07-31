@@ -9,13 +9,13 @@
 
 ## Wiki
 
-Visit our [wiki] (https://github.com/metaflop/metaflop-www/wiki) for:
+Visit our [wiki](https://github.com/metaflop/metaflop-www/wiki) for:
 
-- more [general information] (https://github.com/metaflop/metaflop-www/wiki/About) about the project
-- how to contribute as a [developer] (https://github.com/metaflop/metaflop-www/wiki/Developer-Guide)
-- how to install and work with METAFONT as a [designer] (https://github.com/metaflop/metaflop-www/wiki/METAFONT-for-Designers)
-- how to contribute [your METAFONT] (https://github.com/metaflop/metaflop-www/wiki/Contribute-a-MF-to-Metaflop) to Metaflop
-- [what licenses] (https://github.com/metaflop/metaflop-www/wiki/License) for the source code and fonts are used
+- more [general information](https://github.com/metaflop/metaflop-www/wiki/About) about the project
+- how to contribute as a [developer](https://github.com/metaflop/metaflop-www/wiki/Developer-Guide)
+- how to install and work with METAFONT as a [designer](https://github.com/metaflop/metaflop-www/wiki/METAFONT-for-Designers)
+- how to contribute [your METAFONT](https://github.com/metaflop/metaflop-www/wiki/Contribute-a-MF-to-Metaflop) to Metaflop
+- [what licenses](https://github.com/metaflop/metaflop-www/wiki/License) for the source code and fonts are used
 
 ## License
 

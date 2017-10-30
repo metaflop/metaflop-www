@@ -160,15 +160,15 @@ showcases:
 
   je_peux_le_faire:
     title: Je peux le faire
-    description: <p><a href="http://www.lieuxpublics.org/">Je peux le
+    description: <p><a href="http://www.lieuxpublics.org/" target="_blank">Je peux le
       faire!</a> is an online project that gathers instructions for
       performative public art, their participants and artists.</p>
 
       <p>The Bordeaux based design duo <a
-      href="http://www.tabaramounien.com/je-peux-le-faire/">Tabaramounien</a>
+      href="http://www.tabaramounien.com/je-peux-le-faire/" target="_blank">Tabaramounien</a>
       created the website, stickers and leaflet, combining a slanted MF Bespoke
       with a late 19th century classicist serif type face.</p>
-    design: <a href="http://www.tabaramounien.com/">Tabaramounien</a>
+    design: <a href="http://www.tabaramounien.com/" target="_blank">Tabaramounien</a>
     year: 2016
     font: <a href="/metafonts/bespoke">MF Bespoke</a>
     images:
@@ -182,21 +182,21 @@ showcases:
 
   die_dada:
     title: Die Dada
-    description: <p>The book <a href="http://www.scheidegger-spiess.ch/index.php?page=books&view=co&booktype=order_1_releasedate&subject=1&artist=all&author=all&pd=ss&book=607&lang=de">Die
+    description: <p>The book <a href="http://www.scheidegger-spiess.ch/index.php?page=books&view=co&booktype=order_1_releasedate&subject=1&artist=all&author=all&pd=ss&book=607&lang=de" target="_blank">Die
       Dada – Wie Frauen Dada prägten</a> presents for the first time a
       comprehensive overview about the most important She Dada painters,
       writers, dancers, musicians, publishers and patrons of this avant-garde
       art movement.</p>
 
-      <p>Edited by <a href="http://www.inaboesch.ch/de/buecher/die-dada.html">
+      <p>Edited by <a href="http://www.inaboesch.ch/de/buecher/die-dada.html" target="_blank">
       Ina Boesch</a> and designed by Marco Müller, with contributions from Ina
       Boesch, Ralf Burmeister, Irene Gammel, Ruth Hemus, Sabine T. Kriebel and
       Walburga Krupp. Published by <a
-      href="http://www.scheidegger-spiess.ch/index.php?pd=ss&page=home&view=co&lang=en">Scheidegger
+      href="http://www.scheidegger-spiess.ch/index.php?pd=ss&page=home&view=co&lang=en" target="_blank">Scheidegger
       & Spiess</a> Zurich.</p>
 
       <p>164 pages, 11 color and 46 greyscale plates, 17 x 24 cm</p>
-    design: <a href="http://marco-mueller.com/">Marco Müller</a>
+    design: <a href="http://marco-mueller.com/" target="_blank">Marco Müller</a>
     year: 2015
     font: <a href="/metafonts/bespoke">MF Bespoke</a>
     images:
@@ -208,3 +208,199 @@ showcases:
       - MM_PROJECT_01_021.jpg
       - MM_PROJECT_01_024.jpg
       - MM_PROJECT_01_027.jpg
+
+  the_sprawl:
+    title: The Sprawl
+    description: <p>The project The Sprawl <a href="http://i-d.vice.com/en_gb/article/metahaven-are-making-propaganda-to-fight-propaganda" target="_blank">Propaganda
+      About Propaganda</a> from Dutch art and radical design collective <a
+      href="http://metahaven.net" target="_blank">Metahaven</a>, is using art, reality and
+      the internet to dismantle and fight propaganda in today's media.</p>
+
+      <p>In their first feature, The Sprawl, Metahaven take on propaganda in
+      the social media age and, specifically, the Ukraine War. They are
+      stepping through misinformation and media allegations over who shot
+      down Amsterdam flight MH17 in 2014, and navigate through snippets of
+      communication between Russia's English language broadcaster, the
+      nationalist Russia Today and America's CNN. The layered and non-linear
+      narrative combines fragments from Tolstoy, UN proceedings, Google
+      Earth, found footage, internet interfaces and their art direction.</p>
+
+      <p><a href="http://sprawl.space" target="_blank">sprawl.space</a> is the online
+      interface for The Sprawl, where the viewer can see the shards that make
+      up the full version of the film. The website has been shaped by the
+      interface design of Metahaven, using  and the viewing algorithms of
+      YouTube.</p>
+
+      <p>MF Adjuster (among other typefaces) was used for the website and various medias.</p>
+    design: <a href="http://metahaven.net" target="_blank">Metahaven</a>
+    year: 2016
+    font: <a href="/metafonts/adjuster">MF Adjuster</a>
+    images:
+      - TheSprawl_Metahaven_01.jpg
+      - TheSprawl_Metahaven_02.jpg
+      - TheSprawl_Metahaven_03.jpg
+      - TheSprawl_Metahaven_04.jpg
+      - TheSprawl_Metahaven_05.jpg
+      - TheSprawl_Metahaven_06.jpg
+      - TheSprawl_Metahaven_08.jpg
+
+  sum_of_parts:
+    title: A Sum Of Parts
+    description: <p>Marco Müller designed and coded with the help of Linus
+      Romer a custom METAFONT for A Sum of Parts. A collaborative events
+      program featuring discussions and workshops was curated by Winchester
+      School of Art, BA (Hons) Graphic Arts. 5–10 July, The Archivists Gallery,
+      Haggerston. The mono-line font MF Calport also supported various pen
+      shapes and line options such as dots or overlapping dots that produced a
+      playful variety  of options to choose from.</p>
+
+      <p>catalogue, flyers, various promotion materials</p>
+    design: <a href="http://fourmcreative.co.uk" target="_blank">Fourmcreative</a>
+    year: 2016
+    font: MF Calport
+    images:
+      - ASOP_01.gif
+      - ASOP_02.jpg
+      - ASOP_03.jpg
+      - ASOP_04.jpg
+      - ASOP_05.jpg
+      - ASOP_08.jpg
+      - ASOP_09.jpg
+      - ASOP_10.jpg
+      - ASOP_11.jpg
+      - ASOP_12.jpg
+      - ASOP_13.jpg
+      - ASOP_14.jpg
+      - ASOP_15.jpg
+      - ASOP_16.jpg
+
+  eady_forum:
+    title: Eady Forum / Extended Times
+    description: <p>Both projects were developed at the <a
+      href="https://www.rca.ac.uk" target="_blank">Royal College of Art in London</a> using MF
+      Bespoke.</p>
+
+      <p><a
+      href="http://www.joanapestana.com/index.php?/exhibition/eady-forum/" target="_blank">Eady
+      Forum</a> is a platform for discussions about graphic design in the
+      contemporary realm led by students and supervised by senior tutor Adrian
+      Shaughnessy. Through a series of lectures and events under the title Why
+      so? What if? 2016's forum explored the potential for an inquisitive mode
+      of working (why so) but also a nonconformist and speculative mode of
+      projecting in design (what if).</p>
+
+      <p><a
+      href="http://www.joanapestana.com/index.php?/projects/the-extended-times/" target="_blank">The
+      Extended Times</a>, developed by London-Porto based designer <a
+      href="http://intern-mag.com/joana-pestana/" target="_blank">Joana Pestana</a> during her
+      MA, is an ever-growing fictional newspaper with real stories about life
+      extension and digital afterlife. As a critical design project, it
+      speculates about the possible consequences of graphical user interfaces
+      that allude to perpetual progress and continuity.</p>
+
+      <p>website, screen printed posters, newspaper, various media</p>
+    design: <a href="http://cargocollective.com/joanapestana" target="_blank">Joana Pestana</a>
+    year: 2016
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - EadyForum_01.jpg
+      - EadyForum_02.jpg
+      - EadyForum_03.jpg
+      - EadyForum_04.jpg
+      - EadyForum_05.jpg
+      - EadyForum_08.jpg
+      - EadyForum_JoanaPestana-ExtendedTimes_1.jpg
+      - EadyForum_JoanaPestana-ExtendedTimes_3.jpg
+      - EadyForum_JoanaPestana-ExtendedTimes_4.jpg
+
+  meshtivism:
+    title: Meshtivism
+    description: <p><a
+      href="https://www.behance.net/gallery/41101975/Meshtivism" target="_blank">Meshtivism</a>
+      by Stockholm based designer and illustrator <a
+      href="http://erikkirtley.com" target="_blank">Erik Kirtley</a> is a speculative manual
+      manifesto from a near future in which digital activists avoid the
+      commercialized and surveillance network we know as the internet. They
+      organize and collaborate via so called mesh networks instead, built and
+      maintained by themselves.</p>
+
+      <p>Typefaces used in the publication include an early version of IP by
+      William Andersson and versions of MF Bespoke.</p>
+    design: <a href="http://erikkirtley.com" target="_blank">Erik Kirtley</a>
+    year: 2016
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - Meshtivism_01.jpg
+      - Meshtivism_02.jpg
+      - Meshtivism_03.jpg
+      - Meshtivism_04.jpg
+      - Meshtivism_05.jpg
+      - Meshtivism_06.jpg
+
+  form_informed:
+    title: Form Informed
+    description: <p><a href="http://www.maurabiava.com" target="_blank">Maura
+      Biava</a> combines in her artist’s book <a
+      href="http://www.meeusontwerpt.nl/2016_form_informed.php"
+      target="_blank">Form Informed</a> two-dimensional mathematical graphs
+      with strange, new and compelling three-dimensional forms.</p>
+
+      <p>The book was published by <a href="http://www.konnotation.com"
+      target="_blank">Konnotation</a>, designed by Amsterdam based designers
+      Hilde en Janna Meeus and printed at the <a
+      href="http://www.janvaneyck.nl/en/labs/charles-nypels-lab/"
+      target="_blank">Charles Nypels Lab Van Eyck Academie</a> during the
+      Magical Riso seminar.</p>
+
+      <p>60 pages, Risograph printed in 10 colors, 20 x 29 cm</p>
+
+    design: <a href="http://www.meeusontwerpt.nl" target="_blank">Hilde en Janna Meeus</a>
+    year: 2016
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - FORM_INFORMED_01.jpg
+      - FORM_INFORMED_02.jpg
+      - FORM_INFORMED_03.jpg
+      - FORM_INFORMED_04.jpg
+      - FORM_INFORMED_05.jpg
+      - FORM_INFORMED_06.jpg
+      - FORM_INFORMED_07.jpg
+
+  tradeptford:
+    title: Tradeptford
+    description: <p>For 6 months the project explored local identity,
+      gentrification and the role of the citizens in Deptford, South East
+      London.</p>
+
+      <p><a href="http://www.tradeptford.co.uk" target="_blank">Tradeptford</a>
+      provided a local platform hosting events and debates. It aimed for a new
+      typology of market forum which would turn the artist/architect into a
+      lever for positive social change thus turning the equation art =
+      gentrification into art = local resilience. Through the direct
+      participation in each forum, local residents worked together with local
+      artists and designers to unpick the impact of gentrification in
+      Deptford.</p>
+
+      <p>The identity designed by London based designer <a
+      href="http://rossbennett.eu/tradeptford" target="_blank">Ross Bennett</a>
+      is based on Enzo Mari's table structures which formed the foundation and
+      surface for the workshop lunches and debates, using a custom MF
+      Bespoke.</p>
+
+      <p>Leaflets, posters, website</p>
+
+    design: <a href="http://rossbennett.eu/" target="_blank">Ross Bennett</a>
+    year: 2016
+    font: <a href="/metafonts/bespoke">MF Bespoke</a>
+    images:
+      - Deptford_00.jpg
+      - Deptford_01.jpg
+      - Deptford_02.jpg
+      - Deptford_03.jpg
+      - Deptford_04.jpg
+      - Deptford_05.jpg
+      - Deptford_06.jpg
+      - Deptford_07.jpg
+      - Deptford_08.jpg
+      - Deptford_09.jpg
+      - Deptford_10.jpg

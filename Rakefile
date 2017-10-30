@@ -17,3 +17,11 @@ task 'db:migrate', [:version] do |t, args|
     Sequel::Migrator.run(App.database, 'db/migrations')
   end
 end
+
+desc 'Optimize images in the git staging area'
+task 'optimize_images' do
+  new_images_sub_command = "$(git diff --name-only --cached | grep assets/images)"
+
+  `mogrify -quality 80 #{new_images_sub_command}`
+  `image_optim #{new_images_sub_command}`
+end

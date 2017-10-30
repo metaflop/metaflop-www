@@ -8,7 +8,7 @@ gem 'mysql2'
 gem 'party_foul'
 gem 'rubyzip'
 gem 'sass'
-gem 'sequel'
+gem 'sequel', '~> 4.44'
 gem 'sinatra'
 # FIXME: starting with 1.0 the asset pipeline has breaking changes
 gem 'sinatra-asset-pipeline', '~> 0.7'

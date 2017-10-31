@@ -1,11 +1,26 @@
-% $Id: mfplain.mp,v 1.9 2005/04/28 06:45:21 taco Exp $
-% Public domain.
+% This is a modified MetaPost base with additional features (such as 
+% Unicode names). This files is based on the mfplain.mp (v0.99).
+% The modification have been made by Linus Romer for the 
+% mf2outline.py script.
 
-% This is the plain MetaPost base that looks like what's described
-% in The METAFONTbook.
-string base_name, base_version; base_name="mfplain"; base_version="0.99";
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
 
-message "Preloading the plain base, version "&base_version&": preliminaries,";
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+% Copyright 2014 by Linus Romer
+
+string base_name, base_version; base_name="mf2outline"; base_version="20171029";
+
+message "Preloading the mf2outline base, version "&base_version&": preliminaries,";
 
 delimiters ();  % this makes parentheses behave like parentheses
 def upto = step 1 until enddef; % syntactic sugar
@@ -106,9 +121,12 @@ vardef whatever = save ?; ? enddef;
 % unary operators
 let abs = length;
 
-vardef round primary u = u enddef;
-vardef hround primary x = x enddef;
-vardef vround primary y = y enddef;
+vardef round primary u =
+ if numeric u: floor(u+.5)
+ elseif pair u: (hround xpart u, vround ypart u)
+ else: u fi enddef;
+vardef hround primary x = floor(x+.5) enddef;
+vardef vround primary y = floor(y.o_+.5)_o_ enddef;
 
 vardef ceiling primary x = -floor(-x) enddef;
 
@@ -344,22 +362,28 @@ miterlimit:=10;
 pen currentpen;
 picture currentpicture;
 
-def fill expr c = addto currentpicture contour c t_ pc_ enddef;
+% ----- start of modifications by Linus Romer -----
+def fill expr c = addto currentpicture contour if turningnumber c >= 0: 
+  reverse fi c t_ pc_ 
+enddef;
 def draw expr p =
   addto currentpicture
   if picture p:
     also p
   else:
-    doublepath p t_ withpen currentpen
+    doublepath if turningnumber p >= 0: 
+    reverse fi p t_ withpen currentpen
   fi
   pc_
 enddef;
 def filldraw expr c =
-  addto currentpicture contour c t_ withpen currentpen
+  addto currentpicture contour if turningnumber c >= 0: 
+  reverse fi c t_ withpen currentpen
   pc_ enddef;
 def drawdot expr z =
   addto currentpicture contour makepath currentpen shifted z
   t_ pc_ enddef;
+% ----- end of modifications by Linus Romer -----
 
 def unfill expr c = fill c withcolor background enddef;
 def undraw expr p = draw p withcolor background enddef;
@@ -502,24 +526,272 @@ vardef proofrulethickness expr x =
 
 message " macros for character and font administration,";
 
+% ----- start of modifications by Linus Romer -----
+
+% replace circle pens by icosagon pens for faster import in fontforge
+% (only in preview mode)
+if (substring(8,12) of base_version) = "prev":
+ pen penicosagoncircle;
+ penicosagoncircle:=makepen(
+  for alpha=0 step 360/20 until 359:
+   (0.5 cosd alpha, 0.5 sind alpha)--
+  endfor 
+  cycle);
+ pen pencircle;
+ pencircle:=penicosagoncircle;
+fi
+
+% returns the hexadicmal string of a numeric
+vardef hexadecimal primary n =
+ save m,s;
+ m:=abs round n; 
+ string s; 
+ s=
+ if (m mod 16)<10:
+  decimal(m mod 16)
+ elseif (m mod 16)=10:
+  "A"
+ elseif (m mod 16)=11:
+  "B"
+ elseif (m mod 16)=12:
+  "C"
+ elseif (m mod 16)=13:
+  "D"
+ elseif (m mod 16)=14:
+  "E"
+ else:
+  "F"
+ fi
+ ;
+ forever:
+  m:=m div 16; 
+  exitif m=0;
+  s:=
+  if (m mod 16)<10:
+   decimal(m mod 16)
+  elseif (m mod 16)=10:
+   "A"
+  elseif (m mod 16)=11:
+   "B"
+  elseif (m mod 16)=12:
+   "C"
+  elseif (m mod 16)=13:
+   "D"
+  elseif (m mod 16)=14:
+   "E"
+  else:
+   "F"
+  fi
+  & s; 
+ endfor
+ s
+enddef;
+
+% returns the unicode string of a word (which is a string or a numeric)
+vardef unicode primary n = 
+ save s,z;
+ string s,z;
+ s:=
+ if string n:
+  if length(n)=1: % assume n to be a glyph name like "W"
+   hexadecimal(ASCII n);
+  else: % assume n to be a unicode like "00004A", "004A" or "4A"
+   n;
+  fi
+ else: % assume n to be a numeric 
+  hexadecimal n;
+ fi 
+ % now fill zeroes to be a 6-digit word:
+ z:=
+ if length(s)<6:
+  for i=1 upto (6-length(s)): "0" & endfor s;
+ else:
+  s;
+ fi
+ z
+enddef;
+
+% epscode(c) returns the code c multiplied by epsilon
+def epscode(expr c) =
+ (hex(substring(3,6) of unicode(c))*epsilon
+ +epsilon*256*16*hex(substring(0,3) of unicode(c)))
+enddef;
+
+% unicodeeps(c) returns the unicode of an
+% epscode c (code that was multiplied by epsilon)
+% this is the inverse macro of epscode()
+def unicodeeps(expr c) =
+ (substring(3,6) of unicode(floor(c*16)))
+  & (substring(3,6) of unicode(floor((c*16-floor(c*16))*256*16)))
+enddef;
+
+% c is no longer only a number or ASCII char (e.g. 65 or "A") 
+% but can also be a unicode string, representing a
+% hexadecimal number (eg "0041")
+newinternal string charunicode;
 def beginchar(expr c,w_sharp,h_sharp,d_sharp) =
+  begingroup
+    charunicode:=if known c: unicode c else: "000000" fi; 
+    charcode:=hex(substring(4,6) of charunicode); % this is the place inside the unicode subplane
+    charext:=hex(substring(0,4) of charunicode); % this is the number of the unicode plane and subplane
+    charepscode:=epscode(charunicode); % this is the code multiplied by epsilon=1/65536
+    charwd:=w_sharp;      charht:=h_sharp;       chardp:=d_sharp;
+    w:=charwd*pt; h:=charht*pt; d:=chardp*pt;
+    charic:=0; clearxy; clearit; clearpen; scantokens extra_beginchar;
+enddef;
+
+def endchar =
+    scantokens extra_endchar;
+    if proofing>0: makebox(proofrule); fi
+    chardx:=w;     % desired width of the character in pixels
+    special "% mf2outline: charwd " & decimal charwd;
+    special "% mf2outline: charht " & decimal charht;
+    special "% mf2outline: chardp " & decimal chardp;
+    special "% mf2outline: charic " & decimal charic;
+    special "% mf2outline: charcode " & decimal charcode;
+    special "% mf2outline: charext " & decimal charext;
+    special "% mf2outline: charunicode " & charunicode;
+    shipit;
+  endgroup
+enddef;
+
+string fontforgecommands_[], % list of fontforge command
+ kernclassesl_[][], % list of left kerning classes
+ kernclassesr_[][], % list of right kerning classes
+ ligatures_[][]; % list of ligatures
+numeric kernmatrix_[][], % matrix with kerning entries
+ randvariants_[][];
+fontforgecommands_[0]="0"; % number of commands (will be increased)
+kernclassesl_[0][0]="0"; % number of kernclassesl (will be increased)
+kernclassesr_[0][0]="0"; % number of kernclassesr (will be increased)
+ligatures_[0][0]="0"; % number of ligatures (will be increased)
+randvariants_[-1][0]:=0; % number glyphs with random variants (will be increased)
+
+% store a fontforge command into fontforgecommands_[]
+def fontforge(expr command) = 
  begingroup
- charcode:=if known c: byte c else: 0 fi;
- charwd:=w_sharp;      charht:=h_sharp;       chardp:=d_sharp;
- w:=charwd*pt; h:=charht*pt; d:=chardp*pt;
- charic:=0; clearxy; clearit; clearpen; scantokens extra_beginchar;
- enddef;
+  save i;
+  numeric i;
+  i:=hex(fontforgecommands_[0])+1;
+  fontforgecommands_[0]:=hexadecimal i;
+  fontforgecommands_[i]:=command;
+ endgroup
+enddef;
+
+% add a left kerning class to kernclassesl
+% a is a comma separated list of codes, like addkernclassl(86,87,"c","4A","00004B");
+% the codes may be numbers, ASCII letters or unicode strings
+% but they are always stored as unicode strings
+% the lengths of the array is stored as hexadecimal strings
+def addkernclassl(text a) = 
+ begingroup
+  save i,l;
+  numeric i,l;
+  l:=hex(kernclassesl_[0][0])+1;
+  kernclassesl_[0][0]:=hexadecimal l;
+  i:=0; % number of chars in current class
+  for b=a:
+   i:=i+1;
+   kernclassesl_[l][i]:=unicode b;
+  endfor
+  % number of chars in current class is stored at 0th position
+  kernclassesl_[l][0]:=hexadecimal i; 
+ endgroup
+enddef;
+
+% add a right kerning class to kernclassesr
+% a is a comma separated list of codes, addkernclassr(86,87,"c","4A","00004B");
+def addkernclassr(text a) = 
+ begingroup
+  save i,l;
+  numeric i,l;
+  l:=hex(kernclassesr_[0][0])+1;
+  kernclassesr_[0][0]:=hexadecimal l;
+  i:=0; % number of chars in current class
+  for b=a:
+   i:=i+1;
+   kernclassesr_[l][i]:=unicode b;
+  endfor
+  % number of chars in current class is stored at 0th position
+  kernclassesr_[l][0]:=hexadecimal i; 
+ endgroup
+enddef;
+
+% kern all chars of left class and right class by kvalue
+% identification is done by the first code of the class
+def addclasskern(expr left,right,kvalue) = 
+ begingroup
+  save i,j;
+  numeric i,j;
+  % get the indices i and j of the two classes:
+  i:=0; % default value (cannot be true)
+  j:=0; % default value (cannot be true)
+  forever:
+   i:=i+1;
+   exitif kernclassesl_[i][1]=unicode(left);
+   if i=hex(kernclassesl_[0][0]):
+    errmessage("unknown left kerning class");
+   fi
+  endfor
+  forever:
+   j:=j+1;
+   exitif kernclassesr_[j][1]=unicode(right);
+   if j=hex(kernclassesr_[0][0]):
+    errmessage("unknown right kerning class");
+   fi
+  endfor
+  kernmatrix_[i][j]:=kvalue;
+ endgroup
+enddef;
+
+% adds a (multi-)ligature, e.g.
+% addligature("FB02","f","l");
+% addligature("FB04","f","f","l");
+def addligature(expr c)(text a) = 
+begingroup
+  save i,l;
+  numeric i,l;
+  l:=hex(ligatures_[0][0])+1;
+  ligatures_[0][0]:=hexadecimal l;
+  ligatures_[l][1]:=unicode c;
+  i:=1; % counter for ligature components (normaly 2)
+  for b=a:
+   i:=i+1;
+   ligatures_[l][i]:=unicode b;
+  endfor
+  % number of components + 1 is stored at 0th position
+  ligatures_[l][0]:=hexadecimal i; 
+ endgroup
+enddef;
+
+% add a random variant (unicode v) 
+% for the original glyph (unicode o)
+% the structure of the randvariants_[][] array is
+% as follows: randvariants_[-1] stores the epscodes 
+% of the glyphs that have variants;
+% randvariants_[-1][0] is the number of such glyphs;
+% randvariants_[epscode][1] contains the first variant
+% of the glyph with epscode
+def addrandvariant(expr o,v) = 
+ % check if o has already been used
+ for i=0 upto randvariants_[-1][0]:
+  exitif randvariants_[-1][i]=epscode(o);
+  if i=randvariants_[-1][0]:
+   randvariants_[-1][0]:=randvariants_[-1][0]+1;
+   randvariants_[-1][randvariants_[-1][0]]:=epscode(o);
+   randvariants_[epscode(o)][0]:=0;
+  fi
+ endfor
+ % now store variant
+ randvariants_[epscode(o)][0]:=randvariants_[epscode(o)][0]+1;
+ randvariants_[epscode(o)][randvariants_[epscode(o)][0]]:=epscode(v);
+enddef;
+
+% ------ end of modifications by Linus Romer -----
 
 def italcorr expr x_sharp = if x_sharp>0: charic:=x_sharp fi enddef;
 
 def change_width = enddef;
-
-def endchar =
- scantokens extra_endchar;
- if proofing>0: makebox(proofrule); fi
- chardx:=w;     % desired width of the character in pixels
- shipit;
- endgroup enddef;
 
 string extra_beginchar, extra_endchar;
 extra_beginchar=extra_endchar="";
@@ -536,19 +808,35 @@ def maketicks(text r) =
  if charic<>0: r((w+charic*pt,h-10),(w+charic*pt,h)); fi
  enddef;
 
+% ----- start of some modifications by Linus Romer -----
 def font_size expr x = designsize:=x enddef;
-def font_slant expr x = fontdimen 1: x enddef;
-def font_normal_space expr x = fontdimen 2: x enddef;
-def font_normal_stretch expr x = fontdimen 3: x enddef;
-def font_normal_shrink expr x = fontdimen 4: x enddef;
-def font_x_height expr x = fontdimen 5: x enddef;
-def font_quad expr x = fontdimen 6: x enddef;
-def font_extra_space expr x = fontdimen 7: x enddef;
-
+def font_slant expr x = font_slant_:=x; fontdimen 1: x enddef;
+def font_normal_space expr x = font_normal_space_:=x; fontdimen 2: x enddef;
+def font_normal_stretch expr x = font_normal_stretch_:=x; fontdimen 3: x enddef;
+def font_normal_shrink expr x = font_normal_shrink_:=x; fontdimen 4: x enddef;
+def font_x_height expr x = font_x_height_:=x; fontdimen 5: x enddef;
+def font_quad expr x = font_quad_:=x; fontdimen 6: x enddef;
+def font_extra_space expr x = font_extra_space_:=x; fontdimen 7: x enddef;
+def font_os_weight expr x = font_os_weight_:=x enddef;
+def font_os_width expr x = font_os_width_:=x enddef;
 def font_identifier expr x = font_identifier_:=x enddef;
 def font_coding_scheme expr x = font_coding_scheme_:=x enddef;
-string font_identifier_, font_coding_scheme_;
+def font_version expr x = font_version_:=x enddef;
+def font_copyright expr x = font_copyright_:=x enddef;
+def font_name expr x = font_name_:=x enddef;
+def font_fullname expr x = font_fullname_:=x enddef;
+def font_familyname expr x = font_familyname_:=x enddef;
+numeric font_range_[]; % font size feature (lower,upper,style number)
+def font_range(expr lower,upper,style) = 
+ font_range_[1]:=lower;
+ font_range_[2]:=upper;
+ font_range_[3]:=style;
+enddef;
+string font_identifier_, font_coding_scheme_, 
+ font_name_, font_fullname_, font_familyname_,
+ font_copyright_, font_version_;
 font_identifier_=font_coding_scheme_="UNSPECIFIED";
+% ----- end of some modifications by Linus Romer -----
 
 message "and a few last-minute items.";
 
@@ -576,10 +864,96 @@ def gfcorners = enddef;
 def nodisplays = enddef;
 def notransforms = let t_ = \ enddef;
 
-let bye = end; outer end,bye;
+% ----- start of modifications by Linus Romer -----
+inner end, bye; let savedend=end; let savedbye=bye;
+def end = 
+ write
+ "mf2outline: font_size " & decimal designsize & char 10 &
+ for fvar = "font_slant", "font_normal_space", "font_normal_stretch",
+ "font_normal_shrink", "font_x_height", "font_quad", 
+ "font_extra_space", "font_underline_position", 
+ "font_underline_thickness", "font_os_weight", "font_os_width":
+  if known scantokens (fvar & "_"):
+   "mf2outline: " & fvar & " " &
+   scantokens ("decimal " & fvar & "_") & char 10 &
+  fi
+ endfor
+ if known font_range_[1]:
+  "mf2outline: font_range " & decimal(font_range_[1]) 
+   & " " & decimal(font_range_[2]) 
+   & " " & decimal(font_range_[3]) & char 10 &
+ fi
+ for fvar = "font_identifier", "font_coding_scheme", "font_version",
+  "font_copyright", "font_version", "font_name", "font_fullname", 
+  "font_familyname":
+   if known scantokens (fvar & "_"):
+    "mf2outline: " & fvar & " " & scantokens (fvar & "_") & char 10 &
+   fi
+ endfor
+ if hex(kernclassesl_[0][0])>0:
+  "mf2outline: kerningclassesl " & char 10 &
+  for i=1 upto hex(kernclassesl_[0][0]):
+   for j=1 upto hex(kernclassesl_[i][0]):
+    kernclassesl_[i][j] & char 32 &
+   endfor
+   char 10 &
+  endfor
+ fi
+ if hex(kernclassesr_[0][0])>0:
+  "mf2outline: kerningclassesr " & char 10 &
+  for i=1 upto hex(kernclassesr_[0][0]):
+   for j=1 upto hex(kernclassesr_[i][0]):
+    kernclassesr_[i][j] & char 32 &
+   endfor
+   char 10 &
+  endfor
+ fi
+ if (hex(kernclassesl_[0][0])>0) and (hex(kernclassesr_[0][0])>0):
+  "mf2outline: kerningmatrix " & char 10 &
+  for i=1 upto hex(kernclassesl_[0][0]):
+   for j=1 upto hex(kernclassesr_[0][0]):
+    if known kernmatrix_[i][j]:
+     decimal(kernmatrix_[i][j]) & char 32 &
+    else:
+     char 48 & char 32 &
+    fi
+   endfor
+   char 10 &
+  endfor
+ fi
+ if hex(ligatures_[0][0])>0:
+  "mf2outline: ligatures " & char 10 &
+  for i=1 upto hex(ligatures_[0][0]):
+   for j=1 upto hex(ligatures_[i][0]):
+    ligatures_[i][j] & char 32 &
+   endfor
+   char 10 &
+  endfor
+ fi
+ if randvariants_[-1][0]>0:
+  "mf2outline: randvariants " & char 10 & 
+  for i=1 upto randvariants_[-1][0]:
+   unicodeeps(randvariants_[-1][i]) & char 32 & 
+   for j=1 upto randvariants_[randvariants_[-1][i]][0]:
+    unicodeeps(randvariants_[randvariants_[-1][i]][j]) & char 32 &
+   endfor
+   char 10 &
+  endfor
+ fi
+ if hex(fontforgecommands_[0])>0:
+  "mf2outline: fontforge " & char 10 &
+  for i=1 upto hex(fontforgecommands_[0]):
+   fontforgecommands_[i] & char 10 &
+  endfor
+ fi
+ "mf2outline: eof"
+ to "mf2outline.txt"; 
+savedend; 
+enddef;
+let bye = end;
+outer end, bye;
+% ----- end of modifications by Linus Romer -----
 
 clear_pen_memory;     % initialize the `savepen' mechanism
 mode_setup;           % establish proof mode as the default
 numeric mode,mag;     % but leave mode and mag undefined
-
-

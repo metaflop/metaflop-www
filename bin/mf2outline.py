@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#mf2outline version 20160803
+#mf2outline version 20171029
 
 #This program has been written by Linus Romer for the 
 #Metaflop project by Marco Mueller and Alexis Reigel.
@@ -30,7 +30,9 @@ def run_metapost(mffile,design_size,workdir,tempdir,mainargs):
 	'\mode=localfont;',
 	'mag:=%s;' % (1003.75/design_size), 
 	'nonstopmode;',
-	'outputtemplate:=\"%{charunicode}.eps\";',
+	'outputtemplate:=\"%c.eps\";'
+	if mainargs.max256
+	else 'outputtemplate:=\"%{charunicode}.eps\";',
 	'input %s;' % mffile,
 	'bye']
 	subprocess.call(
@@ -39,6 +41,271 @@ def run_metapost(mffile,design_size,workdir,tempdir,mainargs):
 	stderr = subprocess.PIPE,
 	cwd = tempdir
 	)
+	
+# this takes away "[" and "]"
+def isolate_number(s):
+	if s[0] == "[":
+		try:
+			return float(s[1:])
+		except ValueError:
+			return None
+	elif s[len(s)-1] == "]":
+		try:
+			return float(s[:len(s)-1])
+		except ValueError:
+			return None
+	else:
+		try:
+			return float(s)
+		except ValueError:
+			return None
+	
+# make a homogeneous transformation m*(x,y,1) or
+# truncated matrix m*(x,y)
+# and return the transformed x and y
+def homogeneous(m,x,y):
+	if len(m)==4: # truncated matrix (dtransform)
+		return [m[0]*x+m[2]*y,m[1]*x+m[3]*y]
+	elif len(m)==6: # general case
+		return [m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]]
+	else:
+		return [x,y] # wrong matrix dimensions, no change
+		
+# inverts the transformationmatrix
+def invertmatrix(m):
+	if len(m)>3:
+		c = 1.0/(m[0]*m[3]-m[1]*m[2]) # determinant coefficient
+	if len(m)==4: # truncated matrix (dinvert)
+		return [c*m[3],-c*m[2],-c*m[1],c*m[0]]
+	elif len(m)==6: # general case
+		return [c*m[3],-c*m[2],-c*m[1],c*m[0],-m[4],-m[5]]
+	else:
+		return m # wrong matrix dimensions, no change
+		
+# returns 1 iff point p is right of the line
+# going from point q through point r
+# obsolete
+#def side(p,q,r):
+	#if (r[0]-q[0])*(q[1]-p[1]) > (r[1]-q[1])*(q[0]-p[0]):
+		#return 1
+	#else:
+		#return -1
+
+# Returns the turning angle of a
+# contour c in degree . E.g. if c is a circle
+# that turns counterclockwise, it wil
+# return 360 (-360 for clockwise).
+# Half a circle would return 180 (-180
+# for clockwise).
+# obsolete
+#def turning_angle(c):
+	#angle = 0
+	#l = len(c)
+	#for i in range(0,l):
+		#ax = c[i%l].x-c[(i-1)%l].x
+		#ay = c[i%l].y-c[(i-1)%l].y
+		#bx = c[(i+1)%l].x-c[i%l].x
+		#by = c[(i+1)%l].y-c[i%l].y
+		#if not (ax*ay == 0  or bx*by == 0):
+			#angle += side((c[(i+1)%l].x,c[(i+1)%l].y),(c[i%l].x,c[i%l].y),(c[(i-1)%l].x,c[(i-1)%l].y))* \
+			#math.degrees(math.acos(max(-1,min(1,(ax*bx+ay*by)/((ax**2+ay**2)**.5*(bx**2+by**2)**.5)))))
+	#return angle
+
+# reverses the contour c iff c turns counterclockwise
+# this is a sort of a replacment for the buggy correctDirection()
+# from fontforge (which does not work for the dish erasers in Computer 
+# Modern serifs)
+# obsolete
+#def make_clockwise(c):
+	#if turning_angle(c)>0:
+		#c.reverseDirection()
+		
+# own postscript interpreter for a postscript file "eps" 
+# into the glyph "glyph"
+def import_ps(eps,glyph):
+	with open(eps, "r") as epsfile:
+		# read through the lines and write them continously  as contours
+		# in a fontforge char
+		# this is specialized for Metapost Output and useless for
+		# general postscript
+		#
+		# some variable declarations
+		layer = fontforge.layer()
+		is_white = False # any other color than white will be interpreted as black
+		linewidth = 1 # just default
+		stack = [] # ps stack (coordinate of points, pen dimensions etc.)
+		ctm = [1.0,0.0,0.0,1.0,0.0,0.0] # current transformation matrix
+		dash = 0
+		linecap = "round"
+		linejoin = "round"
+		miterlimit = 10
+		stroke_follows_fill = False 
+		gsave_contour = fontforge.contour() # contour that is saved by gsave
+		gsave_ctm = [1.0,0.0,0.0,1.0,0.0,0.0] # current transformation matrix that is saved by gsave
+		gsave_is_white = False # "color" saved by gsave
+		contour = fontforge.contour() # just declaring
+		#
+		# okay, let's start:
+		for line in epsfile:
+			if line[0] != "%" and len(line)>0: # ignore comments
+				if "gsave fill grestore stroke" in line: # this happens just so often, so we treat it as special case
+					stroke_follows_fill = True # pay attention...
+				words = line.split()
+				for word in words: # go through the words
+					# showpage will have no effect
+					if isolate_number(word) != None:
+						stack.append(isolate_number(word))
+					elif word == "newpath":
+						contour = fontforge.contour()
+					elif word == "moveto":
+						contour.moveTo(stack[len(stack)-2],stack[len(stack)-1])
+						stack = stack[:(len(stack)-2)]
+					elif word == "lineto":
+						contour.lineTo(stack[len(stack)-2],stack[len(stack)-1])
+						stack = stack[:(len(stack)-2)]
+					elif word == "curveto":
+						contour.cubicTo(stack[len(stack)-6],stack[len(stack)-5],\
+						stack[len(stack)-4],stack[len(stack)-3],\
+						stack[len(stack)-2],stack[len(stack)-1])
+						stack = stack[:(len(stack)-6)]
+					elif word == "closepath":
+						contour.closed = True
+					elif word == "setrgbcolor":
+						if stack[len(stack)-1] == 1 and \
+						stack[len(stack)-2] == 1 and \
+						stack[len(stack)-3] == 1:
+							is_white = True
+						else:
+							is_white = False
+						stack = stack[:(len(stack)-3)]
+					elif word == "setlinewidth":
+						linewidth = stack.pop()
+					elif word == "setdash":
+						dash = stack.pop()
+					elif word == "setlinecap":
+						linecapcode = stack.pop()
+						if linecapcode == 0:
+							linecap = "butt"
+						elif linecapcode == 2:
+							linecap = "square"
+						else:
+							linecap = "round"
+					elif word == "setlinejoin":
+						linejoincode = stack.pop()
+						if linejoincode == 0:
+							linejoin = "miter"
+						elif linejoincode == 2:
+							linejoin = "bevel"
+						else:
+							linejoin = "round"
+					elif word == "setmiterlimit":
+						miterlimit = stack.pop()
+					elif word == "scale":
+						sy=stack.pop()
+						sx=stack.pop()
+						ctm=[ctm[0]*sx,ctm[1]*sy,ctm[2]*sx,ctm[3]*sy,ctm[4]*sx,ctm[5]*sy]
+					elif word == "concat":
+						f=stack.pop()
+						e=stack.pop()
+						d=stack.pop()
+						c=stack.pop()
+						b=stack.pop()
+						a=stack.pop()
+						ctm=[a*ctm[0]+c*ctm[1],b*ctm[0]+d*ctm[1],\
+						a*ctm[2]+c*ctm[3],b*ctm[2]+d*ctm[3],\
+						a*ctm[4]+c*ctm[5]+e,b*ctm[4]+d*ctm[5]+f]
+					elif word == "dtransform":
+						dy=stack.pop()
+						dx=stack.pop()
+						stack.extend(homogeneous(ctm[:4],dx,dy))
+					elif word == "idtransform":
+						dy=stack.pop()
+						dx=stack.pop()
+						stack.extend(homogeneous(invertmatrix(ctm[:4]),dx,dy))
+					elif word == "transform":
+						y=stack.pop()
+						x=stack.pop()
+						stack.extend(homogeneous(ctm,x,y))
+					elif word == "itransform":
+						y=stack.pop()
+						x=stack.pop()
+						stack.extend(homogeneous(invertmatrix(ctm),x,y))
+					elif word == "exch":
+						last = stack.pop()
+						secondlast = stack.pop()
+						stack.extend([last,secondlast])
+					elif word == "truncate":
+						stack[len(stack)-1]=int(stack[len(stack)-1])
+					elif word == "pop":
+						stack.pop()
+					elif word == "fill" and not stroke_follows_fill:
+						templayer = fontforge.layer()
+						templayer += contour
+						templayer.round(100)
+						if is_white:
+							#layer.exclude(templayer)	
+							# exclude does not work properly in fontforge
+							# so we intersect the templayer with the layer
+							# and exclude that from the layer by making
+							# it counterclockwise and removeOverlap()
+							templayer += layer
+							templayer.intersect()
+							for i in range(0,len(templayer)):
+								if templayer[i].isClockwise():
+									templayer[i].reverseDirection()
+						layer += templayer
+						layer.removeOverlap()
+						layer.round(100)
+					elif word == "stroke":
+						# We have to determine the angle and the 
+						# axis of the ellipse that is the product of
+						# a circle with radius=linewidth with the 
+						# ctm (current transformation matrix.
+						# One would have to consider also shearing,
+						# but METAPOST makes the ctm (for pens)
+						# always as a product of rotation matrix and 
+						# a diagonal (non-uniform scaling) matrix.
+						# Hence, we make a quick an dirty computation
+						if ctm[0] == ctm[1]:
+							alpha = .25*math.pi
+						else:
+							alpha = math.atan(ctm[1]/ctm[0])
+						pen_x = abs(linewidth*ctm[0]/math.cos(alpha))
+						pen_y = abs(linewidth*ctm[3]/math.cos(alpha))
+						templayer = fontforge.layer()
+						templayer += contour
+						if not (pen_x == 0 or pen_y == 0):
+							templayer.round(100)
+							if stroke_follows_fill:
+								templayer.stroke("eliptical",\
+								pen_x,pen_y,alpha,linecap,linejoin,\
+								"removeinternal")
+							else:
+								templayer.stroke("eliptical",\
+								pen_x,pen_y,alpha,linecap,linejoin)
+						if stroke_follows_fill: # this is need because of the "if not" above
+							stroke_follows_fill = False
+						if is_white:
+							#layer.exclude(templayer)	
+							# exclude does not work properly in fontforge
+							# so we intersect the templayer with the layer
+							# and exclude that from the layer by making
+							# it counterclockwise and removeOverlap()
+							#layer = layer + templayer			
+							print "do nothing"		
+						else:
+							layer = layer + templayer
+						layer.removeOverlap()
+						layer.round(100)
+					elif word == "gsave" and not stroke_follows_fill:
+						gsave_contour = contour.dup() 
+						gsave_ctm = ctm 
+						gsave_is_white = is_white
+					elif word == "grestore" and not stroke_follows_fill:
+						contour = gsave_contour.dup() 
+						ctm = gsave_ctm 
+						is_white = gsave_is_white
+		glyph.foreground = layer
 	
 def generate_pdf(font,mffile,outputname,tempdir,mainargs):
 	subprocess.call( # run mpost in proof mode
@@ -56,12 +323,12 @@ def generate_pdf(font,mffile,outputname,tempdir,mainargs):
 	# write tex-file for proof images
 	with open(os.path.join(tempdir, "%s.tex" % outputname), "w") as texfile:
 		texfile.write("\documentclass{article}\n")
-		texfile.write("\usepackage{graphicx}\n")
-		texfile.write("\usepackage[left=1cm,right=1cm,bottom=1cm]{geometry}\n")
+		texfile.write("\\usepackage{graphicx}\n")
+		texfile.write("\\usepackage[left=1cm,right=1cm,bottom=1cm]{geometry}\n")
 		texfile.write("\pagestyle{empty}\n")
 		texfile.write("\\begin{document}\n")
 		texfile.write("\\begin{center}\n")
-		texfile.write("\mbox{}\n\n\\vspace{3cm}\n{\Huge\\textbf{%s}}\\\\[3ex]\n" % outputname)
+		texfile.write("\mbox{}\n\n\\vspace{3cm}\n{\Huge\\verb|%s|}\\\\[3ex]\n" % outputname)
 		texfile.write("\\today\\\\\n")
 		texfile.write("\\vspace{2cm}\n")
 		texfile.write("\\begin{tabular}{|l|c|}\hline\n")
@@ -74,7 +341,10 @@ def generate_pdf(font,mffile,outputname,tempdir,mainargs):
 		mpslist = sorted(glob.glob(os.path.join(tempdir, "*.mps")),
 		key=lambda name: int(os.path.splitext(os.path.basename(name))[0],16))
 		for i in mpslist:
-			code = int(os.path.splitext(os.path.basename(i))[0],16)
+			if mainargs.max256:
+				code = int(os.path.splitext(os.path.basename(i))[0])
+			else:
+				code = int(os.path.splitext(os.path.basename(i))[0],16)
 			texfile.write("\\begin{tabular}{|l|c|}\hline\n")
 			texfile.write("glyph name & %s\\\\\hline\n" % font[code].glyphname)
 			texfile.write("code (hexadecimal) & %s\\\\\hline\n" % os.path.splitext(os.path.basename(i))[0])
@@ -327,7 +597,7 @@ def write_t1_enc(tempdir):
 		encfile.write("/Udieresis       % 0xDC\n")
 		encfile.write("/Yacute          % 0xDD\n")
 		encfile.write("/Thorn           % 0xDE\n")
-		encfile.write("/Germandbls      % 0xDF U+1E9E\n")
+		encfile.write("/uni1E9E         % 0xDF U+1E9E\n")
 		encfile.write("/agrave          % 0xE0\n")
 		encfile.write("/aacute          % 0xE1\n")
 		encfile.write("/acircumflex     % 0xE2\n")
@@ -494,7 +764,7 @@ def write_ot1_enc(tempdir):
 		encfile.write("/tilde           % 0x7E U+02DC\n")
 		encfile.write("/dieresis        % 0x7F U+00A8\n")
 		encfile.write("] def")
-
+		
 if __name__ == "__main__":			
 	parser = argparse.ArgumentParser(description="Generate outline fonts from Metafont sources.")
 	parser.add_argument("mfsource", help="The file name of the Metafont source file")
@@ -522,6 +792,12 @@ if __name__ == "__main__":
 		dest="ignoretfm",
 		default=False,
 		help="Do not read any data from the tfm file...")
+	parser.add_argument("--max256",
+		action="store_true",
+		dest="max256",
+		default=False,
+		help="Use charcode (256 codes) instead of charunicode" \
+		"(1111998 codes). This is needed for Malvern Greek.")
 	parser.add_argument("--preview",
 		action="store_true",
 		dest="preview",
@@ -529,6 +805,18 @@ if __name__ == "__main__":
 		help="Use icosagon pens instead of circle/elliptic pens and do not" \
 		"care about advanced font features like kerning and ligatures" \
 		"(makes things faster, mainly used for METAFLOP). ")
+	parser.add_argument("--psimport",
+		action="store_true",
+		dest="psimport",
+		default=False,
+		help="Use own PostScript import instead of the PostScript" \
+		"import provided by FontForge.")
+	parser.add_argument("--use-ff-commands",
+		action="store_true",
+		dest="useffcommands",
+		default=False,
+		help="Read additional fontforge commands from mf2outline.txt." \
+		"This may be insecure (uses exec)...")
 	parser.add_argument("-f", "--formats",
 		action="append",
 		dest="formats",
@@ -540,9 +828,10 @@ if __name__ == "__main__":
 		dest="encoding",
 		metavar="ENC",
 		type=str,
-		default="unicode",
+		default=None,
 		help="Force the font encoding to be ENC. Natively supported " \
-		"encodings: ot1, t1, unicode. Default: unicode. The file " \
+		"encodings: OT1 (or ot1), T1 (or t1), unicode. "\
+		"Default: None (this will lead to unicode). The file " \
 		"ENC.enc will be read if it exists in the same directory as " \
 		"the source file (the encoding name inside the encoding file "\
 		"must be named ENC, too).")	
@@ -550,19 +839,19 @@ if __name__ == "__main__":
 		dest="fullname",
 		metavar="FULL",
 		type=str,
-		default="Unknown",
+		default=None,
 		help="Set the full name to FULL (with modifiers and possible spaces).")	
 	parser.add_argument("--fontname", 
 		dest="fontname",
 		metavar="NAME",
 		type=str,
-		default="Unknown",
+		default=None,
 		help="Set the font name to NAME (with modifiers and without spaces).")	
 	parser.add_argument("--familyname", 
 		dest="familyname",
 		metavar="FAM",
 		type=str,
-		default="Unknown",
+		default=None,
 		help="Set the font family name to FAM.")		
 	parser.add_argument("--fullname-as-filename",
 		action="store_true",
@@ -573,19 +862,19 @@ if __name__ == "__main__":
 		dest="version",
 		metavar="VERS",
 		type=str,
-		default="001.001",
-		help="Set the version of the font to VERS. Default: 001.001")	
+		default=None,
+		help="Set the version of the font to VERS.")
 	parser.add_argument("--copyright", 
 		dest="copyright",
 		metavar="COPY",
 		type=str,
-		default="",
+		default=None,
 		help="Set the copyright notice of the font to COPY.")		
 	parser.add_argument("--vendor", 
 		dest="vendor",
 		metavar="VEND",
 		type=str,
-		default="",
+		default=None,
 		help="Set the vendor name of the font to VEND (limited to 4 " \
 		"characters).")	
 	parser.add_argument("--weight", 
@@ -628,7 +917,7 @@ if __name__ == "__main__":
 		args.verbose=True
 
 	if not (os.path.isfile(args.mfsource) or os.path.isfile(args.mfsource+".mf")):
-		print "Cannot find your specified source file '%s'" % args.mfsource
+		print("Cannot find your specified source file '%s'" % args.mfsource)
 		exit(1)
 	
 	font = fontforge.font()
@@ -636,20 +925,22 @@ if __name__ == "__main__":
 		font.design_size = 10
 	else:
 		font.design_size = args.designsize
+	font.os2_weight = 500 # default (may be overwritten)
+	font.os2_width = 5 # default (may be overwritten)
 	
 	mffile = os.path.abspath("%s" % args.mfsource)
 	tempdir = tempfile.mkdtemp()
 	workdir = os.path.split(os.path.abspath(sys.argv[0]))[0]
 	
 	if args.verbose:
-		print "Running METAPOST..."
-		print "-------------------"
+		print("Running METAPOST...")
+		print("-------------------")
 	run_metapost(mffile,font.design_size,workdir,tempdir,args)
 	if args.verbose:
-		print "-------------------"
+		print("-------------------")
 	if args.designsize == None:	
 		if args.verbose:
-			print "Checking the designsize in mf2outline.txt..."
+			print("Checking the designsize in mf2outline.txt...")
 		with open(os.path.join(tempdir,"mf2outline.txt"), "r") as metricfile:
 			for line in metricfile:
 				if line[:11] == "mf2outline:":
@@ -660,18 +951,37 @@ if __name__ == "__main__":
 		if font.design_size != args.designsize: # remember that we just set 10pt by default
 			font.design_size = args.designsize
 			if args.verbose:
-				print "The correct designsize is %s, hence I have to run METAPOST again..." % font.design_size
+				print("The correct designsize is %s, hence I have to run METAPOST again..." % font.design_size)
 			run_metapost(mffile,font.design_size,workdir,tempdir,args)
 	
+	if args.veryverbose:
+		f = open('%s/mf2outline.txt' % tempdir,"r")
+		print(f.read())
+		f.close()
+	
 	if args.verbose:
-		print "Importing font metrics from mf2outline.txt..."
-	font_normal_space = 300 # this is a default that has to be set but is changed probably
+		print("Importing font metrics from mf2outline.txt...")
+	font_slant = 0 # this is a default (will change probably later)
+	font_normal_space = 333 # this is a default (will change probably later)
+	font_normal_stretch = 167 # this is a default (will change probably later)
+	font_normal_shrink = 111 # this is a default (will change probably later)
+	font_x_height = 430 # this is a default (will change probably later)
+	font_quad = 1000 # this is a default (will change probably later)
+	font_extra_space = 111 # this is a default (will change probably later)
+	font_range = None 
+	originalencoding = None # this will probably change
+	# some lists, that may be used later:
+	kerningclassesl = [] 
+	kerningclassesr = []
+	kerningmatrix = []
+	ligatures = []
+	randvariants = []
 	fontforgecommands = [] # this list may be used later
 	with open(os.path.join(tempdir,"mf2outline.txt"), "r") as metricfile:
 		# the idea is to read through the file and store the relevant
 		# information in variables or in the fontforgecommands list,
 		# which will be processed later
-		currentlistname = "none" # yet there is no list to write information to...
+		currentlistname = None # yet there is no list to write information to...
 		for line in metricfile:
 			if line[:11] == "mf2outline:": # look for special words inside the glyphs eps
 				words = line.split()
@@ -680,7 +990,8 @@ if __name__ == "__main__":
 					if words[1] == "eof": # end of file
 						break
 					elif words[1] == "font_slant" and len(words) > 1: # the slant of the font
-						font.italicangle = -math.degrees(math.atan(float(words[2])))
+						font_slant = float(words[2])
+						font.italicangle = -math.degrees(math.atan(font_slant))
 					elif words[1] == "font_version" and len(words) > 1:
 						font.version = " ".join(words[2:])
 					elif words[1] == "font_copyright" and len(words) > 1: 
@@ -694,30 +1005,78 @@ if __name__ == "__main__":
 					elif words[1] == "font_coding_scheme" and len(words) > 1: 
 						originalencoding = " ".join(words[2:])
 					elif words[1] == "font_os_weight" and len(words) > 1:
-						font_os2_weight = int(words[2])
+						font.os2_weight = int(words[2])
 					elif words[1] == "font_os_width" and len(words) > 1:
-						font_os2_width = int(words[2])
-					# the following tex information cannot be set in the font, 
-					# as fontforge does not yet support the setting of 
-					# texparameters (only access) but we still read them
+						font.os2_width = int(words[2])
+					elif words[1] == "font_range" and len(words) > 1:
+						font_range = [float(words[2]),float(words[3]),int(words[4])]
+					# texparameters:
 					elif words[1] == "font_normal_space" and len(words) > 1:
-						font_normal_space = round(float(words[2]) *1000 / args.designsize)
+						font_normal_space = float(words[2]) *1000 / args.designsize
+					elif words[1] == "font_normal_stretch" and len(words) > 1:
+						font_normal_stretch = float(words[2]) *1000 / args.designsize
+					elif words[1] == "font_normal_shrink" and len(words) > 1:
+						font_normal_shrink = float(words[2]) *1000 / args.designsize
 					elif words[1] == "font_x_height" and len(words) > 1:
-						font_x_height = round(float(words[2]) *1000 / args.designsize)
+						font_x_height = float(words[2]) *1000 / args.designsize
 					elif words[1] == "font_quad" and len(words) > 1:
-						font_quad = round(float(words[2]) *1000 / args.designsize)
+						font_quad = float(words[2]) *1000 / args.designsize
+					elif words[1] == "font_extra_space" and len(words) > 1:
+						font_extra_space = float(words[2]) *1000 / args.designsize
+					# and now some lists:
+					elif words[1] == "kerningclassesl":
+						currentlistname = "kerningclassesl"
+					elif words[1] == "kerningclassesr":
+						currentlistname = "kerningclassesr"
+					elif words[1] == "kerningmatrix":
+						currentlistname = "kerningmatrix"
+						args.ignoretfm = True
+					elif words[1] == "ligatures":
+						currentlistname = "ligatures"
+						args.ignoretfm = True
+					elif words[1] == "randvariants":
+						currentlistname = "randvariants"
 					elif words[1] == "fontforge":
 						currentlistname = "fontforgecommands"
 			elif not currentlistname == "none": # if there is something to write to...
-				if (currentlistname == "fontforgecommands"):
-					vars()[currentlistname].append(line.rstrip('\n'))
-				# else: there may be other lists in future...
-					#vars()[currentlistname].append(line.split())
-
+				vars()[currentlistname].append(line.split())
+	
+	# since font.texparameters is not writeable, we have to
+	# insert TeX-data directly into the sfd-file:
+	# this is only implemented for text fonts (not for math or ext fonts)
+	# if "tfm" in args.formats:
+	if "tfm" or "sfd" in args.formats:
+		if args.verbose:
+			print("Writing some special TeX parameters...")
+		font.save("%s/temp.sfd" % tempdir)
+		with open("%s/temp.sfd" % tempdir, 'r') as fin:
+			lines=fin.readlines()
+			with open("%s/temp2.sfd" % tempdir, 'w') as fout:
+				for line in lines:
+					fout.write(line)
+					fout.write("\n")
+					# Now instert after "FitToEm:"
+					if line[:8] == "FitToEm:":
+						fout.write("TeXData: 1 ")
+						fout.write(str(int(args.designsize*(1<<20)))+" ")
+						fout.write(str(int(font_slant/args.designsize*.01*(1<<20)))+" ")
+						fout.write(str(int(font_normal_space/args.designsize*.01*(1<<20)))+" ")
+						fout.write(str(int(font_normal_stretch/args.designsize*.01*(1<<20)))+" ")
+						fout.write(str(int(font_normal_shrink/args.designsize*.01*(1<<20)))+" ")
+						fout.write(str(int(font_x_height/args.designsize*.01*(1<<20)))+" ")
+						fout.write(str(int(font_quad/args.designsize*.01*(1<<20)))+" ")
+						fout.write(str(int(font_extra_space/args.designsize*.01*(1<<20)))+" ")
+						fout.write("0 0 0 0 0 0 0 0 0 0 0 0 0 0 0")
+						fout.write("\n\n")
+		font=fontforge.open("%s/temp2.sfd" % tempdir)
+		
 	if args.verbose:
-		print "Setting the font encoding..."
+		print("Setting the font encoding...")
 	if args.encoding == None:
-		args.encoding = originalencoding
+		if originalencoding == None:
+			font.encoding = "unicode"
+		else:
+			args.encoding = originalencoding
 	if args.encoding == "Unicode" or args.encoding == "unicode":
 		font.encoding = "unicode"
 	elif args.encoding == "t1" or args.encoding == "T1": # tex cork encoding (8bit)
@@ -732,13 +1091,13 @@ if __name__ == "__main__":
 		fontforge.loadEncodingFile(os.path.join(os.path.split(os.path.abspath("%s" % args.mfsource))[0],"%s.enc" %args.encoding))
 		font.encoding = args.encoding
 	else:
-		print os.path.join(os.path.split(os.path.abspath("%s" % args.mfsource))[0],"%s.enc" %args.encoding)
+		print(os.path.join(os.path.split(os.path.abspath("%s" % args.mfsource))[0],"%s.enc" %args.encoding))
 		if args.verbose:
-			print "I do not know this encoding but will continue with Unicode (BMP)"
+			print("I do not know this encoding but will continue with Unicode (BMP)")
 		font.encoding = "unicode"
 	
 	if args.verbose:
-		print "Setting other general font information..."
+		print("Setting other general font information...")
 	if args.fullname:
 		font.fullname = args.fullname
 	if args.fontname:
@@ -747,14 +1106,14 @@ if __name__ == "__main__":
 		font.familyname = args.familyname
 	if args.version:
 		font.version = args.version
+	else:
+		font.version = "001.001"
 	if args.copyright:
 		font.copyright = args.copyright
 	if args.vendor:
 		font.os2_vendor = args.vendor
 	# setting the weight
-	if args.weight == None:
-		font.os2_weight = 500 # default
-	else:
+	if args.weight != None:
 		font.os2_weight = args.weight
 	if font.os2_weight == 100:
 		font.weight = "Thin"
@@ -773,27 +1132,37 @@ if __name__ == "__main__":
 	elif font.os2_weight == 900:
 		font.weight = "Black"
 	else:
-		font.os2_weight == 500
+		font.os2_weight = 500
 		font.weight = "Medium"
 	# setting the width
-	if args.width == None:
-		font.os2_weight = 5 # default
-	else:
-		font.os2_weight = args.width
+	if args.width != None:
+		font.os2_width = args.width
 	# setting the font comment
 	font.comment = "Created with mf2outline."
+	#setting the font range
+	if font_range != None:
+		font.size_feature = (args.designsize,font_range[0],\
+		font_range[1],font_range[2],(('English (US)','Regular'),))
 
 	if args.verbose:
-		print "Importing glyphs and adding glyph metrics..."
+		print("Importing glyphs and adding glyph metrics...")
 	glyph_files = glob.glob(os.path.join(tempdir, "*.eps"))
 	for eps in glyph_files:
-		code  = int(os.path.splitext(os.path.basename(eps))[0],16) # string is in hexadecimal
+		if args.max256:
+			code  = int(os.path.splitext(os.path.basename(eps))[0]) 
+		else:
+			code  = int(os.path.splitext(os.path.basename(eps))[0],16) # string is in hexadecimal
+		if args.veryverbose:
+			print("["+str(code)+"]")
 		if args.encoding == "unicode":
 			glyph = font.createChar(code,fontforge.nameFromUnicode(code))
 		else:
 			glyph = font.createMappedChar(code)
 		if not ((args.encoding == "unicode") and (code == 32) or (args.encoding == "t1" and code == 23)): # do not read space/cwm (it will be empty)
-			glyph.importOutlines(eps, ("toobigwarn", "correctdir"))
+			if args.psimport:
+				import_ps(eps,glyph)
+			else:			
+				glyph.importOutlines(eps, ("toobigwarn", "correctdir"))
 		with open(eps, "r") as epsfile:
 			for line in epsfile:
 				if line[0] == "%": # only look at comments	
@@ -807,78 +1176,133 @@ if __name__ == "__main__":
 							glyph.texdepth = round(float(words[3]) *1000 / args.designsize)
 						elif words[2] == "charic": # the italic correction of the current char
 							glyph.italicCorrection = round(float(words[3]) *1000 / args.designsize)	
+		
 	generalname = os.path.splitext(os.path.basename(args.mfsource))[0]	
-	
 	if not args.preview: # preview does not need ligatures, kernings etc.
 		if args.verbose:
-			print "Processing font metrics"
+			print("Processing font metrics")
 		# read and integrate the tfm-file if needed (hence, there seem to be no OpenType features)
-		if not args.ignoretfm:
+		if args.ignoretfm:
+			# integrate kerningclasses
+			if len(kerningclassesl)>0 and len(kerningclassesr)>0:
+				kerningclassesr[:0] = [["0"]] # this is the "Everything else" feature from fontforge
+				for i in kerningmatrix:
+					i[:0] = ["0"] # "Everything else" shall not be kerned
+				kerningmatrix = [round(float(i)*1000/args.designsize) for j in kerningmatrix for i in j] # flatten 2d matrix to 1d (and string to int)
+				kerningclassesl = [[fontforge.nameFromUnicode(int(j,16)) for j in i] for i in kerningclassesl]
+				kerningclassesr = [[fontforge.nameFromUnicode(int(j,16)) for j in i] for i in kerningclassesr]
+				font.addLookup("Horizontal Kerning",
+				"gpos_pair",
+				(),
+				(("kern",(("DFLT",("dflt")),("latn",("dflt")),)),)) 
+				font.addKerningClass("Horizontal Kerning",
+				"Horizontal Kerning subtable",
+				kerningclassesl,
+				kerningclassesr,
+				kerningmatrix) # kerningmatrix float entries will be rounded
+			# add ligatures
+			if len(ligatures)>0:
+				font.addLookup('ligatures','gsub_ligature',(),(('liga',(('latn',('dflt')),)),))
+				font.addLookupSubtable('ligatures','ligatures subtable')
+				# make codes in ligatures to glyph names
+				ligatures=[[fontforge.nameFromUnicode(int(j,16)) for j in i] for i in ligatures]
+				for i in range(0,len(ligatures)):
+					font[ligatures[i][0]].addPosSub('ligatures subtable',(ligatures[i][1:]))
+		else: # tfm shall not be ignored and hence read and used
 			if args.verbose:
-				print "Reading kerning/ligature information from tfm..."
+				print("Reading kerning/ligature information from tfm...")
 			font.mergeFeature("%s/%s.tfm" % (tempdir, generalname))
+		# apply random variants
+		if len(randvariants)>0:
+			font.addLookup("Randomize lookup","gsub_alternate",(),\
+			(('rand',(('DFLT', ('dflt',)),('latn', ('dflt',)))),))
+			font.addLookupSubtable("Randomize lookup", "Randomize subtable")
+			for i in range(0,len(randvariants)):
+				origcode = randvariants[i][0]
+				font[int(origcode,16)].addPosSub("Randomize subtable",\
+				[fontforge.nameFromUnicode(int(j,16)) for j in randvariants[i][1:]])
 		# apply fontforge commands
-		if len(fontforgecommands)>0:
+		if len(fontforgecommands)>0 and args.useffcommands:
 			for i in range(0,len(fontforgecommands)):
-				eval(fontforgecommands[i])
+				exec(fontforgecommands[i])
 				
-	if args.encoding == "t1":
+	if font.encoding == "T1Encoding" \
+	or font.encoding == "OT1Encoding":
 		if args.veryverbose:
-			print "Adding the space character..."
+			print("Adding the space character...")
+		currentencoding = font.encoding
 		font.encoding = "unicode" #add space for non-TeX use
 		font.createChar(32)
 		font[32].width = font_normal_space
-		font.encoding = "T1Encoding"
-		font.encoding = "compacted"
+		font.encoding = currentencoding
 	
 	if not args.raw:
 		if args.verbose:
-			print "General finetuning in fontforge..."
+			print("General finetuning in fontforge...")
 		if args.preview:
 			font.selection.all()
 			if args.veryverbose:
-				print "Removing overlaps"
+				print("Removing overlaps")
 			font.removeOverlap()
 			if args.veryverbose:
-				print "Correcting directions"
+				print("Correcting directions")
 			font.correctDirection()
 			if args.veryverbose:
-				print "Rounding"
+				print("Rounding")
 			font.round()
 			if args.veryverbose:
-				print "Hinting"
+				print("Hinting")
 			font.autoHint()
 		elif args.ffscript == "": # no user defined script
 			font.selection.all()
+			#if args.veryverbose:
+			#	print("Rounding to 1/100 unit")
+			#font.round(100)
 			if args.veryverbose:
-				print "Simplifying"
-			font.simplify()
-			if args.veryverbose:
-				print "Rounding to 1/100 unit"
-			font.round(100)
-			if args.veryverbose:
-				print "Removing overlaps"
+				print("Removing overlaps")
 			font.removeOverlap()
 			if args.veryverbose:
-				print "Correcting directions"
+				print("Correcting directions")
 			font.correctDirection()
 			if args.veryverbose:
-				print "Adding extrema"
+				print("Rounding to 1/100 unit")
+			font.round(100) # otherwise, extrema may be ugly
+			if args.veryverbose:
+				print("Adding extrema")
 			font.addExtrema()
 			if args.veryverbose:
-				print "Simplifying"
+				print("Simplifying")
 			font.simplify()
 			if args.veryverbose:
-				print "Rounding"
+				print("Rounding")
 			font.round()
 			if args.veryverbose:
-				print "Simplifying"
+				print("Simplifying")
 			font.simplify()
 			if args.veryverbose:
-				print "Rounding"
+				print("Rounding")
+			font.round()
+			# and one more time... (this is needed!)
+			if args.veryverbose:
+				print("Adding extrema")
+			font.addExtrema()
+			if args.veryverbose:
+				print("Rounding")
 			font.round()
 			if args.veryverbose:
-				print "Hinting"
+				print("Simplifying")
+			font.simplify()
+			if args.veryverbose:
+				print("Rounding")
+			font.round()
+			if args.veryverbose:
+				print("Simplifying")
+			font.simplify()
+			if args.veryverbose:
+				print("Rounding")
+			font.round()
+			if args.veryverbose:
+				print("Hinting")
 			font.autoHint()
 		else:		# user defined script
 			font.save("%s/temp.sfd" % tempdir)
@@ -894,23 +1318,21 @@ if __name__ == "__main__":
 			font=fontforge.open("%s/temp.sfd" % tempdir)
 			 
 	if args.verbose:
-		print "Saving outline font file..."
+		print("Saving outline font file...")
 	if args.fullnameasfilename:
 		outputname = font.fullname
 	else:
 		outputname = generalname
 	for outlineformat in args.formats:
 		if outlineformat == "sfd":
+			#font.encoding = "compacted"
 			font.save("%s.%s" % (outputname,outlineformat))
 		elif outlineformat == "pdf":
 			generate_pdf(font,mffile,outputname,tempdir,args)
+		elif outlineformat == "tfm":
+			shutil.copyfile("%s/%s.tfm" % (tempdir,outputname), "./%s.tfm" % outputname)
 		else:
 			font.generate("%s.%s" % (outputname,outlineformat))
-	
-	#print os.listdir(tempdir)
-	#f = open('%s/mf2outline.txt' % tempdir,"r")
-	#print f.read()
-	#f.close()
 	
 	shutil.rmtree(tempdir)
 	

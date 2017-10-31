@@ -24,6 +24,10 @@ set :application, 'metaflop'
 set :scm, :git
 set :repository, 'git@github.com:metaflop/metaflop-www.git'
 set :git_enable_submodules, 1
+# allows deployment of custom branch:
+# `cap staging deploy -s branch=my_branch`
+set :branch, fetch(:branch, 'master')
+
 set :deploy_to, '/home/app/app'
 set :deploy_via, :remote_cache # don't clone repo each time
 

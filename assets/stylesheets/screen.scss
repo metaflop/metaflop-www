@@ -548,11 +548,26 @@ embed {
     height: auto;
   }
 
+  .preview-text-wrapper {
+    display: inline-block;
+    position: relative;
+    margin: $box_spacing_y * 2;
+    background-color: $bg_color_modulator;
+
+    &:before {
+      position: absolute;
+      content: "\1F589";
+      top: 1px;
+      right: 3px;
+      font-size: 16px;
+    }
+  }
+
   .preview-text {
+    position: relative;
     color: #000;
     font-size: 32px;
     text-align: left;
-    margin: $box_spacing_y * 2;
     padding: $box_spacing_y;
     width: $preview_box_width_full - $box_spacing_y * 6;
     line-height: 1.5;
@@ -561,8 +576,13 @@ embed {
     resize: none;
     min-height: $preview_box_height / 2;
 
+    &:hover {
+      background: transparent;
+    }
+
     &:focus {
-      background-color: #fff;
+      text-decoration: underline;
+      background: transparent;
       outline: none;
     }
   }

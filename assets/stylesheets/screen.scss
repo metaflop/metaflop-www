@@ -554,12 +554,12 @@ embed {
     margin: $box_spacing_y * 2;
     background-color: $bg_color_modulator;
 
-    &:before {
+    .fa {
       position: absolute;
       content: "\1F589";
       top: 1px;
-      right: 3px;
-      font-size: 16px;
+      right: 5px;
+      font-size: 14px;
     }
   }
 

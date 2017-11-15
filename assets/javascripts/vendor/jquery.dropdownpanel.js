@@ -1,5 +1,5 @@
 /*
- * JQuery Dropdown Panel plugin (v 0.2.0)
+ * JQuery Dropdown Panel plugin (v 0.3.0)
  *
  * Replaces an html select element with a
  * simple, animated dropdown.
@@ -25,7 +25,7 @@
         };
 
         return $.each(this, function(index, select) {
-            var select = $(select);
+            select = $(select);
 
             // settings
             var settings = $.extend({}, defaults, options);
@@ -69,6 +69,10 @@
                 // set select value
                 selectEl.val(li.data('value'));
 
+                // trigger the select's change event so third parties may
+                // still use handlers on the select element
+                selectEl.trigger('change', true);
+
                 // set display value
                 displayEl.html(li.find('a').text());
 
@@ -80,7 +84,9 @@
             });
 
             // listen for changes on the original select
-            select.change(function(e) {
+            select.change(function(e, skip) {
+                if (skip) { return; }
+
                 var selectEl = select;
                 var listItems = lis;
                 var displayEl = wrapper;

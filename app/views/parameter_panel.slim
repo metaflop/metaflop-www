@@ -18,7 +18,7 @@ h2: span Parameters
     fieldset
       legend class="#{css_class}" = title
       - items
-        .clearfix.inputblock class="#{css_class}"
+        .clearfix.inputblock class="#{css_class}" data-dependent=dependent
           label for="param-#{name}" = title
           - dropdown
             select id="param-#{name}"

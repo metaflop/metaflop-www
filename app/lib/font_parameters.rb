@@ -40,7 +40,10 @@ class FontParameters
     :accent_height,
     :comma_depth,
     :slant,
-    :craziness
+    :craziness,
+
+    :drawing_style,
+    :number_of_points
   ]
 
   # the mapping between the defined params in the mf file and this class' properties
@@ -75,7 +78,11 @@ class FontParameters
     'comma_depth#' => :comma_depth,
     'prot' => :pen_angle,
     'slant' => :slant,
-    'craziness' => :craziness
+    'craziness' => :craziness,
+
+    # calport additions
+    'drawingstyle' => :drawing_style,
+    'dnum' => :number_of_points
   }
 
   attr_accessor *VALID_PARAMETERS_KEYS

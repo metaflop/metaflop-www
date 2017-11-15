@@ -142,6 +142,7 @@ $(function() {
   var getInputFields = function() {
     return $('#parameter-panel, #menu')
       .find('input:text,select')
+      .filter(':enabled')
       // exclude the slider's inputs
       .not('[id^=slider-]');
   };
@@ -407,6 +408,7 @@ $(function() {
               initSliders();
               initParameterDropdowns();
               resetParameters();
+              toggleDependentFields();
               if (activeNerdMode.length > 0) togglePanelMode(activeNerdMode);
               $.fn.metaflop.parameterPanel.fadeTo(0, 1);
               generatePreview();
@@ -608,6 +610,50 @@ $(function() {
     });
   };
   initSliders();
+
+  // enable and disable fields depending on expected values on dependent
+  // fields.
+  //
+  // a field with a dependency must have the `data-dependent` attribute set on its inputblock.
+  //
+  // Example:
+  //
+  // ```
+  //  <div class="clearfix inputblock" data-dependent="{&quot;drawing_style&quot;:[2,3]}">
+  // ```
+  var toggleDependentFields = function() {
+    $('[data-dependent]').each(function() {
+      var source = $(this);
+      var dependencies = source.data('dependent');
+
+      // we need to set the height instead of using `#show()` and `#hide()`, as
+      // the slider won't be properly initialized otherwise.
+      var toggleVisibility = function(value) {
+        if (dependencies[key].includes(value)) {
+          source.css({ height: 'inherit' });
+          source.find('input, select').prop('disabled', false);
+        }
+        else {
+          source.css({ height: '0' });
+          source.find('input, select').prop('disabled', true);
+        }
+      };
+
+      var onChange = function() {
+        var value = Number($(this).val());
+        toggleVisibility(value);
+      };
+
+      // attach change handlers on the dependencies
+      for (var key in dependencies) {
+        $.fn.metaflop.parameterPanel.on('change', '#param-' + key, onChange);
+      }
+
+      // initial visibility
+      toggleVisibility();
+    });
+  };
+  toggleDependentFields();
 
   // character chooser for single preview
   var charChooser = $('div.char-chooser');

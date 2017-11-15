@@ -6,6 +6,8 @@
 # licensed under gpl v3
 #
 
+require 'json'
+
 class ModulatorParameters
   def initialize(font_parameters)
     @font_parameters = font_parameters
@@ -39,12 +41,19 @@ class ModulatorParameters
         { title: 'contrast', key: :contrast },
         { title: 'superness', key: :superness },
         { title: 'pen angle', key: :pen_angle },
-        { title: 'pen shape', key: :pen_shape, options:
-          [{ value: '1', text: 'Circle' },
-           { value: '2', text: 'Square' },
-           { value: '3', text: 'Razor' }] },
+        { title: 'pen shape', key: :pen_shape, options: [
+          { value: '1', text: 'circle' },
+          { value: '2', text: 'square' },
+          { value: '3', text: 'razor' }
+        ]},
         { title: 'slanting', key: :slant },
-        { title: 'randomness', key: :craziness }
+        { title: 'randomness', key: :craziness },
+        { title: 'drawing style', key: :drawing_style, options: [
+          { value: '1', text: 'line' },
+          { value: '2', text: 'dots' },
+          { value: '3', text: 'overdraw' }
+        ]},
+        { title: 'number of points', key: :number_of_points, dependent: { drawing_style: [2, 3] }}
       ]
     }, {
       title: 'Optical corrections',
@@ -79,6 +88,11 @@ class ModulatorParameters
         if selected
           selected[:selected] = true
         end
+      end
+
+      # dependencies
+      if item[:dependent]
+        item[:dependent] = JSON.generate(item[:dependent])
       end
 
       i = i + 1

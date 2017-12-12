@@ -338,6 +338,7 @@ $(function() {
     }
     // up increase value
     else if (event.keyCode == 38) {
+      changeValue($(this), 'add1');
     }
     // down decrease value
     else if (event.keyCode == 40) {

@@ -6,6 +6,7 @@
  * licensed under gpl v3
  */
 
+/* global $, Modernizr, fdSlider */
 $(function() {
   if (!$('#main').hasClass('modulator')) {
     return;
@@ -202,7 +203,7 @@ $(function() {
       window.stop();
     }
     else if (document.execCommand !== undefined) {
-      document.execCommand("Stop", false);
+      document.execCommand('Stop', false);
     }
   };
 
@@ -241,7 +242,7 @@ $(function() {
     $.fn.metaflop.queryString = '?' +
       $.makeArray(inputFields).map(function(element){
         return element.id.remove('param-') + '=' + $(element).val();
-      }).join("&");
+      }).join('&');
 
     return $.fn.metaflop.queryString;
   };
@@ -293,11 +294,11 @@ $(function() {
           if (styleSheet.ownerNode.id == 'font-face-css') {
             styleSheet.deleteRule(0);
 
-            rule =
-              "@font-face {" +
-              "    font-family: 'preview';" +
-              "    src: url(data:font/opentype;base64," + data + ") format('opentype');" +
-              "}";
+            var rule =
+              '@font-face {' +
+              '  font-family: "preview";' +
+              '  src: url(data:font/opentype;base64,' + data + ') format("opentype");' +
+              '}';
             styleSheet.insertRule(rule, 0);
 
             break;
@@ -325,46 +326,49 @@ $(function() {
       [46, 9, 35, 36, 37, 39].some(keyCode); // backspace, delete, tab, cursors
   };
 
-  $.fn.metaflop.parameterPanel.on('focus', '.adjuster input.param', function() {
-    var $this = $(this);
-    setActiveInputs($this);
-  })
-  .on('keydown', '.adjuster input.param', function(event) {
-    // allow backspace, delete, tab, cursors and metakeys
-    if (isAllowedMetaKey(event.keyCode)) {
-    }
-    // allow delete
-    else if (event.keyCode == 8){
-    }
-    // up increase value
-    else if (event.keyCode == 38) {
-      changeValue($(this), 'add1');
-    }
-    // down decrease value
-    else if (event.keyCode == 40) {
-      changeValue($(this), 'sub1');
-    }
-    // allow decimal point (".", ",")
-    else if (isAllowedTrailingCharacter(event.keyCode)) {
-    }
-    else {
-      // stop keypress if NaN
-      if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
-        event.preventDefault();
+  $.fn.metaflop.parameterPanel
+    .on('focus', '.adjuster input.param', function() {
+      var $this = $(this);
+      setActiveInputs($this);
+    })
+    .on('keydown', '.adjuster input.param', function(event) {
+      // allow backspace, delete, tab, cursors and metakeys
+      if (isAllowedMetaKey(event.keyCode)) {
+        // no-op
       }
-    }
-
-  })
-  .on('keyup', '.adjuster input.param', function(event) {
-    // defer evaluation when allowed trailing characters (e.g. ".", wait for the next number)
-    // ignore meta keys
-    if (!(isAllowedTrailingCharacter(event.keyCode) || isAllowedMetaKey(event.keyCode))) {
-      setValue($(this));
-    }
-  })
-  .on('blur', '.adjuster input.param', function() {
-    setValue($(this), null);
-  });
+      // allow delete
+      else if (event.keyCode == 8) {
+        // no-op
+      }
+      // up increase value
+      else if (event.keyCode == 38) {
+        changeValue($(this), 'add1');
+      }
+      // down decrease value
+      else if (event.keyCode == 40) {
+        changeValue($(this), 'sub1');
+      }
+      // allow decimal point (".", ",")
+      else if (isAllowedTrailingCharacter(event.keyCode)) {
+        // no-op
+      }
+      else {
+        // stop keypress if NaN
+        if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+          event.preventDefault();
+        }
+      }
+    })
+    .on('keyup', '.adjuster input.param', function(event) {
+      // defer evaluation when allowed trailing characters (e.g. ".", wait for the next number)
+      // ignore meta keys
+      if (!(isAllowedTrailingCharacter(event.keyCode) || isAllowedMetaKey(event.keyCode))) {
+        setValue($(this));
+      }
+    })
+    .on('blur', '.adjuster input.param', function() {
+      setValue($(this), null);
+    });
 
   // parameter list dropdown menus
   var initParameterDropdowns = function() {
@@ -460,9 +464,9 @@ $(function() {
 
     // randomize the dropdowns
     $('#parameter-panel select').each(function() {
-      $this = $(this);
+      var $this = $(this);
 
-      options = $this.find('option');
+      var options = $this.find('option');
       var optionsIndex = Number.random(0, options.length - 1);
 
       var value = $(options[optionsIndex]).val();
@@ -476,13 +480,13 @@ $(function() {
   var getFontUrl = function(shortenendUrl) {
     var url = $.url();
     var baseUrl = url.attr('source').remove(url.attr('relative'));
-    return baseUrl + "/modulator/font/" + shortenendUrl;
+    return baseUrl + '/modulator/font/' + shortenendUrl;
   };
 
   // share the current settings
   // this function is called from flash clippy
   $.fn.metaflop.getFlashShareUrl = function() {
-    var container = $('#action-share-url');
+    var container = $('#action-share-url'); // eslint-disable-line no-unused-vars
 
     if (!$.fn.metaflop.shortenendUrl) {
       showProgress('Generating share url...');
@@ -528,14 +532,14 @@ $(function() {
     showProgress('Exporting the font...');
 
     callWithFontHash(function(data) {
-      var url = "/modulator/export/font/" + $this.attr('data-type') + "/" + $('#param-fontface').val() + "/" + data;
+      var url = '/modulator/export/font/' + $this.attr('data-type') + '/' + $('#param-fontface').val() + '/' + data;
 
       // make an ajax request first, only after that redirect to force the download, because:
       // 1. we can show a spinner while the export gets generated
       // 2. we can handle errors and display a message
       $.ajax({
         url: url,
-        success: function(data) {
+        success: function() {
           hideProgress();
           window.location = url;
         },
@@ -543,7 +547,7 @@ $(function() {
           showErrorMessage(jqXHR.responseText);
         }
       });
-    }, function() {}); // don't call "hideProgress"
+    }, function() {}); // don't call 'hideProgress'
   });
 
   // toggle the +/- buttons for the inputs
@@ -591,14 +595,14 @@ $(function() {
     $.fn.metaflop.parameterPanel.find('.slider input').each(function() {
       fdSlider.createSlider({
         inp: this,
-        step: "0.01",
+        step: '0.01',
         maxStep: 1, // (for keyboard users)
         min: $(this).attr('data-range-from'),
         max: $(this).attr('data-range-to'),
-        animation:"timed",
+        animation:'timed',
         hideInput: true,
         callbacks:{
-          "change":[updateValue]
+          'change': [updateValue]
         }
       });
     });
@@ -610,7 +614,7 @@ $(function() {
   charChooser.on('click', 'a', function(e) {
     e.preventDefault();
 
-    $this = $(this);
+    var $this = $(this);
     var box = $this.parents('.box');
     charChooser.find('a').removeClass('active');
     $this.addClass('active').blur();
@@ -628,12 +632,12 @@ $(function() {
     var items = div.find('li');
 
     var nextItem = $($this.hasClass('right') ?
-        activeItem.next()[0] || items.first() :
-        activeItem.prev()[0] || items.last());
+      activeItem.next()[0] || items.first() :
+      activeItem.prev()[0] || items.last());
 
     items.removeClass('active');
     nextItem.addClass('active');
-    div.scrollTo(nextItem, 400, { easing: 'easeInOutExpo', axis: "x" });
+    div.scrollTo(nextItem, 400, { easing: 'easeInOutExpo', axis: 'x' });
 
     return false;
   });
@@ -677,8 +681,8 @@ $(function() {
     if (!$this.is('.active')) {
       informationToggle.toggleClass('active');
       $('#info-panel').slideToggle(
-          $.fn.metaflop.settings.panelToggleDuration,
-          $.fn.metaflop.settings.panelToggleEasing);
+        $.fn.metaflop.settings.panelToggleDuration,
+        $.fn.metaflop.settings.panelToggleEasing);
     }
 
     $this.blur();
@@ -693,8 +697,8 @@ $(function() {
     if (!$this.is('.active')) {
       glyphChartPreviewToggle.toggleClass('active');
       $('#preview-single, #preview-chart').slideToggle(
-          $.fn.metaflop.settings.panelToggleDuration,
-          $.fn.metaflop.settings.panelToggleEasing);
+        $.fn.metaflop.settings.panelToggleDuration,
+        $.fn.metaflop.settings.panelToggleEasing);
     }
 
     $this.blur();
@@ -749,12 +753,12 @@ $(function() {
   }
   else {
     var unsupported = $(
-        '<div id="modulator-unsupported" style="height: ' +
-        $('#main').height() +
-        'px;"><p>Your browser <a href="http://caniuse.com/ttf">' +
-        'is not supported</a> by our modulator.<br />' +
-        'Please try to upgrade to a more contemporary browser.</p>' +
-        '</div>');
+      '<div id="modulator-unsupported" style="height: ' +
+      $('#main').height() +
+      'px;"><p>Your browser <a href="http://caniuse.com/ttf">' +
+      'is not supported</a> by our modulator.<br />' +
+      'Please try to upgrade to a more contemporary browser.</p>' +
+      '</div>');
     $('#main').append(unsupported);
     unsupported.fadeTo(0, 0.9);
   }

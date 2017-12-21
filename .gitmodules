@@ -10,3 +10,6 @@
 [submodule "mf/metaflop-font-calport"]
 	path = mf/metaflop-font-calport
 	url = git@github.com:metaflop/metaflop-font-calport.git
+[submodule "mf/metaflop-font-funtauna"]
+	path = mf/metaflop-font-funtauna
+	url = git@github.com:metaflop/metaflop-font-funtauna.git

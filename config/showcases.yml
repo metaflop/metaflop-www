@@ -182,7 +182,7 @@ showcases:
 
   die_dada:
     title: Die Dada
-    description: <p>The book <a href="http://www.scheidegger-spiess.ch/index.php?page=books&view=co&booktype=order_1_releasedate&subject=1&artist=all&author=all&pd=ss&book=607&lang=de" target="_blank">Die
+    description: <p>The book <a href="http://www.marco-mueller.com/projects/die-dada/" target="_blank">Die
       Dada – Wie Frauen Dada prägten</a> presents for the first time a
       comprehensive overview about the most important She Dada painters,
       writers, dancers, musicians, publishers and patrons of this avant-garde
@@ -211,24 +211,17 @@ showcases:
 
   the_sprawl:
     title: The Sprawl
-    description: <p>The project The Sprawl <a href="http://i-d.vice.com/en_gb/article/metahaven-are-making-propaganda-to-fight-propaganda" target="_blank">Propaganda
-      About Propaganda</a> from Dutch art and radical design collective <a
-      href="http://metahaven.net" target="_blank">Metahaven</a>, is using art, reality and
-      the internet to dismantle and fight propaganda in today's media.</p>
+    description: <p>The film project <a
+      href="https://www.youtube.com/watch?v=Bs7NFbE2NS8" target="_blank">The
+      Sprawl (Propaganda About Propaganda)</a> from Dutch design studio <a
+      href="http://metahaven.net" target="_blank">Metahaven</a> combines facts,
+      fantasy, and the internet to dismantle and fight propaganda in today's
+      media.</p>
 
-      <p>In their first feature, The Sprawl, Metahaven take on propaganda in
-      the social media age and, specifically, the Ukraine War. They are
-      stepping through misinformation and media allegations over who shot
-      down Amsterdam flight MH17 in 2014, and navigate through snippets of
-      communication between Russia's English language broadcaster, the
-      nationalist Russia Today and America's CNN. The layered and non-linear
-      narrative combines fragments from Tolstoy, UN proceedings, Google
-      Earth, found footage, internet interfaces and their art direction.</p>
-
-      <p><a href="http://sprawl.space" target="_blank">sprawl.space</a> is the online
-      interface for The Sprawl, where the viewer can see the shards that make
-      up the full version of the film. The website has been shaped by the
-      interface design of Metahaven, using  and the viewing algorithms of
+      <p><a href="http://sprawl.space" target="_blank">sprawl.space</a> is the
+      online interface for The Sprawl, where the viewer can see the fragments
+      that make up the full version of the film. The website has been shaped by
+      the interface design of Metahaven, using the viewing algorithms of
       YouTube.</p>
 
       <p>MF Adjuster (among other typefaces) was used for the website and various medias.</p>
@@ -246,15 +239,19 @@ showcases:
 
   sum_of_parts:
     title: A Sum Of Parts
-    description: <p>Marco Müller designed and coded with the help of Linus
-      Romer a custom METAFONT for A Sum of Parts. A collaborative events
-      program featuring discussions and workshops was curated by Winchester
-      School of Art, BA (Hons) Graphic Arts. 5–10 July, The Archivists Gallery,
-      Haggerston. The mono-line font MF Calport also supported various pen
-      shapes and line options such as dots or overlapping dots that produced a
-      playful variety  of options to choose from.</p>
+    description: <p>A visual identity for a collaborative events program
+      featuring discussions and workshops, curated by <a
+      href="http://www.winchesterstudio.soton.ac.uk/"
+      target="_blank">Winchester School of Art</a> at The Archivists Gallery,
+      London.</p>
 
-      <p>catalogue, flyers, various promotion materials</p>
+      <p>Marco Müller was asked by the design team of A Sum of Parts for a
+      collaboration and provided an early version of a new mono-line METAFONT.
+      The output resulted in various pen shapes and drawing modes, that the
+      design studio Fourmcreative transformed in a playful variety for online
+      and print applications.</p>
+
+      <p>Catalogue, flyers, various promotion materials</p>
     design: <a href="http://fourmcreative.co.uk" target="_blank">Fourmcreative</a>
     year: 2016
     font: MF Calport
@@ -282,23 +279,22 @@ showcases:
 
       <p><a
       href="http://www.joanapestana.com/index.php?/exhibition/eady-forum/" target="_blank">Eady
-      Forum</a> is a platform for discussions about graphic design in the
-      contemporary realm led by students and supervised by senior tutor Adrian
-      Shaughnessy. Through a series of lectures and events under the title Why
-      so? What if? 2016's forum explored the potential for an inquisitive mode
-      of working (why so) but also a nonconformist and speculative mode of
-      projecting in design (what if).</p>
+      Forum</a> is a platform for discussions about contemporary graphic design
+      led by RCA students and supervised by Adrian Shaughnessy. Through a
+      series of lectures and events under the title Why so? What if? 2016's
+      forum explored the potential for an inquisitive mode of working (why so)
+      but also a nonconformist and speculative mode of projecting in design
+      (what if).</p
 
       <p><a
       href="http://www.joanapestana.com/index.php?/projects/the-extended-times/" target="_blank">The
       Extended Times</a>, developed by London-Porto based designer <a
       href="http://intern-mag.com/joana-pestana/" target="_blank">Joana Pestana</a> during her
-      MA, is an ever-growing fictional newspaper with real stories about life
-      extension and digital afterlife. As a critical design project, it
-      speculates about the possible consequences of graphical user interfaces
-      that allude to perpetual progress and continuity.</p>
+      MA, is a fictional newspaper dealing with life extension and digital
+      afterlife. It speculates about the possible consequences of graphical
+      user interfaces that allude to perpetual progress and continuity.</p>
 
-      <p>website, screen printed posters, newspaper, various media</p>
+      <p>Website, screen printed posters, newspaper, various media</p>
     design: <a href="http://cargocollective.com/joanapestana" target="_blank">Joana Pestana</a>
     year: 2016
     font: <a href="/metafonts/bespoke">MF Bespoke</a>
@@ -375,11 +371,9 @@ showcases:
       <p><a href="http://www.tradeptford.co.uk" target="_blank">Tradeptford</a>
       provided a local platform hosting events and debates. It aimed for a new
       typology of market forum which would turn the artist/architect into a
-      lever for positive social change thus turning the equation art =
-      gentrification into art = local resilience. Through the direct
-      participation in each forum, local residents worked together with local
-      artists and designers to unpick the impact of gentrification in
-      Deptford.</p>
+      lever for positive social change. Through the direct participation in
+      each forum, local residents worked together with local artists and
+      designers to unpick the impact of gentrification in Deptford.</p>
 
       <p>The identity designed by London based designer <a
       href="http://rossbennett.eu/tradeptford" target="_blank">Ross Bennett</a>

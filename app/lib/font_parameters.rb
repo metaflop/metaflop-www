@@ -43,7 +43,9 @@ class FontParameters
     :craziness,
 
     :drawing_style,
-    :number_of_points
+    :number_of_points,
+
+    :serifs
   ]
 
   # the mapping between the defined params in the mf file and this class' properties
@@ -82,7 +84,10 @@ class FontParameters
 
     # calport additions
     'drawingstyle' => :drawing_style,
-    'dnum' => :number_of_points
+    'dnum' => :number_of_points,
+
+    # funtauna additions
+    'serifs#' => :serifs
   }
 
   attr_accessor *VALID_PARAMETERS_KEYS

@@ -53,7 +53,8 @@ class ModulatorParameters
           { value: '2', text: 'dots' },
           { value: '3', text: 'overdraw' }
         ]},
-        { title: 'number of points', key: :number_of_points, dependent: { drawing_style: [2, 3] }}
+        { title: 'number of points', key: :number_of_points, dependent: { drawing_style: [2, 3] }},
+        { title: 'serifs', key: :serifs }
       ]
     }, {
       title: 'Optical corrections',

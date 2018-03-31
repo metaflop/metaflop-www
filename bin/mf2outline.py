@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#mf2outline version 20171029
+#mf2outline version 20180328
 
 #This program has been written by Linus Romer for the 
 #Metaflop project by Marco Mueller and Alexis Reigel.
@@ -70,55 +70,322 @@ def homogeneous(m,x,y):
 		return [m[0]*x+m[2]*y+m[4],m[1]*x+m[3]*y+m[5]]
 	else:
 		return [x,y] # wrong matrix dimensions, no change
-		
+
 # inverts the transformationmatrix
 def invertmatrix(m):
 	if len(m)>3:
 		c = 1.0/(m[0]*m[3]-m[1]*m[2]) # determinant coefficient
 	if len(m)==4: # truncated matrix (dinvert)
-		return [c*m[3],-c*m[2],-c*m[1],c*m[0]]
+		return [c*m[3],-c*m[1],-c*m[2],c*m[0]]
 	elif len(m)==6: # general case
-		return [c*m[3],-c*m[2],-c*m[1],c*m[0],-m[4],-m[5]]
+		return [c*m[3],-c*m[1],-c*m[2],c*m[0],-m[4],-m[5]]
 	else:
 		return m # wrong matrix dimensions, no change
+
+# For the own postscript interpreter we use the following 
+# convention for cubic bezier paths:
+# (0,1)--(3,4)..controls (1,2) and (-2,7)..(8,5)--(2,9)
+# maps bijective to
+# [[(0,1)],[(3,4)],[(1,2),(-2,7),(8,5)],[2,9]]
+# We will NOT store, if the path is cyclic, because for
+# elliptical pens this is equivalent to make the first 
+# and the last point the same
+
+def vecadd(a,b):
+	return (a[0]+b[0],a[1]+b[1])
+
+def vecdiff(a,b):
+	return (a[0]-b[0],a[1]-b[1])
+
+def veclen(a):
+	return (a[0]**2+a[1]**2)**.5
+	
+def vecnorm(a):
+	return (a[0]/veclen(a),a[1]/veclen(a))
+	
+# scale a vector a such that it has length l
+# (if l is negative, it will be in opposite direction)
+def vecscaleto(a,l):
+	return (a[0]/veclen(a)*l,a[1]/veclen(a)*l)
+
+# directed angle from vector a to b (inbetween -180 and 180)	
+def vecangle(a,b):
+	return math.degrees(math.atan2(a[0]*b[1]-a[1]*b[0],
+	a[0]*b[0]+a[1]*b[1]))
+
+# returns a points right of point p where right
+# means rectangular to direction d in distance r
+# (choose r negative for a left point)
+def pointright(p,d,r):
+	if (d[0] == 0) and (d[1] == 0) or (r == 0):
+		return p
+	else:
+		dscaled = vecscaleto(d,r)
+		return (p[0]+dscaled[1],p[1]-dscaled[0])
+
+# bezierinterpolate returns a bezier path as list (see the convention
+# as above) which starts in point za, heading in direction dira, 
+# passing zb at time 0.5 and ending in time 1
+# at zc heading in direction dirc
+def bezierinterpolate(za,dira,zb,zc,dirc):
+	# (xp,yp) is the first control point
+	# (xq,yq) is the second control point
+	# solve([(yp-ya)*xdira=(xp-xa)*ydira,
+	#(yq-yc)*xdirc=(xq-xc)*ydirc,
+	# xb=0.125*(xa+3*xp+3*xq+xc),
+	# yb=0.125*(ya+3*yp+3*yq+yc)],[xp,yp,xq,yq])
+	# yields to
+	xa = float(za[0])
+	ya = float(za[1])
+	xdira = float(dira[0])
+	ydira = float(dira[1])
+	xb = float(zb[0])
+	yb = float(zb[1])
+	xc = float(zc[0])
+	yc = float(zc[1])
+	xdirc = float(dirc[0])
+	ydirc = float(dirc[1])
+	if ydira*xdirc == xdira*ydirc: # this may be a straight line
+		return [[za],[zc]]
+	else:
+		xp=(-((-xdira*ydirc-3*ydira*xdirc)*xa+4*xdira*xdirc*ya+xdira
+		*(4*xdirc*yc-8*xdirc*yb-4*ydirc*xc+8*ydirc*xb))
+		/(3*ydira*xdirc-3*xdira*ydirc))
+		yp=(-(-4*ydira*ydirc*xa+(3*xdira*ydirc+ydira*xdirc)*ya+ydira
+		*(4*xdirc*yc-8*xdirc*yb-4*ydirc*xc+8*ydirc*xb))
+		/(3*ydira*xdirc-3*xdira*ydirc))
+		xq=((-4*ydira*xdirc*xa+ydira*(8*xdirc*xb-xdirc*xc)
+		+4*xdira*xdirc*ya+xdira*(4*xdirc*yc-8*xdirc*yb-3*ydirc*xc))
+		/(3*ydira*xdirc-3*xdira*ydirc))
+		yq=((-4*ydira*ydirc*xa+4*xdira*ydirc*ya
+		+ydira*(3*xdirc*yc-4*ydirc*xc+8*ydirc*xb)
+		+xdira*(ydirc*yc-8*ydirc*yb))/(3*ydira*xdirc-3*xdira*ydirc))
+		return [[za],[(xp,yp),(xq,yq),zc]]
+	
+# parallel of a cubic bezier path p (s,cs,ce,e)
+# where s = start of p, cs = starting control of p
+# ce = ending control of p, e = end of p 
+# in distance r at the right iff r>0 (else left)
+def beziersidesegment(s,cs,ce,e,r):
+	# compute the midpoint (t = 0.5) of the original path
+	mid = (0.125*(s[0]+3*cs[0]+3*ce[0]+e[0]),
+	0.125*(s[1]+3*cs[1]+3*ce[1]+e[1]))
+	middir = (-s[0]-cs[0]+ce[0]+e[0],
+	-s[1]-cs[1]+ce[1]+e[1])
+	midside = pointright(mid,middir,r)
+	if (cs[0]-s[0] == 0) and (cs[1]-s[1] == 0) \
+	and (ce[0]-e[0] == 0) and (ce[1]-e[1] == 0): 
+		# this means both control points lie on the start and end point
+		# hence the path must be a straight line
+		xstartdir = e[0]-s[0]
+		ystartdir = e[1]-s[1]
+		xenddir = e[0]-s[0]
+		yenddir = e[1]-s[1]
+	elif (cs[0]-s[0] == 0) and (cs[1]-s[1] == 0):
+		# the first control point lies on the start point
+		xstartdir = s[0]-2*cs[0]+ce[0] # proportional to second derivative
+		ystartdir = s[1]-2*cs[1]+ce[1]
+		xenddir = e[0]-ce[0]
+		yenddir = e[1]-ce[1]
+	elif (ce[0]-e[0] == 0) and (ce[1]-e[1] == 0):
+		# the second control point lies on the end point
+		xstartdir = cs[0]-s[0]
+		ystartdir = cs[1]-s[1]
+		xenddir = e[0]-2*ce[0]+cs[0]
+		yenddir = e[1]-2*ce[1]+cs[1]
+	else:
+		xstartdir = cs[0]-s[0]
+		ystartdir = cs[1]-s[1]
+		xenddir = e[0]-ce[0]
+		yenddir = e[1]-ce[1]
+	start = ( s[0]+ystartdir
+	/(xstartdir**2+ystartdir**2)**.5*r ,
+	s[1]-xstartdir
+	/(xstartdir**2+ystartdir**2)**.5*r )
+	end = ( e[0]+yenddir
+	/(xenddir**2+yenddir**2)**.5*r ,
+	e[1]-xenddir
+	/(xenddir**2+yenddir**2)**.5*r )
+	return bezierinterpolate(start,(xstartdir,ystartdir),midside,end,(xenddir,yenddir))
+	
+# bezierjoin returns the join of two bezierpaths
+def bezierjoin(first,second):
+	if first[-1][-1] == second[0][0]: 
+		# the last point of the first path equals the first
+		# point of the second path
+		return first + second[1:]
+	else:
+		return first + second
+
+# bezierarc returns a bezierpath which is a part of a circle
+# around center c with the radius r starting in direction s
+# and ending in direction e
+def bezierarc(c,s,e,r):
+	if (vecangle(s,e) % 360) <= 90: # not more than a quarter circle
+		mid = vecadd(c,vecscaleto(vecadd(vecnorm(s),vecscaleto(e,-1)),r))
+		start = pointright(c,s,r)
+		end = pointright(c,e,r)
+		return bezierinterpolate(start,s,mid,end,e)
+	else:
+		middir = pointright((0,0),vecadd(vecnorm(s),vecscaleto(e,-1)),-1) 
+		return bezierjoin(bezierarc(c,s,middir,r),
+		bezierarc(c,middir,e,r))
 		
-# returns 1 iff point p is right of the line
-# going from point q through point r
-# obsolete
-#def side(p,q,r):
-	#if (r[0]-q[0])*(q[1]-p[1]) > (r[1]-q[1])*(q[0]-p[0]):
-		#return 1
-	#else:
-		#return -1
+# bezierreverse returns a reversed copy of the path p
+def bezierreverse(p):
+	reverse = [] 
+	overlap = [] # overlapping list items
+	l = len(p)
+	for i in range (0,l):
+		reverse.append([])
+		for j in range (0,len(overlap)):
+			reverse[i].append(overlap[j])
+		reverse[i].append(p[l-1-i][-1])
+		overlap = p[l-1-i][-2::-1]
+	return reverse
+	
+# returns an approximation of the windingnumer of a 
+# (list) bezier path p 
+# the approximation is exact, if the beziersegments are not
+# self-intersecting (which normally not happens when defining fonts)
+def windingnumber(p):
+	flat = [] # first, we flatten the point list
+	for i in range(0,len(p)):
+		for j in range(0,len(p[i])):
+			flat.append(p[i][j])
+	angle = 0;
+	for i in range(1,len(flat)-1):
+		angle += vecangle(vecdiff(flat[i],flat[i-1]),
+		vecdiff(flat[i+1],flat[i]))
+	if (flat[-1][0] == flat[0][0]) and (flat[-1][1] == flat[0][1]): # cyclic
+		angle += vecangle(vecdiff(flat[-1],flat[-2]),
+		vecdiff(flat[1],flat[0]))
+	return angle/360.0
+		
+	
+# bezierfontforge takes a (list) path p
+# and returns a fontforge contour
+def bezierfontforge(p):
+	c = fontforge.contour()
+	c.moveTo(p[0][0][0],p[0][0][1])
+	for i in range (1,len(p)):
+		if len(p[i]) == 1: # this means a straight line
+			c.lineTo(p[i][0][0],p[i][0][1])
+		elif len(p[i]) == 3: # this means a cubic bezier
+			c.cubicTo(p[i][0],p[i][1],p[i][2])
+	return c
 
-# Returns the turning angle of a
-# contour c in degree . E.g. if c is a circle
-# that turns counterclockwise, it wil
-# return 360 (-360 for clockwise).
-# Half a circle would return 180 (-180
-# for clockwise).
-# obsolete
-#def turning_angle(c):
-	#angle = 0
-	#l = len(c)
-	#for i in range(0,l):
-		#ax = c[i%l].x-c[(i-1)%l].x
-		#ay = c[i%l].y-c[(i-1)%l].y
-		#bx = c[(i+1)%l].x-c[i%l].x
-		#by = c[(i+1)%l].y-c[i%l].y
-		#if not (ax*ay == 0  or bx*by == 0):
-			#angle += side((c[(i+1)%l].x,c[(i+1)%l].y),(c[i%l].x,c[i%l].y),(c[(i-1)%l].x,c[(i-1)%l].y))* \
-			#math.degrees(math.acos(max(-1,min(1,(ax*bx+ay*by)/((ax**2+ay**2)**.5*(bx**2+by**2)**.5)))))
-	#return angle
+# bezierrightpath returns the right part of an outline of a 
+# (list) path p when drawn with a circular pen of radius r
+def bezierrightpath(p,r):
+	outline = [] 
+	for i in range(1,len(p)):
+		if (len(p[i]) == 1) or (len(p[i]) == 3):
+			if len(p[i]) == 3: # cubic bezier path
+				if i == 1: # include initial point
+					outline += beziersidesegment(p[i-1][-1],p[i][0],p[i][1],p[i][2],r)
+				else:
+					outline += beziersidesegment(p[i-1][-1],p[i][0],p[i][1],p[i][2],r)[1:]
+				startdir = vecdiff(p[i][2],p[i][1]) # for the following arc
+			elif len(p[i]) == 1: # straight line
+				if i == 1: # include initial point
+					outline += [[pointright(p[i-1][0],vecdiff(p[i][0],p[i-1][-1]),r)]]
+				outline += [[pointright(p[i][0],vecdiff(p[i][0],p[i-1][-1]),r)]]
+				startdir = vecdiff(p[i][0],p[i-1][-1]) # for the following arc
+			# append a round joint:
+			if i == len(p)-1: # last point of the path, so enddir is the reverse direction
+				if len(p[i]) == 3:
+					enddir = vecdiff(p[i][1],p[i][2]) # 
+				else: # assume a straight line
+					enddir = vecdiff(p[i-1][-1],p[i][0])
+			elif len(p[i+1]) == 3: # cubic bezier path follows
+				enddir = vecdiff(p[i+1][0],p[i][-1])
+			else: # assume that a straight line follows
+				enddir = vecdiff(p[i+1][0],p[i][-1])
+			if not (abs(startdir[0]*enddir[1]-enddir[0]*startdir[1])<0.00001 \
+			and (math.copysign(1,enddir[0]) == math.copysign(1,startdir[0])) \
+			and (math.copysign(1,enddir[1]) == math.copysign(1,startdir[1]))
+			or veclen(enddir) == 0 or veclen(startdir) == 0): 
+				# if not nearly same direction (reverse direction is okay)
+				outline += bezierarc(p[i][-1],startdir,enddir,r)
+	return outline
+	
+# beziercircularoutline returns the outline of a 
+# (list) path p when drawn with a circular pen of diameter d
+# the list has to be reversed, as fontforge determines outer = clockwise
+def beziercircularoutline(p,d):
+	return bezierreverse(bezierjoin(bezierrightpath(p,0.5*d),
+	bezierrightpath(bezierreverse(p),0.5*d)))
 
-# reverses the contour c iff c turns counterclockwise
-# this is a sort of a replacment for the buggy correctDirection()
-# from fontforge (which does not work for the dish erasers in Computer 
-# Modern serifs)
-# obsolete
-#def make_clockwise(c):
-	#if turning_angle(c)>0:
-		#c.reverseDirection()
+# bezierhomogeneous transforms the bezier path p homogeneously with
+# the transformation matrix m
+def bezierhomogeneous(p,m):
+	transformed = []
+	for i in range(0,len(p)):
+		transformed.append([])
+		for j in range(0,len(p[i])):
+			transformedpoint = homogeneous(m,p[i][j][0],p[i][j][1])
+			transformed[i].append((transformedpoint[0],transformedpoint[1]))
+	return transformed
+	
+# bezieroutline returns the outline of a (list) path p when drawn with a
+# elliptical pen of a horizontal diameter dx and a vertical diameter dy
+# rotated by the angle alpha
+def bezieroutline(p,dx,dy,alpha):
+	ca = math.cos(math.radians(alpha))
+	sa = math.sin(math.radians(alpha))
+	if dx == 0:
+		return p
+	else:
+		m = [ca,sa,-sa*dy/dx,ca*dy/dx] # transformation matrix (squeeze and rotate)
+		return bezierhomogeneous(beziercircularoutline(
+		bezierhomogeneous(p,invertmatrix(m)),dx),m)
+		
+# bezierouteroutline returns the outer part of an 
+# outline of a (list) closed path path when drawn with a
+# elliptical pen of a horizontal diameter dx and a vertical diameter dy
+# rotated by the angle alpha
+# this is needed for METAPOSTs filldraw function 
+def bezierouteroutline(path,dx,dy,alpha):
+	if dx == 0:
+		return path
+	else:
+		r = 0.5*dx
+		ca = math.cos(math.radians(alpha))
+		sa = math.sin(math.radians(alpha))
+		m = [ca,sa,-sa*dy/dx,ca*dy/dx] # transformation matrix (squeeze and rotate)
+		if windingnumber(path) < 0: # make counterclockwise (yes, really!)
+			p = bezierhomogeneous(bezierreverse(path),invertmatrix(m))
+		else:
+			p = bezierhomogeneous(path,invertmatrix(m))
+		outline = [] 
+		for i in range(1,len(p)):
+			if (len(p[i]) == 1) or (len(p[i]) == 3):
+				if len(p[i]) == 3: # cubic bezier path
+					if i == 1: # include initial point
+						outline += beziersidesegment(p[i-1][-1],p[i][0],p[i][1],p[i][2],r)
+					else:
+						outline += beziersidesegment(p[i-1][-1],p[i][0],p[i][1],p[i][2],r)[1:]
+					startdir = vecdiff(p[i][2],p[i][1]) # for the following arc
+				elif len(p[i]) == 1: # straight line
+					if i == 1: # include initial point
+						outline += [[pointright(p[i-1][0],vecdiff(p[i][0],p[i-1][-1]),r)]]
+					outline += [[pointright(p[i][0],vecdiff(p[i][0],p[i-1][-1]),r)]]
+					startdir = vecdiff(p[i][0],p[i-1][-1]) # for the following arc
+				# append a round joint:
+				if i == len(p)-1: # last point of the path, jump to the first segment
+					enddir = vecdiff(p[1][0],p[0][0])
+				elif len(p[i+1]) == 3: # cubic bezier path follows
+					enddir = vecdiff(p[i+1][0],p[i][-1])
+				else: # assume that a straight line follows
+					enddir = vecdiff(p[i+1][0],p[i][-1])
+				if not (abs(startdir[0]*enddir[1]-enddir[0]*startdir[1])<0.00001 \
+				and (math.copysign(1,enddir[0]) == math.copysign(1,startdir[0])) \
+				and (math.copysign(1,enddir[1]) == math.copysign(1,startdir[1]))
+				or veclen(enddir) == 0 or veclen(startdir) == 0): 
+					# if not nearly same direction (reverse direction is okay)
+					outline += bezierarc(p[i][-1],startdir,enddir,r)
+		return bezierreverse(bezierhomogeneous(outline,m))
 		
 # own postscript interpreter for a postscript file "eps" 
 # into the glyph "glyph"
@@ -139,11 +406,11 @@ def import_ps(eps,glyph):
 		linecap = "round"
 		linejoin = "round"
 		miterlimit = 10
+		contour = []
 		stroke_follows_fill = False 
-		gsave_contour = fontforge.contour() # contour that is saved by gsave
+		gsave_contour = [] # (list) bezier path that is saved by gsave
 		gsave_ctm = [1.0,0.0,0.0,1.0,0.0,0.0] # current transformation matrix that is saved by gsave
 		gsave_is_white = False # "color" saved by gsave
-		contour = fontforge.contour() # just declaring
 		#
 		# okay, let's start:
 		for line in epsfile:
@@ -156,28 +423,30 @@ def import_ps(eps,glyph):
 					if isolate_number(word) != None:
 						stack.append(isolate_number(word))
 					elif word == "newpath":
-						contour = fontforge.contour()
-					elif word == "moveto":
-						contour.moveTo(stack[len(stack)-2],stack[len(stack)-1])
-						stack = stack[:(len(stack)-2)]
-					elif word == "lineto":
-						contour.lineTo(stack[len(stack)-2],stack[len(stack)-1])
-						stack = stack[:(len(stack)-2)]
+						contour = [] # (list) bezier path 
+					elif (word == "moveto") or (word == "lineto"):
+						contour.append([(stack[-2],stack[-1])])
+						stack = stack[:-2]
 					elif word == "curveto":
-						contour.cubicTo(stack[len(stack)-6],stack[len(stack)-5],\
-						stack[len(stack)-4],stack[len(stack)-3],\
-						stack[len(stack)-2],stack[len(stack)-1])
-						stack = stack[:(len(stack)-6)]
+						contour.append([
+						(stack[-6],stack[-5]),
+						(stack[-4],stack[-3]),
+						(stack[-2],stack[-1])
+						])
+						stack = stack[:-6]
 					elif word == "closepath":
-						contour.closed = True
+						if (len(contour) > 1) and \
+						(contour[0][0][0] != contour[-1][-1][0]) or \
+						(contour[0][0][1] != contour[-1][-1][1]):
+							contour.append([(contour[0][0][0],contour[0][0][1])])
 					elif word == "setrgbcolor":
-						if stack[len(stack)-1] == 1 and \
-						stack[len(stack)-2] == 1 and \
-						stack[len(stack)-3] == 1:
+						if stack[-1] == 1 and \
+						stack[-2] == 1 and \
+						stack[-3] == 1:
 							is_white = True
 						else:
 							is_white = False
-						stack = stack[:(len(stack)-3)]
+						stack = stack[:-3]
 					elif word == "setlinewidth":
 						linewidth = stack.pop()
 					elif word == "setdash":
@@ -239,11 +508,18 @@ def import_ps(eps,glyph):
 					elif word == "pop":
 						stack.pop()
 					elif word == "fill" and not stroke_follows_fill:
+						if windingnumber(contour) > 0:
+							contour = bezierreverse(contour) # assures that
+						# every contour is clockwise
+						tempcontour = fontforge.contour()
+						tempcontour = bezierfontforge(contour)
+						if (contour[0][0][0] == contour[-1][-1][0]) and \
+						(contour[0][0][1] == contour[-1][-1][1]):
+							tempcontour.closed = True
 						templayer = fontforge.layer()
-						templayer += contour
-						templayer.round(100)
+						templayer += tempcontour
 						if is_white:
-							#layer.exclude(templayer)	
+							# actually layer.exclude(templayer), but
 							# exclude does not work properly in fontforge
 							# so we intersect the templayer with the layer
 							# and exclude that from the layer by making
@@ -254,8 +530,7 @@ def import_ps(eps,glyph):
 								if templayer[i].isClockwise():
 									templayer[i].reverseDirection()
 						layer += templayer
-						layer.removeOverlap()
-						layer.round(100)
+						#layer.removeOverlap()
 					elif word == "stroke":
 						# We have to determine the angle and the 
 						# axis of the ellipse that is the product of
@@ -272,37 +547,35 @@ def import_ps(eps,glyph):
 							alpha = math.atan(ctm[1]/ctm[0])
 						pen_x = abs(linewidth*ctm[0]/math.cos(alpha))
 						pen_y = abs(linewidth*ctm[3]/math.cos(alpha))
-						templayer = fontforge.layer()
-						templayer += contour
-						if not (pen_x == 0 or pen_y == 0):
-							templayer.round(100)
-							if stroke_follows_fill:
-								templayer.stroke("eliptical",\
-								pen_x,pen_y,alpha,linecap,linejoin,\
-								"removeinternal")
-							else:
-								templayer.stroke("eliptical",\
-								pen_x,pen_y,alpha,linecap,linejoin)
-						if stroke_follows_fill: # this is need because of the "if not" above
+						tempcontour = fontforge.contour()
+						if stroke_follows_fill:
+							tempcontour = bezierfontforge(bezierouteroutline(contour,pen_x,pen_y,alpha))
 							stroke_follows_fill = False
+						else:
+							tempcontour = bezierfontforge(bezieroutline(contour,pen_x,pen_y,alpha))
+						tempcontour.closed = True # the outline should be closed anyway!
+						# (and the contour outline will automatically be clockwise)
+						templayer = fontforge.layer()
+						templayer += tempcontour
 						if is_white:
-							#layer.exclude(templayer)	
+							# actually layer.exclude(templayer), but
 							# exclude does not work properly in fontforge
 							# so we intersect the templayer with the layer
 							# and exclude that from the layer by making
 							# it counterclockwise and removeOverlap()
-							#layer = layer + templayer			
-							print "do nothing"		
-						else:
-							layer = layer + templayer
-						layer.removeOverlap()
-						layer.round(100)
-					elif word == "gsave" and not stroke_follows_fill:
-						gsave_contour = contour.dup() 
+							templayer += layer
+							templayer.intersect()
+							for i in range(0,len(templayer)):
+								if templayer[i].isClockwise():
+									templayer[i].reverseDirection()
+						layer = layer + templayer
+						#layer.removeOverlap()
+					elif word == "gsave":
+						gsave_contour = list(contour) # clone contour 
 						gsave_ctm = ctm 
 						gsave_is_white = is_white
-					elif word == "grestore" and not stroke_follows_fill:
-						contour = gsave_contour.dup() 
+					elif word == "grestore":
+						contour = list(gsave_contour)
 						ctm = gsave_ctm 
 						is_white = gsave_is_white
 		glyph.foreground = layer
@@ -831,7 +1104,7 @@ if __name__ == "__main__":
 		default=None,
 		help="Force the font encoding to be ENC. Natively supported " \
 		"encodings: OT1 (or ot1), T1 (or t1), unicode. "\
-		"Default: None (this will lead to unicode). The file " \
+		"Default: None (this will lead to T1). The file " \
 		"ENC.enc will be read if it exists in the same directory as " \
 		"the source file (the encoding name inside the encoding file "\
 		"must be named ENC, too).")	
@@ -1074,7 +1347,7 @@ if __name__ == "__main__":
 		print("Setting the font encoding...")
 	if args.encoding == None:
 		if originalencoding == None:
-			font.encoding = "unicode"
+			args.encoding = "t1"
 		else:
 			args.encoding = originalencoding
 	if args.encoding == "Unicode" or args.encoding == "unicode":
@@ -1255,9 +1528,6 @@ if __name__ == "__main__":
 			font.autoHint()
 		elif args.ffscript == "": # no user defined script
 			font.selection.all()
-			#if args.veryverbose:
-			#	print("Rounding to 1/100 unit")
-			#font.round(100)
 			if args.veryverbose:
 				print("Removing overlaps")
 			font.removeOverlap()
@@ -1270,6 +1540,7 @@ if __name__ == "__main__":
 			if args.veryverbose:
 				print("Adding extrema")
 			font.addExtrema()
+			font.round(100) # otherwise, extrema may be ugly
 			if args.veryverbose:
 				print("Simplifying")
 			font.simplify()
@@ -1305,7 +1576,6 @@ if __name__ == "__main__":
 				print("Hinting")
 			font.autoHint()
 		else:		# user defined script
-			font.save("%s/temp.sfd" % tempdir)
 			subprocess.call(
 			['fontforge',
 			'-script',

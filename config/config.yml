@@ -1,7 +1,6 @@
 metaflop:
   font_otf: >-
     timeout %{timeout} ./mf2outline.py
-    --encoding=t1
     --copyright="Copyright (c) %{year}, Metaflop (http://www.metaflop.com),
     Simon Egli, Marco Mueller, Alexis Reigel, with Reserved Font Name
     %{fontface}. Dual licensed under the GPL v3

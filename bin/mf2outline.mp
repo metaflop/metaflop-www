@@ -362,28 +362,22 @@ miterlimit:=10;
 pen currentpen;
 picture currentpicture;
 
-% ----- start of modifications by Linus Romer -----
-def fill expr c = addto currentpicture contour if turningnumber c >= 0: 
-  reverse fi c t_ pc_ 
-enddef;
+def fill expr c = addto currentpicture contour c t_ pc_ enddef;
 def draw expr p =
   addto currentpicture
   if picture p:
     also p
   else:
-    doublepath if turningnumber p >= 0: 
-    reverse fi p t_ withpen currentpen
+    doublepath p t_ withpen currentpen
   fi
   pc_
 enddef;
 def filldraw expr c =
-  addto currentpicture contour if turningnumber c >= 0: 
-  reverse fi c t_ withpen currentpen
+  addto currentpicture contour c t_ withpen currentpen
   pc_ enddef;
 def drawdot expr z =
   addto currentpicture contour makepath currentpen shifted z
   t_ pc_ enddef;
-% ----- end of modifications by Linus Romer -----
 
 def unfill expr c = fill c withcolor background enddef;
 def undraw expr p = draw p withcolor background enddef;

@@ -628,8 +628,8 @@ $(function() {
 
       // we need to set the height instead of using `#show()` and `#hide()`, as
       // the slider won't be properly initialized otherwise.
-      var toggleVisibility = function(value) {
-        if (dependencies[key].includes(value)) {
+      var toggleVisibility = function(key, value) {
+        if (key && value && dependencies[key].includes(value)) {
           source.css({ height: 'inherit' });
           source.find('input, select').prop('disabled', false);
         }
@@ -639,15 +639,15 @@ $(function() {
         }
       };
 
-      var onChange = function() {
+      var onChange = function(event) {
         var value = Number($(this).val());
-        toggleVisibility(value);
+        toggleVisibility(event.data, value);
       };
 
       // attach change handlers on the dependencies
-      for (var key in dependencies) {
-        $.fn.metaflop.parameterPanel.on('change', '#param-' + key, onChange);
-      }
+      Object.keys(dependencies).forEach(function(key) {
+        $.fn.metaflop.parameterPanel.on('change', '#param-' + key, key, onChange);
+      });
 
       // initial visibility
       toggleVisibility();

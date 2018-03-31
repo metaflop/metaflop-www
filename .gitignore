@@ -7,3 +7,4 @@ db.yml
 *.swp
 vendor/cache
 tags
+node_modules/

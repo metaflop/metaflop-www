@@ -25,3 +25,8 @@ task 'optimize_images' do
   `mogrify -quality 80 #{new_images_sub_command}`
   `image_optim #{new_images_sub_command}`
 end
+
+desc 'ESLint'
+task 'eslint' do
+  system 'node_modules/eslint/bin/eslint.js assets/javascripts/*.js'
+end

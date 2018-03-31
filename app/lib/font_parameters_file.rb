@@ -11,7 +11,7 @@ require './app/lib/font_parameters_file_content_line'
 require './app/lib/font_parameters_file_content_lines'
 
 class FontParametersFile
-  FILE_ENCODING = 'utf-8'
+  FILE_ENCODING = 'ISO-8859-1'
 
   def initialize(file: nil, font_settings: FontSettings.new)
     @font_settings = font_settings

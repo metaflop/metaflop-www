@@ -7,6 +7,7 @@
  */
 
 /* global $, Modernizr, fdSlider */
+
 $(function() {
   if (!$('#main').hasClass('modulator')) {
     return;
@@ -14,14 +15,15 @@ $(function() {
 
   // create a namespace for later use
   $.fn.metaflop = {
-    ready: false, // is set to true when the initial preview has been generated (i.e. the UI is ready)
+    // is set to true when the initial preview has been generated (i.e. the UI is ready)
+    ready: false,
     settings: {
       panelToggleDuration: 100,
       panelToggleEasing: 'easeInOutExpo',
       shareUrls: {
         twitter: 'http://twitter.com/home?status=%{title} %{url}',
         facebook: 'https://www.facebook.com/sharer/sharer.php?u=%{url}',
-        email: 'mailto:?subject=metaflop font&body=%{title} %{url}',
+        email: 'mailto:?subject=metaflop font&body=%{title} %{url}'
       }
     },
     parameterPanel: $('#parameter-panel'),
@@ -155,7 +157,7 @@ $(function() {
   };
 
   // increase/decrease the inputField's value
-  var changeValue = function(inputField, cssClass){
+  var changeValue = function(inputField, cssClass) {
     var number = cssClass.remove(/\D/g).toNumber() / 100.0;
     var method = cssClass.remove(/\d+$/);
 
@@ -241,7 +243,7 @@ $(function() {
     var inputFields = getInputFields();
 
     $.fn.metaflop.queryString = '?' +
-      $.makeArray(inputFields).map(function(element){
+      $.makeArray(inputFields).map(function(element) {
         return element.id.remove('param-') + '=' + $(element).val();
       }).join('&');
 
@@ -313,7 +315,7 @@ $(function() {
   };
 
   var timeout;
-  var generatePreview = function(addUndoStep){
+  var generatePreview = function(addUndoStep) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(function() { generatePreviewCall(addUndoStep); }, 300);
   };
@@ -425,7 +427,7 @@ $(function() {
   });
 
   // reset parameter values
-  var resetParameters = function(){
+  var resetParameters = function() {
     $('.adjuster input.param').each(function() {
       var $this = $(this);
 
@@ -601,10 +603,10 @@ $(function() {
         maxStep: 1, // (for keyboard users)
         min: $(this).attr('data-range-from'),
         max: $(this).attr('data-range-to'),
-        animation:'timed',
+        animation: 'timed',
         hideInput: true,
-        callbacks:{
-          'change': [updateValue]
+        callbacks: {
+          change: [updateValue]
         }
       });
     });
@@ -707,7 +709,7 @@ $(function() {
   };
 
   // switch basic/pro mode for parameter panel
-  $.fn.metaflop.parameterPanel.on('click', '.parameter-panel-mode-toggle',function(e) {
+  $.fn.metaflop.parameterPanel.on('click', '.parameter-panel-mode-toggle', function(e) {
     e.preventDefault();
 
     var $this = $(this);
@@ -728,7 +730,8 @@ $(function() {
       informationToggle.toggleClass('active');
       $('#info-panel').slideToggle(
         $.fn.metaflop.settings.panelToggleDuration,
-        $.fn.metaflop.settings.panelToggleEasing);
+        $.fn.metaflop.settings.panelToggleEasing
+      );
     }
 
     $this.blur();
@@ -744,14 +747,15 @@ $(function() {
       glyphChartPreviewToggle.toggleClass('active');
       $('#preview-single, #preview-chart').slideToggle(
         $.fn.metaflop.settings.panelToggleDuration,
-        $.fn.metaflop.settings.panelToggleEasing);
+        $.fn.metaflop.settings.panelToggleEasing
+      );
     }
 
     $this.blur();
   });
 
   // change type writer font size
-  var typeWriterFontSizeDropdown= $('#typewriter-font-size');
+  var typeWriterFontSizeDropdown = $('#typewriter-font-size');
   typeWriterFontSizeDropdown.dropdownpanel({
     panelToggleDuration: $.fn.metaflop.settings.panelToggleDuration,
     onClicked: function() {
@@ -804,7 +808,8 @@ $(function() {
       'px;"><p>Your browser <a href="http://caniuse.com/ttf">' +
       'is not supported</a> by our modulator.<br />' +
       'Please try to upgrade to a more contemporary browser.</p>' +
-      '</div>');
+      '</div>'
+    );
     $('#main').append(unsupported);
     unsupported.fadeTo(0, 0.9);
   }

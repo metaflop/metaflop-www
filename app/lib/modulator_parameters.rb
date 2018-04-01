@@ -23,37 +23,23 @@ class ModulatorParameters
   end
 
   def all
-    i = 1
+    tab_index = 1
 
     # add properties needed for view
     all_with_each_item do |item|
       param = @font_parameters.send(item[:key])
 
-      item[:default] = param.default
-      item[:value] = param.value
-      item[:range_from] = param.range && param.range[:from]
-      item[:range_to] = param.range && param.range[:to]
-      item[:hidden] = param.hidden
-      item[:name] = item[:key]
-      item[:tabindex] = i
+      base!(item, param)
+      dropdowns!(item, param)
+      dependencies!(item, param)
 
-      # special case for dropdowns
-      if item[:options]
-        item[:dropdown] = true
-        selected = item[:options].select { |option| option[:value] == param.value }.first
-        if selected
-          selected[:selected] = true
-        end
-      end
+      item[:tabindex] = tab_index
 
-      # dependencies
-      if item[:dependent]
-        item[:dependent] = JSON.generate(item[:dependent])
-      end
-
-      i = i + 1
+      tab_index += 1
     end
   end
+
+  private
 
   def all_with_each_item
     groups = default_parameters

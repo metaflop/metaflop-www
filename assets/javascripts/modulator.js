@@ -123,7 +123,7 @@ $(function() {
   var toggleUndoActionDisabled = function() {
     var undoAction = $('#action-undo');
 
-    if (getHistoryLength() == 1) {
+    if (getHistoryLength() === 1) {
       undoAction.addClass('disabled');
     }
     else {
@@ -163,27 +163,30 @@ $(function() {
 
     var value = inputField.val().toNumber() || 0;
 
-    if (method == 'add') value = value + number;
-    else if (method == 'sub') value = value - number;
+    if (method === 'add') value += number;
+    else if (method === 'sub') value -= number;
 
     setValue(inputField, value.round(2));
   };
 
   var setValue = function(inputField, value) {
-    if (!value && value !== 0){
-      value = inputField.val() || 0;
+    var valueAsNumber = value;
+
+    if (!valueAsNumber && valueAsNumber !== 0) {
+      valueAsNumber = inputField.val() || 0;
     }
 
-    value = String(value).replace(',', '.').toNumber();
+    valueAsNumber = String(valueAsNumber).replace(',', '.').toNumber();
 
-    inputField.val(value);
+    inputField.val(valueAsNumber);
     // add init class to prevent tooltips and recursion
     inputField.addClass('init');
 
     var sliderInput = getTwinInput(inputField);
     // update the associated slider too
-    if (value >= sliderInput.attr('data-range-from') && value <= sliderInput.attr('data-range-to')) {
-      sliderInput.val(value);
+    if (valueAsNumber >= sliderInput.attr('data-range-from') &&
+        valueAsNumber <= sliderInput.attr('data-range-to')) {
+      sliderInput.val(valueAsNumber);
       fdSlider.updateSlider(sliderInput[0].id);
     }
 
@@ -215,14 +218,14 @@ $(function() {
   // clipboard callback from the flahs clippy async doesn't work.
   // TODO: as this is deprecated as of 1.8, find a new solution
   var callWithFontHash = function(success, complete) {
-    complete = complete || function() {
+    var successWithDefault = success || function() {};
+    var completeWithDefault = complete || function() {
       hideProgress();
     };
-    success = success || function() {};
 
     if ($.fn.metaflop.shortenendUrl) {
-      success($.fn.metaflop.shortenendUrl);
-      complete();
+      successWithDefault($.fn.metaflop.shortenendUrl);
+      completeWithDefault();
     }
     else {
       $.ajax({
@@ -230,10 +233,10 @@ $(function() {
         url: '/modulator/font/create' + $.fn.metaflop.queryString,
         success: function(data) {
           $.fn.metaflop.shortenendUrl = data;
-          success(data);
+          successWithDefault(data);
         },
         complete: function() {
-          complete();
+          completeWithDefault();
         }
       });
     }
@@ -251,7 +254,7 @@ $(function() {
   };
 
   var generatePreviewCall = function(addUndoStep) {
-    addUndoStep = addUndoStep === undefined ? true : addUndoStep;
+    var addUndoStepWithDefault = addUndoStep === undefined ? true : addUndoStep;
     var content = $('.box:visible');
 
     // clear cached shortend url
@@ -285,16 +288,16 @@ $(function() {
         $.fn.metaflop.typeWriterTextArea.autogrow();
       },
       success: function(data) {
-        if (addUndoStep) {
+        if (addUndoStepWithDefault) {
           addUndo();
         }
         hideProgress();
         content.fadeTo(0, 1);
 
         // TODO only find once initially
-        for (var i = 0; i < document.styleSheets.length; ++i) {
+        for (var i = 0; i < document.styleSheets.length; i += 1) {
           var styleSheet = document.styleSheets[i];
-          if (styleSheet.ownerNode.id == 'font-face-css') {
+          if (styleSheet.ownerNode.id === 'font-face-css') {
             styleSheet.deleteRule(0);
 
             var rule =
@@ -340,26 +343,25 @@ $(function() {
         // no-op
       }
       // allow delete
-      else if (event.keyCode == 8) {
+      else if (event.keyCode === 8) {
         // no-op
       }
       // up increase value
-      else if (event.keyCode == 38) {
+      else if (event.keyCode === 38) {
         changeValue($(this), 'add1');
       }
       // down decrease value
-      else if (event.keyCode == 40) {
+      else if (event.keyCode === 40) {
         changeValue($(this), 'sub1');
       }
       // allow decimal point (".", ",")
       else if (isAllowedTrailingCharacter(event.keyCode)) {
         // no-op
       }
-      else {
-        // stop keypress if NaN
-        if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
-          event.preventDefault();
-        }
+      // stop keypress if NaN
+      else if ((event.keyCode < 48 || event.keyCode > 57) &&
+               (event.keyCode < 96 || event.keyCode > 105)) {
+        event.preventDefault();
       }
     })
     .on('keyup', '.adjuster input.param', function(event) {
@@ -401,12 +403,12 @@ $(function() {
 
       $.ajax({
         url: '/modulator/char_chooser/partial' + createQueryString(),
-        success: function(data) {
-          $('#preview-single').find('div.char-chooser').html(data);
+        success: function(charChooserData) {
+          $('#preview-single').find('div.char-chooser').html(charChooserData);
           $.ajax({
             url: '/modulator/parameter_panel/partial' + createQueryString(),
-            success: function(data) {
-              $('#parameter-panel').html(data);
+            success: function(parameterPanelData) {
+              $('#parameter-panel').html(parameterPanelData);
               initSliders();
               initParameterDropdowns();
               resetParameters();
@@ -516,7 +518,7 @@ $(function() {
         .replace('%{title}', title)
         .replace('%{url}', url);
 
-      if (type == 'email') {
+      if (type === 'email') {
         window.location = link;
       }
       // open in new window

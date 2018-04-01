@@ -17,4 +17,9 @@ before_install:
   - cp config/db.travis-ci.yml config/db.yml
   - mysql -e 'CREATE DATABASE metaflop_test;'
 
-script: bundle exec rspec -f d spec
+jobs:
+  include:
+    - script: bundle exec rspec -f d spec
+      env: rspec
+    - script: bundle exec rake eslint
+      env: eslint

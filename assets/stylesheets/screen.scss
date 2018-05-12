@@ -785,3 +785,8 @@ a.char-chooser {
 p.bjqs-caption {
   @include box-caption;
 }
+
+.bjqs-slide img {
+  max-height: 100%;
+  max-width: 100%;
+}

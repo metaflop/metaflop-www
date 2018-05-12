@@ -281,3 +281,97 @@ metafonts:
       -
         - fetamont-derivations-19.png
         - dJCvFHU3OR
+
+  funtauna:
+    description: <a href="/modulator?fontface=Funtauna">MF Funtauna</a> is a
+      rectangular slab-serif font similar to the Georg Trump's City (1930) or
+      Adrian Frutiger's Algol (1963) typefaces. Its geometric structure of
+      right angles and opposing round corners hints at the early 20th century
+      machine age and industrial times. The serifs and superness parameters
+      enable variations of square, sans-serif or even hairline serif fonts. The
+      unicode font encoding of MF Funtauna covers over 360 characters
+      supporting many European languages with latin writing.
+    type_designer:
+      -
+        name: Linus Romer
+        url: http://www.ctan.org/author/romer
+    year: 2017–2018
+    encoding: unicode
+    source_code:
+      -
+        title: Github
+        url: https://github.com/metaflop/metaflop-font-funtauna
+      -
+        title: Font Library
+        url: https://fontlibrary.org/en/font/funtauna
+    images:
+      -
+        - funtauna-01.svg
+        -
+      -
+        - funtauna-02.svg
+        -
+      -
+        - funtauna-03.svg
+        -
+      -
+        - funtauna-04.svg
+        -
+      -
+        - funtauna-05.svg
+        - mf funtauna supporting many european languages with latin writing.
+      -
+        - funtauna-06.svg
+        - selection of characters from unicode font encoding.
+    subimages:
+      -
+        - funtauna-derivations-01.svg
+        - GTWpMn5z3M
+      -
+        - funtauna-derivations-02.svg
+        - Julk1hfTY6
+      -
+        - funtauna-derivations-03.svg
+        - n_5ihPGn6H
+      -
+        - funtauna-derivations-04.svg
+        - 2Hxp8SiPeJ
+      -
+        - funtauna-derivations-05.svg
+        - d5Gspby3UU
+      -
+        - funtauna-derivations-06.svg
+        - cC8kv874is
+      -
+        - funtauna-derivations-07.svg
+        - RRTjhGIiQR
+      -
+        - funtauna-derivations-08.svg
+        - jiV3-m29bU
+      -
+        - funtauna-derivations-09.svg
+        - --u1GVnJpC
+      -
+        - funtauna-derivations-10.svg
+        - _cHlwGdwVL
+      -
+        - funtauna-derivations-11.svg
+        - xaj6S8CbTg
+      -
+        - funtauna-derivations-12.svg
+        - Xxo7ME1nfa
+      -
+        - funtauna-derivations-13.svg
+        - cZSA-Qkr68
+      -
+        - funtauna-derivations-14.svg
+        - GWJAIjR4H0
+      -
+        - funtauna-derivations-15.svg
+        - gNNHl_TXtB
+      -
+        - funtauna-derivations-16.svg
+        - dKLQ5X1bRI
+      -
+        - funtauna-derivations-17.svg
+        - zVDKB5SqfO

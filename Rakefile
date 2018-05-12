@@ -20,10 +20,26 @@ end
 
 desc 'Optimize images in the git staging area'
 task 'optimize_images' do
-  new_images_sub_command = "$(git diff --name-only --cached | grep assets/images)"
+  def file_message(message, files)
+    puts message
+    puts files.map { |name| "  > #{name}" }.join("\n")
+  end
 
-  `mogrify -quality 80 #{new_images_sub_command}`
-  `image_optim #{new_images_sub_command}`
+  images = `git diff --name-only --cached | grep assets/images`.split("\n")
+
+  abort 'No images found. You need to stage the files first.' if images.empty?
+
+  jpg_images = images.grep(/\.jpg$/)
+
+  if jpg_images.any?
+    file_message 'Mogrifying jpg images to 80% quality...', jpg_images
+    `mogrify -quality 80 #{images.join(' ')}`
+  end
+
+  file_message 'Applying image_optim on all images...', images
+  `image_optim #{images.join(' ')}`
+
+  puts 'Done.'
 end
 
 desc 'ESLint'

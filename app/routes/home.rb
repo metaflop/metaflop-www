@@ -11,6 +11,8 @@ require './app/routes/base'
 module Routes
   class Home < Base
     get '/' do
+      @settings = settings
+
       slim :news, http_caching: false
     end
   end

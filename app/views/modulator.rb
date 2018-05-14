@@ -82,7 +82,7 @@ class App < Sinatra::Base
           {
             name: fontface[:name],
             css_class: fontface[:active] ? 'active' : '',
-            url: image_path("anatomy-#{fontface[:name].downcase}.png")
+            url: image_path("anatomy-#{fontface[:name].downcase}.svg")
           }
         end
       end

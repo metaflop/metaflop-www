@@ -21,19 +21,19 @@ metafonts:
         url: https://github.com/metaflop/metaflop-font-adjuster
     images:
       -
-        - adjuster1-01.png
+        - adjuster1-01.svg
         -
       -
-        - adjuster1-02.png
+        - adjuster1-02.svg
         -
       -
-        - adjuster1-03.png
+        - adjuster1-03.svg
         -
       -
-        - adjuster1-04.png
+        - adjuster1-04.svg
         - The 256 characters of T1 font encoding.
       -
-        - adjuster1-05.png
+        - adjuster1-05.svg
         - MF Adjuster supporting many european languages with latin writing.
       -
         - adjuster1-06.png
@@ -55,40 +55,40 @@ metafonts:
         - Pen Razor transformation from 0 to 45 degree and vice versa.
     subimages:
       -
-        - adjuster-derivations-01.png
+        - adjuster-derivations-01.svg
         - 4pY8SPVUeO
       -
-        - adjuster-derivations-02.png
+        - adjuster-derivations-02.svg
         - GfXF00-goL
       -
-        - adjuster-derivations-03.png
+        - adjuster-derivations-03.svg
         - pQkUOJOPk8
       -
-        - adjuster-derivations-04.png
+        - adjuster-derivations-04.svg
         - WitXxEC_wq
       -
-        - adjuster-derivations-05.png
+        - adjuster-derivations-05.svg
         - 19mOboz6Sq
       -
-        - adjuster-derivations-06.png
+        - adjuster-derivations-06.svg
         - B_DF7u3XWz
       -
-        - adjuster-derivations-07.png
+        - adjuster-derivations-07.svg
         - JgRFUo8ZJV
       -
-        - adjuster-derivations-08.png
+        - adjuster-derivations-08.svg
         - BL4uWv2Vdt
       -
-        - adjuster-derivations-09.png
+        - adjuster-derivations-09.svg
         - xo_LzNRVdV
       -
-        - adjuster-derivations-10.png
+        - adjuster-derivations-10.svg
         - poimn57bWc
       -
-        - adjuster-derivations-11.png
+        - adjuster-derivations-11.svg
         - N-SDv-KkDl
       -
-        - adjuster-derivations-12.png
+        - adjuster-derivations-12.svg
         - IVhW3c2vuS
   bespoke:
     description: <a href="/modulator?fontface=Bespoke">MF Bespoke</a> is geared to simply
@@ -112,19 +112,22 @@ metafonts:
         url: https://github.com/metaflop/metaflop-font-bespoke"
     images:
       -
-        - bespoke1-01.png
+        - bespoke1-01.svg
         -
       -
-        - bespoke1-02.png
+        - bespoke1-02.svg
         -
       -
-        - bespoke1-03.png
+        - bespoke1-03.svg
         -
       -
-        - bespoke1-04.png
+        - bespoke1-04.svg
         - MF Bespoke supporting many european languages with latin writing.
       -
-        - bespoke1-05.png
+        - bespoke1-05.svg
+        -
+      -
+        - bespoke1-06.png
         -
       -
         - bespoke2-01.png
@@ -146,43 +149,43 @@ metafonts:
         - Horizontal and vertical increase transformation from 1.0 to 0.0 points and vice versa.
     subimages:
       -
-        - bespoke-derivations-01.png
+        - bespoke-derivations-01.svg
         - 4WJYLMoYJb
       -
-        - bespoke-derivations-02.png
+        - bespoke-derivations-02.svg
         - spoqlZV8n3
       -
-        - bespoke-derivations-03.png
+        - bespoke-derivations-03.svg
         - WQpfAjTK7l
       -
-        - bespoke-derivations-04.png
+        - bespoke-derivations-04.svg
         - VHvNIzZuE9
       -
-        - bespoke-derivations-05.png
+        - bespoke-derivations-05.svg
         - yKLK4x6MHp
       -
-        - bespoke-derivations-06.png
+        - bespoke-derivations-06.svg
         - 2Llq27N0HS
       -
-        - bespoke-derivations-07.png
+        - bespoke-derivations-07.svg
         - jbDcNNx0Ss
       -
-        - bespoke-derivations-08.png
+        - bespoke-derivations-08.svg
         - sN99ysuCfX
       -
-        - bespoke-derivations-09.png
+        - bespoke-derivations-09.svg
         - RXs7iBJfQX
       -
-        - bespoke-derivations-10.png
+        - bespoke-derivations-10.svg
         - ekVa5bxevw
       -
-        - bespoke-derivations-11.png
+        - bespoke-derivations-11.svg
         - FfcB5XuDKR
       -
-        - bespoke-derivations-12.png
+        - bespoke-derivations-12.svg
         - JLROi5SwqW
       -
-        - bespoke-derivations-13.png
+        - bespoke-derivations-13.svg
         - Mg__1hCUUp
   fetamont:
     description: <a href="/modulator?fontface=Fetamont">MF Fetamont</a> is an extended version of
@@ -206,80 +209,80 @@ metafonts:
         url: http://www.ctan.org/tex-archive/fonts/fetamont
     images:
       -
-        - fetamont-01.png
+        - fetamont-01.svg
         -
       -
-        - fetamont-02.png
+        - fetamont-02.svg
         - The 256 characters of T1 font encoding.
       -
-        - fetamont-03.png
+        - fetamont-03.svg
         -
       -
-        - fetamont-04.png
+        - fetamont-04.svg
         - MF Fetamont supporting many european languages with latin writing.
       -
-        - fetamont-05.png
+        - fetamont-05.svg
         -
       -
-        - fetamont-06.png
+        - fetamont-06.svg
         -
     subimages:
       -
-        - fetamont-derivations-01.png
+        - fetamont-derivations-01.svg
         - GkBrVZN_iX
       -
-        - fetamont-derivations-02.png
+        - fetamont-derivations-02.svg
         - MfkdNdMDDn
       -
-        - fetamont-derivations-03.png
+        - fetamont-derivations-03.svg
         - dl7Ht74V5u
       -
-        - fetamont-derivations-04.png
+        - fetamont-derivations-04.svg
         - LkeR_2xby-
       -
-        - fetamont-derivations-05.png
+        - fetamont-derivations-05.svg
         - PP_OiCwdeP
       -
-        - fetamont-derivations-06.png
+        - fetamont-derivations-06.svg
         - 27bdRg9sxs
       -
-        - fetamont-derivations-07.png
+        - fetamont-derivations-07.svg
         - 9ExkzVmc3w
       -
-        - fetamont-derivations-08.png
+        - fetamont-derivations-08.svg
         - -VD4YZ2DoE
       -
-        - fetamont-derivations-09.png
+        - fetamont-derivations-09.svg
         - hCBJISerqx
       -
-        - fetamont-derivations-10.png
+        - fetamont-derivations-10.svg
         - Lib0ZSdIQq
       -
-        - fetamont-derivations-11.png
+        - fetamont-derivations-11.svg
         - lIyb2HtLTh
       -
-        - fetamont-derivations-12.png
+        - fetamont-derivations-12.svg
         - e93KUT9DBj
       -
-        - fetamont-derivations-13.png
+        - fetamont-derivations-13.svg
         - 6vxhO7I2He
       -
-        - fetamont-derivations-14.png
+        - fetamont-derivations-14.svg
         - aqgUyrHqrz
       -
-        - fetamont-derivations-15.png
+        - fetamont-derivations-15.svg
         - -G_AJAvhEX
       -
-        - fetamont-derivations-16.png
+        - fetamont-derivations-16.svg
         - dFcZJbTYmO
       -
-        - fetamont-derivations-17.png
+        - fetamont-derivations-17.svg
         - MelgMG3dUD
       -
-        - fetamont-derivations-18.png
+        - fetamont-derivations-18.svg
         - ei9rUTPryF
       -
-        - fetamont-derivations-19.png
+        - fetamont-derivations-19.svg
         - dJCvFHU3OR
 
   funtauna:

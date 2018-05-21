@@ -670,31 +670,48 @@ div.char-chooser {
 
 a.char-chooser {
   position: absolute;
-  bottom: 3px;
+  bottom: 4px;
   z-index: 1;
-  width: 14px;
+  width: 11px;
   color: transparent;
   line-height: $font_size;
 
   &.left {
-    left: 2px;
-    background: image-url('arrows.png') no-repeat scroll 0 -189px transparent;
+    left: 3px;
+    background: image-url('arrow.svg') no-repeat scroll 0 0 transparent;
+    background-size: 11px;
+    transform: rotate(0.75turn);
   }
 
   &.right {
-    right: 2px;
-    background: image-url('arrows.png') no-repeat scroll 0 -64px transparent;
+    right: 3px;
+    background: image-url('arrow.svg') no-repeat scroll 0 0 transparent;
+    background-size: 11px;
+    transform: rotate(0.25turn);
   }
 }
 
 .dropdown-value {
+  position: relative;
   cursor: pointer;
   font-size: $font_size;
-  line-height: 24px;
-  background: image-url('arrows.png') no-repeat right -120px transparent;
 
   &.active {
-    background-position: right 5px;
+    &:after {
+      transform: rotate(0);
+    }
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 11px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: image-url('arrow.svg') no-repeat scroll right center transparent;
+    background-size: 11px;
+    transform: rotate(0.5turn);
   }
 }
 

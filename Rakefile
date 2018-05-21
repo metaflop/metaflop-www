@@ -25,7 +25,7 @@ task 'optimize_images' do
     puts files.map { |name| "  > #{name}" }.join("\n")
   end
 
-  images = `git diff --name-only --cached | grep assets/images`.split("\n")
+  images = `git diff --name-only --cached --diff-filter=AM | grep assets/images`.split("\n")
 
   abort 'No images found. You need to stage the files first.' if images.empty?
 

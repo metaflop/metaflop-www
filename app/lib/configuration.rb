@@ -54,6 +54,10 @@ module Configuration
         asset_pipeline
         config
 
+        # brotli compression
+        require 'rack/brotli'
+        use Rack::Brotli
+
         # gzip compression
         use Rack::Deflater
       end

@@ -1,38 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
   <url>
-    <loc>http://www.metaflop.com</loc>
+    <loc>https://www.metaflop.com</loc>
     <changefreq>always</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/modulator</loc>
+    <loc>https://www.metaflop.com/modulator</loc>
     <changefreq>always</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/metafonts/adjuster</loc>
+    <loc>https://www.metaflop.com/metafonts/adjuster</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/metafonts/bespoke</loc>
+    <loc>https://www.metaflop.com/metafonts/bespoke</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/metafonts/fetamont</loc>
+    <loc>https://www.metaflop.com/metafonts/fetamont</loc>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/terms</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.50</priority>
+    <loc>https://www.metaflop.com/metafonts/funtauna</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://www.metaflop.com/faq</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.50</priority>
+    <loc>https://www.metaflop.com/showcases/electronic_superhighway</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/off_grid</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/staging_disorder</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/yearbook_of_type_1</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/dont_shoot_the_messenger</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/intreccio_mirage</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/je_peux_le_faire</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/die_dada</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/the_sprawl</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/sum_of_parts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/eady_forum</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/meshtivism</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/form_informed</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/showcases/tradeptford</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.metaflop.com/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
   </url>
 </urlset>

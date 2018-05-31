@@ -49,18 +49,9 @@ module Configuration
     end
 
     def configure_root_application
-      configure do
-        application_root
-        asset_pipeline
-        config
-
-        # brotli compression
-        require 'rack/brotli'
-        use Rack::Brotli
-
-        # gzip compression
-        use Rack::Deflater
-      end
+      application_root
+      asset_pipeline
+      config
     end
   end
 

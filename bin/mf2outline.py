@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#mf2outline version 20180328
+#mf2outline version 20180503
 
 #This program has been written by Linus Romer for the 
 #Metaflop project by Marco Mueller and Alexis Reigel.
@@ -112,6 +112,10 @@ def vecscaleto(a,l):
 def vecangle(a,b):
 	return math.degrees(math.atan2(a[0]*b[1]-a[1]*b[0],
 	a[0]*b[0]+a[1]*b[1]))
+	
+# returns true iff b is right when looking in direction a	
+def isright(a,b):
+	return a[1]*b[0]>a[0]*b[1]
 
 # returns a points right of point p where right
 # means rectangular to direction d in distance r
@@ -307,7 +311,12 @@ def bezierrightpath(p,r):
 			and (math.copysign(1,enddir[1]) == math.copysign(1,startdir[1]))
 			or veclen(enddir) == 0 or veclen(startdir) == 0): 
 				# if not nearly same direction (reverse direction is okay)
-				outline += bezierarc(p[i][-1],startdir,enddir,r)
+				# now check if arc knee is really needed:
+				if not isright(startdir,enddir): # arc knee is necessary 
+					outline += bezierarc(p[i][-1],startdir,enddir,r)
+				else: # arc knee is not necessary
+				#	outline += bezierarc(p[i][-1],vecscaleto(startdir,-1),vecscaleto(enddir,-1),r)
+					outline += [[pointright(p[i][-1],enddir,r)]]
 	return outline
 	
 # beziercircularoutline returns the outline of a 
@@ -379,7 +388,7 @@ def bezierouteroutline(path,dx,dy,alpha):
 					enddir = vecdiff(p[i+1][0],p[i][-1])
 				else: # assume that a straight line follows
 					enddir = vecdiff(p[i+1][0],p[i][-1])
-				if not (abs(startdir[0]*enddir[1]-enddir[0]*startdir[1])<0.00001 \
+				if not (abs(startdir[0]*enddir[1]-enddir[0]*startdir[1])<0.01*veclen(startdir)*veclen(enddir) \
 				and (math.copysign(1,enddir[0]) == math.copysign(1,startdir[0])) \
 				and (math.copysign(1,enddir[1]) == math.copysign(1,startdir[1]))
 				or veclen(enddir) == 0 or veclen(startdir) == 0): 

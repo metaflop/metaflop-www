@@ -21,7 +21,7 @@ class FontGenerator
 
     out_file = "#{@metaflop.font_settings.out_dir}/font.otf"
     settings_parameters = @metaflop.font_settings.to_hash
-    settings_parameters[:timeout] = preview ? 5 : 15
+    settings_parameters[:timeout] = preview ? 10 : 25
     command = @metaflop.settings[:font_otf] % settings_parameters
 
     `cd #{@metaflop.font_settings.out_dir} && rm -f #{out_file} && #{command}`

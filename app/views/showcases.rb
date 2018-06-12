@@ -31,7 +31,6 @@ class App < Sinatra::Base
           }
         end
 
-        # sort by year descending, title ascending
         pages.sort_by! { |page| page[:title] }
 
         current(pages)['css_class'] = 'active'

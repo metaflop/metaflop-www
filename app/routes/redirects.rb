@@ -16,7 +16,11 @@ module Routes
     end
 
     get '/metafonts' do
-      redirect to('/metafonts/adjuster'), 301
+      redirect to('/metafonts/adjuster'), 303
+    end
+
+    get '/showcases' do
+      redirect to('/showcases/sum_of_parts'), 303
     end
 
     # redirect trailing slash urls

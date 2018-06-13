@@ -30,7 +30,7 @@ class App < Sinatra::Base
       end
 
       def fontfaces
-        (@settings.metafonts.keys.map(&:titleize) + ['Calport']).map do |fontface|
+        @settings.metafonts.keys.map(&:titleize).map do |fontface|
           { name: fontface, active: @active_fontface == fontface }
         end
       end

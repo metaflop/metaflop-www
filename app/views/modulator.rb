@@ -36,7 +36,7 @@ class App < Sinatra::Base
       end
 
       def typewriter_font_sizes
-        [16, 24, 32, 48].map do |size|
+        [16, 24, 32, 48, 96].map do |size|
           {
             value: size,
             text: "#{size}px",

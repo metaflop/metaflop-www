@@ -552,11 +552,10 @@ embed {
     display: inline-block;
     position: relative;
     margin: $box_spacing_y * 2;
-    background-color: $bg_color_modulator;
+    background-color: transparent;
 
     .fa {
       position: absolute;
-      content: "\1F589";
       top: 1px;
       right: 5px;
       font-size: 14px;
@@ -569,6 +568,7 @@ embed {
     font-size: 32px;
     text-align: left;
     padding: $box_spacing_y;
+    margin: 0;
     width: $preview_box_width_full - $box_spacing_y * 6;
     line-height: 1.5;
     background-color: $bg_color_modulator;
@@ -581,8 +581,7 @@ embed {
     }
 
     &:focus {
-      text-decoration: underline;
-      background: transparent;
+      background-color: transparent;
       outline: none;
     }
   }

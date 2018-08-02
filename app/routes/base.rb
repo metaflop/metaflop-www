@@ -25,7 +25,6 @@ module Routes
     end
 
     error do
-      PartyFoul::RacklessExceptionHandler.handle(env['sinatra.error'], env)
       halt slim :error_500
     end
 

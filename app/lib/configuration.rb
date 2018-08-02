@@ -150,21 +150,9 @@ module Configuration
     end
 
     def error_reporting
-      require 'party_foul'
-      PartyFoul.configure do |config|
-        config.oauth_token = ENV['PARTY_FOUL_OAUTH_TOKEN']
-        config.owner = 'metaflop'
-        config.repo = 'metaflop-www'
-        config.title_prefix = environment
-        config.additional_labels = -> (exception, env) do
-          if env['HTTP_HOST'] =~ /^test\./
-            ['staging']
-          else
-            ['production']
-          end
-        end
-      end
-      use PartyFoul::Middleware
+      # the SENTRY_DSN environment variable needs to be set (-> .env)
+      require 'raven'
+      use Raven::Rack
     end
 
     def file_logging

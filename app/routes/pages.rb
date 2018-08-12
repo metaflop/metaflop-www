@@ -11,10 +11,10 @@ require './app/routes/base'
 module Routes
   class Pages < Base
     get %r{/(\w+)/?(\w+)?} do |page, subpage|
-      if settings.respond_to? page
-        @settings = settings.method(page).call
-      end
+      return not_found unless @navigation_item_exists
 
+      # not all pages have settings
+      @settings = settings.method(page).call if settings.respond_to?(page)
       @subpage = subpage
 
       begin

@@ -86,8 +86,13 @@ module Configuration
       register Sinatra::SimpleNavigation
 
       before do
-        @main_navigation = render_navigation context: :main
-        @meta_navigation = render_navigation context: :meta
+        @main_navigation = render_navigation(context: :main)
+        @meta_navigation = render_navigation(context: :meta)
+
+        main_navigation = render_navigation(context: :main, renderer: :json, as_hash: true)
+        meta_navigation = render_navigation(context: :meta, renderer: :json, as_hash: true)
+
+        @navigation_item_exists = (main_navigation + meta_navigation).any? { |item| item[:selected] }
       end
     end
 

@@ -77,7 +77,7 @@ module Configuration
         './config/config.yml',
         './config/metafonts.yml',
         './config/showcases.yml',
-        './config/db.yml'
+        './config/database.yml'
       ]
     end
 

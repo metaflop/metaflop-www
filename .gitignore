@@ -2,7 +2,7 @@ screeen.css
 .sass-cache
 .bundle
 config/user.rb
-db.yml
+database.yml
 .DS_Store
 *.swp
 vendor/cache

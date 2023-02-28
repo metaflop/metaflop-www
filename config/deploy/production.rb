@@ -1,1 +1,1 @@
-server 'metaflop-production.panter.biz', :app, :web, :db, primary: true
+server 'metaflop-production', user: 'deploy', roles: %w[web app db]

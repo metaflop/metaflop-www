@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#mf2outline version 20190508
+#mf2outline-skia version 20190508
 
 #This program has been written by Linus Romer for the 
 #Metaflop project by Marco Mueller and Alexis Reigel.
@@ -257,7 +257,6 @@ def bezierjoin(first,second):
 def bezierarc_new(c,s,e,r):
 	sangle = vecangle((1,0),s) + 360  # this is very important!
 	eangle = sangle + vecangle(s,e) # this is very important!
-	print sangle,eangle,vecangle(s,e)
 	# if < 90 degree and no extremum inbetween:
 	if abs(eangle-sangle) <= 90.001 and (sangle // 90 == eangle // 90 \
 	or sangle % 90 < 1e-6 or eangle % 90 < 1e-6):
@@ -501,50 +500,8 @@ def roundRawGlyph(rawcontour,n):
 				rounded[i][j][k].append(round(n*rawcontour[i][j][k][1])/n)
 	return rounded
 
-# converts a booleanContour from
-# https://github.com/typemytype/booleanOperations
-# to a "raw" contour (2d list as described above)		
-def booleanContourToRawContour(booleancontour):
-	rawcontour = []
-	l = len(booleancontour._points)
-	if l > 0:
-		rawcontour.append([booleancontour._points[0][1]])
-		i = 1 # iterator
-		while i < l:
-			if booleancontour._points[i][0] == "line": 
-				rawcontour.append([booleancontour._points[i][1]])
-				i += 1
-			else: # handles for curve
-				if i+2 == l: # go back to the beginning point
-					rawcontour.append([booleancontour._points[i][1],
-					booleancontour._points[i+1][1],
-					booleancontour._points[0][1]])
-				else:
-					rawcontour.append([booleancontour._points[i][1],
-					booleancontour._points[i+1][1],
-					booleancontour._points[i+2][1]])	
-				i += 3
-	# booleanContours have to be closed (cyclic), therefore we may
-	# need to add the initial point:
-	if not rawcontour[-1][-1] == rawcontour[0][0]:
-		if len(rawcontour[-1]) == 2:
-			rawcontour[-1].append(rawcontour[0][0])
-		else:
-			rawcontour.append([rawcontour[0][0]])
-	return rawcontour
-
-# converts a booleanGlyph from
-# https://github.com/typemytype/booleanOperations
-# to a "raw" glyph (3d list as described above)	
-def booleanGlyphToRawGlyph(booleanglyph):
-	rawglyph = []
-	for c in booleanglyph.contours:
-		rawglyph.append(booleanContourToRawContour(c))
-	return rawglyph
-	
 # converts a "raw" glyph (3d list as described above)	
 # to a defcon.Glyph (https://github.com/typesupply/defcon)
-# in order to be used with the booleanOperations	
 def rawGlyphToDefconGlyph(rawglyph):
 	import defcon
 	defconglyph = defcon.Glyph()
@@ -562,34 +519,51 @@ def rawGlyphToDefconGlyph(rawglyph):
 		pen.closePath()
 	return defconglyph
 	
-def rawUnion(rawglyph,otherrawglyph):
-	import booleanOperations.booleanGlyph
-	if (otherrawglyph is None) or (len(otherrawglyph) == 0):
-		return rawglyph
-	else:
-		return booleanGlyphToRawGlyph(
-		booleanOperations.booleanGlyph.BooleanGlyph(
-		rawGlyphToDefconGlyph(rawglyph)).union(
-		booleanOperations.booleanGlyph.BooleanGlyph(
-		rawGlyphToDefconGlyph(otherrawglyph))))
+# converts a a defcon.Glyph (https://github.com/typesupply/defcon)	
+# to a "raw" glyph (3d list as described above)	
+def defconGlyphToRawGlyph(defconglyph):
+	rawglyph = []
+	for contour in defconglyph:
+		rawglyph.append([[]])
+		for p in range(0,len(contour)): # going through points
+			rawglyph[-1][-1].append((contour[p].x,contour[p].y))
+			# if the next point is not a control point
+			# i.e. "line" or "curve" indicating the end of
+			# a line or a curve
+			if (not contour[p%len(contour)].segmentType is None) \
+			and not p == len(contour)-1: 
+				rawglyph[-1].append([])
+		# defcon contours have to be closed (cyclic), therefore we may
+		# need to add the initial point:
+		if not rawglyph[-1][-1][-1] == rawglyph[-1][0][0]:
+			if len(rawglyph[-1][-1]) == 2:
+				rawglyph[-1][-1].append(rawglyph[-1][0][0])
+			else:
+				rawglyph[-1].append([rawglyph[-1][0][0]])
+	return rawglyph
+
+def rawRemoveOverlap(rawglyph):
+	import pathops,defcon
+	defconglyph = defcon.Glyph()
+	pen = defconglyph.getPen()
+	pathops.union(list(rawGlyphToDefconGlyph(rawglyph)),pen)
+	return defconGlyphToRawGlyph(defconglyph)
 	
 def rawDifference(rawglyph,excludedrawglyph):
-	import booleanOperations.booleanGlyph
 	if (excludedrawglyph is None) or (len(excludedrawglyph) == 0):
 		return rawglyph
 	else:
-		return booleanGlyphToRawGlyph(
-		booleanOperations.booleanGlyph.BooleanGlyph(
-		rawGlyphToDefconGlyph(roundRawGlyph(rawglyph,500))).difference(
-		booleanOperations.booleanGlyph.BooleanGlyph(
-		rawGlyphToDefconGlyph(roundRawGlyph(excludedrawglyph,500)))))
+		import pathops,defcon
+		defconglyph = defcon.Glyph()
+		pen = defconglyph.getPen()
+		pathops.difference(list(rawGlyphToDefconGlyph(roundRawGlyph(rawRemoveOverlap(rawglyph),500))),
+		list(rawGlyphToDefconGlyph(roundRawGlyph(excludedrawglyph,500))),pen)
+		return defconGlyphToRawGlyph(defconglyph)
 	
-def rawRemoveOverlap(rawglyph):
-	import booleanOperations.booleanGlyph
-	return booleanGlyphToRawGlyph(
-	booleanOperations.booleanGlyph.BooleanGlyph(
-	rawGlyphToDefconGlyph(rawglyph)).removeOverlap())
-	
+
+
+# this may be not used in the moment
+# but may be useful later
 def fontforgeLayerToDefconGlyph(layer):
 	import defcon
 	defconglyph = defcon.Glyph()
@@ -609,38 +583,6 @@ def fontforgeLayerToDefconGlyph(layer):
 				j += 3
 		pen.closePath()
 	return defconglyph
-	
-def booleanGlyphToFontforgeLayer(booleanglyph):
-	layer = fontforge.layer()
-	for c in booleanglyph.contours:
-		contour = fontforge.contour()
-		l = len(c._points)
-		if l > 0:
-			contour.moveTo(c._points[0][1][0],c._points[0][1][1])
-			i = 1 # iterator
-			while i < l:
-				if c._points[i][0] == "line": 
-					contour.lineTo(c._points[i][1])
-					i += 1
-				else: # handles for curve
-					contour.cubicTo(c._points[i][1],
-					c._points[(i+1)%l][1],
-					c._points[(i+2)%l][1])
-					i += 3
-		contour.closed = True
-		layer += contour
-	return layer
-	
-def booleanDifference(fflayer,excludedfflayer):
-	import booleanOperations.booleanGlyph
-	if len(excludedfflayer) == 0:
-		return fflayer
-	else:
-		return booleanGlyphToFontforgeLayer(
-		booleanOperations.booleanGlyph.BooleanGlyph(
-		fontforgeLayerToDefconGlyph(fflayer.round(500))).difference(
-		booleanOperations.booleanGlyph.BooleanGlyph(
-		fontforgeLayerToDefconGlyph(excludedfflayer.round(500))))).reverseDirection()
 	
 # As we use the convention that a raw contour
 # [[(0,1)],[(3,4)],[(1,2),(-2,7),(8,5)],[(2,9)]]
@@ -794,7 +736,8 @@ def import_ps(eps,glyph):
 					#elif word == "truncate":
 						# truncate is problematic, as it produces
 						# results that are not exact
-						# I do not know, why this is in METAPOST
+						# I do not know, why this is in METAPOST!
+						# Still, if you need it:
 						# stack[len(stack)-1]=int(stack[len(stack)-1])
 					elif word == "pop":
 						stack.pop()
@@ -806,7 +749,7 @@ def import_ps(eps,glyph):
 						else:
 							if windingnumber(contour) < 0:
 								contour = bezierreverse(contour) # make clockwise
-							rawglyph.append(contour) #rawglyph = romerUnion(rawglyph,[contour])
+							rawglyph.append(contour)
 					elif word == "stroke":		
 						# We have to determine the angle and the 
 						# axis of the ellipse that is the product of
@@ -846,6 +789,8 @@ def import_ps(eps,glyph):
 						is_white = gsave_is_white
 		# now fill the raw glyph into a fontforge glyph:
 		#rawglyphrounded = roundRawGlyph(rawglyph,10)
+		#if not args.raw:
+		#	rawglyph = rawRemoveOverlap(rawglyph)
 		for c in rawglyph:
 			glyph.foreground += rawPathToFontforgeContour(c)
 			if not args.raw:

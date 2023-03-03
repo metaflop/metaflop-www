@@ -43,7 +43,6 @@ module Configuration
       end
 
       configure :production do
-        file_logging
         error_reporting
       end
     end
@@ -158,17 +157,6 @@ module Configuration
       # the SENTRY_DSN environment variable needs to be set (-> .env)
       require 'raven'
       use Raven::Rack
-    end
-
-    def file_logging
-      require 'fileutils'
-      require 'time'
-
-      log_dir = File.join(settings.root, 'log/rack/')
-      FileUtils.mkdir_p(log_dir) unless Dir.exist? log_dir
-      logger = File.new("#{log_dir}#{Time.new.iso8601}.log", 'w+')
-      $stderr.reopen(logger)
-      $stdout.reopen(logger)
     end
   end
 end

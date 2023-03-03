@@ -18,7 +18,7 @@
 
 % Copyright 2014 by Linus Romer
 
-string base_name, base_version; base_name="mf2outline"; base_version="20171029prev";
+string base_name, base_version; base_name="mf2outline"; base_version="20190416prev";
 
 message "Preloading the mf2outline base, version "&base_version&": preliminaries,";
 
@@ -121,12 +121,17 @@ vardef whatever = save ?; ? enddef;
 % unary operators
 let abs = length;
 
-vardef round primary u =
+vardef round primary u = u enddef;
+vardef hround primary x = x enddef;
+vardef vround primary y = y enddef;
+
+% added by Linus Romer:
+vardef mf_round primary u =
  if numeric u: floor(u+.5)
  elseif pair u: (hround xpart u, vround ypart u)
  else: u fi enddef;
-vardef hround primary x = floor(x+.5) enddef;
-vardef vround primary y = floor(y.o_+.5)_o_ enddef;
+vardef mf_hround primary x = floor(x+.5) enddef;
+vardef mf_vround primary y = floor(y.o_+.5)_o_ enddef;
 
 vardef ceiling primary x = -floor(-x) enddef;
 
@@ -362,28 +367,22 @@ miterlimit:=10;
 pen currentpen;
 picture currentpicture;
 
-% ----- start of modifications by Linus Romer -----
-def fill expr c = addto currentpicture contour if turningnumber c >= 0: 
-  reverse fi c t_ pc_ 
-enddef;
+def fill expr c = addto currentpicture contour c t_ pc_ enddef;
 def draw expr p =
   addto currentpicture
   if picture p:
     also p
   else:
-    doublepath if turningnumber p >= 0: 
-    reverse fi p t_ withpen currentpen
+    doublepath p t_ withpen currentpen
   fi
   pc_
 enddef;
 def filldraw expr c =
-  addto currentpicture contour if turningnumber c >= 0: 
-  reverse fi c t_ withpen currentpen
+  addto currentpicture contour c t_ withpen currentpen
   pc_ enddef;
 def drawdot expr z =
   addto currentpicture contour makepath currentpen shifted z
   t_ pc_ enddef;
-% ----- end of modifications by Linus Romer -----
 
 def unfill expr c = fill c withcolor background enddef;
 def undraw expr p = draw p withcolor background enddef;

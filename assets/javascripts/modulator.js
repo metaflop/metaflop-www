@@ -214,9 +214,6 @@ $(function() {
   };
 
   // don't create new url each time for unchanged setting
-  // makes an ajax request with async:false, as with the copy
-  // clipboard callback from the flahs clippy async doesn't work.
-  // TODO: as this is deprecated as of 1.8, find a new solution
   var callWithFontHash = function(success, complete) {
     var successWithDefault = success || function() {};
     var completeWithDefault = complete || function() {
@@ -229,7 +226,6 @@ $(function() {
     }
     else {
       $.ajax({
-        async: false,
         url: '/modulator/font/create' + $.fn.metaflop.queryString,
         success: function(data) {
           $.fn.metaflop.shortenendUrl = data;
@@ -489,20 +485,6 @@ $(function() {
     return baseUrl + '/modulator/font/' + shortenendUrl;
   };
 
-  // share the current settings
-  // this function is called from flash clippy
-  $.fn.metaflop.getFlashShareUrl = function() {
-    var container = $('#action-share-url'); // eslint-disable-line no-unused-vars
-
-    if (!$.fn.metaflop.shortenendUrl) {
-      showProgress('Generating share url...');
-
-      callWithFontHash();
-    }
-
-    return getFontUrl($.fn.metaflop.shortenendUrl);
-  };
-
   $('#action-share-url a').click(function(e) {
     e.preventDefault();
     var $this = $(this);
@@ -514,16 +496,21 @@ $(function() {
       var title = 'I created a nice metaflop font!';
       var type = $this.attr('data-type');
 
-      var link = $.fn.metaflop.settings.shareUrls[type]
-        .replace('%{title}', title)
-        .replace('%{url}', url);
-
-      if (type === 'email') {
-        window.location = link;
+      if (type === 'clipboard') {
+        navigator.clipboard.writeText(url);
       }
-      // open in new window
       else {
-        window.open(link);
+        var link = $.fn.metaflop.settings.shareUrls[type]
+          .replace('%{title}', title)
+          .replace('%{url}', url);
+
+        if (type === 'email') {
+          window.location = link;
+        }
+        // open in new window
+        else {
+          window.open(link);
+        }
       }
     };
 

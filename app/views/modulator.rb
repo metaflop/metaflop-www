@@ -86,10 +86,6 @@ class App < Sinatra::Base
           }
         end
       end
-
-      def clippy_url
-        asset_path('flash/clippy.swf')
-      end
     end
   end
 end

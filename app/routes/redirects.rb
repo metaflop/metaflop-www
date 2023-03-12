@@ -24,7 +24,7 @@ module Routes
     end
 
     # redirect trailing slash urls
-    get %r{(/.+)/$} do
+    get %r{(/.+)/} do
       url = request.fullpath.
         sub(/\/$/, ''). # trailing slash
         sub(/\/\?/, '?') # slash before query params

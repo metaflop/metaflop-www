@@ -98,6 +98,7 @@ module Configuration
     def asset_pipeline
       require 'sinatra/asset_pipeline'
 
+      set :assets_paths, %w(assets assets/stylesheets assets/javascripts assets/images assets/fonts)
       set :assets_css_compressor, :sass
       set :assets_js_compressor, :uglifier
       set :assets_precompile, %w(app.js app.css *.png *.jpg *.gif *.svg *.eot *.ttf *.woff *.woff2 *.cur *.swf)

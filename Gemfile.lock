@@ -48,10 +48,6 @@ GEM
     erubi (1.12.0)
     execjs (2.8.1)
     exifr (1.3.10)
-    faraday (2.7.4)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.2)
     ffi (1.15.5)
     fspath (3.1.2)
     i18n (1.12.0)
@@ -131,8 +127,8 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sentry-raven (3.1.2)
-      faraday (>= 1.0)
+    sentry-ruby (5.8.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     sequel (4.49.0)
     simple-navigation (4.4.0)
       activesupport (>= 2.3.2)
@@ -207,7 +203,7 @@ DEPENDENCIES
   rubocop
   rubyzip
   sass
-  sentry-raven
+  sentry-ruby
   sequel (~> 4.44)
   sinatra
   sinatra-asset-pipeline

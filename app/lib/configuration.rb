@@ -155,9 +155,14 @@ module Configuration
     end
 
     def error_reporting
+      require 'sentry-ruby'
       # the SENTRY_DSN environment variable needs to be set (-> .env)
-      require 'raven'
-      use Raven::Rack
+      Sentry.init do |config|
+        config.dsn = ENV['SENTRY_DSN']
+        config.breadcrumbs_logger = [:sentry_logger, :http_logger]
+      end
+
+      use Sentry::Rack::CaptureExceptions
     end
   end
 end

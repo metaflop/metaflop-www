@@ -1,4 +1,4 @@
-lock '~> 3.17.0'
+lock '~> 3.18.0'
 
 set :application, 'metaflop'
 set :repo_url, 'git@github.com:metaflop/metaflop-www.git'

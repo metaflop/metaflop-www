@@ -32,7 +32,3 @@ group :development do
   gem 'rspec'
   gem 'rubocop', require: false
 end
-
-group :production do
-  gem 'therubyracer'
-end

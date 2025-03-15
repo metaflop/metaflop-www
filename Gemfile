@@ -30,5 +30,5 @@ group :development do
   gem 'nyan-cat-formatter'
   gem 'pry'
   gem 'rspec'
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 1.57.2', require: false
 end

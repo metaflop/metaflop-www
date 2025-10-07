@@ -117,7 +117,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     racc (1.8.1)
-    rack (2.2.18)
+    rack (2.2.19)
     rack-protection (2.2.4)
       rack
     rainbow (3.1.1)

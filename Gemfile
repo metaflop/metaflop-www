@@ -28,7 +28,7 @@ group :development do
   gem 'image_optim'
   gem 'image_optim_pack'
   gem 'nyan-cat-formatter'
-  gem 'pry'
+  gem 'pry', '~> 0.15.2' # TODO: newer version depend on io-console which doesn't seem to compile on ruby 2.7
   gem 'rspec'
   gem 'rubocop', '~> 1.57.2', require: false
 end
